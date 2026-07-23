@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="QuizArena — kuis interaktif ala Wayground. Main, jawab, dan kejar skor tertinggi!" />
+  <title>QuizArena — Kuis Interaktif</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/styles.css" />
+</head>
+<body>
+  <div class="aurora" aria-hidden="true">
+    <span class="blob blob-1"></span>
+    <span class="blob blob-2"></span>
+    <span class="blob blob-3"></span>
+  </div>
+
+  <main class="app" id="app">
+    <!-- ============ HOME SCREEN ============ -->
+    <section class="screen screen--home is-active" id="screen-home">
+      <div class="card card--hero">
+        <span class="badge">⚡ Kuis Interaktif</span>
+        <h1 class="hero-title" id="quiz-title">QuizArena</h1>
+        <p class="hero-subtitle" id="quiz-desc">Uji pengetahuanmu, kumpulkan poin, dan pecahkan rekor skor tertinggi.</p>
+
+        <div class="field">
+          <label for="player-name">Nama kamu</label>
+          <input type="text" id="player-name" placeholder="Ketik nama kamu…" maxlength="24" autocomplete="off" />
+        </div>
+
+        <button class="btn btn--primary btn--lg" id="btn-start">
+          Mulai Kuis <span class="btn-arrow">→</span>
+        </button>
+
+        <ul class="meta-row" id="quiz-meta">
+          <li><strong id="meta-count">0</strong> Soal</li>
+          <li><strong id="meta-time">15s</strong> / Soal</li>
+          <li><strong id="meta-best">0</strong> Skor Terbaik</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ============ QUIZ SCREEN ============ -->
+    <section class="screen screen--quiz" id="screen-quiz">
+      <header class="quiz-top">
+        <div class="quiz-top__left">
+          <span class="pill" id="progress-label">Soal 1 / 10</span>
+          <span class="pill pill--streak" id="streak-pill">🔥 0</span>
+        </div>
+        <div class="quiz-top__right">
+          <span class="score-chip">⭐ <strong id="score-live">0</strong></span>
+        </div>
+      </header>
+
+      <div class="progress-track"><div class="progress-fill" id="progress-fill"></div></div>
+
+      <div class="timer">
+        <div class="timer-bar" id="timer-bar"></div>
+        <span class="timer-num" id="timer-num">15</span>
+      </div>
+
+      <div class="card card--question">
+        <p class="question-tag" id="question-tag">Pilihan Ganda</p>
+        <h2 class="question-text" id="question-text">—</h2>
+      </div>
+
+      <div class="answers" id="answers"></div>
+    </section>
+
+    <!-- ============ RESULT SCREEN ============ -->
+    <section class="screen screen--result" id="screen-result">
+      <div class="card card--result">
+        <div class="result-emoji" id="result-emoji">🎉</div>
+        <h2 class="result-title" id="result-title">Kerja bagus!</h2>
+        <p class="result-sub" id="result-sub">Ini hasil kuis kamu.</p>
+
+        <div class="result-score">
+          <span class="result-score__num" id="result-score">0</span>
+          <span class="result-score__label">POIN</span>
+        </div>
+
+        <div class="stat-grid">
+          <div class="stat"><span class="stat__num" id="stat-correct">0</span><span class="stat__label">Benar</span></div>
+          <div class="stat"><span class="stat__num" id="stat-wrong">0</span><span class="stat__label">Salah</span></div>
+          <div class="stat"><span class="stat__num" id="stat-acc">0%</span><span class="stat__label">Akurasi</span></div>
+          <div class="stat"><span class="stat__num" id="stat-streak">0</span><span class="stat__label">Streak Maks</span></div>
+        </div>
+
+        <div class="result-actions">
+          <button class="btn btn--primary" id="btn-retry">Main Lagi</button>
+          <button class="btn btn--ghost" id="btn-review">Lihat Pembahasan</button>
+        </div>
+      </div>
+
+      <div class="review" id="review" hidden></div>
+    </section>
+  </main>
+
+  <footer class="foot">Dibuat dengan ⚡ QuizArena · Deploy di Vercel</footer>
+
+  <script src="assets/questions.js"></script>
+  <script src="assets/app.js"></script>
+</body>
+</html>

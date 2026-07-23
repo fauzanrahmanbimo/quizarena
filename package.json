@@ -1,0 +1,12 @@
+{
+  "name": "quizarena",
+  "version": "1.0.0",
+  "description": "Kuis interaktif ala Wayground — situs statis siap deploy ke Vercel.",
+  "private": true,
+  "scripts": {
+    "dev": "npx serve .",
+    "start": "npx serve ."
+  },
+  "keywords": ["quiz", "kuis", "wayground", "quizizz", "vercel"],
+  "license": "MIT"
+}
