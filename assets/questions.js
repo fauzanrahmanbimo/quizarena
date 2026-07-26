@@ -1,150 +1,3700 @@
 /* =============================================================
-   DATA KUIS — Edit bagian ini untuk membuat kuis kamu sendiri.
+   DATA KUIS — 10 LEVEL x 30 SOAL (Bahasa Inggris Dasar → Mahir)
    -------------------------------------------------------------
-   - title       : judul kuis (tampil di halaman depan)
-   - description : deskripsi singkat
-   - timePerQuestion : waktu per soal (detik)
-   - shuffle     : true = soal & pilihan diacak tiap main
-   - pickCount   : berapa soal diambil per sesi (0 = semua)
-   - questions[] :
-       q        -> teks pertanyaan
-       category -> label kategori (tampil sebagai tag, opsional)
-       options  -> daftar jawaban (2-4 pilihan)
-       answer   -> index jawaban benar (mulai dari 0)
-       explain  -> penjelasan singkat (opsional, tampil di pembahasan)
+   Struktur:
+   window.QUIZ = {
+     title, description, timePerQuestion, shuffle,
+     levels: [ { level, name, difficulty, emoji, questions: [
+        { q, category, options[4], answer(index benar), explain }
+     ] } ]
+   }
+   Tips: untuk menamb/mengubah soal, edit array "questions" pada level terkait.
    ============================================================= */
 window.QUIZ = {
-  title: "Quiz Bahasa Inggris Dasar",
-  description: "Kuis interaktif dasar Bahasa Inggris — sapaan, kosakata, grammar, dan ungkapan sehari-hari.",
-  timePerQuestion: 15,
-  shuffle: true,
-  pickCount: 10,
-  questions: [
+  "title": "QuizArena — English Levels",
+  "description": "Kuis Bahasa Inggris 10 level bertingkat. Pilih level, jawab 30 soal, dan kumpulkan poin!",
+  "timePerQuestion": 20,
+  "shuffle": true,
+  "levels": [
     {
-      q: "Apa yang kita ucapkan saat bertemu seseorang pada jam 8 pagi?",
-      category: "Daily Talk",
-      options: ["Good afternoon", "Good evening", "Good morning", "Hello"],
-      answer: 2,
-      explain: "Pagi hari (sebelum jam 12 siang) menggunakan 'Good morning'."
+      "level": 1,
+      "name": "Kata Dasar & Warna",
+      "difficulty": "Sangat Mudah",
+      "emoji": "🌱",
+      "questions": [
+        {
+          "q": "Apa arti kata \"cat\"?",
+          "category": "Vocabulary",
+          "options": [
+            "pintu",
+            "hijau",
+            "putih",
+            "kucing"
+          ],
+          "answer": 3,
+          "explain": "\"cat\" artinya kucing."
+        },
+        {
+          "q": "Apa arti kata \"dog\"?",
+          "category": "Vocabulary",
+          "options": [
+            "lima",
+            "kucing",
+            "anjing",
+            "putih"
+          ],
+          "answer": 2,
+          "explain": "\"dog\" artinya anjing."
+        },
+        {
+          "q": "Apa arti kata \"bird\"?",
+          "category": "Vocabulary",
+          "options": [
+            "lima",
+            "kursi",
+            "hijau",
+            "burung"
+          ],
+          "answer": 3,
+          "explain": "\"bird\" artinya burung."
+        },
+        {
+          "q": "Apa arti kata \"fish\"?",
+          "category": "Vocabulary",
+          "options": [
+            "ikan",
+            "apel",
+            "kepala",
+            "kursi"
+          ],
+          "answer": 0,
+          "explain": "\"fish\" artinya ikan."
+        },
+        {
+          "q": "Apa arti kata \"cow\"?",
+          "category": "Vocabulary",
+          "options": [
+            "bintang",
+            "kaki",
+            "anjing",
+            "sapi"
+          ],
+          "answer": 3,
+          "explain": "\"cow\" artinya sapi."
+        },
+        {
+          "q": "Apa arti kata \"book\"?",
+          "category": "Vocabulary",
+          "options": [
+            "satu",
+            "hitam",
+            "kursi",
+            "buku"
+          ],
+          "answer": 3,
+          "explain": "\"book\" artinya buku."
+        },
+        {
+          "q": "Apa arti kata \"pen\"?",
+          "category": "Vocabulary",
+          "options": [
+            "putih",
+            "lima",
+            "pena",
+            "kuning"
+          ],
+          "answer": 2,
+          "explain": "\"pen\" artinya pena."
+        },
+        {
+          "q": "Apa arti kata \"bag\"?",
+          "category": "Vocabulary",
+          "options": [
+            "hijau",
+            "nasi",
+            "tas",
+            "kepala"
+          ],
+          "answer": 2,
+          "explain": "\"bag\" artinya tas."
+        },
+        {
+          "q": "Apa arti kata \"door\"?",
+          "category": "Vocabulary",
+          "options": [
+            "tas",
+            "pintu",
+            "dua",
+            "pena"
+          ],
+          "answer": 1,
+          "explain": "\"door\" artinya pintu."
+        },
+        {
+          "q": "Apa arti kata \"chair\"?",
+          "category": "Vocabulary",
+          "options": [
+            "kursi",
+            "pena",
+            "susu",
+            "buku"
+          ],
+          "answer": 0,
+          "explain": "\"chair\" artinya kursi."
+        },
+        {
+          "q": "Apa arti kata \"table\"?",
+          "category": "Vocabulary",
+          "options": [
+            "meja",
+            "bulan",
+            "matahari",
+            "bintang"
+          ],
+          "answer": 0,
+          "explain": "\"table\" artinya meja."
+        },
+        {
+          "q": "Apa arti kata \"red\"?",
+          "category": "Vocabulary",
+          "options": [
+            "kucing",
+            "satu",
+            "merah",
+            "kuning"
+          ],
+          "answer": 2,
+          "explain": "\"red\" artinya merah."
+        },
+        {
+          "q": "Apa arti kata \"blue\"?",
+          "category": "Vocabulary",
+          "options": [
+            "air",
+            "nasi",
+            "tangan",
+            "biru"
+          ],
+          "answer": 3,
+          "explain": "\"blue\" artinya biru."
+        },
+        {
+          "q": "Apa arti kata \"green\"?",
+          "category": "Vocabulary",
+          "options": [
+            "buku",
+            "hijau",
+            "putih",
+            "biru"
+          ],
+          "answer": 1,
+          "explain": "\"green\" artinya hijau."
+        },
+        {
+          "q": "Apa arti kata \"yellow\"?",
+          "category": "Vocabulary",
+          "options": [
+            "kuning",
+            "bintang",
+            "kaki",
+            "buku"
+          ],
+          "answer": 0,
+          "explain": "\"yellow\" artinya kuning."
+        },
+        {
+          "q": "Apa arti kata \"black\"?",
+          "category": "Vocabulary",
+          "options": [
+            "merah",
+            "pena",
+            "hitam",
+            "kaki"
+          ],
+          "answer": 2,
+          "explain": "\"black\" artinya hitam."
+        },
+        {
+          "q": "Apa arti kata \"white\"?",
+          "category": "Vocabulary",
+          "options": [
+            "susu",
+            "putih",
+            "mata",
+            "tangan"
+          ],
+          "answer": 1,
+          "explain": "\"white\" artinya putih."
+        },
+        {
+          "q": "Apa arti kata \"one\"?",
+          "category": "Vocabulary",
+          "options": [
+            "lima",
+            "kuning",
+            "satu",
+            "merah"
+          ],
+          "answer": 2,
+          "explain": "\"one\" artinya satu."
+        },
+        {
+          "q": "Apa arti kata \"two\"?",
+          "category": "Vocabulary",
+          "options": [
+            "hijau",
+            "matahari",
+            "mata",
+            "dua"
+          ],
+          "answer": 3,
+          "explain": "\"two\" artinya dua."
+        },
+        {
+          "q": "Apa arti kata \"three\"?",
+          "category": "Vocabulary",
+          "options": [
+            "empat",
+            "buku",
+            "tiga",
+            "merah"
+          ],
+          "answer": 2,
+          "explain": "\"three\" artinya tiga."
+        },
+        {
+          "q": "Apa arti kata \"four\"?",
+          "category": "Vocabulary",
+          "options": [
+            "pintu",
+            "ikan",
+            "satu",
+            "empat"
+          ],
+          "answer": 3,
+          "explain": "\"four\" artinya empat."
+        },
+        {
+          "q": "Apa arti kata \"five\"?",
+          "category": "Vocabulary",
+          "options": [
+            "tangan",
+            "lima",
+            "burung",
+            "mata"
+          ],
+          "answer": 1,
+          "explain": "\"five\" artinya lima."
+        },
+        {
+          "q": "Apa arti kata \"sun\"?",
+          "category": "Vocabulary",
+          "options": [
+            "kucing",
+            "buku",
+            "matahari",
+            "merah"
+          ],
+          "answer": 2,
+          "explain": "\"sun\" artinya matahari."
+        },
+        {
+          "q": "Apa arti kata \"moon\"?",
+          "category": "Vocabulary",
+          "options": [
+            "hitam",
+            "bulan",
+            "nasi",
+            "telur"
+          ],
+          "answer": 1,
+          "explain": "\"moon\" artinya bulan."
+        },
+        {
+          "q": "Apa arti kata \"star\"?",
+          "category": "Vocabulary",
+          "options": [
+            "bintang",
+            "hijau",
+            "sapi",
+            "empat"
+          ],
+          "answer": 0,
+          "explain": "\"star\" artinya bintang."
+        },
+        {
+          "q": "Apa arti kata \"water\"?",
+          "category": "Vocabulary",
+          "options": [
+            "air",
+            "anjing",
+            "sapi",
+            "mata"
+          ],
+          "answer": 0,
+          "explain": "\"water\" artinya air."
+        },
+        {
+          "q": "Apa arti kata \"milk\"?",
+          "category": "Vocabulary",
+          "options": [
+            "susu",
+            "empat",
+            "kaki",
+            "air"
+          ],
+          "answer": 0,
+          "explain": "\"milk\" artinya susu."
+        },
+        {
+          "q": "Apa arti kata \"rice\"?",
+          "category": "Vocabulary",
+          "options": [
+            "bulan",
+            "mata",
+            "nasi",
+            "merah"
+          ],
+          "answer": 2,
+          "explain": "\"rice\" artinya nasi."
+        },
+        {
+          "q": "Apa arti kata \"apple\"?",
+          "category": "Vocabulary",
+          "options": [
+            "tiga",
+            "sapi",
+            "apel",
+            "lima"
+          ],
+          "answer": 2,
+          "explain": "\"apple\" artinya apel."
+        },
+        {
+          "q": "Apa arti kata \"banana\"?",
+          "category": "Vocabulary",
+          "options": [
+            "satu",
+            "pisang",
+            "bintang",
+            "buku"
+          ],
+          "answer": 1,
+          "explain": "\"banana\" artinya pisang."
+        }
+      ]
     },
     {
-      q: "Sapaan yang tepat digunakan pada jam 3 sore adalah…",
-      category: "Daily Talk",
-      options: ["Good night", "Good morning", "Good evening", "Good afternoon"],
-      answer: 3,
-      explain: "Siang hingga sore (12 siang - 6 sore) memakai 'Good afternoon'."
+      "level": 2,
+      "name": "Kata Sehari-hari",
+      "difficulty": "Mudah",
+      "emoji": "🐣",
+      "questions": [
+        {
+          "q": "Bahasa Inggris dari \"ibu\" adalah…",
+          "category": "Vocabulary",
+          "options": [
+            "year",
+            "village",
+            "mother",
+            "road"
+          ],
+          "answer": 2,
+          "explain": "\"ibu\" dalam Bahasa Inggris adalah \"mother\"."
+        },
+        {
+          "q": "Bahasa Inggris dari \"ayah\" adalah…",
+          "category": "Vocabulary",
+          "options": [
+            "week",
+            "friend",
+            "year",
+            "father"
+          ],
+          "answer": 3,
+          "explain": "\"ayah\" dalam Bahasa Inggris adalah \"father\"."
+        },
+        {
+          "q": "Bahasa Inggris dari \"saudara laki-laki\" adalah…",
+          "category": "Vocabulary",
+          "options": [
+            "car",
+            "train",
+            "brother",
+            "room"
+          ],
+          "answer": 2,
+          "explain": "\"saudara laki-laki\" dalam Bahasa Inggris adalah \"brother\"."
+        },
+        {
+          "q": "Bahasa Inggris dari \"saudara perempuan\" adalah…",
+          "category": "Vocabulary",
+          "options": [
+            "sister",
+            "month",
+            "week",
+            "road"
+          ],
+          "answer": 0,
+          "explain": "\"saudara perempuan\" dalam Bahasa Inggris adalah \"sister\"."
+        },
+        {
+          "q": "Bahasa Inggris dari \"keluarga\" adalah…",
+          "category": "Vocabulary",
+          "options": [
+            "city",
+            "work",
+            "village",
+            "family"
+          ],
+          "answer": 3,
+          "explain": "\"keluarga\" dalam Bahasa Inggris adalah \"family\"."
+        },
+        {
+          "q": "Bahasa Inggris dari \"teman\" adalah…",
+          "category": "Vocabulary",
+          "options": [
+            "afternoon",
+            "food",
+            "work",
+            "friend"
+          ],
+          "answer": 3,
+          "explain": "\"teman\" dalam Bahasa Inggris adalah \"friend\"."
+        },
+        {
+          "q": "Bahasa Inggris dari \"guru\" adalah…",
+          "category": "Vocabulary",
+          "options": [
+            "train",
+            "teacher",
+            "kitchen",
+            "night"
+          ],
+          "answer": 1,
+          "explain": "\"guru\" dalam Bahasa Inggris adalah \"teacher\"."
+        },
+        {
+          "q": "Bahasa Inggris dari \"murid\" adalah…",
+          "category": "Vocabulary",
+          "options": [
+            "bike",
+            "student",
+            "room",
+            "morning"
+          ],
+          "answer": 1,
+          "explain": "\"murid\" dalam Bahasa Inggris adalah \"student\"."
+        },
+        {
+          "q": "Bahasa Inggris dari \"sekolah\" adalah…",
+          "category": "Vocabulary",
+          "options": [
+            "house",
+            "village",
+            "brother",
+            "school"
+          ],
+          "answer": 3,
+          "explain": "\"sekolah\" dalam Bahasa Inggris adalah \"school\"."
+        },
+        {
+          "q": "Bahasa Inggris dari \"rumah\" adalah…",
+          "category": "Vocabulary",
+          "options": [
+            "car",
+            "house",
+            "kitchen",
+            "student"
+          ],
+          "answer": 1,
+          "explain": "\"rumah\" dalam Bahasa Inggris adalah \"house\"."
+        },
+        {
+          "q": "Bahasa Inggris dari \"kamar\" adalah…",
+          "category": "Vocabulary",
+          "options": [
+            "friend",
+            "bike",
+            "brother",
+            "room"
+          ],
+          "answer": 3,
+          "explain": "\"kamar\" dalam Bahasa Inggris adalah \"room\"."
+        },
+        {
+          "q": "Bahasa Inggris dari \"dapur\" adalah…",
+          "category": "Vocabulary",
+          "options": [
+            "bike",
+            "kitchen",
+            "room",
+            "month"
+          ],
+          "answer": 1,
+          "explain": "\"dapur\" dalam Bahasa Inggris adalah \"kitchen\"."
+        },
+        {
+          "q": "Bahasa Inggris dari \"pasar\" adalah…",
+          "category": "Vocabulary",
+          "options": [
+            "market",
+            "food",
+            "car",
+            "evening"
+          ],
+          "answer": 0,
+          "explain": "\"pasar\" dalam Bahasa Inggris adalah \"market\"."
+        },
+        {
+          "q": "Bahasa Inggris dari \"kota\" adalah…",
+          "category": "Vocabulary",
+          "options": [
+            "month",
+            "city",
+            "mother",
+            "market"
+          ],
+          "answer": 1,
+          "explain": "\"kota\" dalam Bahasa Inggris adalah \"city\"."
+        },
+        {
+          "q": "Bahasa Inggris dari \"desa\" adalah…",
+          "category": "Vocabulary",
+          "options": [
+            "brother",
+            "night",
+            "evening",
+            "village"
+          ],
+          "answer": 3,
+          "explain": "\"desa\" dalam Bahasa Inggris adalah \"village\"."
+        },
+        {
+          "q": "Bahasa Inggris dari \"jalan\" adalah…",
+          "category": "Vocabulary",
+          "options": [
+            "father",
+            "road",
+            "kitchen",
+            "money"
+          ],
+          "answer": 1,
+          "explain": "\"jalan\" dalam Bahasa Inggris adalah \"road\"."
+        },
+        {
+          "q": "Bahasa Inggris dari \"mobil\" adalah…",
+          "category": "Vocabulary",
+          "options": [
+            "student",
+            "evening",
+            "morning",
+            "car"
+          ],
+          "answer": 3,
+          "explain": "\"mobil\" dalam Bahasa Inggris adalah \"car\"."
+        },
+        {
+          "q": "Bahasa Inggris dari \"bus\" adalah…",
+          "category": "Vocabulary",
+          "options": [
+            "bus",
+            "work",
+            "year",
+            "mother"
+          ],
+          "answer": 0,
+          "explain": "\"bus\" dalam Bahasa Inggris adalah \"bus\"."
+        },
+        {
+          "q": "Bahasa Inggris dari \"sepeda\" adalah…",
+          "category": "Vocabulary",
+          "options": [
+            "night",
+            "drink",
+            "sister",
+            "bike"
+          ],
+          "answer": 3,
+          "explain": "\"sepeda\" dalam Bahasa Inggris adalah \"bike\"."
+        },
+        {
+          "q": "Bahasa Inggris dari \"kereta\" adalah…",
+          "category": "Vocabulary",
+          "options": [
+            "afternoon",
+            "train",
+            "room",
+            "day"
+          ],
+          "answer": 1,
+          "explain": "\"kereta\" dalam Bahasa Inggris adalah \"train\"."
+        },
+        {
+          "q": "Bahasa Inggris dari \"pagi\" adalah…",
+          "category": "Vocabulary",
+          "options": [
+            "sister",
+            "kitchen",
+            "morning",
+            "school"
+          ],
+          "answer": 2,
+          "explain": "\"pagi\" dalam Bahasa Inggris adalah \"morning\"."
+        },
+        {
+          "q": "Bahasa Inggris dari \"siang\" adalah…",
+          "category": "Vocabulary",
+          "options": [
+            "father",
+            "night",
+            "year",
+            "afternoon"
+          ],
+          "answer": 3,
+          "explain": "\"siang\" dalam Bahasa Inggris adalah \"afternoon\"."
+        },
+        {
+          "q": "Bahasa Inggris dari \"sore\" adalah…",
+          "category": "Vocabulary",
+          "options": [
+            "friend",
+            "evening",
+            "year",
+            "day"
+          ],
+          "answer": 1,
+          "explain": "\"sore\" dalam Bahasa Inggris adalah \"evening\"."
+        },
+        {
+          "q": "Bahasa Inggris dari \"malam\" adalah…",
+          "category": "Vocabulary",
+          "options": [
+            "month",
+            "brother",
+            "night",
+            "road"
+          ],
+          "answer": 2,
+          "explain": "\"malam\" dalam Bahasa Inggris adalah \"night\"."
+        },
+        {
+          "q": "Bahasa Inggris dari \"hari ini\" adalah…",
+          "category": "Vocabulary",
+          "options": [
+            "school",
+            "room",
+            "evening",
+            "today"
+          ],
+          "answer": 3,
+          "explain": "\"hari ini\" dalam Bahasa Inggris adalah \"today\"."
+        },
+        {
+          "q": "Bahasa Inggris dari \"Senin\" adalah…",
+          "category": "Vocabulary",
+          "options": [
+            "today",
+            "teacher",
+            "Monday",
+            "train"
+          ],
+          "answer": 2,
+          "explain": "\"Senin\" dalam Bahasa Inggris adalah \"Monday\"."
+        },
+        {
+          "q": "Bahasa Inggris dari \"minggu\" adalah…",
+          "category": "Vocabulary",
+          "options": [
+            "car",
+            "morning",
+            "week",
+            "train"
+          ],
+          "answer": 2,
+          "explain": "\"minggu\" dalam Bahasa Inggris adalah \"week\"."
+        },
+        {
+          "q": "Bahasa Inggris dari \"bulan\" adalah…",
+          "category": "Vocabulary",
+          "options": [
+            "drink",
+            "month",
+            "money",
+            "student"
+          ],
+          "answer": 1,
+          "explain": "\"bulan\" dalam Bahasa Inggris adalah \"month\"."
+        },
+        {
+          "q": "Bahasa Inggris dari \"tahun\" adalah…",
+          "category": "Vocabulary",
+          "options": [
+            "mother",
+            "work",
+            "year",
+            "sister"
+          ],
+          "answer": 2,
+          "explain": "\"tahun\" dalam Bahasa Inggris adalah \"year\"."
+        },
+        {
+          "q": "Bahasa Inggris dari \"hari\" adalah…",
+          "category": "Vocabulary",
+          "options": [
+            "house",
+            "afternoon",
+            "money",
+            "day"
+          ],
+          "answer": 3,
+          "explain": "\"hari\" dalam Bahasa Inggris adalah \"day\"."
+        }
+      ]
     },
     {
-      q: "Jika kita berpisah dengan seseorang, kita mengucapkan…",
-      category: "Daily Talk",
-      options: ["Hi", "Goodbye", "How are you", "Good morning"],
-      answer: 1,
-      explain: "'Goodbye' digunakan ketika berpisah atau mengakhiri percakapan."
+      "level": 3,
+      "name": "Lawan Kata",
+      "difficulty": "Mudah",
+      "emoji": "🌤️",
+      "questions": [
+        {
+          "q": "Lawan kata dari \"big\" adalah…",
+          "category": "Antonim",
+          "options": [
+            "night",
+            "low",
+            "hate",
+            "small"
+          ],
+          "answer": 3,
+          "explain": "Lawan kata \"big\" adalah \"small\"."
+        },
+        {
+          "q": "Lawan kata dari \"hot\" adalah…",
+          "category": "Antonim",
+          "options": [
+            "slow",
+            "thin",
+            "cold",
+            "dark"
+          ],
+          "answer": 2,
+          "explain": "Lawan kata \"hot\" adalah \"cold\"."
+        },
+        {
+          "q": "Lawan kata dari \"fast\" adalah…",
+          "category": "Antonim",
+          "options": [
+            "hate",
+            "thin",
+            "used",
+            "slow"
+          ],
+          "answer": 3,
+          "explain": "Lawan kata \"fast\" adalah \"slow\"."
+        },
+        {
+          "q": "Lawan kata dari \"tall\" adalah…",
+          "category": "Antonim",
+          "options": [
+            "far",
+            "hate",
+            "dirty",
+            "short"
+          ],
+          "answer": 3,
+          "explain": "Lawan kata \"tall\" adalah \"short\"."
+        },
+        {
+          "q": "Lawan kata dari \"happy\" adalah…",
+          "category": "Antonim",
+          "options": [
+            "difficult",
+            "sad",
+            "weak",
+            "false"
+          ],
+          "answer": 1,
+          "explain": "Lawan kata \"happy\" adalah \"sad\"."
+        },
+        {
+          "q": "Lawan kata dari \"good\" adalah…",
+          "category": "Antonim",
+          "options": [
+            "pull",
+            "bad",
+            "hard",
+            "cold"
+          ],
+          "answer": 1,
+          "explain": "Lawan kata \"good\" adalah \"bad\"."
+        },
+        {
+          "q": "Lawan kata dari \"open\" adalah…",
+          "category": "Antonim",
+          "options": [
+            "down",
+            "closed",
+            "late",
+            "dirty"
+          ],
+          "answer": 1,
+          "explain": "Lawan kata \"open\" adalah \"closed\"."
+        },
+        {
+          "q": "Lawan kata dari \"up\" adalah…",
+          "category": "Antonim",
+          "options": [
+            "short",
+            "dark",
+            "down",
+            "bad"
+          ],
+          "answer": 2,
+          "explain": "Lawan kata \"up\" adalah \"down\"."
+        },
+        {
+          "q": "Lawan kata dari \"day\" adalah…",
+          "category": "Antonim",
+          "options": [
+            "far",
+            "night",
+            "dark",
+            "low"
+          ],
+          "answer": 1,
+          "explain": "Lawan kata \"day\" adalah \"night\"."
+        },
+        {
+          "q": "Lawan kata dari \"rich\" adalah…",
+          "category": "Antonim",
+          "options": [
+            "poor",
+            "bad",
+            "late",
+            "empty"
+          ],
+          "answer": 0,
+          "explain": "Lawan kata \"rich\" adalah \"poor\"."
+        },
+        {
+          "q": "Lawan kata dari \"easy\" adalah…",
+          "category": "Antonim",
+          "options": [
+            "sad",
+            "hate",
+            "difficult",
+            "night"
+          ],
+          "answer": 2,
+          "explain": "Lawan kata \"easy\" adalah \"difficult\"."
+        },
+        {
+          "q": "Lawan kata dari \"clean\" adalah…",
+          "category": "Antonim",
+          "options": [
+            "slow",
+            "empty",
+            "dirty",
+            "closed"
+          ],
+          "answer": 2,
+          "explain": "Lawan kata \"clean\" adalah \"dirty\"."
+        },
+        {
+          "q": "Lawan kata dari \"full\" adalah…",
+          "category": "Antonim",
+          "options": [
+            "small",
+            "empty",
+            "short",
+            "down"
+          ],
+          "answer": 1,
+          "explain": "Lawan kata \"full\" adalah \"empty\"."
+        },
+        {
+          "q": "Lawan kata dari \"high\" adalah…",
+          "category": "Antonim",
+          "options": [
+            "thin",
+            "low",
+            "dry",
+            "empty"
+          ],
+          "answer": 1,
+          "explain": "Lawan kata \"high\" adalah \"low\"."
+        },
+        {
+          "q": "Lawan kata dari \"near\" adalah…",
+          "category": "Antonim",
+          "options": [
+            "down",
+            "closed",
+            "far",
+            "late"
+          ],
+          "answer": 2,
+          "explain": "Lawan kata \"near\" adalah \"far\"."
+        },
+        {
+          "q": "Lawan kata dari \"wet\" adalah…",
+          "category": "Antonim",
+          "options": [
+            "dry",
+            "dark",
+            "low",
+            "dirty"
+          ],
+          "answer": 0,
+          "explain": "Lawan kata \"wet\" adalah \"dry\"."
+        },
+        {
+          "q": "Lawan kata dari \"strong\" adalah…",
+          "category": "Antonim",
+          "options": [
+            "sad",
+            "end",
+            "weak",
+            "loud"
+          ],
+          "answer": 2,
+          "explain": "Lawan kata \"strong\" adalah \"weak\"."
+        },
+        {
+          "q": "Lawan kata dari \"light\" adalah…",
+          "category": "Antonim",
+          "options": [
+            "pull",
+            "dry",
+            "dark",
+            "end"
+          ],
+          "answer": 2,
+          "explain": "Lawan kata \"light\" adalah \"dark\"."
+        },
+        {
+          "q": "Lawan kata dari \"early\" adalah…",
+          "category": "Antonim",
+          "options": [
+            "thin",
+            "late",
+            "poor",
+            "sell"
+          ],
+          "answer": 1,
+          "explain": "Lawan kata \"early\" adalah \"late\"."
+        },
+        {
+          "q": "Lawan kata dari \"first\" adalah…",
+          "category": "Antonim",
+          "options": [
+            "last",
+            "cold",
+            "dry",
+            "night"
+          ],
+          "answer": 0,
+          "explain": "Lawan kata \"first\" adalah \"last\"."
+        },
+        {
+          "q": "Lawan kata dari \"win\" adalah…",
+          "category": "Antonim",
+          "options": [
+            "lose",
+            "difficult",
+            "dark",
+            "pull"
+          ],
+          "answer": 0,
+          "explain": "Lawan kata \"win\" adalah \"lose\"."
+        },
+        {
+          "q": "Lawan kata dari \"buy\" adalah…",
+          "category": "Antonim",
+          "options": [
+            "sell",
+            "low",
+            "dry",
+            "hate"
+          ],
+          "answer": 0,
+          "explain": "Lawan kata \"buy\" adalah \"sell\"."
+        },
+        {
+          "q": "Lawan kata dari \"love\" adalah…",
+          "category": "Antonim",
+          "options": [
+            "last",
+            "thin",
+            "hate",
+            "hard"
+          ],
+          "answer": 2,
+          "explain": "Lawan kata \"love\" adalah \"hate\"."
+        },
+        {
+          "q": "Lawan kata dari \"push\" adalah…",
+          "category": "Antonim",
+          "options": [
+            "last",
+            "hard",
+            "end",
+            "pull"
+          ],
+          "answer": 3,
+          "explain": "Lawan kata \"push\" adalah \"pull\"."
+        },
+        {
+          "q": "Lawan kata dari \"begin\" adalah…",
+          "category": "Antonim",
+          "options": [
+            "dry",
+            "end",
+            "lose",
+            "thin"
+          ],
+          "answer": 1,
+          "explain": "Lawan kata \"begin\" adalah \"end\"."
+        },
+        {
+          "q": "Lawan kata dari \"soft\" adalah…",
+          "category": "Antonim",
+          "options": [
+            "cold",
+            "hard",
+            "short",
+            "low"
+          ],
+          "answer": 1,
+          "explain": "Lawan kata \"soft\" adalah \"hard\"."
+        },
+        {
+          "q": "Lawan kata dari \"thick\" adalah…",
+          "category": "Antonim",
+          "options": [
+            "far",
+            "small",
+            "sell",
+            "thin"
+          ],
+          "answer": 3,
+          "explain": "Lawan kata \"thick\" adalah \"thin\"."
+        },
+        {
+          "q": "Lawan kata dari \"wide\" adalah…",
+          "category": "Antonim",
+          "options": [
+            "false",
+            "empty",
+            "narrow",
+            "lose"
+          ],
+          "answer": 2,
+          "explain": "Lawan kata \"wide\" adalah \"narrow\"."
+        },
+        {
+          "q": "Lawan kata dari \"quiet\" adalah…",
+          "category": "Antonim",
+          "options": [
+            "closed",
+            "loud",
+            "end",
+            "false"
+          ],
+          "answer": 1,
+          "explain": "Lawan kata \"quiet\" adalah \"loud\"."
+        },
+        {
+          "q": "Lawan kata dari \"young\" adalah…",
+          "category": "Antonim",
+          "options": [
+            "slow",
+            "poor",
+            "old",
+            "difficult"
+          ],
+          "answer": 2,
+          "explain": "Lawan kata \"young\" adalah \"old\"."
+        }
+      ]
     },
     {
-      q: "Bahasa Inggris dari \"Apa kabar?\" adalah…",
-      category: "Daily Talk",
-      options: ["Who are you?", "How are you?", "Where are you?", "What is this?"],
-      answer: 1,
-      explain: "'How are you?' berarti menanyakan kabar seseorang."
+      "level": 4,
+      "name": "Artikel & Jamak",
+      "difficulty": "Cukup Mudah",
+      "emoji": "📗",
+      "questions": [
+        {
+          "q": "Lengkapi: \"This is ___ apple.\"",
+          "category": "Grammar · Artikel",
+          "options": [
+            "the",
+            "a",
+            "an",
+            "some"
+          ],
+          "answer": 2,
+          "explain": "Diawali bunyi vokal → pakai 'an'."
+        },
+        {
+          "q": "Bentuk jamak dari \"box\" adalah…",
+          "category": "Grammar · Jamak",
+          "options": [
+            "women",
+            "cars",
+            "cities",
+            "boxes"
+          ],
+          "answer": 3,
+          "explain": "Jamak dari \"box\" adalah \"boxes\"."
+        },
+        {
+          "q": "Lengkapi: \"This is ___ orange.\"",
+          "category": "Grammar · Artikel",
+          "options": [
+            "the",
+            "a",
+            "some",
+            "an"
+          ],
+          "answer": 3,
+          "explain": "Diawali bunyi vokal → pakai 'an'."
+        },
+        {
+          "q": "Bentuk jamak dari \"baby\" adalah…",
+          "category": "Grammar · Jamak",
+          "options": [
+            "boys",
+            "children",
+            "babies",
+            "tomatoes"
+          ],
+          "answer": 2,
+          "explain": "Jamak dari \"baby\" adalah \"babies\"."
+        },
+        {
+          "q": "Lengkapi: \"This is ___ egg.\"",
+          "category": "Grammar · Artikel",
+          "options": [
+            "the",
+            "a",
+            "some",
+            "an"
+          ],
+          "answer": 3,
+          "explain": "Diawali bunyi vokal → pakai 'an'."
+        },
+        {
+          "q": "Bentuk jamak dari \"child\" adalah…",
+          "category": "Grammar · Jamak",
+          "options": [
+            "tomatoes",
+            "leaves",
+            "women",
+            "children"
+          ],
+          "answer": 3,
+          "explain": "Jamak dari \"child\" adalah \"children\"."
+        },
+        {
+          "q": "Lengkapi: \"This is ___ umbrella.\"",
+          "category": "Grammar · Artikel",
+          "options": [
+            "the",
+            "some",
+            "an",
+            "a"
+          ],
+          "answer": 2,
+          "explain": "Diawali bunyi vokal → pakai 'an'."
+        },
+        {
+          "q": "Bentuk jamak dari \"man\" adalah…",
+          "category": "Grammar · Jamak",
+          "options": [
+            "women",
+            "men",
+            "buses",
+            "leaves"
+          ],
+          "answer": 1,
+          "explain": "Jamak dari \"man\" adalah \"men\"."
+        },
+        {
+          "q": "Lengkapi: \"This is ___ hour.\"",
+          "category": "Grammar · Artikel",
+          "options": [
+            "the",
+            "a",
+            "an",
+            "some"
+          ],
+          "answer": 2,
+          "explain": "Diawali bunyi vokal → pakai 'an'."
+        },
+        {
+          "q": "Bentuk jamak dari \"woman\" adalah…",
+          "category": "Grammar · Jamak",
+          "options": [
+            "cities",
+            "classes",
+            "women",
+            "boys"
+          ],
+          "answer": 2,
+          "explain": "Jamak dari \"woman\" adalah \"women\"."
+        },
+        {
+          "q": "Lengkapi: \"This is ___ elephant.\"",
+          "category": "Grammar · Artikel",
+          "options": [
+            "some",
+            "an",
+            "a",
+            "the"
+          ],
+          "answer": 1,
+          "explain": "Diawali bunyi vokal → pakai 'an'."
+        },
+        {
+          "q": "Bentuk jamak dari \"foot\" adalah…",
+          "category": "Grammar · Jamak",
+          "options": [
+            "feet",
+            "children",
+            "footes",
+            "women"
+          ],
+          "answer": 0,
+          "explain": "Jamak dari \"foot\" adalah \"feet\"."
+        },
+        {
+          "q": "Lengkapi: \"This is ___ island.\"",
+          "category": "Grammar · Artikel",
+          "options": [
+            "the",
+            "some",
+            "a",
+            "an"
+          ],
+          "answer": 3,
+          "explain": "Diawali bunyi vokal → pakai 'an'."
+        },
+        {
+          "q": "Bentuk jamak dari \"tooth\" adalah…",
+          "category": "Grammar · Jamak",
+          "options": [
+            "dishes",
+            "teeth",
+            "men",
+            "women"
+          ],
+          "answer": 1,
+          "explain": "Jamak dari \"tooth\" adalah \"teeth\"."
+        },
+        {
+          "q": "Lengkapi: \"This is ___ idea.\"",
+          "category": "Grammar · Artikel",
+          "options": [
+            "an",
+            "a",
+            "the",
+            "some"
+          ],
+          "answer": 0,
+          "explain": "Diawali bunyi vokal → pakai 'an'."
+        },
+        {
+          "q": "Bentuk jamak dari \"mouse\" adalah…",
+          "category": "Grammar · Jamak",
+          "options": [
+            "books",
+            "men",
+            "babies",
+            "mice"
+          ],
+          "answer": 3,
+          "explain": "Jamak dari \"mouse\" adalah \"mice\"."
+        },
+        {
+          "q": "Lengkapi: \"This is ___ uncle.\"",
+          "category": "Grammar · Artikel",
+          "options": [
+            "a",
+            "the",
+            "some",
+            "an"
+          ],
+          "answer": 3,
+          "explain": "Diawali bunyi vokal → pakai 'an'."
+        },
+        {
+          "q": "Bentuk jamak dari \"city\" adalah…",
+          "category": "Grammar · Jamak",
+          "options": [
+            "tomatoes",
+            "cities",
+            "watches",
+            "feet"
+          ],
+          "answer": 1,
+          "explain": "Jamak dari \"city\" adalah \"cities\"."
+        },
+        {
+          "q": "Lengkapi: \"This is ___ apron.\"",
+          "category": "Grammar · Artikel",
+          "options": [
+            "an",
+            "some",
+            "the",
+            "a"
+          ],
+          "answer": 0,
+          "explain": "Diawali bunyi vokal → pakai 'an'."
+        },
+        {
+          "q": "Bentuk jamak dari \"leaf\" adalah…",
+          "category": "Grammar · Jamak",
+          "options": [
+            "knives",
+            "children",
+            "leaves",
+            "babies"
+          ],
+          "answer": 2,
+          "explain": "Jamak dari \"leaf\" adalah \"leaves\"."
+        },
+        {
+          "q": "Lengkapi: \"This is ___ book.\"",
+          "category": "Grammar · Artikel",
+          "options": [
+            "the",
+            "an",
+            "a",
+            "some"
+          ],
+          "answer": 2,
+          "explain": "Diawali bunyi konsonan → pakai 'a'."
+        },
+        {
+          "q": "Bentuk jamak dari \"knife\" adalah…",
+          "category": "Grammar · Jamak",
+          "options": [
+            "buses",
+            "knives",
+            "tomatoes",
+            "knifees"
+          ],
+          "answer": 1,
+          "explain": "Jamak dari \"knife\" adalah \"knives\"."
+        },
+        {
+          "q": "Lengkapi: \"This is ___ car.\"",
+          "category": "Grammar · Artikel",
+          "options": [
+            "an",
+            "the",
+            "a",
+            "some"
+          ],
+          "answer": 2,
+          "explain": "Diawali bunyi konsonan → pakai 'a'."
+        },
+        {
+          "q": "Bentuk jamak dari \"bus\" adalah…",
+          "category": "Grammar · Jamak",
+          "options": [
+            "knives",
+            "buss",
+            "people",
+            "buses"
+          ],
+          "answer": 3,
+          "explain": "Jamak dari \"bus\" adalah \"buses\"."
+        },
+        {
+          "q": "Lengkapi: \"This is ___ dog.\"",
+          "category": "Grammar · Artikel",
+          "options": [
+            "some",
+            "a",
+            "an",
+            "the"
+          ],
+          "answer": 1,
+          "explain": "Diawali bunyi konsonan → pakai 'a'."
+        },
+        {
+          "q": "Bentuk jamak dari \"class\" adalah…",
+          "category": "Grammar · Jamak",
+          "options": [
+            "classes",
+            "knives",
+            "classs",
+            "tomatoes"
+          ],
+          "answer": 0,
+          "explain": "Jamak dari \"class\" adalah \"classes\"."
+        },
+        {
+          "q": "Lengkapi: \"This is ___ house.\"",
+          "category": "Grammar · Artikel",
+          "options": [
+            "an",
+            "some",
+            "a",
+            "the"
+          ],
+          "answer": 2,
+          "explain": "Diawali bunyi konsonan → pakai 'a'."
+        },
+        {
+          "q": "Bentuk jamak dari \"dish\" adalah…",
+          "category": "Grammar · Jamak",
+          "options": [
+            "dishs",
+            "women",
+            "tomatoes",
+            "dishes"
+          ],
+          "answer": 3,
+          "explain": "Jamak dari \"dish\" adalah \"dishes\"."
+        },
+        {
+          "q": "Lengkapi: \"This is ___ pen.\"",
+          "category": "Grammar · Artikel",
+          "options": [
+            "the",
+            "some",
+            "a",
+            "an"
+          ],
+          "answer": 2,
+          "explain": "Diawali bunyi konsonan → pakai 'a'."
+        },
+        {
+          "q": "Bentuk jamak dari \"book\" adalah…",
+          "category": "Grammar · Jamak",
+          "options": [
+            "boys",
+            "women",
+            "leaves",
+            "books"
+          ],
+          "answer": 3,
+          "explain": "Jamak dari \"book\" adalah \"books\"."
+        }
+      ]
     },
     {
-      q: "Kata 'Thank you' dalam Bahasa Indonesia berarti…",
-      category: "Vocabulary",
-      options: ["Maaf", "Tolong", "Terima kasih", "Sama-sama"],
-      answer: 2,
-      explain: "'Thank you' = Terima kasih."
+      "level": 5,
+      "name": "To Be & This/That",
+      "difficulty": "Menengah",
+      "emoji": "🧩",
+      "questions": [
+        {
+          "q": "Lengkapi: \"I ___ happy.\"",
+          "category": "Grammar · To Be",
+          "options": [
+            "am",
+            "be",
+            "is",
+            "are"
+          ],
+          "answer": 0,
+          "explain": "Subjek \"I\" memakai \"am\"."
+        },
+        {
+          "q": "Lengkapi: \"You ___ happy.\"",
+          "category": "Grammar · To Be",
+          "options": [
+            "am",
+            "are",
+            "is",
+            "be"
+          ],
+          "answer": 1,
+          "explain": "Subjek \"You\" memakai \"are\"."
+        },
+        {
+          "q": "Lengkapi: \"He ___ happy.\"",
+          "category": "Grammar · To Be",
+          "options": [
+            "is",
+            "be",
+            "am",
+            "are"
+          ],
+          "answer": 0,
+          "explain": "Subjek \"He\" memakai \"is\"."
+        },
+        {
+          "q": "Lengkapi: \"She ___ happy.\"",
+          "category": "Grammar · To Be",
+          "options": [
+            "am",
+            "is",
+            "are",
+            "be"
+          ],
+          "answer": 1,
+          "explain": "Subjek \"She\" memakai \"is\"."
+        },
+        {
+          "q": "Lengkapi: \"It ___ happy.\"",
+          "category": "Grammar · To Be",
+          "options": [
+            "is",
+            "am",
+            "are",
+            "be"
+          ],
+          "answer": 0,
+          "explain": "Subjek \"It\" memakai \"is\"."
+        },
+        {
+          "q": "Lengkapi: \"We ___ happy.\"",
+          "category": "Grammar · To Be",
+          "options": [
+            "be",
+            "are",
+            "is",
+            "am"
+          ],
+          "answer": 1,
+          "explain": "Subjek \"We\" memakai \"are\"."
+        },
+        {
+          "q": "Lengkapi: \"They ___ happy.\"",
+          "category": "Grammar · To Be",
+          "options": [
+            "am",
+            "be",
+            "is",
+            "are"
+          ],
+          "answer": 3,
+          "explain": "Subjek \"They\" memakai \"are\"."
+        },
+        {
+          "q": "Lengkapi: \"The cat ___ happy.\"",
+          "category": "Grammar · To Be",
+          "options": [
+            "be",
+            "is",
+            "am",
+            "are"
+          ],
+          "answer": 1,
+          "explain": "Subjek \"The cat\" memakai \"is\"."
+        },
+        {
+          "q": "Lengkapi: \"The dogs ___ happy.\"",
+          "category": "Grammar · To Be",
+          "options": [
+            "are",
+            "am",
+            "be",
+            "is"
+          ],
+          "answer": 0,
+          "explain": "Subjek \"The dogs\" memakai \"are\"."
+        },
+        {
+          "q": "Lengkapi: \"My friend ___ happy.\"",
+          "category": "Grammar · To Be",
+          "options": [
+            "are",
+            "is",
+            "am",
+            "be"
+          ],
+          "answer": 1,
+          "explain": "Subjek \"My friend\" memakai \"is\"."
+        },
+        {
+          "q": "Lengkapi: \"My friends ___ happy.\"",
+          "category": "Grammar · To Be",
+          "options": [
+            "is",
+            "be",
+            "are",
+            "am"
+          ],
+          "answer": 2,
+          "explain": "Subjek \"My friends\" memakai \"are\"."
+        },
+        {
+          "q": "Lengkapi: \"Tom ___ happy.\"",
+          "category": "Grammar · To Be",
+          "options": [
+            "am",
+            "be",
+            "are",
+            "is"
+          ],
+          "answer": 3,
+          "explain": "Subjek \"Tom\" memakai \"is\"."
+        },
+        {
+          "q": "Lengkapi: \"Tom and I ___ happy.\"",
+          "category": "Grammar · To Be",
+          "options": [
+            "are",
+            "am",
+            "be",
+            "is"
+          ],
+          "answer": 0,
+          "explain": "Subjek \"Tom and I\" memakai \"are\"."
+        },
+        {
+          "q": "Lengkapi: \"The book ___ happy.\"",
+          "category": "Grammar · To Be",
+          "options": [
+            "be",
+            "is",
+            "am",
+            "are"
+          ],
+          "answer": 1,
+          "explain": "Subjek \"The book\" memakai \"is\"."
+        },
+        {
+          "q": "Lengkapi: \"The books ___ happy.\"",
+          "category": "Grammar · To Be",
+          "options": [
+            "be",
+            "are",
+            "am",
+            "is"
+          ],
+          "answer": 1,
+          "explain": "Subjek \"The books\" memakai \"are\"."
+        },
+        {
+          "q": "Lengkapi: \"This ___ happy.\"",
+          "category": "Grammar · To Be",
+          "options": [
+            "am",
+            "are",
+            "is",
+            "be"
+          ],
+          "answer": 2,
+          "explain": "Subjek \"This\" memakai \"is\"."
+        },
+        {
+          "q": "Lengkapi: \"These ___ happy.\"",
+          "category": "Grammar · To Be",
+          "options": [
+            "are",
+            "is",
+            "be",
+            "am"
+          ],
+          "answer": 0,
+          "explain": "Subjek \"These\" memakai \"are\"."
+        },
+        {
+          "q": "Lengkapi: \"The water ___ happy.\"",
+          "category": "Grammar · To Be",
+          "options": [
+            "be",
+            "am",
+            "is",
+            "are"
+          ],
+          "answer": 2,
+          "explain": "Subjek \"The water\" memakai \"is\"."
+        },
+        {
+          "q": "Lengkapi: \"The children ___ happy.\"",
+          "category": "Grammar · To Be",
+          "options": [
+            "is",
+            "are",
+            "am",
+            "be"
+          ],
+          "answer": 1,
+          "explain": "Subjek \"The children\" memakai \"are\"."
+        },
+        {
+          "q": "Lengkapi: \"My mother ___ happy.\"",
+          "category": "Grammar · To Be",
+          "options": [
+            "is",
+            "be",
+            "am",
+            "are"
+          ],
+          "answer": 0,
+          "explain": "Subjek \"My mother\" memakai \"is\"."
+        },
+        {
+          "q": "___ book is mine. (satu, dekat)",
+          "category": "Grammar · This/That",
+          "options": [
+            "Those",
+            "This",
+            "That",
+            "These"
+          ],
+          "answer": 1,
+          "explain": "Tunggal & dekat → This."
+        },
+        {
+          "q": "___ books are mine. (banyak, dekat)",
+          "category": "Grammar · This/That",
+          "options": [
+            "This",
+            "These",
+            "That",
+            "Those"
+          ],
+          "answer": 1,
+          "explain": "Jamak & dekat → These."
+        },
+        {
+          "q": "___ car over there is fast. (satu, jauh)",
+          "category": "Grammar · This/That",
+          "options": [
+            "That",
+            "Those",
+            "These",
+            "This"
+          ],
+          "answer": 0,
+          "explain": "Tunggal & jauh → That."
+        },
+        {
+          "q": "___ cars over there are fast. (banyak, jauh)",
+          "category": "Grammar · This/That",
+          "options": [
+            "This",
+            "These",
+            "That",
+            "Those"
+          ],
+          "answer": 3,
+          "explain": "Jamak & jauh → Those."
+        },
+        {
+          "q": "___ is my pen. (satu, dekat)",
+          "category": "Grammar · This/That",
+          "options": [
+            "That",
+            "Those",
+            "This",
+            "These"
+          ],
+          "answer": 2,
+          "explain": "Tunggal & dekat → This."
+        },
+        {
+          "q": "___ are my shoes. (banyak, dekat)",
+          "category": "Grammar · This/That",
+          "options": [
+            "These",
+            "That",
+            "This",
+            "Those"
+          ],
+          "answer": 0,
+          "explain": "Jamak & dekat → These."
+        },
+        {
+          "q": "Look at ___ bird in the sky. (satu, jauh)",
+          "category": "Grammar · This/That",
+          "options": [
+            "These",
+            "That",
+            "This",
+            "Those"
+          ],
+          "answer": 1,
+          "explain": "Tunggal & jauh → That."
+        },
+        {
+          "q": "___ apples over there are sweet. (banyak, jauh)",
+          "category": "Grammar · This/That",
+          "options": [
+            "These",
+            "This",
+            "That",
+            "Those"
+          ],
+          "answer": 3,
+          "explain": "Jamak & jauh → Those."
+        },
+        {
+          "q": "___ is a beautiful flower here. (satu, dekat)",
+          "category": "Grammar · This/That",
+          "options": [
+            "This",
+            "That",
+            "These",
+            "Those"
+          ],
+          "answer": 0,
+          "explain": "Tunggal & dekat → This."
+        },
+        {
+          "q": "___ students there are new. (banyak, jauh)",
+          "category": "Grammar · This/That",
+          "options": [
+            "That",
+            "Those",
+            "This",
+            "These"
+          ],
+          "answer": 1,
+          "explain": "Jamak & jauh → Those."
+        }
+      ]
     },
     {
-      q: "Untuk meminta maaf, kita mengucapkan…",
-      category: "Daily Talk",
-      options: ["Sorry", "Please", "Welcome", "Thanks"],
-      answer: 0,
-      explain: "'Sorry' digunakan untuk meminta maaf."
+      "level": 6,
+      "name": "Simple Present",
+      "difficulty": "Menengah",
+      "emoji": "⏱️",
+      "questions": [
+        {
+          "q": "Subjek \"He/She\", bentuk simple present yang benar dari \"play\" adalah…",
+          "category": "Grammar · Simple Present",
+          "options": [
+            "playes",
+            "playing",
+            "play",
+            "plays"
+          ],
+          "answer": 3,
+          "explain": "Orang ketiga tunggal: \"play\" → \"plays\"."
+        },
+        {
+          "q": "Subjek \"He/She\", bentuk simple present yang benar dari \"go\" adalah…",
+          "category": "Grammar · Simple Present",
+          "options": [
+            "go",
+            "going",
+            "goes",
+            "gos"
+          ],
+          "answer": 2,
+          "explain": "Orang ketiga tunggal: \"go\" → \"goes\"."
+        },
+        {
+          "q": "Subjek \"He/She\", bentuk simple present yang benar dari \"watch\" adalah…",
+          "category": "Grammar · Simple Present",
+          "options": [
+            "watchs",
+            "watches",
+            "watching",
+            "watch"
+          ],
+          "answer": 1,
+          "explain": "Orang ketiga tunggal: \"watch\" → \"watches\"."
+        },
+        {
+          "q": "Subjek \"He/She\", bentuk simple present yang benar dari \"study\" adalah…",
+          "category": "Grammar · Simple Present",
+          "options": [
+            "study",
+            "studies",
+            "studying",
+            "studys"
+          ],
+          "answer": 1,
+          "explain": "Orang ketiga tunggal: \"study\" → \"studies\"."
+        },
+        {
+          "q": "Subjek \"He/She\", bentuk simple present yang benar dari \"do\" adalah…",
+          "category": "Grammar · Simple Present",
+          "options": [
+            "does",
+            "do",
+            "dos",
+            "doing"
+          ],
+          "answer": 0,
+          "explain": "Orang ketiga tunggal: \"do\" → \"does\"."
+        },
+        {
+          "q": "Subjek \"He/She\", bentuk simple present yang benar dari \"have\" adalah…",
+          "category": "Grammar · Simple Present",
+          "options": [
+            "haveing",
+            "has",
+            "have",
+            "haves"
+          ],
+          "answer": 1,
+          "explain": "Orang ketiga tunggal: \"have\" → \"has\"."
+        },
+        {
+          "q": "Subjek \"He/She\", bentuk simple present yang benar dari \"teach\" adalah…",
+          "category": "Grammar · Simple Present",
+          "options": [
+            "teach",
+            "teaching",
+            "teachs",
+            "teaches"
+          ],
+          "answer": 3,
+          "explain": "Orang ketiga tunggal: \"teach\" → \"teaches\"."
+        },
+        {
+          "q": "Subjek \"He/She\", bentuk simple present yang benar dari \"eat\" adalah…",
+          "category": "Grammar · Simple Present",
+          "options": [
+            "eating",
+            "eat",
+            "eates",
+            "eats"
+          ],
+          "answer": 3,
+          "explain": "Orang ketiga tunggal: \"eat\" → \"eats\"."
+        },
+        {
+          "q": "Subjek \"He/She\", bentuk simple present yang benar dari \"read\" adalah…",
+          "category": "Grammar · Simple Present",
+          "options": [
+            "reading",
+            "read",
+            "reades",
+            "reads"
+          ],
+          "answer": 3,
+          "explain": "Orang ketiga tunggal: \"read\" → \"reads\"."
+        },
+        {
+          "q": "Subjek \"He/She\", bentuk simple present yang benar dari \"write\" adalah…",
+          "category": "Grammar · Simple Present",
+          "options": [
+            "write",
+            "writees",
+            "writeing",
+            "writes"
+          ],
+          "answer": 3,
+          "explain": "Orang ketiga tunggal: \"write\" → \"writes\"."
+        },
+        {
+          "q": "Subjek \"He/She\", bentuk simple present yang benar dari \"work\" adalah…",
+          "category": "Grammar · Simple Present",
+          "options": [
+            "workes",
+            "works",
+            "work",
+            "working"
+          ],
+          "answer": 1,
+          "explain": "Orang ketiga tunggal: \"work\" → \"works\"."
+        },
+        {
+          "q": "Subjek \"He/She\", bentuk simple present yang benar dari \"like\" adalah…",
+          "category": "Grammar · Simple Present",
+          "options": [
+            "like",
+            "likes",
+            "likeing",
+            "likees"
+          ],
+          "answer": 1,
+          "explain": "Orang ketiga tunggal: \"like\" → \"likes\"."
+        },
+        {
+          "q": "Subjek \"He/She\", bentuk simple present yang benar dari \"run\" adalah…",
+          "category": "Grammar · Simple Present",
+          "options": [
+            "run",
+            "runing",
+            "runs",
+            "runes"
+          ],
+          "answer": 2,
+          "explain": "Orang ketiga tunggal: \"run\" → \"runs\"."
+        },
+        {
+          "q": "Subjek \"He/She\", bentuk simple present yang benar dari \"fly\" adalah…",
+          "category": "Grammar · Simple Present",
+          "options": [
+            "flys",
+            "flies",
+            "fly",
+            "flying"
+          ],
+          "answer": 1,
+          "explain": "Orang ketiga tunggal: \"fly\" → \"flies\"."
+        },
+        {
+          "q": "Subjek \"He/She\", bentuk simple present yang benar dari \"cry\" adalah…",
+          "category": "Grammar · Simple Present",
+          "options": [
+            "crying",
+            "cry",
+            "crys",
+            "cries"
+          ],
+          "answer": 3,
+          "explain": "Orang ketiga tunggal: \"cry\" → \"cries\"."
+        },
+        {
+          "q": "Subjek \"He/She\", bentuk simple present yang benar dari \"fix\" adalah…",
+          "category": "Grammar · Simple Present",
+          "options": [
+            "fixs",
+            "fix",
+            "fixes",
+            "fixing"
+          ],
+          "answer": 2,
+          "explain": "Orang ketiga tunggal: \"fix\" → \"fixes\"."
+        },
+        {
+          "q": "Subjek \"He/She\", bentuk simple present yang benar dari \"wash\" adalah…",
+          "category": "Grammar · Simple Present",
+          "options": [
+            "washes",
+            "washing",
+            "wash",
+            "washs"
+          ],
+          "answer": 0,
+          "explain": "Orang ketiga tunggal: \"wash\" → \"washes\"."
+        },
+        {
+          "q": "Subjek \"He/She\", bentuk simple present yang benar dari \"miss\" adalah…",
+          "category": "Grammar · Simple Present",
+          "options": [
+            "misses",
+            "miss",
+            "missing",
+            "misss"
+          ],
+          "answer": 0,
+          "explain": "Orang ketiga tunggal: \"miss\" → \"misses\"."
+        },
+        {
+          "q": "Subjek \"He/She\", bentuk simple present yang benar dari \"try\" adalah…",
+          "category": "Grammar · Simple Present",
+          "options": [
+            "trys",
+            "trying",
+            "try",
+            "tries"
+          ],
+          "answer": 3,
+          "explain": "Orang ketiga tunggal: \"try\" → \"tries\"."
+        },
+        {
+          "q": "Subjek \"He/She\", bentuk simple present yang benar dari \"catch\" adalah…",
+          "category": "Grammar · Simple Present",
+          "options": [
+            "catches",
+            "catching",
+            "catchs",
+            "catch"
+          ],
+          "answer": 0,
+          "explain": "Orang ketiga tunggal: \"catch\" → \"catches\"."
+        },
+        {
+          "q": "___ she like coffee?",
+          "category": "Grammar · Do/Does",
+          "options": [
+            "Are",
+            "Does",
+            "Do",
+            "Is"
+          ],
+          "answer": 1,
+          "explain": "He/She/It → Does."
+        },
+        {
+          "q": "___ they play football?",
+          "category": "Grammar · Do/Does",
+          "options": [
+            "Are",
+            "Is",
+            "Do",
+            "Does"
+          ],
+          "answer": 2,
+          "explain": "I/You/We/They → Do."
+        },
+        {
+          "q": "___ he go to school?",
+          "category": "Grammar · Do/Does",
+          "options": [
+            "Does",
+            "Are",
+            "Do",
+            "Is"
+          ],
+          "answer": 0,
+          "explain": "He/She/It → Does."
+        },
+        {
+          "q": "___ you speak English?",
+          "category": "Grammar · Do/Does",
+          "options": [
+            "Do",
+            "Is",
+            "Are",
+            "Does"
+          ],
+          "answer": 0,
+          "explain": "I/You/We/They → Do."
+        },
+        {
+          "q": "___ it work well?",
+          "category": "Grammar · Do/Does",
+          "options": [
+            "Is",
+            "Does",
+            "Are",
+            "Do"
+          ],
+          "answer": 1,
+          "explain": "He/She/It → Does."
+        },
+        {
+          "q": "___ we need this?",
+          "category": "Grammar · Do/Does",
+          "options": [
+            "Does",
+            "Are",
+            "Do",
+            "Is"
+          ],
+          "answer": 2,
+          "explain": "I/You/We/They → Do."
+        },
+        {
+          "q": "___ your father drive?",
+          "category": "Grammar · Do/Does",
+          "options": [
+            "Does",
+            "Do",
+            "Is",
+            "Are"
+          ],
+          "answer": 0,
+          "explain": "He/She/It → Does."
+        },
+        {
+          "q": "___ the students study?",
+          "category": "Grammar · Do/Does",
+          "options": [
+            "Is",
+            "Are",
+            "Does",
+            "Do"
+          ],
+          "answer": 3,
+          "explain": "I/You/We/They → Do."
+        },
+        {
+          "q": "___ Maria sing?",
+          "category": "Grammar · Do/Does",
+          "options": [
+            "Is",
+            "Does",
+            "Do",
+            "Are"
+          ],
+          "answer": 1,
+          "explain": "He/She/It → Does."
+        },
+        {
+          "q": "___ your friends come?",
+          "category": "Grammar · Do/Does",
+          "options": [
+            "Do",
+            "Are",
+            "Is",
+            "Does"
+          ],
+          "answer": 0,
+          "explain": "I/You/We/They → Do."
+        }
+      ]
     },
     {
-      q: "Lawan kata dari 'big' adalah…",
-      category: "Vocabulary",
-      options: ["Tall", "Small", "Long", "Wide"],
-      answer: 1,
-      explain: "'Big' (besar) lawannya 'small' (kecil)."
+      "level": 7,
+      "name": "Continuous & Preposisi",
+      "difficulty": "Menengah+",
+      "emoji": "🌀",
+      "questions": [
+        {
+          "q": "Lengkapi: \"They are ___ now.\" (bentuk -ing dari \"play\")",
+          "category": "Grammar · Continuous",
+          "options": [
+            "playing",
+            "play",
+            "plays",
+            "played"
+          ],
+          "answer": 0,
+          "explain": "Present continuous: \"play\" → \"playing\"."
+        },
+        {
+          "q": "Lengkapi: \"They are ___ now.\" (bentuk -ing dari \"go\")",
+          "category": "Grammar · Continuous",
+          "options": [
+            "goed",
+            "gos",
+            "going",
+            "go"
+          ],
+          "answer": 2,
+          "explain": "Present continuous: \"go\" → \"going\"."
+        },
+        {
+          "q": "Lengkapi: \"They are ___ now.\" (bentuk -ing dari \"run\")",
+          "category": "Grammar · Continuous",
+          "options": [
+            "runs",
+            "running",
+            "runed",
+            "run"
+          ],
+          "answer": 1,
+          "explain": "Present continuous: \"run\" → \"running\"."
+        },
+        {
+          "q": "Lengkapi: \"They are ___ now.\" (bentuk -ing dari \"sit\")",
+          "category": "Grammar · Continuous",
+          "options": [
+            "sit",
+            "sits",
+            "sited",
+            "sitting"
+          ],
+          "answer": 3,
+          "explain": "Present continuous: \"sit\" → \"sitting\"."
+        },
+        {
+          "q": "Lengkapi: \"They are ___ now.\" (bentuk -ing dari \"write\")",
+          "category": "Grammar · Continuous",
+          "options": [
+            "write",
+            "writes",
+            "writing",
+            "writeed"
+          ],
+          "answer": 2,
+          "explain": "Present continuous: \"write\" → \"writing\"."
+        },
+        {
+          "q": "Lengkapi: \"They are ___ now.\" (bentuk -ing dari \"make\")",
+          "category": "Grammar · Continuous",
+          "options": [
+            "makes",
+            "making",
+            "makeed",
+            "make"
+          ],
+          "answer": 1,
+          "explain": "Present continuous: \"make\" → \"making\"."
+        },
+        {
+          "q": "Lengkapi: \"They are ___ now.\" (bentuk -ing dari \"swim\")",
+          "category": "Grammar · Continuous",
+          "options": [
+            "swim",
+            "swimed",
+            "swimming",
+            "swims"
+          ],
+          "answer": 2,
+          "explain": "Present continuous: \"swim\" → \"swimming\"."
+        },
+        {
+          "q": "Lengkapi: \"They are ___ now.\" (bentuk -ing dari \"read\")",
+          "category": "Grammar · Continuous",
+          "options": [
+            "readed",
+            "reading",
+            "reads",
+            "read"
+          ],
+          "answer": 1,
+          "explain": "Present continuous: \"read\" → \"reading\"."
+        },
+        {
+          "q": "Lengkapi: \"They are ___ now.\" (bentuk -ing dari \"eat\")",
+          "category": "Grammar · Continuous",
+          "options": [
+            "eats",
+            "eated",
+            "eat",
+            "eating"
+          ],
+          "answer": 3,
+          "explain": "Present continuous: \"eat\" → \"eating\"."
+        },
+        {
+          "q": "Lengkapi: \"They are ___ now.\" (bentuk -ing dari \"study\")",
+          "category": "Grammar · Continuous",
+          "options": [
+            "studyed",
+            "studys",
+            "studying",
+            "study"
+          ],
+          "answer": 2,
+          "explain": "Present continuous: \"study\" → \"studying\"."
+        },
+        {
+          "q": "Lengkapi: \"They are ___ now.\" (bentuk -ing dari \"come\")",
+          "category": "Grammar · Continuous",
+          "options": [
+            "comes",
+            "come",
+            "coming",
+            "comeed"
+          ],
+          "answer": 2,
+          "explain": "Present continuous: \"come\" → \"coming\"."
+        },
+        {
+          "q": "Lengkapi: \"They are ___ now.\" (bentuk -ing dari \"begin\")",
+          "category": "Grammar · Continuous",
+          "options": [
+            "beginning",
+            "begin",
+            "begins",
+            "begined"
+          ],
+          "answer": 0,
+          "explain": "Present continuous: \"begin\" → \"beginning\"."
+        },
+        {
+          "q": "Lengkapi: \"They are ___ now.\" (bentuk -ing dari \"cook\")",
+          "category": "Grammar · Continuous",
+          "options": [
+            "cooked",
+            "cooks",
+            "cooking",
+            "cook"
+          ],
+          "answer": 2,
+          "explain": "Present continuous: \"cook\" → \"cooking\"."
+        },
+        {
+          "q": "Lengkapi: \"They are ___ now.\" (bentuk -ing dari \"drink\")",
+          "category": "Grammar · Continuous",
+          "options": [
+            "drinks",
+            "drink",
+            "drinked",
+            "drinking"
+          ],
+          "answer": 3,
+          "explain": "Present continuous: \"drink\" → \"drinking\"."
+        },
+        {
+          "q": "Lengkapi: \"They are ___ now.\" (bentuk -ing dari \"dance\")",
+          "category": "Grammar · Continuous",
+          "options": [
+            "danceed",
+            "dance",
+            "dancing",
+            "dances"
+          ],
+          "answer": 2,
+          "explain": "Present continuous: \"dance\" → \"dancing\"."
+        },
+        {
+          "q": "We go to school ___ Monday.",
+          "category": "Grammar · Preposisi",
+          "options": [
+            "on",
+            "at",
+            "to",
+            "in"
+          ],
+          "answer": 0,
+          "explain": "Hari tertentu → on."
+        },
+        {
+          "q": "I wake up ___ the morning.",
+          "category": "Grammar · Preposisi",
+          "options": [
+            "on",
+            "in",
+            "to",
+            "at"
+          ],
+          "answer": 1,
+          "explain": "Bagian hari (morning/afternoon) → in."
+        },
+        {
+          "q": "The stars shine ___ night.",
+          "category": "Grammar · Preposisi",
+          "options": [
+            "to",
+            "at",
+            "on",
+            "in"
+          ],
+          "answer": 1,
+          "explain": "'night' → at."
+        },
+        {
+          "q": "The class starts ___ 7 o’clock.",
+          "category": "Grammar · Preposisi",
+          "options": [
+            "on",
+            "in",
+            "at",
+            "to"
+          ],
+          "answer": 2,
+          "explain": "Jam tertentu → at."
+        },
+        {
+          "q": "He was born ___ 2005.",
+          "category": "Grammar · Preposisi",
+          "options": [
+            "at",
+            "on",
+            "in",
+            "to"
+          ],
+          "answer": 2,
+          "explain": "Tahun → in."
+        },
+        {
+          "q": "The book is ___ the table.",
+          "category": "Grammar · Preposisi",
+          "options": [
+            "to",
+            "on",
+            "at",
+            "in"
+          ],
+          "answer": 1,
+          "explain": "Di atas permukaan → on."
+        },
+        {
+          "q": "The pen is ___ the box.",
+          "category": "Grammar · Preposisi",
+          "options": [
+            "at",
+            "in",
+            "to",
+            "on"
+          ],
+          "answer": 1,
+          "explain": "Di dalam → in."
+        },
+        {
+          "q": "She is ___ home now.",
+          "category": "Grammar · Preposisi",
+          "options": [
+            "at",
+            "on",
+            "to",
+            "in"
+          ],
+          "answer": 0,
+          "explain": "'home' → at."
+        },
+        {
+          "q": "We meet ___ the weekend.",
+          "category": "Grammar · Preposisi",
+          "options": [
+            "in",
+            "at",
+            "on",
+            "to"
+          ],
+          "answer": 2,
+          "explain": "Akhir pekan (British: at) umum → on the weekend."
+        },
+        {
+          "q": "The cat is ___ the chair.",
+          "category": "Grammar · Preposisi",
+          "options": [
+            "in",
+            "to",
+            "on",
+            "at"
+          ],
+          "answer": 2,
+          "explain": "Di atas → on."
+        },
+        {
+          "q": "I will see you ___ December.",
+          "category": "Grammar · Preposisi",
+          "options": [
+            "to",
+            "at",
+            "on",
+            "in"
+          ],
+          "answer": 3,
+          "explain": "Bulan → in."
+        },
+        {
+          "q": "The party is ___ Friday evening.",
+          "category": "Grammar · Preposisi",
+          "options": [
+            "to",
+            "in",
+            "on",
+            "at"
+          ],
+          "answer": 2,
+          "explain": "Hari + bagian hari tertentu → on."
+        },
+        {
+          "q": "He is good ___ math.",
+          "category": "Grammar · Preposisi",
+          "options": [
+            "on",
+            "in",
+            "to",
+            "at"
+          ],
+          "answer": 3,
+          "explain": "'good at' → at."
+        },
+        {
+          "q": "There is a picture ___ the wall.",
+          "category": "Grammar · Preposisi",
+          "options": [
+            "to",
+            "on",
+            "in",
+            "at"
+          ],
+          "answer": 1,
+          "explain": "Menempel di dinding → on."
+        },
+        {
+          "q": "The children are ___ the garden.",
+          "category": "Grammar · Preposisi",
+          "options": [
+            "at",
+            "to",
+            "in",
+            "on"
+          ],
+          "answer": 2,
+          "explain": "Area/ruang → in."
+        }
+      ]
     },
     {
-      q: "Angka 'seven' dalam Bahasa Indonesia adalah…",
-      category: "Vocabulary",
-      options: ["Enam", "Delapan", "Tujuh", "Sembilan"],
-      answer: 2,
-      explain: "'Seven' = tujuh."
+      "level": 8,
+      "name": "Past Tense",
+      "difficulty": "Sulit",
+      "emoji": "🕰️",
+      "questions": [
+        {
+          "q": "Bentuk lampau (past tense) dari \"go\" adalah…",
+          "category": "Grammar · Past Tense",
+          "options": [
+            "studied",
+            "played",
+            "goed",
+            "went"
+          ],
+          "answer": 3,
+          "explain": "Past tense \"go\" adalah \"went\"."
+        },
+        {
+          "q": "Bentuk lampau (past tense) dari \"eat\" adalah…",
+          "category": "Grammar · Past Tense",
+          "options": [
+            "drank",
+            "ate",
+            "swam",
+            "said"
+          ],
+          "answer": 1,
+          "explain": "Past tense \"eat\" adalah \"ate\"."
+        },
+        {
+          "q": "Bentuk lampau (past tense) dari \"see\" adalah…",
+          "category": "Grammar · Past Tense",
+          "options": [
+            "began",
+            "left",
+            "saw",
+            "broke"
+          ],
+          "answer": 2,
+          "explain": "Past tense \"see\" adalah \"saw\"."
+        },
+        {
+          "q": "Bentuk lampau (past tense) dari \"come\" adalah…",
+          "category": "Grammar · Past Tense",
+          "options": [
+            "drove",
+            "came",
+            "got",
+            "swam"
+          ],
+          "answer": 1,
+          "explain": "Past tense \"come\" adalah \"came\"."
+        },
+        {
+          "q": "Bentuk lampau (past tense) dari \"take\" adalah…",
+          "category": "Grammar · Past Tense",
+          "options": [
+            "took",
+            "sat",
+            "brought",
+            "got"
+          ],
+          "answer": 0,
+          "explain": "Past tense \"take\" adalah \"took\"."
+        },
+        {
+          "q": "Bentuk lampau (past tense) dari \"make\" adalah…",
+          "category": "Grammar · Past Tense",
+          "options": [
+            "taught",
+            "felt",
+            "read",
+            "made"
+          ],
+          "answer": 3,
+          "explain": "Past tense \"make\" adalah \"made\"."
+        },
+        {
+          "q": "Bentuk lampau (past tense) dari \"buy\" adalah…",
+          "category": "Grammar · Past Tense",
+          "options": [
+            "drove",
+            "stood",
+            "bought",
+            "began"
+          ],
+          "answer": 2,
+          "explain": "Past tense \"buy\" adalah \"bought\"."
+        },
+        {
+          "q": "Bentuk lampau (past tense) dari \"bring\" adalah…",
+          "category": "Grammar · Past Tense",
+          "options": [
+            "made",
+            "brought",
+            "bought",
+            "wanted"
+          ],
+          "answer": 1,
+          "explain": "Past tense \"bring\" adalah \"brought\"."
+        },
+        {
+          "q": "Bentuk lampau (past tense) dari \"think\" adalah…",
+          "category": "Grammar · Past Tense",
+          "options": [
+            "found",
+            "thought",
+            "swam",
+            "taught"
+          ],
+          "answer": 1,
+          "explain": "Past tense \"think\" adalah \"thought\"."
+        },
+        {
+          "q": "Bentuk lampau (past tense) dari \"teach\" adalah…",
+          "category": "Grammar · Past Tense",
+          "options": [
+            "taught",
+            "swam",
+            "chose",
+            "won"
+          ],
+          "answer": 0,
+          "explain": "Past tense \"teach\" adalah \"taught\"."
+        },
+        {
+          "q": "Bentuk lampau (past tense) dari \"write\" adalah…",
+          "category": "Grammar · Past Tense",
+          "options": [
+            "wrote",
+            "spoke",
+            "drove",
+            "taught"
+          ],
+          "answer": 0,
+          "explain": "Past tense \"write\" adalah \"wrote\"."
+        },
+        {
+          "q": "Bentuk lampau (past tense) dari \"run\" adalah…",
+          "category": "Grammar · Past Tense",
+          "options": [
+            "won",
+            "broke",
+            "ran",
+            "read"
+          ],
+          "answer": 2,
+          "explain": "Past tense \"run\" adalah \"ran\"."
+        },
+        {
+          "q": "Bentuk lampau (past tense) dari \"drink\" adalah…",
+          "category": "Grammar · Past Tense",
+          "options": [
+            "slept",
+            "flew",
+            "drank",
+            "stood"
+          ],
+          "answer": 2,
+          "explain": "Past tense \"drink\" adalah \"drank\"."
+        },
+        {
+          "q": "Bentuk lampau (past tense) dari \"swim\" adalah…",
+          "category": "Grammar · Past Tense",
+          "options": [
+            "ate",
+            "swam",
+            "played",
+            "wanted"
+          ],
+          "answer": 1,
+          "explain": "Past tense \"swim\" adalah \"swam\"."
+        },
+        {
+          "q": "Bentuk lampau (past tense) dari \"give\" adalah…",
+          "category": "Grammar · Past Tense",
+          "options": [
+            "gave",
+            "stood",
+            "left",
+            "spoke"
+          ],
+          "answer": 0,
+          "explain": "Past tense \"give\" adalah \"gave\"."
+        },
+        {
+          "q": "Bentuk lampau (past tense) dari \"find\" adalah…",
+          "category": "Grammar · Past Tense",
+          "options": [
+            "found",
+            "made",
+            "took",
+            "began"
+          ],
+          "answer": 0,
+          "explain": "Past tense \"find\" adalah \"found\"."
+        },
+        {
+          "q": "Bentuk lampau (past tense) dari \"get\" adalah…",
+          "category": "Grammar · Past Tense",
+          "options": [
+            "left",
+            "bought",
+            "got",
+            "broke"
+          ],
+          "answer": 2,
+          "explain": "Past tense \"get\" adalah \"got\"."
+        },
+        {
+          "q": "Bentuk lampau (past tense) dari \"know\" adalah…",
+          "category": "Grammar · Past Tense",
+          "options": [
+            "bought",
+            "brought",
+            "drove",
+            "knew"
+          ],
+          "answer": 3,
+          "explain": "Past tense \"know\" adalah \"knew\"."
+        },
+        {
+          "q": "Bentuk lampau (past tense) dari \"speak\" adalah…",
+          "category": "Grammar · Past Tense",
+          "options": [
+            "slept",
+            "spoke",
+            "took",
+            "gave"
+          ],
+          "answer": 1,
+          "explain": "Past tense \"speak\" adalah \"spoke\"."
+        },
+        {
+          "q": "Bentuk lampau (past tense) dari \"drive\" adalah…",
+          "category": "Grammar · Past Tense",
+          "options": [
+            "felt",
+            "brought",
+            "drove",
+            "swam"
+          ],
+          "answer": 2,
+          "explain": "Past tense \"drive\" adalah \"drove\"."
+        },
+        {
+          "q": "Bentuk lampau (past tense) dari \"fly\" adalah…",
+          "category": "Grammar · Past Tense",
+          "options": [
+            "met",
+            "slept",
+            "flew",
+            "drove"
+          ],
+          "answer": 2,
+          "explain": "Past tense \"fly\" adalah \"flew\"."
+        },
+        {
+          "q": "Bentuk lampau (past tense) dari \"begin\" adalah…",
+          "category": "Grammar · Past Tense",
+          "options": [
+            "began",
+            "left",
+            "drove",
+            "chose"
+          ],
+          "answer": 0,
+          "explain": "Past tense \"begin\" adalah \"began\"."
+        },
+        {
+          "q": "Bentuk lampau (past tense) dari \"break\" adalah…",
+          "category": "Grammar · Past Tense",
+          "options": [
+            "slept",
+            "broke",
+            "wrote",
+            "flew"
+          ],
+          "answer": 1,
+          "explain": "Past tense \"break\" adalah \"broke\"."
+        },
+        {
+          "q": "Bentuk lampau (past tense) dari \"choose\" adalah…",
+          "category": "Grammar · Past Tense",
+          "options": [
+            "watched",
+            "chooseed",
+            "said",
+            "chose"
+          ],
+          "answer": 3,
+          "explain": "Past tense \"choose\" adalah \"chose\"."
+        },
+        {
+          "q": "Bentuk lampau (past tense) dari \"feel\" adalah…",
+          "category": "Grammar · Past Tense",
+          "options": [
+            "spoke",
+            "swam",
+            "felt",
+            "feeled"
+          ],
+          "answer": 2,
+          "explain": "Past tense \"feel\" adalah \"felt\"."
+        },
+        {
+          "q": "Bentuk lampau (past tense) dari \"leave\" adalah…",
+          "category": "Grammar · Past Tense",
+          "options": [
+            "taught",
+            "left",
+            "drank",
+            "leaveed"
+          ],
+          "answer": 1,
+          "explain": "Past tense \"leave\" adalah \"left\"."
+        },
+        {
+          "q": "Bentuk lampau (past tense) dari \"meet\" adalah…",
+          "category": "Grammar · Past Tense",
+          "options": [
+            "began",
+            "met",
+            "flew",
+            "got"
+          ],
+          "answer": 1,
+          "explain": "Past tense \"meet\" adalah \"met\"."
+        },
+        {
+          "q": "Bentuk lampau (past tense) dari \"pay\" adalah…",
+          "category": "Grammar · Past Tense",
+          "options": [
+            "came",
+            "wanted",
+            "paid",
+            "made"
+          ],
+          "answer": 2,
+          "explain": "Past tense \"pay\" adalah \"paid\"."
+        },
+        {
+          "q": "Bentuk lampau (past tense) dari \"say\" adalah…",
+          "category": "Grammar · Past Tense",
+          "options": [
+            "said",
+            "won",
+            "ate",
+            "ran"
+          ],
+          "answer": 0,
+          "explain": "Past tense \"say\" adalah \"said\"."
+        },
+        {
+          "q": "Bentuk lampau (past tense) dari \"sell\" adalah…",
+          "category": "Grammar · Past Tense",
+          "options": [
+            "watched",
+            "sold",
+            "paid",
+            "ate"
+          ],
+          "answer": 1,
+          "explain": "Past tense \"sell\" adalah \"sold\"."
+        }
+      ]
     },
     {
-      q: "Warna 'blue' artinya…",
-      category: "Vocabulary",
-      options: ["Merah", "Biru", "Hijau", "Kuning"],
-      answer: 1,
-      explain: "'Blue' = biru."
+      "level": 9,
+      "name": "Comparative & Modals",
+      "difficulty": "Sulit",
+      "emoji": "📈",
+      "questions": [
+        {
+          "q": "Bentuk comparative dari \"big\" adalah…",
+          "category": "Grammar · Comparative",
+          "options": [
+            "happier",
+            "more beautiful",
+            "bigger",
+            "faster"
+          ],
+          "answer": 2,
+          "explain": "Comparative \"big\" → \"bigger\"."
+        },
+        {
+          "q": "Bentuk comparative dari \"small\" adalah…",
+          "category": "Grammar · Comparative",
+          "options": [
+            "smaller",
+            "heavier",
+            "bigger",
+            "easier"
+          ],
+          "answer": 0,
+          "explain": "Comparative \"small\" → \"smaller\"."
+        },
+        {
+          "q": "Bentuk comparative dari \"tall\" adalah…",
+          "category": "Grammar · Comparative",
+          "options": [
+            "happier",
+            "faster",
+            "hotter",
+            "taller"
+          ],
+          "answer": 3,
+          "explain": "Comparative \"tall\" → \"taller\"."
+        },
+        {
+          "q": "Bentuk comparative dari \"short\" adalah…",
+          "category": "Grammar · Comparative",
+          "options": [
+            "slower",
+            "more expensive",
+            "shorter",
+            "smaller"
+          ],
+          "answer": 2,
+          "explain": "Comparative \"short\" → \"shorter\"."
+        },
+        {
+          "q": "Bentuk comparative dari \"fast\" adalah…",
+          "category": "Grammar · Comparative",
+          "options": [
+            "hotter",
+            "faster",
+            "heavier",
+            "more beautiful"
+          ],
+          "answer": 1,
+          "explain": "Comparative \"fast\" → \"faster\"."
+        },
+        {
+          "q": "Bentuk comparative dari \"slow\" adalah…",
+          "category": "Grammar · Comparative",
+          "options": [
+            "bigger",
+            "worse",
+            "slower",
+            "colder"
+          ],
+          "answer": 2,
+          "explain": "Comparative \"slow\" → \"slower\"."
+        },
+        {
+          "q": "Bentuk comparative dari \"hot\" adalah…",
+          "category": "Grammar · Comparative",
+          "options": [
+            "faster",
+            "bigger",
+            "hotter",
+            "better"
+          ],
+          "answer": 2,
+          "explain": "Comparative \"hot\" → \"hotter\"."
+        },
+        {
+          "q": "Bentuk comparative dari \"cold\" adalah…",
+          "category": "Grammar · Comparative",
+          "options": [
+            "colder",
+            "bigger",
+            "taller",
+            "happier"
+          ],
+          "answer": 0,
+          "explain": "Comparative \"cold\" → \"colder\"."
+        },
+        {
+          "q": "Bentuk comparative dari \"happy\" adalah…",
+          "category": "Grammar · Comparative",
+          "options": [
+            "worse",
+            "happier",
+            "heavier",
+            "bigger"
+          ],
+          "answer": 1,
+          "explain": "Comparative \"happy\" → \"happier\"."
+        },
+        {
+          "q": "Bentuk comparative dari \"easy\" adalah…",
+          "category": "Grammar · Comparative",
+          "options": [
+            "better",
+            "easier",
+            "faster",
+            "colder"
+          ],
+          "answer": 1,
+          "explain": "Comparative \"easy\" → \"easier\"."
+        },
+        {
+          "q": "Bentuk comparative dari \"good\" adalah…",
+          "category": "Grammar · Comparative",
+          "options": [
+            "taller",
+            "better",
+            "smaller",
+            "more expensive"
+          ],
+          "answer": 1,
+          "explain": "Comparative \"good\" → \"better\"."
+        },
+        {
+          "q": "Bentuk comparative dari \"bad\" adalah…",
+          "category": "Grammar · Comparative",
+          "options": [
+            "happier",
+            "easier",
+            "worse",
+            "bigger"
+          ],
+          "answer": 2,
+          "explain": "Comparative \"bad\" → \"worse\"."
+        },
+        {
+          "q": "Bentuk comparative dari \"beautiful\" adalah…",
+          "category": "Grammar · Comparative",
+          "options": [
+            "better",
+            "shorter",
+            "more beautiful",
+            "smaller"
+          ],
+          "answer": 2,
+          "explain": "Comparative \"beautiful\" → \"more beautiful\"."
+        },
+        {
+          "q": "Bentuk comparative dari \"expensive\" adalah…",
+          "category": "Grammar · Comparative",
+          "options": [
+            "more expensive",
+            "slower",
+            "smaller",
+            "happier"
+          ],
+          "answer": 0,
+          "explain": "Comparative \"expensive\" → \"more expensive\"."
+        },
+        {
+          "q": "Bentuk comparative dari \"heavy\" adalah…",
+          "category": "Grammar · Comparative",
+          "options": [
+            "slower",
+            "more beautiful",
+            "heavier",
+            "worse"
+          ],
+          "answer": 2,
+          "explain": "Comparative \"heavy\" → \"heavier\"."
+        },
+        {
+          "q": "Bentuk superlative dari \"tall\" adalah…",
+          "category": "Grammar · Superlative",
+          "options": [
+            "easier",
+            "faster",
+            "slower",
+            "tallest"
+          ],
+          "answer": 3,
+          "explain": "Superlative \"tall\" → \"the tallest\"."
+        },
+        {
+          "q": "Bentuk superlative dari \"big\" adalah…",
+          "category": "Grammar · Superlative",
+          "options": [
+            "fastest",
+            "most beautiful",
+            "biggest",
+            "hotter"
+          ],
+          "answer": 2,
+          "explain": "Superlative \"big\" → \"the biggest\"."
+        },
+        {
+          "q": "Bentuk superlative dari \"small\" adalah…",
+          "category": "Grammar · Superlative",
+          "options": [
+            "worse",
+            "happier",
+            "smallest",
+            "better"
+          ],
+          "answer": 2,
+          "explain": "Superlative \"small\" → \"the smallest\"."
+        },
+        {
+          "q": "Bentuk superlative dari \"good\" adalah…",
+          "category": "Grammar · Superlative",
+          "options": [
+            "bigger",
+            "best",
+            "colder",
+            "heavier"
+          ],
+          "answer": 1,
+          "explain": "Superlative \"good\" → \"the best\"."
+        },
+        {
+          "q": "Bentuk superlative dari \"bad\" adalah…",
+          "category": "Grammar · Superlative",
+          "options": [
+            "easier",
+            "faster",
+            "biggest",
+            "worst"
+          ],
+          "answer": 3,
+          "explain": "Superlative \"bad\" → \"the worst\"."
+        },
+        {
+          "q": "Bentuk superlative dari \"fast\" adalah…",
+          "category": "Grammar · Superlative",
+          "options": [
+            "fastest",
+            "faster",
+            "smaller",
+            "shorter"
+          ],
+          "answer": 0,
+          "explain": "Superlative \"fast\" → \"the fastest\"."
+        },
+        {
+          "q": "Bentuk superlative dari \"happy\" adalah…",
+          "category": "Grammar · Superlative",
+          "options": [
+            "biggest",
+            "colder",
+            "happiest",
+            "more expensive"
+          ],
+          "answer": 2,
+          "explain": "Superlative \"happy\" → \"the happiest\"."
+        },
+        {
+          "q": "Bentuk superlative dari \"beautiful\" adalah…",
+          "category": "Grammar · Superlative",
+          "options": [
+            "shorter",
+            "most beautiful",
+            "happiest",
+            "fastest"
+          ],
+          "answer": 1,
+          "explain": "Superlative \"beautiful\" → \"the most beautiful\"."
+        },
+        {
+          "q": "You look sick. You ___ see a doctor.",
+          "category": "Grammar · Modals",
+          "options": [
+            "should",
+            "may",
+            "must",
+            "can"
+          ],
+          "answer": 0,
+          "explain": "Saran → should."
+        },
+        {
+          "q": "I ___ swim very well when I was young.",
+          "category": "Grammar · Modals",
+          "options": [
+            "can",
+            "should",
+            "could",
+            "must"
+          ],
+          "answer": 2,
+          "explain": "Kemampuan lampau → could."
+        },
+        {
+          "q": "Students ___ wear a uniform. It is a rule.",
+          "category": "Grammar · Modals",
+          "options": [
+            "should",
+            "must",
+            "may",
+            "can"
+          ],
+          "answer": 1,
+          "explain": "Kewajiban/aturan → must."
+        },
+        {
+          "q": "___ I open the window, please?",
+          "category": "Grammar · Modals",
+          "options": [
+            "must",
+            "May",
+            "could",
+            "can"
+          ],
+          "answer": 1,
+          "explain": "Meminta izin sopan → May."
+        },
+        {
+          "q": "She ___ speak three languages.",
+          "category": "Grammar · Modals",
+          "options": [
+            "should",
+            "may",
+            "can",
+            "must"
+          ],
+          "answer": 2,
+          "explain": "Kemampuan → can."
+        },
+        {
+          "q": "It’s late. We ___ go home now.",
+          "category": "Grammar · Modals",
+          "options": [
+            "may",
+            "can",
+            "must",
+            "should"
+          ],
+          "answer": 3,
+          "explain": "Saran → should."
+        },
+        {
+          "q": "You ___ not smoke here. It is forbidden.",
+          "category": "Grammar · Modals",
+          "options": [
+            "can",
+            "should",
+            "must",
+            "may"
+          ],
+          "answer": 2,
+          "explain": "Larangan tegas → must not."
+        }
+      ]
     },
     {
-      q: "Kalimat sopan untuk meminta bantuan diawali dengan…",
-      category: "Daily Talk",
-      options: ["No", "Stop", "Please", "Never"],
-      answer: 2,
-      explain: "'Please' membuat permintaan menjadi lebih sopan."
-    },
-    {
-      q: "She ___ a teacher.",
-      category: "Grammar",
-      options: ["am", "is", "are", "be"],
-      answer: 1,
-      explain: "Subjek 'she' memakai 'is' (to be untuk orang ketiga tunggal)."
-    },
-    {
-      q: "Bentuk jamak (plural) dari 'child' adalah…",
-      category: "Grammar",
-      options: ["childs", "childes", "children", "child"],
-      answer: 2,
-      explain: "'Child' bentuk jamaknya tidak beraturan: 'children'."
-    },
-    {
-      q: "Yesterday I ___ to school.",
-      category: "Tenses",
-      options: ["go", "goes", "went", "going"],
-      answer: 2,
-      explain: "'Yesterday' menandakan lampau, jadi bentuk lampau 'go' adalah 'went'."
-    },
-    {
-      q: "They ___ playing football now.",
-      category: "Tenses",
-      options: ["is", "am", "are", "be"],
-      answer: 2,
-      explain: "Present continuous dengan subjek 'they' memakai 'are' + V-ing."
-    },
-    {
-      q: "This is ___ umbrella.",
-      category: "Grammar",
-      options: ["a", "an", "the", "some"],
-      answer: 1,
-      explain: "Kata 'umbrella' diawali bunyi vokal, jadi memakai 'an'."
-    },
-    {
-      q: "Idiom 'break a leg' artinya…",
-      category: "Idioms",
-      options: ["Patah kaki", "Semoga sukses", "Lari cepat", "Jangan pergi"],
-      answer: 1,
-      explain: "'Break a leg' adalah ungkapan untuk 'semoga sukses / good luck'."
-    },
-    {
-      q: "Hari setelah 'Monday' adalah…",
-      category: "Vocabulary",
-      options: ["Sunday", "Tuesday", "Friday", "Saturday"],
-      answer: 1,
-      explain: "Setelah Monday (Senin) adalah Tuesday (Selasa)."
-    },
-    {
-      q: "Jawaban sopan untuk 'Thank you' adalah…",
-      category: "Daily Talk",
-      options: ["You're welcome", "Good night", "See you", "Excuse me"],
-      answer: 0,
-      explain: "'You're welcome' = sama-sama, respon umum untuk terima kasih."
+      "level": 10,
+      "name": "Idioms & Phrasal Verbs",
+      "difficulty": "Sangat Sulit",
+      "emoji": "🔥",
+      "questions": [
+        {
+          "q": "Idiom \"break a leg\" artinya…",
+          "category": "Idiom",
+          "options": [
+            "membocorkan rahasia",
+            "kurang sehat",
+            "menggoda / bercanda",
+            "semoga sukses"
+          ],
+          "answer": 3,
+          "explain": "\"break a leg\" = semoga sukses."
+        },
+        {
+          "q": "Phrasal verb \"give up\" artinya…",
+          "category": "Phrasal Verb",
+          "options": [
+            "menyerah",
+            "bangun tidur",
+            "memakai (pakaian)",
+            "mencari"
+          ],
+          "answer": 0,
+          "explain": "\"give up\" = menyerah."
+        },
+        {
+          "q": "Apa arti kata \"enormous\"?",
+          "category": "Advanced Vocab",
+          "options": [
+            "tulus",
+            "rapuh",
+            "sangat besar",
+            "dermawan"
+          ],
+          "answer": 2,
+          "explain": "\"enormous\" = sangat besar."
+        },
+        {
+          "q": "Idiom \"piece of cake\" artinya…",
+          "category": "Idiom",
+          "options": [
+            "belajar dengan giat",
+            "sangat mudah",
+            "sangat mahal",
+            "begadang untuk bekerja/belajar"
+          ],
+          "answer": 1,
+          "explain": "\"piece of cake\" = sangat mudah."
+        },
+        {
+          "q": "Phrasal verb \"look for\" artinya…",
+          "category": "Phrasal Verb",
+          "options": [
+            "melepas / lepas landas",
+            "kehabisan",
+            "mencari",
+            "bangun tidur"
+          ],
+          "answer": 2,
+          "explain": "\"look for\" = mencari."
+        },
+        {
+          "q": "Apa arti kata \"ancient\"?",
+          "category": "Advanced Vocab",
+          "options": [
+            "bersyukur",
+            "kuno",
+            "penasaran",
+            "berani"
+          ],
+          "answer": 1,
+          "explain": "\"ancient\" = kuno."
+        },
+        {
+          "q": "Idiom \"hit the books\" artinya…",
+          "category": "Idiom",
+          "options": [
+            "tiba-tiba gugup / ragu",
+            "berkah tersembunyi",
+            "belajar dengan giat",
+            "semoga sukses"
+          ],
+          "answer": 2,
+          "explain": "\"hit the books\" = belajar dengan giat."
+        },
+        {
+          "q": "Phrasal verb \"turn on\" artinya…",
+          "category": "Phrasal Verb",
+          "options": [
+            "mematikan",
+            "mengetahui",
+            "menyalakan",
+            "menyerah"
+          ],
+          "answer": 2,
+          "explain": "\"turn on\" = menyalakan."
+        },
+        {
+          "q": "Apa arti kata \"generous\"?",
+          "category": "Advanced Vocab",
+          "options": [
+            "bersyukur",
+            "dermawan",
+            "sangat besar",
+            "rapuh"
+          ],
+          "answer": 1,
+          "explain": "\"generous\" = dermawan."
+        },
+        {
+          "q": "Idiom \"under the weather\" artinya…",
+          "category": "Idiom",
+          "options": [
+            "kurang sehat",
+            "semoga sukses",
+            "sangat jarang",
+            "belajar dengan giat"
+          ],
+          "answer": 0,
+          "explain": "\"under the weather\" = kurang sehat."
+        },
+        {
+          "q": "Phrasal verb \"turn off\" artinya…",
+          "category": "Phrasal Verb",
+          "options": [
+            "memakai (pakaian)",
+            "mengetahui",
+            "mematikan",
+            "melepas / lepas landas"
+          ],
+          "answer": 2,
+          "explain": "\"turn off\" = mematikan."
+        },
+        {
+          "q": "Apa arti kata \"honest\"?",
+          "category": "Advanced Vocab",
+          "options": [
+            "bersyukur",
+            "penasaran",
+            "jujur",
+            "dermawan"
+          ],
+          "answer": 2,
+          "explain": "\"honest\" = jujur."
+        },
+        {
+          "q": "Idiom \"once in a blue moon\" artinya…",
+          "category": "Idiom",
+          "options": [
+            "belajar dengan giat",
+            "sangat jarang",
+            "sangat mahal",
+            "tiba-tiba gugup / ragu"
+          ],
+          "answer": 1,
+          "explain": "\"once in a blue moon\" = sangat jarang."
+        },
+        {
+          "q": "Phrasal verb \"put on\" artinya…",
+          "category": "Phrasal Verb",
+          "options": [
+            "bangun tidur",
+            "memakai (pakaian)",
+            "kembali",
+            "mematikan"
+          ],
+          "answer": 1,
+          "explain": "\"put on\" = memakai (pakaian)."
+        },
+        {
+          "q": "Apa arti kata \"brave\"?",
+          "category": "Advanced Vocab",
+          "options": [
+            "dermawan",
+            "berani",
+            "sangat besar",
+            "penasaran"
+          ],
+          "answer": 1,
+          "explain": "\"brave\" = berani."
+        },
+        {
+          "q": "Idiom \"spill the beans\" artinya…",
+          "category": "Idiom",
+          "options": [
+            "pergi tidur",
+            "membocorkan rahasia",
+            "sangat mahal",
+            "mengambil jalan pintas asal-asalan"
+          ],
+          "answer": 1,
+          "explain": "\"spill the beans\" = membocorkan rahasia."
+        },
+        {
+          "q": "Phrasal verb \"take off\" artinya…",
+          "category": "Phrasal Verb",
+          "options": [
+            "melanjutkan",
+            "mematikan",
+            "menyalakan",
+            "melepas / lepas landas"
+          ],
+          "answer": 3,
+          "explain": "\"take off\" = melepas / lepas landas."
+        },
+        {
+          "q": "Apa arti kata \"curious\"?",
+          "category": "Advanced Vocab",
+          "options": [
+            "bersyukur",
+            "penasaran",
+            "kuno",
+            "sangat besar"
+          ],
+          "answer": 1,
+          "explain": "\"curious\" = penasaran."
+        },
+        {
+          "q": "Idiom \"cost an arm and a leg\" artinya…",
+          "category": "Idiom",
+          "options": [
+            "mengakhiri pekerjaan hari itu",
+            "sangat mahal",
+            "menghadapi hal sulit dengan berani",
+            "pergi tidur"
+          ],
+          "answer": 1,
+          "explain": "\"cost an arm and a leg\" = sangat mahal."
+        },
+        {
+          "q": "Phrasal verb \"find out\" artinya…",
+          "category": "Phrasal Verb",
+          "options": [
+            "mengetahui",
+            "melepas / lepas landas",
+            "kehabisan",
+            "menyerah"
+          ],
+          "answer": 0,
+          "explain": "\"find out\" = mengetahui."
+        },
+        {
+          "q": "Apa arti kata \"fragile\"?",
+          "category": "Advanced Vocab",
+          "options": [
+            "bersyukur",
+            "tulus",
+            "penasaran",
+            "rapuh"
+          ],
+          "answer": 3,
+          "explain": "\"fragile\" = rapuh."
+        },
+        {
+          "q": "Idiom \"call it a day\" artinya…",
+          "category": "Idiom",
+          "options": [
+            "tiba-tiba gugup / ragu",
+            "membocorkan rahasia",
+            "mengakhiri pekerjaan hari itu",
+            "berkah tersembunyi"
+          ],
+          "answer": 2,
+          "explain": "\"call it a day\" = mengakhiri pekerjaan hari itu."
+        },
+        {
+          "q": "Phrasal verb \"run out of\" artinya…",
+          "category": "Phrasal Verb",
+          "options": [
+            "menjaga / merawat",
+            "mencari",
+            "melepas / lepas landas",
+            "kehabisan"
+          ],
+          "answer": 3,
+          "explain": "\"run out of\" = kehabisan."
+        },
+        {
+          "q": "Apa arti kata \"grateful\"?",
+          "category": "Advanced Vocab",
+          "options": [
+            "bersyukur",
+            "berani",
+            "dermawan",
+            "tulus"
+          ],
+          "answer": 0,
+          "explain": "\"grateful\" = bersyukur."
+        },
+        {
+          "q": "Idiom \"hit the sack\" artinya…",
+          "category": "Idiom",
+          "options": [
+            "kurang sehat",
+            "semoga sukses",
+            "berkah tersembunyi",
+            "pergi tidur"
+          ],
+          "answer": 3,
+          "explain": "\"hit the sack\" = pergi tidur."
+        },
+        {
+          "q": "Phrasal verb \"look after\" artinya…",
+          "category": "Phrasal Verb",
+          "options": [
+            "menyalakan",
+            "menjaga / merawat",
+            "menyerah",
+            "mengetahui"
+          ],
+          "answer": 1,
+          "explain": "\"look after\" = menjaga / merawat."
+        },
+        {
+          "q": "Apa arti kata \"ambitious\"?",
+          "category": "Advanced Vocab",
+          "options": [
+            "bersyukur",
+            "rapuh",
+            "jujur",
+            "ambisius"
+          ],
+          "answer": 3,
+          "explain": "\"ambitious\" = ambisius."
+        },
+        {
+          "q": "Idiom \"bite the bullet\" artinya…",
+          "category": "Idiom",
+          "options": [
+            "membocorkan rahasia",
+            "menghadapi hal sulit dengan berani",
+            "begadang untuk bekerja/belajar",
+            "mengambil jalan pintas asal-asalan"
+          ],
+          "answer": 1,
+          "explain": "\"bite the bullet\" = menghadapi hal sulit dengan berani."
+        },
+        {
+          "q": "Phrasal verb \"get up\" artinya…",
+          "category": "Phrasal Verb",
+          "options": [
+            "mencari",
+            "menyerah",
+            "bangun (dari tempat tidur)",
+            "muncul / datang"
+          ],
+          "answer": 2,
+          "explain": "\"get up\" = bangun (dari tempat tidur)."
+        },
+        {
+          "q": "Apa arti kata \"sincere\"?",
+          "category": "Advanced Vocab",
+          "options": [
+            "penasaran",
+            "sangat besar",
+            "tulus",
+            "rapuh"
+          ],
+          "answer": 2,
+          "explain": "\"sincere\" = tulus."
+        }
+      ]
     }
   ]
 };
