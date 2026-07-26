@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="QuizArena — kuis Bahasa Inggris dasar yang seru. Main, jawab, dan kejar skor tertinggi!" />
-  <title>QuizArena — Kuis Interaktif</title>
+  <meta name="description" content="QuizArena — kuis Bahasa Inggris 10 level bertingkat. Pilih level, jawab, dan kejar skor tertinggi!" />
+  <title>QuizArena — English Levels</title>
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -21,14 +21,14 @@
   <!-- ============ TOPBAR / BRAND ============ -->
   <header class="topbar">
     <div class="logo"><span class="q">Q</span><span class="u">u</span><span class="i">i</span><span class="z">z</span><span class="rest">Arena</span></div>
-    <span class="brand-badge">⚡ Kuis Interaktif</span>
+    <span class="brand-badge">⚡ 10 Level</span>
   </header>
 
   <main class="app" id="app">
     <!-- ============ HOME SCREEN ============ -->
     <section class="screen screen--home is-active" id="screen-home">
       <div class="card card--hero">
-        <span class="badge">🌟 Bahasa Inggris Dasar</span>
+        <span class="badge">🌟 Bahasa Inggris · 10 Level</span>
         <h1 class="hero-title" id="quiz-title">QuizArena</h1>
         <p class="hero-subtitle" id="quiz-desc">Uji pengetahuanmu, kumpulkan poin, dan pecahkan rekor skor tertinggi.</p>
 
@@ -38,34 +38,47 @@
         </div>
 
         <button class="btn btn--primary btn--lg" id="btn-start">
-          Mulai Kuis <span class="btn-arrow">→</span>
+          Pilih Level <span class="btn-arrow">→</span>
         </button>
 
         <ul class="meta-row" id="quiz-meta">
-          <li><strong id="meta-count">0</strong> Soal</li>
-          <li><strong id="meta-time">15s</strong> / Soal</li>
-          <li><strong id="meta-best">0</strong> Skor Terbaik</li>
+          <li><strong id="meta-count">10</strong> Level</li>
+          <li><strong id="meta-qtotal">300</strong> Soal</li>
+          <li><strong id="meta-time">20s</strong> / Soal</li>
         </ul>
       </div>
+    </section>
+
+    <!-- ============ LEVEL SELECT SCREEN ============ -->
+    <section class="screen screen--levels" id="screen-levels">
+      <div class="levels-head">
+        <button class="btn-text" id="btn-back-home">← Ganti nama</button>
+        <h2 class="levels-title">Pilih Level</h2>
+        <p class="levels-greeting" id="levels-greeting">Pilih level yang ingin kamu mainkan 👇</p>
+      </div>
+      <div class="levels-grid" id="levels-grid"></div>
     </section>
 
     <!-- ============ QUIZ SCREEN ============ -->
     <section class="screen screen--quiz" id="screen-quiz">
       <header class="quiz-top">
         <div class="quiz-top__left">
-          <span class="pill" id="progress-label">Soal 1 / 10</span>
+          <span class="pill" id="progress-label">Soal 1 / 30</span>
           <span class="pill pill--streak" id="streak-pill">🔥 0</span>
         </div>
         <div class="quiz-top__right">
           <span class="score-chip">⭐ <strong id="score-live">0</strong></span>
+          <button class="btn-text" id="btn-quit">Keluar</button>
         </div>
       </header>
+
+      <div class="level-tag" id="quiz-level-tag">Level 1</div>
 
       <div class="progress-track"><div class="progress-fill" id="progress-fill"></div></div>
 
       <div class="timer">
         <div class="timer-bar" id="timer-bar"></div>
-        <span class="timer-num" id="timer-num">15</span>
+        <span class="timer-num" id="timer-num">20</span>
       </div>
 
       <div class="card card--question">
@@ -96,8 +109,9 @@
         </div>
 
         <div class="result-actions">
-          <button class="btn btn--primary" id="btn-retry">Main Lagi</button>
-          <button class="btn btn--ghost" id="btn-review">Lihat Pembahasan</button>
+          <button class="btn btn--primary" id="btn-retry">Ulangi Level</button>
+          <button class="btn btn--ghost" id="btn-levels">Pilih Level</button>
+          <button class="btn btn--soft" id="btn-review">Lihat Pembahasan</button>
         </div>
       </div>
 
