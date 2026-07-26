@@ -1,13 +1,15 @@
-/* ================= QuizArena — game logic ================= */
+/* ================= QuizArena — game logic (mode 10 level) ================= */
 (function () {
   "use strict";
-  const CONFIG = window.QUIZ || { title: "Quiz", description: "", timePerQuestion: 15, questions: [] };
+  const CONFIG = window.QUIZ || { title: "Quiz", description: "", timePerQuestion: 20, levels: [] };
+  const LEVELS = CONFIG.levels || [];
   const KEYS = ["A", "B", "C", "D"];
   const COLORS = ["var(--a0)", "var(--a1)", "var(--a2)", "var(--a3)"];
-  const BEST_KEY = "quizarena_best_" + slug(CONFIG.title);
+  const APP_KEY = "quizarena_" + slug(CONFIG.title);
 
   // ---- State ----
-  let questions = [];               // soal untuk sesi ini (sudah dipilih & diacak)
+  let currentLevel = null;          // index level yang dimainkan
+  let questions = [];               // 30 soal sesi ini (sudah diacak)
   let idx = 0, score = 0, correct = 0, streak = 0, maxStreak = 0;
   let timeLeft = CONFIG.timePerQuestion, timer = null, answered = false;
   let history = [];
@@ -15,50 +17,75 @@
   // ---- Elements ----
   const $ = (id) => document.getElementById(id);
   const screens = {
-    home: $("screen-home"), quiz: $("screen-quiz"), result: $("screen-result"),
+    home: $("screen-home"),
+    levels: $("screen-levels"),
+    quiz: $("screen-quiz"),
+    result: $("screen-result"),
   };
 
   // ---- Init home ----
   $("quiz-title").textContent = CONFIG.title;
   $("quiz-desc").textContent = CONFIG.description;
-  document.title = CONFIG.title + " — Kuis Interaktif";
-  $("meta-count").textContent = sessionSize();
+  document.title = CONFIG.title;
+  $("meta-count").textContent = LEVELS.length;
+  $("meta-qtotal").textContent = LEVELS.reduce((s, l) => s + l.questions.length, 0);
   $("meta-time").textContent = CONFIG.timePerQuestion + "s";
-  $("meta-best").textContent = getBest();
 
-  $("btn-start").addEventListener("click", startQuiz);
-  $("player-name").addEventListener("keydown", (e) => { if (e.key === "Enter") startQuiz(); });
-  $("btn-retry").addEventListener("click", () => { show("home"); $("meta-best").textContent = getBest(); });
+  $("btn-start").addEventListener("click", goToLevels);
+  $("player-name").addEventListener("keydown", (e) => { if (e.key === "Enter") goToLevels(); });
+  $("btn-back-home").addEventListener("click", () => show("home"));
+  $("btn-retry").addEventListener("click", () => { if (currentLevel != null) startLevel(currentLevel); });
+  $("btn-levels").addEventListener("click", goToLevels);
   $("btn-review").addEventListener("click", toggleReview);
+  $("btn-quit").addEventListener("click", () => { clearInterval(timer); goToLevels(); });
 
-  function sessionSize() {
-    const total = CONFIG.questions.length;
-    const pick = CONFIG.pickCount && CONFIG.pickCount > 0 ? CONFIG.pickCount : total;
-    return Math.min(pick, total);
+  // ---- Level select ----
+  function goToLevels() {
+    renderLevels();
+    show("levels");
   }
 
-  function buildSession() {
-    let pool = CONFIG.questions.map((q) => ({ ...q, options: [...q.options] }));
+  function renderLevels() {
+    const name = ($("player-name").value || "").trim();
+    $("levels-greeting").textContent = name ? `Halo, ${name}! Pilih levelmu 👇` : "Pilih level yang ingin kamu mainkan 👇";
+    const grid = $("levels-grid");
+    grid.innerHTML = "";
+    LEVELS.forEach((lv, i) => {
+      const best = getBest(lv.level);
+      const card = document.createElement("button");
+      card.className = "level-card";
+      card.innerHTML =
+        `<span class="level-num">Level ${lv.level}</span>` +
+        `<span class="level-emoji">${lv.emoji || "🎯"}</span>` +
+        `<span class="level-name">${esc(lv.name)}</span>` +
+        `<span class="level-diff">${esc(lv.difficulty)}</span>` +
+        `<span class="level-best">${best > 0 ? "⭐ Terbaik: " + best : lv.questions.length + " soal"}</span>`;
+      card.addEventListener("click", () => startLevel(i));
+      grid.appendChild(card);
+    });
+  }
+
+  // ---- Quiz flow ----
+  function buildSession(level) {
+    let pool = level.questions.map((q) => ({ ...q, options: [...q.options] }));
     if (CONFIG.shuffle) {
       shuffle(pool);
-      // acak juga urutan pilihan sambil menjaga index jawaban benar
       pool = pool.map((q) => {
         const paired = q.options.map((opt, i) => ({ opt, correct: i === q.answer }));
         shuffle(paired);
-        return {
-          ...q,
-          options: paired.map((p) => p.opt),
-          answer: paired.findIndex((p) => p.correct),
-        };
+        return { ...q, options: paired.map((p) => p.opt), answer: paired.findIndex((p) => p.correct) };
       });
     }
-    return pool.slice(0, sessionSize());
+    return pool;
   }
 
-  function startQuiz() {
-    questions = buildSession();
+  function startLevel(i) {
+    currentLevel = i;
+    const level = LEVELS[i];
+    questions = buildSession(level);
     idx = 0; score = 0; correct = 0; streak = 0; maxStreak = 0; history = [];
     $("score-live").textContent = "0";
+    $("quiz-level-tag").textContent = `Level ${level.level} · ${level.difficulty}`;
     show("quiz");
     renderQuestion();
   }
@@ -138,7 +165,7 @@
     $("streak-pill").textContent = `🔥 ${streak}`;
     history.push({ q: q.q, chosen: i, answer: q.answer, options: q.options, explain: q.explain, correct: isCorrect });
 
-    setTimeout(next, 1150);
+    setTimeout(next, 1100);
   }
 
   function lockOut() {
@@ -151,7 +178,7 @@
     streak = 0;
     $("streak-pill").textContent = `🔥 0`;
     history.push({ q: q.q, chosen: -1, answer: q.answer, options: q.options, explain: q.explain, correct: false });
-    setTimeout(next, 1150);
+    setTimeout(next, 1100);
   }
 
   function next() {
@@ -162,6 +189,7 @@
 
   function finish() {
     $("progress-fill").style.width = "100%";
+    const level = LEVELS[currentLevel];
     const total = questions.length;
     const acc = total ? Math.round((correct / total) * 100) : 0;
     $("result-score").textContent = score;
@@ -171,16 +199,17 @@
     $("stat-streak").textContent = maxStreak;
 
     const name = ($("player-name").value || "").trim();
-    let emoji = "🎉", title = "Kerja bagus!", sub = "Kamu menyelesaikan kuis.";
+    let emoji = "🎉", title = "Kerja bagus!", sub = "Kamu menyelesaikan level ini.";
     if (acc === 100) { emoji = "🏆"; title = "Sempurna!"; sub = "Semua jawaban benar. Luar biasa!"; }
     else if (acc >= 70) { emoji = "🌟"; title = "Hebat!"; sub = "Skor kamu sangat bagus."; }
     else if (acc >= 40) { emoji = "💪"; title = "Lumayan!"; sub = "Terus berlatih, kamu pasti bisa lebih baik."; }
     else { emoji = "🌱"; title = "Tetap semangat!"; sub = "Coba lagi untuk meningkatkan skormu."; }
+    const isBest = score > getBest(level.level);
     $("result-emoji").textContent = emoji;
     $("result-title").textContent = name ? `${title} ${name}` : title;
-    $("result-sub").textContent = sub;
+    $("result-sub").textContent = `Level ${level.level} · ${level.name}. ${sub}` + (isBest ? " 🎊 Rekor baru!" : "");
 
-    saveBest(score);
+    saveBest(level.level, score);
     buildReview();
     $("review").hidden = true;
     $("btn-review").textContent = "Lihat Pembahasan";
@@ -234,8 +263,9 @@
     }
     return arr;
   }
-  function getBest() { return Number(localStorage.getItem(BEST_KEY) || 0); }
-  function saveBest(s) { if (s > getBest()) localStorage.setItem(BEST_KEY, String(s)); }
+  function bestKey(level) { return APP_KEY + "_best_L" + level; }
+  function getBest(level) { return Number(localStorage.getItem(bestKey(level)) || 0); }
+  function saveBest(level, s) { if (s > getBest(level)) localStorage.setItem(bestKey(level), String(s)); }
   function slug(s) { return String(s).toLowerCase().replace(/[^a-z0-9]+/g, "_"); }
   function esc(s) { const d = document.createElement("div"); d.textContent = s == null ? "" : s; return d.innerHTML; }
 })();
