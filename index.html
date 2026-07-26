@@ -9,7 +9,324 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Fredoka:wght@400;500;600;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="assets/styles.css" />
+  <style>
+/* =============================================================
+   QuizArena — Tema "Playful Cozy" (mirip Quiz.com)
+   Warna hangat krem, kartu teal, tombol pill lime/mint, font rounded.
+   ============================================================= */
+:root {
+  --cream: #FBF5E9;
+  --cream-2: #F4ECDA;
+  --teal: #173F3A;
+  --teal-2: #0F2E2A;
+  --lime: #84E06E;
+  --lime-d: #5FBE49;
+  --mint: #A4E9F2;
+  --mint-d: #74D2E1;
+  --coral: #F4A18F;
+  --coral-d: #E7745C;
+  --ink: #1E2B29;
+  --muted: #6E7C77;
+  --white: #FFFFFF;
+  --green: #3FA76A;
+  --green-soft: #E7F6EC;
+  --red: #E0674F;
+  --red-soft: #FBEAE5;
+  --amber: #F0A62A;
+  /* logo rainbow */
+  --pink: #F1699B; --sky: #54C6E6; --grass: #86D96E; --sun: #F6A62A;
+  /* Answer key tile colors */
+  --a0: #F1699B; --a1: #54C6E6; --a2: #F6A62A; --a3: #57C77F;
+  --radius: 22px;
+  --shadow-soft: 0 12px 34px rgba(23,63,58,.10);
+  --font-head: "Baloo 2", "Fredoka", "Nunito", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-body: "Fredoka", "Nunito", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { height: 100%; }
+
+body {
+  font-family: var(--font-body);
+  color: var(--ink);
+  background: var(--cream);
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  overflow-x: hidden;
+  position: relative;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ---------- Dekorasi lembut (moon & clouds) ---------- */
+.aurora { position: fixed; inset: 0; z-index: -1; overflow: hidden; }
+.blob { position: absolute; border-radius: 50%; opacity: .5; }
+.blob-1 { width: 220px; height: 220px; background: radial-gradient(circle at 35% 35%, transparent 58%, rgba(244,161,143,.20) 60%); top: -40px; left: -40px; }
+.blob-2 { width: 180px; height: 180px; background: radial-gradient(circle at 65% 35%, transparent 58%, rgba(164,233,242,.28) 60%); bottom: 40px; right: -30px; }
+.blob-3 { width: 120px; height: 120px; background: radial-gradient(circle at 50% 50%, rgba(132,224,110,.16), transparent 70%); top: 32vh; right: 12vw; }
+
+/* ---------- Topbar / Brand ---------- */
+.topbar {
+  width: 100%; max-width: 940px; margin: 0 auto;
+  padding: 22px 20px 6px;
+  display: flex; align-items: center; justify-content: space-between; gap: 16px;
+}
+.logo { font-family: var(--font-head); font-weight: 800; font-size: 28px; letter-spacing: -.5px; white-space: nowrap; }
+.logo .q { color: var(--pink); } .logo .u { color: var(--sky); }
+.logo .i { color: var(--grass); } .logo .z { color: var(--sun); }
+.logo .rest { color: var(--teal); }
+.brand-badge {
+  font-family: var(--font-head); font-weight: 600; font-size: 14px; color: #5a2018;
+  background: var(--coral); padding: 9px 16px; border-radius: 14px;
+  box-shadow: 0 4px 0 var(--coral-d);
+}
+
+/* ---------- Layout ---------- */
+.app {
+  width: 100%;
+  max-width: 720px;
+  padding: 14px 20px 12px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.screen { display: none; animation: fadeUp .4s cubic-bezier(.2,.7,.2,1); }
+.screen.is-active { display: block; }
+@keyframes fadeUp { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
+
+.card {
+  background: var(--white);
+  border-radius: var(--radius);
+  padding: 32px;
+  box-shadow: var(--shadow-soft);
+}
+
+/* ---------- Home ---------- */
+.card--hero {
+  text-align: center; padding: 44px 34px;
+  background: var(--teal); color: var(--white);
+  position: relative; overflow: hidden;
+}
+.card--hero::before {
+  content: ""; position: absolute; width: 190px; height: 190px; border-radius: 50%;
+  background: rgba(255,255,255,.06); top: -60px; right: -50px;
+}
+.card--hero::after {
+  content: ""; position: absolute; width: 120px; height: 120px; border-radius: 50%;
+  background: rgba(132,224,110,.10); bottom: -50px; left: -30px;
+}
+.badge {
+  position: relative; z-index: 1;
+  display: inline-block; font-size: 13px; font-weight: 600; letter-spacing: .3px;
+  color: #dff7d8; background: rgba(132,224,110,.18);
+  border: 1px solid rgba(132,224,110,.4); padding: 7px 16px; border-radius: 999px;
+}
+.hero-title {
+  position: relative; z-index: 1;
+  font-family: var(--font-head); font-weight: 800;
+  font-size: clamp(34px, 7vw, 52px); line-height: 1.05; margin: 18px 0 10px;
+  color: var(--white);
+}
+.hero-subtitle {
+  position: relative; z-index: 1;
+  color: rgba(255,255,255,.82); font-size: 16px; line-height: 1.55; max-width: 460px; margin: 0 auto 28px;
+}
+
+.field { position: relative; z-index: 1; text-align: left; max-width: 400px; margin: 0 auto 20px; }
+.field label { display: block; font-size: 13px; font-weight: 600; color: rgba(255,255,255,.7); margin-bottom: 8px; }
+.field input {
+  width: 100%; padding: 15px 18px; font-size: 16px; font-family: var(--font-body); font-weight: 600;
+  color: var(--ink); background: var(--white); border: 2px solid transparent;
+  border-radius: 16px; outline: none; transition: border-color .2s, box-shadow .2s;
+}
+.field input::placeholder { color: #9aa4a1; font-weight: 500; }
+.field input:focus { border-color: var(--lime); box-shadow: 0 0 0 4px rgba(132,224,110,.28); }
+
+.meta-row { position: relative; z-index: 1; list-style: none; display: flex; justify-content: center; gap: 14px; margin-top: 28px; flex-wrap: wrap; }
+.meta-row li {
+  color: rgba(255,255,255,.8); font-size: 13px; font-weight: 600;
+  background: rgba(255,255,255,.08); border-radius: 16px; padding: 12px 18px; min-width: 92px;
+}
+.meta-row strong { display: block; font-size: 22px; font-family: var(--font-head); font-weight: 800; color: var(--white); }
+
+/* ---------- Buttons ---------- */
+.btn {
+  font-family: var(--font-head); font-size: 16px; font-weight: 700; cursor: pointer;
+  border: none; border-radius: 16px; padding: 14px 26px; color: var(--ink);
+  transition: transform .08s ease, box-shadow .08s ease, filter .2s ease;
+  display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+}
+.btn:active { transform: translateY(3px); }
+.btn--primary { background: var(--lime); color: #123f0d; box-shadow: 0 5px 0 var(--lime-d); }
+.btn--primary:hover { filter: brightness(1.03); }
+.btn--primary:active { box-shadow: 0 2px 0 var(--lime-d); }
+.btn--ghost { background: var(--mint); color: #0c4048; box-shadow: 0 5px 0 var(--mint-d); }
+.btn--ghost:active { box-shadow: 0 2px 0 var(--mint-d); }
+.btn--lg { position: relative; z-index: 1; width: 100%; max-width: 400px; padding: 16px 26px; font-size: 18px; }
+.btn-arrow { transition: transform .2s; }
+.btn--primary:hover .btn-arrow { transform: translateX(4px); }
+
+/* ---------- Quiz top ---------- */
+.quiz-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; }
+.quiz-top__left { display: flex; gap: 10px; align-items: center; }
+.pill { font-family: var(--font-head); font-size: 14px; font-weight: 700; color: var(--teal); background: var(--white); padding: 8px 14px; border-radius: 14px; box-shadow: var(--shadow-soft); }
+.pill b { color: var(--teal); }
+.pill--streak { color: #b5541f; }
+.score-chip { font-family: var(--font-head); font-size: 15px; font-weight: 700; color: var(--teal); background: var(--white); padding: 8px 15px; border-radius: 14px; box-shadow: var(--shadow-soft); }
+.score-chip strong { color: var(--amber); }
+
+.progress-track { height: 12px; background: var(--cream-2); border-radius: 999px; overflow: hidden; margin-bottom: 18px; }
+.progress-fill { height: 100%; width: 0; background: var(--lime); border-radius: 999px; transition: width .4s ease; }
+
+/* ---------- Timer ---------- */
+.timer { position: relative; height: 12px; background: var(--cream-2); border-radius: 999px; margin-bottom: 26px; }
+.timer-bar { height: 100%; width: 100%; border-radius: 999px; background: var(--mint-d); transition: width 1s linear, background .3s; }
+.timer-bar.warn { background: var(--amber); }
+.timer-bar.danger { background: var(--coral-d); }
+.timer-num { position: absolute; right: 2px; top: 16px; font-family: var(--font-head); font-size: 13px; font-weight: 700; color: var(--muted); }
+
+/* ---------- Question ---------- */
+.card--question {
+  margin-bottom: 18px; text-align: center; padding: 38px 30px;
+  background: var(--teal); color: var(--white); position: relative; overflow: hidden;
+}
+.card--question::before {
+  content: ""; position: absolute; width: 150px; height: 150px; border-radius: 50%;
+  background: rgba(255,255,255,.05); top: -50px; right: -40px;
+}
+.question-tag {
+  position: relative; z-index: 1;
+  display: inline-block; font-size: 12px; font-weight: 700; letter-spacing: .6px;
+  color: #dff7d8; background: rgba(255,255,255,.12); padding: 6px 14px; border-radius: 12px; margin-bottom: 14px;
+}
+.question-text { position: relative; z-index: 1; font-family: var(--font-head); font-weight: 700; font-size: clamp(21px, 4.5vw, 29px); line-height: 1.25; }
+
+/* ---------- Answers ---------- */
+.answers { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.answer {
+  --c: var(--teal);
+  position: relative; text-align: left; cursor: pointer; color: var(--ink);
+  background: var(--white); border: 2px solid var(--cream-2);
+  border-radius: 18px; padding: 18px 18px 18px 64px;
+  font-family: var(--font-body); font-size: 16px; font-weight: 600;
+  min-height: 66px; display: flex; align-items: center;
+  transition: transform .1s, border-color .2s, background .2s, box-shadow .2s;
+}
+.answer::before {
+  content: attr(data-key); position: absolute; left: 15px; top: 50%; transform: translateY(-50%);
+  width: 34px; height: 34px; border-radius: 10px; display: grid; place-items: center;
+  font-family: var(--font-head); font-weight: 800; font-size: 15px; color: #fff;
+  background: var(--c);
+}
+.answer:hover:not(.locked) { transform: translateY(-2px); border-color: var(--c); box-shadow: var(--shadow-soft); }
+.answer.locked { cursor: default; }
+.answer.correct { border-color: var(--green); background: var(--green-soft); }
+.answer.correct::before { background: var(--green); }
+.answer.correct::after { content: "\2713"; position: absolute; right: 16px; font-weight: 800; color: var(--green); }
+.answer.wrong { border-color: var(--red); background: var(--red-soft); }
+.answer.wrong::before { background: var(--red); }
+.answer.wrong::after { content: "\2715"; position: absolute; right: 16px; font-weight: 800; color: var(--red); }
+.answer.dim { opacity: .5; }
+
+/* floating points */
+.float-pts { position: fixed; font-family: var(--font-head); font-weight: 800; font-size: 28px; color: var(--green); pointer-events: none; z-index: 50; animation: floatPts 1s ease-out forwards; }
+@keyframes floatPts { 0% { opacity: 0; transform: translateY(0) scale(.8);} 20%{opacity:1;} 100% { opacity: 0; transform: translateY(-60px) scale(1.1);} }
+
+/* ---------- Result ---------- */
+.card--result { text-align: center; padding: 44px 34px; background: var(--white); }
+.result-emoji { font-size: 64px; margin-bottom: 8px; animation: pop .5s cubic-bezier(.2,1.4,.4,1); }
+@keyframes pop { from { transform: scale(0);} to { transform: scale(1);} }
+.result-title { font-family: var(--font-head); font-weight: 800; font-size: 32px; color: var(--teal); margin-bottom: 6px; }
+.result-sub { color: var(--muted); font-weight: 500; margin-bottom: 22px; }
+.result-score { margin: 8px auto 26px; }
+.result-score__num { font-family: var(--font-head); font-weight: 800; font-size: 60px; line-height: 1; color: var(--amber); }
+.result-score__label { display: block; font-size: 13px; letter-spacing: 2px; color: var(--muted); font-weight: 600; margin-top: 4px; }
+
+.stat-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 12px; margin-bottom: 26px; }
+.stat { background: var(--cream); border-radius: 18px; padding: 16px 8px; }
+.stat__num { display: block; font-family: var(--font-head); font-weight: 800; font-size: 24px; color: var(--teal); }
+.stat__label { font-size: 12px; color: var(--muted); font-weight: 600; margin-top: 2px; }
+
+.result-actions { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+.result-actions .btn { flex: 1; min-width: 150px; }
+
+/* ---------- Review ---------- */
+.review { margin-top: 22px; display: flex; flex-direction: column; gap: 12px; }
+.review-item { background: var(--cream); border-left: 5px solid var(--green); border-radius: 16px; padding: 16px 18px; text-align: left; }
+.review-item.is-wrong { border-left-color: var(--red); }
+.review-q { font-family: var(--font-head); font-weight: 700; color: var(--teal); margin-bottom: 8px; }
+.review-a { font-size: 14px; color: var(--muted); font-weight: 600; margin-bottom: 4px; }
+.review-a strong { color: var(--green); }
+.review-a.wrong strong { color: var(--red); }
+.review-explain { font-size: 14px; color: var(--muted); margin-top: 8px; font-weight: 500; line-height: 1.5; }
+
+/* ---------- Footer ---------- */
+.foot { padding: 22px; font-size: 14px; color: var(--muted); font-weight: 600; text-align: center; }
+
+/* ---------- Responsive ---------- */
+@media (max-width: 520px) {
+  .answers { grid-template-columns: 1fr; }
+  .stat-grid { grid-template-columns: repeat(2,1fr); }
+  .card { padding: 26px 20px; }
+  .card--hero, .card--result { padding: 34px 22px; }
+  .logo { font-size: 24px; }
+  .brand-badge { display: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * { animation: none !important; transition: none !important; }
+}
+
+/* ---------- Level select ---------- */
+.levels-head { text-align: center; margin-bottom: 22px; position: relative; }
+.levels-title { font-family: var(--font-head); font-weight: 800; font-size: clamp(28px,6vw,40px); color: var(--teal); }
+.levels-greeting { color: var(--muted); font-weight: 600; margin-top: 6px; }
+.btn-text { position: absolute; left: 0; top: 6px; background: none; border: none; cursor: pointer; font-family: var(--font-head); font-weight: 700; font-size: 14px; color: var(--teal); padding: 8px 10px; border-radius: 12px; transition: background .2s; }
+.btn-text:hover { background: var(--cream-2); }
+
+.levels-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 16px; }
+.level-card {
+  position: relative; cursor: pointer; text-align: left;
+  background: var(--white); border: 2px solid var(--cream-2); border-radius: 20px;
+  padding: 18px 16px 16px; display: flex; flex-direction: column; gap: 4px;
+  box-shadow: 0 5px 0 var(--cream-2); transition: transform .1s, box-shadow .1s, border-color .2s;
+  font-family: var(--font-body);
+}
+.level-card:hover { transform: translateY(-3px); border-color: var(--lime); box-shadow: 0 8px 0 var(--lime-d); }
+.level-card:active { transform: translateY(2px); box-shadow: 0 3px 0 var(--lime-d); }
+.level-num { font-family: var(--font-head); font-weight: 800; font-size: 18px; color: var(--teal); }
+.level-emoji { position: absolute; top: 14px; right: 14px; font-size: 26px; }
+.level-name { font-family: var(--font-head); font-weight: 700; font-size: 15px; color: var(--ink); line-height: 1.2; margin-top: 2px; min-height: 36px; }
+.level-diff { display: inline-block; align-self: flex-start; font-size: 11px; font-weight: 700; color: #5a2018; background: var(--coral); padding: 3px 10px; border-radius: 999px; margin-top: 2px; }
+.level-best { font-size: 12px; font-weight: 600; color: var(--muted); margin-top: 6px; }
+
+/* level tag on quiz screen */
+.level-tag { font-family: var(--font-head); font-weight: 700; font-size: 13px; color: var(--teal); background: var(--white); display: inline-block; padding: 6px 14px; border-radius: 12px; box-shadow: var(--shadow-soft); margin-bottom: 14px; }
+
+/* soft button (review) */
+.btn--soft { background: var(--cream-2); color: var(--teal); box-shadow: 0 5px 0 #e2d8c2; }
+.btn--soft:active { box-shadow: 0 2px 0 #e2d8c2; }
+
+@media (max-width: 520px) {
+  .levels-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+  .level-name { min-height: 34px; font-size: 14px; }
+  .btn-text { position: static; display: inline-block; margin-bottom: 10px; }
+  .levels-head { text-align: center; }
+}
+
+/* ---------- Level card v2 (dengan deskripsi) ---------- */
+.level-card { min-height: 176px; }
+.level-top { display: flex; align-items: center; justify-content: space-between; }
+.level-emoji { position: static; top: auto; right: auto; font-size: 24px; line-height: 1; }
+.level-name { min-height: auto; margin-top: 8px; }
+.level-desc { font-size: 12.5px; color: var(--muted); font-weight: 500; line-height: 1.45; margin: 4px 0 10px; }
+.level-foot { margin-top: auto; display: flex; align-items: center; justify-content: space-between; gap: 8px; padding-top: 6px; }
+.level-foot .level-best { margin-top: 0; }
+
+  </style>
 </head>
 <body>
   <div class="aurora" aria-hidden="true">
@@ -49,7 +366,7 @@
       </div>
     </section>
 
-    <!-- ============ LEVEL SELECT SCREEN (BARU) ============ -->
+    <!-- ============ LEVEL SELECT SCREEN ============ -->
     <section class="screen screen--levels" id="screen-levels">
       <div class="levels-head">
         <button class="btn-text" id="btn-back-home">← Ganti nama</button>
@@ -121,7 +438,628 @@
 
   <footer class="foot">Dibuat dengan ⚡ QuizArena · Deploy di Vercel</footer>
 
-  <script src="assets/questions.js"></script>
-  <script src="assets/app.js"></script>
+  <script>
+/* =============================================================
+   DATA KUIS — 10 LEVEL x 30 SOAL (Bahasa Inggris Dasar → Mahir)
+   Tiap level dimasukkan lewat window.QUIZ.levels.push({...}).
+   Untuk menambah/mengubah soal, edit array "questions" pada level terkait.
+   answer = index jawaban benar (0 = opsi pertama).
+   ============================================================= */
+window.QUIZ = {"title":"QuizArena — English Levels","description":"Kuis Bahasa Inggris 10 level bertingkat. Pilih level, jawab 30 soal, dan kumpulkan poin!","timePerQuestion":20,"shuffle":true,"levels":[]};
+
+/* ---------- Level 1 · Kata Dasar & Warna (Sangat Mudah) ---------- */
+window.QUIZ.levels.push({"level":1,"name":"Kata Dasar & Warna","difficulty":"Sangat Mudah","emoji":"🌱","desc":"Kosakata paling dasar: benda, warna, dan angka.", "questions": [
+  {"q":"Apa arti kata \"cat\"?","category":"Vocabulary","options":["pintu","hijau","putih","kucing"],"answer":3,"explain":"\"cat\" artinya kucing."},
+  {"q":"Apa arti kata \"dog\"?","category":"Vocabulary","options":["lima","kucing","anjing","putih"],"answer":2,"explain":"\"dog\" artinya anjing."},
+  {"q":"Apa arti kata \"bird\"?","category":"Vocabulary","options":["lima","kursi","hijau","burung"],"answer":3,"explain":"\"bird\" artinya burung."},
+  {"q":"Apa arti kata \"fish\"?","category":"Vocabulary","options":["ikan","apel","kepala","kursi"],"answer":0,"explain":"\"fish\" artinya ikan."},
+  {"q":"Apa arti kata \"cow\"?","category":"Vocabulary","options":["bintang","kaki","anjing","sapi"],"answer":3,"explain":"\"cow\" artinya sapi."},
+  {"q":"Apa arti kata \"book\"?","category":"Vocabulary","options":["satu","hitam","kursi","buku"],"answer":3,"explain":"\"book\" artinya buku."},
+  {"q":"Apa arti kata \"pen\"?","category":"Vocabulary","options":["putih","lima","pena","kuning"],"answer":2,"explain":"\"pen\" artinya pena."},
+  {"q":"Apa arti kata \"bag\"?","category":"Vocabulary","options":["hijau","nasi","tas","kepala"],"answer":2,"explain":"\"bag\" artinya tas."},
+  {"q":"Apa arti kata \"door\"?","category":"Vocabulary","options":["tas","pintu","dua","pena"],"answer":1,"explain":"\"door\" artinya pintu."},
+  {"q":"Apa arti kata \"chair\"?","category":"Vocabulary","options":["kursi","pena","susu","buku"],"answer":0,"explain":"\"chair\" artinya kursi."},
+  {"q":"Apa arti kata \"table\"?","category":"Vocabulary","options":["meja","bulan","matahari","bintang"],"answer":0,"explain":"\"table\" artinya meja."},
+  {"q":"Apa arti kata \"red\"?","category":"Vocabulary","options":["kucing","satu","merah","kuning"],"answer":2,"explain":"\"red\" artinya merah."},
+  {"q":"Apa arti kata \"blue\"?","category":"Vocabulary","options":["air","nasi","tangan","biru"],"answer":3,"explain":"\"blue\" artinya biru."},
+  {"q":"Apa arti kata \"green\"?","category":"Vocabulary","options":["buku","hijau","putih","biru"],"answer":1,"explain":"\"green\" artinya hijau."},
+  {"q":"Apa arti kata \"yellow\"?","category":"Vocabulary","options":["kuning","bintang","kaki","buku"],"answer":0,"explain":"\"yellow\" artinya kuning."},
+  {"q":"Apa arti kata \"black\"?","category":"Vocabulary","options":["merah","pena","hitam","kaki"],"answer":2,"explain":"\"black\" artinya hitam."},
+  {"q":"Apa arti kata \"white\"?","category":"Vocabulary","options":["susu","putih","mata","tangan"],"answer":1,"explain":"\"white\" artinya putih."},
+  {"q":"Apa arti kata \"one\"?","category":"Vocabulary","options":["lima","kuning","satu","merah"],"answer":2,"explain":"\"one\" artinya satu."},
+  {"q":"Apa arti kata \"two\"?","category":"Vocabulary","options":["hijau","matahari","mata","dua"],"answer":3,"explain":"\"two\" artinya dua."},
+  {"q":"Apa arti kata \"three\"?","category":"Vocabulary","options":["empat","buku","tiga","merah"],"answer":2,"explain":"\"three\" artinya tiga."},
+  {"q":"Apa arti kata \"four\"?","category":"Vocabulary","options":["pintu","ikan","satu","empat"],"answer":3,"explain":"\"four\" artinya empat."},
+  {"q":"Apa arti kata \"five\"?","category":"Vocabulary","options":["tangan","lima","burung","mata"],"answer":1,"explain":"\"five\" artinya lima."},
+  {"q":"Apa arti kata \"sun\"?","category":"Vocabulary","options":["kucing","buku","matahari","merah"],"answer":2,"explain":"\"sun\" artinya matahari."},
+  {"q":"Apa arti kata \"moon\"?","category":"Vocabulary","options":["hitam","bulan","nasi","telur"],"answer":1,"explain":"\"moon\" artinya bulan."},
+  {"q":"Apa arti kata \"star\"?","category":"Vocabulary","options":["bintang","hijau","sapi","empat"],"answer":0,"explain":"\"star\" artinya bintang."},
+  {"q":"Apa arti kata \"water\"?","category":"Vocabulary","options":["air","anjing","sapi","mata"],"answer":0,"explain":"\"water\" artinya air."},
+  {"q":"Apa arti kata \"milk\"?","category":"Vocabulary","options":["susu","empat","kaki","air"],"answer":0,"explain":"\"milk\" artinya susu."},
+  {"q":"Apa arti kata \"rice\"?","category":"Vocabulary","options":["bulan","mata","nasi","merah"],"answer":2,"explain":"\"rice\" artinya nasi."},
+  {"q":"Apa arti kata \"apple\"?","category":"Vocabulary","options":["tiga","sapi","apel","lima"],"answer":2,"explain":"\"apple\" artinya apel."},
+  {"q":"Apa arti kata \"banana\"?","category":"Vocabulary","options":["satu","pisang","bintang","buku"],"answer":1,"explain":"\"banana\" artinya pisang."},
+]});
+
+/* ---------- Level 2 · Kata Sehari-hari (Mudah) ---------- */
+window.QUIZ.levels.push({"level":2,"name":"Kata Sehari-hari","difficulty":"Mudah","emoji":"🐣","desc":"Kata umum sehari-hari: keluarga, tempat, dan waktu.", "questions": [
+  {"q":"Bahasa Inggris dari \"ibu\" adalah…","category":"Vocabulary","options":["year","village","mother","road"],"answer":2,"explain":"\"ibu\" dalam Bahasa Inggris adalah \"mother\"."},
+  {"q":"Bahasa Inggris dari \"ayah\" adalah…","category":"Vocabulary","options":["week","friend","year","father"],"answer":3,"explain":"\"ayah\" dalam Bahasa Inggris adalah \"father\"."},
+  {"q":"Bahasa Inggris dari \"saudara laki-laki\" adalah…","category":"Vocabulary","options":["car","train","brother","room"],"answer":2,"explain":"\"saudara laki-laki\" dalam Bahasa Inggris adalah \"brother\"."},
+  {"q":"Bahasa Inggris dari \"saudara perempuan\" adalah…","category":"Vocabulary","options":["sister","month","week","road"],"answer":0,"explain":"\"saudara perempuan\" dalam Bahasa Inggris adalah \"sister\"."},
+  {"q":"Bahasa Inggris dari \"keluarga\" adalah…","category":"Vocabulary","options":["city","work","village","family"],"answer":3,"explain":"\"keluarga\" dalam Bahasa Inggris adalah \"family\"."},
+  {"q":"Bahasa Inggris dari \"teman\" adalah…","category":"Vocabulary","options":["afternoon","food","work","friend"],"answer":3,"explain":"\"teman\" dalam Bahasa Inggris adalah \"friend\"."},
+  {"q":"Bahasa Inggris dari \"guru\" adalah…","category":"Vocabulary","options":["train","teacher","kitchen","night"],"answer":1,"explain":"\"guru\" dalam Bahasa Inggris adalah \"teacher\"."},
+  {"q":"Bahasa Inggris dari \"murid\" adalah…","category":"Vocabulary","options":["bike","student","room","morning"],"answer":1,"explain":"\"murid\" dalam Bahasa Inggris adalah \"student\"."},
+  {"q":"Bahasa Inggris dari \"sekolah\" adalah…","category":"Vocabulary","options":["house","village","brother","school"],"answer":3,"explain":"\"sekolah\" dalam Bahasa Inggris adalah \"school\"."},
+  {"q":"Bahasa Inggris dari \"rumah\" adalah…","category":"Vocabulary","options":["car","house","kitchen","student"],"answer":1,"explain":"\"rumah\" dalam Bahasa Inggris adalah \"house\"."},
+  {"q":"Bahasa Inggris dari \"kamar\" adalah…","category":"Vocabulary","options":["friend","bike","brother","room"],"answer":3,"explain":"\"kamar\" dalam Bahasa Inggris adalah \"room\"."},
+  {"q":"Bahasa Inggris dari \"dapur\" adalah…","category":"Vocabulary","options":["bike","kitchen","room","month"],"answer":1,"explain":"\"dapur\" dalam Bahasa Inggris adalah \"kitchen\"."},
+  {"q":"Bahasa Inggris dari \"pasar\" adalah…","category":"Vocabulary","options":["market","food","car","evening"],"answer":0,"explain":"\"pasar\" dalam Bahasa Inggris adalah \"market\"."},
+  {"q":"Bahasa Inggris dari \"kota\" adalah…","category":"Vocabulary","options":["month","city","mother","market"],"answer":1,"explain":"\"kota\" dalam Bahasa Inggris adalah \"city\"."},
+  {"q":"Bahasa Inggris dari \"desa\" adalah…","category":"Vocabulary","options":["brother","night","evening","village"],"answer":3,"explain":"\"desa\" dalam Bahasa Inggris adalah \"village\"."},
+  {"q":"Bahasa Inggris dari \"jalan\" adalah…","category":"Vocabulary","options":["father","road","kitchen","money"],"answer":1,"explain":"\"jalan\" dalam Bahasa Inggris adalah \"road\"."},
+  {"q":"Bahasa Inggris dari \"mobil\" adalah…","category":"Vocabulary","options":["student","evening","morning","car"],"answer":3,"explain":"\"mobil\" dalam Bahasa Inggris adalah \"car\"."},
+  {"q":"Bahasa Inggris dari \"bus\" adalah…","category":"Vocabulary","options":["bus","work","year","mother"],"answer":0,"explain":"\"bus\" dalam Bahasa Inggris adalah \"bus\"."},
+  {"q":"Bahasa Inggris dari \"sepeda\" adalah…","category":"Vocabulary","options":["night","drink","sister","bike"],"answer":3,"explain":"\"sepeda\" dalam Bahasa Inggris adalah \"bike\"."},
+  {"q":"Bahasa Inggris dari \"kereta\" adalah…","category":"Vocabulary","options":["afternoon","train","room","day"],"answer":1,"explain":"\"kereta\" dalam Bahasa Inggris adalah \"train\"."},
+  {"q":"Bahasa Inggris dari \"pagi\" adalah…","category":"Vocabulary","options":["sister","kitchen","morning","school"],"answer":2,"explain":"\"pagi\" dalam Bahasa Inggris adalah \"morning\"."},
+  {"q":"Bahasa Inggris dari \"siang\" adalah…","category":"Vocabulary","options":["father","night","year","afternoon"],"answer":3,"explain":"\"siang\" dalam Bahasa Inggris adalah \"afternoon\"."},
+  {"q":"Bahasa Inggris dari \"sore\" adalah…","category":"Vocabulary","options":["friend","evening","year","day"],"answer":1,"explain":"\"sore\" dalam Bahasa Inggris adalah \"evening\"."},
+  {"q":"Bahasa Inggris dari \"malam\" adalah…","category":"Vocabulary","options":["month","brother","night","road"],"answer":2,"explain":"\"malam\" dalam Bahasa Inggris adalah \"night\"."},
+  {"q":"Bahasa Inggris dari \"hari ini\" adalah…","category":"Vocabulary","options":["school","room","evening","today"],"answer":3,"explain":"\"hari ini\" dalam Bahasa Inggris adalah \"today\"."},
+  {"q":"Bahasa Inggris dari \"Senin\" adalah…","category":"Vocabulary","options":["today","teacher","Monday","train"],"answer":2,"explain":"\"Senin\" dalam Bahasa Inggris adalah \"Monday\"."},
+  {"q":"Bahasa Inggris dari \"minggu\" adalah…","category":"Vocabulary","options":["car","morning","week","train"],"answer":2,"explain":"\"minggu\" dalam Bahasa Inggris adalah \"week\"."},
+  {"q":"Bahasa Inggris dari \"bulan\" adalah…","category":"Vocabulary","options":["drink","month","money","student"],"answer":1,"explain":"\"bulan\" dalam Bahasa Inggris adalah \"month\"."},
+  {"q":"Bahasa Inggris dari \"tahun\" adalah…","category":"Vocabulary","options":["mother","work","year","sister"],"answer":2,"explain":"\"tahun\" dalam Bahasa Inggris adalah \"year\"."},
+  {"q":"Bahasa Inggris dari \"hari\" adalah…","category":"Vocabulary","options":["house","afternoon","money","day"],"answer":3,"explain":"\"hari\" dalam Bahasa Inggris adalah \"day\"."},
+]});
+
+/* ---------- Level 3 · Lawan Kata (Mudah) ---------- */
+window.QUIZ.levels.push({"level":3,"name":"Lawan Kata","difficulty":"Mudah","emoji":"🌤️","desc":"Latihan lawan kata (antonim) yang sering dipakai.", "questions": [
+  {"q":"Lawan kata dari \"big\" adalah…","category":"Antonim","options":["night","low","hate","small"],"answer":3,"explain":"Lawan kata \"big\" adalah \"small\"."},
+  {"q":"Lawan kata dari \"hot\" adalah…","category":"Antonim","options":["slow","thin","cold","dark"],"answer":2,"explain":"Lawan kata \"hot\" adalah \"cold\"."},
+  {"q":"Lawan kata dari \"fast\" adalah…","category":"Antonim","options":["hate","thin","used","slow"],"answer":3,"explain":"Lawan kata \"fast\" adalah \"slow\"."},
+  {"q":"Lawan kata dari \"tall\" adalah…","category":"Antonim","options":["far","hate","dirty","short"],"answer":3,"explain":"Lawan kata \"tall\" adalah \"short\"."},
+  {"q":"Lawan kata dari \"happy\" adalah…","category":"Antonim","options":["difficult","sad","weak","false"],"answer":1,"explain":"Lawan kata \"happy\" adalah \"sad\"."},
+  {"q":"Lawan kata dari \"good\" adalah…","category":"Antonim","options":["pull","bad","hard","cold"],"answer":1,"explain":"Lawan kata \"good\" adalah \"bad\"."},
+  {"q":"Lawan kata dari \"open\" adalah…","category":"Antonim","options":["down","closed","late","dirty"],"answer":1,"explain":"Lawan kata \"open\" adalah \"closed\"."},
+  {"q":"Lawan kata dari \"up\" adalah…","category":"Antonim","options":["short","dark","down","bad"],"answer":2,"explain":"Lawan kata \"up\" adalah \"down\"."},
+  {"q":"Lawan kata dari \"day\" adalah…","category":"Antonim","options":["far","night","dark","low"],"answer":1,"explain":"Lawan kata \"day\" adalah \"night\"."},
+  {"q":"Lawan kata dari \"rich\" adalah…","category":"Antonim","options":["poor","bad","late","empty"],"answer":0,"explain":"Lawan kata \"rich\" adalah \"poor\"."},
+  {"q":"Lawan kata dari \"easy\" adalah…","category":"Antonim","options":["sad","hate","difficult","night"],"answer":2,"explain":"Lawan kata \"easy\" adalah \"difficult\"."},
+  {"q":"Lawan kata dari \"clean\" adalah…","category":"Antonim","options":["slow","empty","dirty","closed"],"answer":2,"explain":"Lawan kata \"clean\" adalah \"dirty\"."},
+  {"q":"Lawan kata dari \"full\" adalah…","category":"Antonim","options":["small","empty","short","down"],"answer":1,"explain":"Lawan kata \"full\" adalah \"empty\"."},
+  {"q":"Lawan kata dari \"high\" adalah…","category":"Antonim","options":["thin","low","dry","empty"],"answer":1,"explain":"Lawan kata \"high\" adalah \"low\"."},
+  {"q":"Lawan kata dari \"near\" adalah…","category":"Antonim","options":["down","closed","far","late"],"answer":2,"explain":"Lawan kata \"near\" adalah \"far\"."},
+  {"q":"Lawan kata dari \"wet\" adalah…","category":"Antonim","options":["dry","dark","low","dirty"],"answer":0,"explain":"Lawan kata \"wet\" adalah \"dry\"."},
+  {"q":"Lawan kata dari \"strong\" adalah…","category":"Antonim","options":["sad","end","weak","loud"],"answer":2,"explain":"Lawan kata \"strong\" adalah \"weak\"."},
+  {"q":"Lawan kata dari \"light\" adalah…","category":"Antonim","options":["pull","dry","dark","end"],"answer":2,"explain":"Lawan kata \"light\" adalah \"dark\"."},
+  {"q":"Lawan kata dari \"early\" adalah…","category":"Antonim","options":["thin","late","poor","sell"],"answer":1,"explain":"Lawan kata \"early\" adalah \"late\"."},
+  {"q":"Lawan kata dari \"first\" adalah…","category":"Antonim","options":["last","cold","dry","night"],"answer":0,"explain":"Lawan kata \"first\" adalah \"last\"."},
+  {"q":"Lawan kata dari \"win\" adalah…","category":"Antonim","options":["lose","difficult","dark","pull"],"answer":0,"explain":"Lawan kata \"win\" adalah \"lose\"."},
+  {"q":"Lawan kata dari \"buy\" adalah…","category":"Antonim","options":["sell","low","dry","hate"],"answer":0,"explain":"Lawan kata \"buy\" adalah \"sell\"."},
+  {"q":"Lawan kata dari \"love\" adalah…","category":"Antonim","options":["last","thin","hate","hard"],"answer":2,"explain":"Lawan kata \"love\" adalah \"hate\"."},
+  {"q":"Lawan kata dari \"push\" adalah…","category":"Antonim","options":["last","hard","end","pull"],"answer":3,"explain":"Lawan kata \"push\" adalah \"pull\"."},
+  {"q":"Lawan kata dari \"begin\" adalah…","category":"Antonim","options":["dry","end","lose","thin"],"answer":1,"explain":"Lawan kata \"begin\" adalah \"end\"."},
+  {"q":"Lawan kata dari \"soft\" adalah…","category":"Antonim","options":["cold","hard","short","low"],"answer":1,"explain":"Lawan kata \"soft\" adalah \"hard\"."},
+  {"q":"Lawan kata dari \"thick\" adalah…","category":"Antonim","options":["far","small","sell","thin"],"answer":3,"explain":"Lawan kata \"thick\" adalah \"thin\"."},
+  {"q":"Lawan kata dari \"wide\" adalah…","category":"Antonim","options":["false","empty","narrow","lose"],"answer":2,"explain":"Lawan kata \"wide\" adalah \"narrow\"."},
+  {"q":"Lawan kata dari \"quiet\" adalah…","category":"Antonim","options":["closed","loud","end","false"],"answer":1,"explain":"Lawan kata \"quiet\" adalah \"loud\"."},
+  {"q":"Lawan kata dari \"young\" adalah…","category":"Antonim","options":["slow","poor","old","difficult"],"answer":2,"explain":"Lawan kata \"young\" adalah \"old\"."},
+]});
+
+/* ---------- Level 4 · Artikel & Jamak (Cukup Mudah) ---------- */
+window.QUIZ.levels.push({"level":4,"name":"Artikel & Jamak","difficulty":"Cukup Mudah","emoji":"📗","desc":"Artikel a/an dan bentuk jamak kata benda.", "questions": [
+  {"q":"Lengkapi: \"This is ___ apple.\"","category":"Grammar · Artikel","options":["the","a","an","some"],"answer":2,"explain":"Diawali bunyi vokal → pakai 'an'."},
+  {"q":"Bentuk jamak dari \"box\" adalah…","category":"Grammar · Jamak","options":["women","cars","cities","boxes"],"answer":3,"explain":"Jamak dari \"box\" adalah \"boxes\"."},
+  {"q":"Lengkapi: \"This is ___ orange.\"","category":"Grammar · Artikel","options":["the","a","some","an"],"answer":3,"explain":"Diawali bunyi vokal → pakai 'an'."},
+  {"q":"Bentuk jamak dari \"baby\" adalah…","category":"Grammar · Jamak","options":["boys","children","babies","tomatoes"],"answer":2,"explain":"Jamak dari \"baby\" adalah \"babies\"."},
+  {"q":"Lengkapi: \"This is ___ egg.\"","category":"Grammar · Artikel","options":["the","a","some","an"],"answer":3,"explain":"Diawali bunyi vokal → pakai 'an'."},
+  {"q":"Bentuk jamak dari \"child\" adalah…","category":"Grammar · Jamak","options":["tomatoes","leaves","women","children"],"answer":3,"explain":"Jamak dari \"child\" adalah \"children\"."},
+  {"q":"Lengkapi: \"This is ___ umbrella.\"","category":"Grammar · Artikel","options":["the","some","an","a"],"answer":2,"explain":"Diawali bunyi vokal → pakai 'an'."},
+  {"q":"Bentuk jamak dari \"man\" adalah…","category":"Grammar · Jamak","options":["women","men","buses","leaves"],"answer":1,"explain":"Jamak dari \"man\" adalah \"men\"."},
+  {"q":"Lengkapi: \"This is ___ hour.\"","category":"Grammar · Artikel","options":["the","a","an","some"],"answer":2,"explain":"Diawali bunyi vokal → pakai 'an'."},
+  {"q":"Bentuk jamak dari \"woman\" adalah…","category":"Grammar · Jamak","options":["cities","classes","women","boys"],"answer":2,"explain":"Jamak dari \"woman\" adalah \"women\"."},
+  {"q":"Lengkapi: \"This is ___ elephant.\"","category":"Grammar · Artikel","options":["some","an","a","the"],"answer":1,"explain":"Diawali bunyi vokal → pakai 'an'."},
+  {"q":"Bentuk jamak dari \"foot\" adalah…","category":"Grammar · Jamak","options":["feet","children","footes","women"],"answer":0,"explain":"Jamak dari \"foot\" adalah \"feet\"."},
+  {"q":"Lengkapi: \"This is ___ island.\"","category":"Grammar · Artikel","options":["the","some","a","an"],"answer":3,"explain":"Diawali bunyi vokal → pakai 'an'."},
+  {"q":"Bentuk jamak dari \"tooth\" adalah…","category":"Grammar · Jamak","options":["dishes","teeth","men","women"],"answer":1,"explain":"Jamak dari \"tooth\" adalah \"teeth\"."},
+  {"q":"Lengkapi: \"This is ___ idea.\"","category":"Grammar · Artikel","options":["an","a","the","some"],"answer":0,"explain":"Diawali bunyi vokal → pakai 'an'."},
+  {"q":"Bentuk jamak dari \"mouse\" adalah…","category":"Grammar · Jamak","options":["books","men","babies","mice"],"answer":3,"explain":"Jamak dari \"mouse\" adalah \"mice\"."},
+  {"q":"Lengkapi: \"This is ___ uncle.\"","category":"Grammar · Artikel","options":["a","the","some","an"],"answer":3,"explain":"Diawali bunyi vokal → pakai 'an'."},
+  {"q":"Bentuk jamak dari \"city\" adalah…","category":"Grammar · Jamak","options":["tomatoes","cities","watches","feet"],"answer":1,"explain":"Jamak dari \"city\" adalah \"cities\"."},
+  {"q":"Lengkapi: \"This is ___ apron.\"","category":"Grammar · Artikel","options":["an","some","the","a"],"answer":0,"explain":"Diawali bunyi vokal → pakai 'an'."},
+  {"q":"Bentuk jamak dari \"leaf\" adalah…","category":"Grammar · Jamak","options":["knives","children","leaves","babies"],"answer":2,"explain":"Jamak dari \"leaf\" adalah \"leaves\"."},
+  {"q":"Lengkapi: \"This is ___ book.\"","category":"Grammar · Artikel","options":["the","an","a","some"],"answer":2,"explain":"Diawali bunyi konsonan → pakai 'a'."},
+  {"q":"Bentuk jamak dari \"knife\" adalah…","category":"Grammar · Jamak","options":["buses","knives","tomatoes","knifees"],"answer":1,"explain":"Jamak dari \"knife\" adalah \"knives\"."},
+  {"q":"Lengkapi: \"This is ___ car.\"","category":"Grammar · Artikel","options":["an","the","a","some"],"answer":2,"explain":"Diawali bunyi konsonan → pakai 'a'."},
+  {"q":"Bentuk jamak dari \"bus\" adalah…","category":"Grammar · Jamak","options":["knives","buss","people","buses"],"answer":3,"explain":"Jamak dari \"bus\" adalah \"buses\"."},
+  {"q":"Lengkapi: \"This is ___ dog.\"","category":"Grammar · Artikel","options":["some","a","an","the"],"answer":1,"explain":"Diawali bunyi konsonan → pakai 'a'."},
+  {"q":"Bentuk jamak dari \"class\" adalah…","category":"Grammar · Jamak","options":["classes","knives","classs","tomatoes"],"answer":0,"explain":"Jamak dari \"class\" adalah \"classes\"."},
+  {"q":"Lengkapi: \"This is ___ house.\"","category":"Grammar · Artikel","options":["an","some","a","the"],"answer":2,"explain":"Diawali bunyi konsonan → pakai 'a'."},
+  {"q":"Bentuk jamak dari \"dish\" adalah…","category":"Grammar · Jamak","options":["dishs","women","tomatoes","dishes"],"answer":3,"explain":"Jamak dari \"dish\" adalah \"dishes\"."},
+  {"q":"Lengkapi: \"This is ___ pen.\"","category":"Grammar · Artikel","options":["the","some","a","an"],"answer":2,"explain":"Diawali bunyi konsonan → pakai 'a'."},
+  {"q":"Bentuk jamak dari \"book\" adalah…","category":"Grammar · Jamak","options":["boys","women","leaves","books"],"answer":3,"explain":"Jamak dari \"book\" adalah \"books\"."},
+]});
+
+/* ---------- Level 5 · To Be & This/That (Menengah) ---------- */
+window.QUIZ.levels.push({"level":5,"name":"To Be & This/That","difficulty":"Menengah","emoji":"🧩","desc":"Kata kerja to be dan this/that/these/those.", "questions": [
+  {"q":"Lengkapi: \"I ___ happy.\"","category":"Grammar · To Be","options":["am","be","is","are"],"answer":0,"explain":"Subjek \"I\" memakai \"am\"."},
+  {"q":"Lengkapi: \"You ___ happy.\"","category":"Grammar · To Be","options":["am","are","is","be"],"answer":1,"explain":"Subjek \"You\" memakai \"are\"."},
+  {"q":"Lengkapi: \"He ___ happy.\"","category":"Grammar · To Be","options":["is","be","am","are"],"answer":0,"explain":"Subjek \"He\" memakai \"is\"."},
+  {"q":"Lengkapi: \"She ___ happy.\"","category":"Grammar · To Be","options":["am","is","are","be"],"answer":1,"explain":"Subjek \"She\" memakai \"is\"."},
+  {"q":"Lengkapi: \"It ___ happy.\"","category":"Grammar · To Be","options":["is","am","are","be"],"answer":0,"explain":"Subjek \"It\" memakai \"is\"."},
+  {"q":"Lengkapi: \"We ___ happy.\"","category":"Grammar · To Be","options":["be","are","is","am"],"answer":1,"explain":"Subjek \"We\" memakai \"are\"."},
+  {"q":"Lengkapi: \"They ___ happy.\"","category":"Grammar · To Be","options":["am","be","is","are"],"answer":3,"explain":"Subjek \"They\" memakai \"are\"."},
+  {"q":"Lengkapi: \"The cat ___ happy.\"","category":"Grammar · To Be","options":["be","is","am","are"],"answer":1,"explain":"Subjek \"The cat\" memakai \"is\"."},
+  {"q":"Lengkapi: \"The dogs ___ happy.\"","category":"Grammar · To Be","options":["are","am","be","is"],"answer":0,"explain":"Subjek \"The dogs\" memakai \"are\"."},
+  {"q":"Lengkapi: \"My friend ___ happy.\"","category":"Grammar · To Be","options":["are","is","am","be"],"answer":1,"explain":"Subjek \"My friend\" memakai \"is\"."},
+  {"q":"Lengkapi: \"My friends ___ happy.\"","category":"Grammar · To Be","options":["is","be","are","am"],"answer":2,"explain":"Subjek \"My friends\" memakai \"are\"."},
+  {"q":"Lengkapi: \"Tom ___ happy.\"","category":"Grammar · To Be","options":["am","be","are","is"],"answer":3,"explain":"Subjek \"Tom\" memakai \"is\"."},
+  {"q":"Lengkapi: \"Tom and I ___ happy.\"","category":"Grammar · To Be","options":["are","am","be","is"],"answer":0,"explain":"Subjek \"Tom and I\" memakai \"are\"."},
+  {"q":"Lengkapi: \"The book ___ happy.\"","category":"Grammar · To Be","options":["be","is","am","are"],"answer":1,"explain":"Subjek \"The book\" memakai \"is\"."},
+  {"q":"Lengkapi: \"The books ___ happy.\"","category":"Grammar · To Be","options":["be","are","am","is"],"answer":1,"explain":"Subjek \"The books\" memakai \"are\"."},
+  {"q":"Lengkapi: \"This ___ happy.\"","category":"Grammar · To Be","options":["am","are","is","be"],"answer":2,"explain":"Subjek \"This\" memakai \"is\"."},
+  {"q":"Lengkapi: \"These ___ happy.\"","category":"Grammar · To Be","options":["are","is","be","am"],"answer":0,"explain":"Subjek \"These\" memakai \"are\"."},
+  {"q":"Lengkapi: \"The water ___ happy.\"","category":"Grammar · To Be","options":["be","am","is","are"],"answer":2,"explain":"Subjek \"The water\" memakai \"is\"."},
+  {"q":"Lengkapi: \"The children ___ happy.\"","category":"Grammar · To Be","options":["is","are","am","be"],"answer":1,"explain":"Subjek \"The children\" memakai \"are\"."},
+  {"q":"Lengkapi: \"My mother ___ happy.\"","category":"Grammar · To Be","options":["is","be","am","are"],"answer":0,"explain":"Subjek \"My mother\" memakai \"is\"."},
+  {"q":"___ book is mine. (satu, dekat)","category":"Grammar · This/That","options":["Those","This","That","These"],"answer":1,"explain":"Tunggal & dekat → This."},
+  {"q":"___ books are mine. (banyak, dekat)","category":"Grammar · This/That","options":["This","These","That","Those"],"answer":1,"explain":"Jamak & dekat → These."},
+  {"q":"___ car over there is fast. (satu, jauh)","category":"Grammar · This/That","options":["That","Those","These","This"],"answer":0,"explain":"Tunggal & jauh → That."},
+  {"q":"___ cars over there are fast. (banyak, jauh)","category":"Grammar · This/That","options":["This","These","That","Those"],"answer":3,"explain":"Jamak & jauh → Those."},
+  {"q":"___ is my pen. (satu, dekat)","category":"Grammar · This/That","options":["That","Those","This","These"],"answer":2,"explain":"Tunggal & dekat → This."},
+  {"q":"___ are my shoes. (banyak, dekat)","category":"Grammar · This/That","options":["These","That","This","Those"],"answer":0,"explain":"Jamak & dekat → These."},
+  {"q":"Look at ___ bird in the sky. (satu, jauh)","category":"Grammar · This/That","options":["These","That","This","Those"],"answer":1,"explain":"Tunggal & jauh → That."},
+  {"q":"___ apples over there are sweet. (banyak, jauh)","category":"Grammar · This/That","options":["These","This","That","Those"],"answer":3,"explain":"Jamak & jauh → Those."},
+  {"q":"___ is a beautiful flower here. (satu, dekat)","category":"Grammar · This/That","options":["This","That","These","Those"],"answer":0,"explain":"Tunggal & dekat → This."},
+  {"q":"___ students there are new. (banyak, jauh)","category":"Grammar · This/That","options":["That","Those","This","These"],"answer":1,"explain":"Jamak & jauh → Those."},
+]});
+
+/* ---------- Level 6 · Simple Present (Menengah) ---------- */
+window.QUIZ.levels.push({"level":6,"name":"Simple Present","difficulty":"Menengah","emoji":"⏱️","desc":"Simple present: akhiran -s/-es dan do/does.", "questions": [
+  {"q":"Subjek \"He/She\", bentuk simple present yang benar dari \"play\" adalah…","category":"Grammar · Simple Present","options":["playes","playing","play","plays"],"answer":3,"explain":"Orang ketiga tunggal: \"play\" → \"plays\"."},
+  {"q":"Subjek \"He/She\", bentuk simple present yang benar dari \"go\" adalah…","category":"Grammar · Simple Present","options":["go","going","goes","gos"],"answer":2,"explain":"Orang ketiga tunggal: \"go\" → \"goes\"."},
+  {"q":"Subjek \"He/She\", bentuk simple present yang benar dari \"watch\" adalah…","category":"Grammar · Simple Present","options":["watchs","watches","watching","watch"],"answer":1,"explain":"Orang ketiga tunggal: \"watch\" → \"watches\"."},
+  {"q":"Subjek \"He/She\", bentuk simple present yang benar dari \"study\" adalah…","category":"Grammar · Simple Present","options":["study","studies","studying","studys"],"answer":1,"explain":"Orang ketiga tunggal: \"study\" → \"studies\"."},
+  {"q":"Subjek \"He/She\", bentuk simple present yang benar dari \"do\" adalah…","category":"Grammar · Simple Present","options":["does","do","dos","doing"],"answer":0,"explain":"Orang ketiga tunggal: \"do\" → \"does\"."},
+  {"q":"Subjek \"He/She\", bentuk simple present yang benar dari \"have\" adalah…","category":"Grammar · Simple Present","options":["haveing","has","have","haves"],"answer":1,"explain":"Orang ketiga tunggal: \"have\" → \"has\"."},
+  {"q":"Subjek \"He/She\", bentuk simple present yang benar dari \"teach\" adalah…","category":"Grammar · Simple Present","options":["teach","teaching","teachs","teaches"],"answer":3,"explain":"Orang ketiga tunggal: \"teach\" → \"teaches\"."},
+  {"q":"Subjek \"He/She\", bentuk simple present yang benar dari \"eat\" adalah…","category":"Grammar · Simple Present","options":["eating","eat","eates","eats"],"answer":3,"explain":"Orang ketiga tunggal: \"eat\" → \"eats\"."},
+  {"q":"Subjek \"He/She\", bentuk simple present yang benar dari \"read\" adalah…","category":"Grammar · Simple Present","options":["reading","read","reades","reads"],"answer":3,"explain":"Orang ketiga tunggal: \"read\" → \"reads\"."},
+  {"q":"Subjek \"He/She\", bentuk simple present yang benar dari \"write\" adalah…","category":"Grammar · Simple Present","options":["write","writees","writeing","writes"],"answer":3,"explain":"Orang ketiga tunggal: \"write\" → \"writes\"."},
+  {"q":"Subjek \"He/She\", bentuk simple present yang benar dari \"work\" adalah…","category":"Grammar · Simple Present","options":["workes","works","work","working"],"answer":1,"explain":"Orang ketiga tunggal: \"work\" → \"works\"."},
+  {"q":"Subjek \"He/She\", bentuk simple present yang benar dari \"like\" adalah…","category":"Grammar · Simple Present","options":["like","likes","likeing","likees"],"answer":1,"explain":"Orang ketiga tunggal: \"like\" → \"likes\"."},
+  {"q":"Subjek \"He/She\", bentuk simple present yang benar dari \"run\" adalah…","category":"Grammar · Simple Present","options":["run","runing","runs","runes"],"answer":2,"explain":"Orang ketiga tunggal: \"run\" → \"runs\"."},
+  {"q":"Subjek \"He/She\", bentuk simple present yang benar dari \"fly\" adalah…","category":"Grammar · Simple Present","options":["flys","flies","fly","flying"],"answer":1,"explain":"Orang ketiga tunggal: \"fly\" → \"flies\"."},
+  {"q":"Subjek \"He/She\", bentuk simple present yang benar dari \"cry\" adalah…","category":"Grammar · Simple Present","options":["crying","cry","crys","cries"],"answer":3,"explain":"Orang ketiga tunggal: \"cry\" → \"cries\"."},
+  {"q":"Subjek \"He/She\", bentuk simple present yang benar dari \"fix\" adalah…","category":"Grammar · Simple Present","options":["fixs","fix","fixes","fixing"],"answer":2,"explain":"Orang ketiga tunggal: \"fix\" → \"fixes\"."},
+  {"q":"Subjek \"He/She\", bentuk simple present yang benar dari \"wash\" adalah…","category":"Grammar · Simple Present","options":["washes","washing","wash","washs"],"answer":0,"explain":"Orang ketiga tunggal: \"wash\" → \"washes\"."},
+  {"q":"Subjek \"He/She\", bentuk simple present yang benar dari \"miss\" adalah…","category":"Grammar · Simple Present","options":["misses","miss","missing","misss"],"answer":0,"explain":"Orang ketiga tunggal: \"miss\" → \"misses\"."},
+  {"q":"Subjek \"He/She\", bentuk simple present yang benar dari \"try\" adalah…","category":"Grammar · Simple Present","options":["trys","trying","try","tries"],"answer":3,"explain":"Orang ketiga tunggal: \"try\" → \"tries\"."},
+  {"q":"Subjek \"He/She\", bentuk simple present yang benar dari \"catch\" adalah…","category":"Grammar · Simple Present","options":["catches","catching","catchs","catch"],"answer":0,"explain":"Orang ketiga tunggal: \"catch\" → \"catches\"."},
+  {"q":"___ she like coffee?","category":"Grammar · Do/Does","options":["Are","Does","Do","Is"],"answer":1,"explain":"He/She/It → Does."},
+  {"q":"___ they play football?","category":"Grammar · Do/Does","options":["Are","Is","Do","Does"],"answer":2,"explain":"I/You/We/They → Do."},
+  {"q":"___ he go to school?","category":"Grammar · Do/Does","options":["Does","Are","Do","Is"],"answer":0,"explain":"He/She/It → Does."},
+  {"q":"___ you speak English?","category":"Grammar · Do/Does","options":["Do","Is","Are","Does"],"answer":0,"explain":"I/You/We/They → Do."},
+  {"q":"___ it work well?","category":"Grammar · Do/Does","options":["Is","Does","Are","Do"],"answer":1,"explain":"He/She/It → Does."},
+  {"q":"___ we need this?","category":"Grammar · Do/Does","options":["Does","Are","Do","Is"],"answer":2,"explain":"I/You/We/They → Do."},
+  {"q":"___ your father drive?","category":"Grammar · Do/Does","options":["Does","Do","Is","Are"],"answer":0,"explain":"He/She/It → Does."},
+  {"q":"___ the students study?","category":"Grammar · Do/Does","options":["Is","Are","Does","Do"],"answer":3,"explain":"I/You/We/They → Do."},
+  {"q":"___ Maria sing?","category":"Grammar · Do/Does","options":["Is","Does","Do","Are"],"answer":1,"explain":"He/She/It → Does."},
+  {"q":"___ your friends come?","category":"Grammar · Do/Does","options":["Do","Are","Is","Does"],"answer":0,"explain":"I/You/We/They → Do."},
+]});
+
+/* ---------- Level 7 · Continuous & Preposisi (Menengah+) ---------- */
+window.QUIZ.levels.push({"level":7,"name":"Continuous & Preposisi","difficulty":"Menengah+","emoji":"🌀","desc":"Present continuous (-ing) dan preposisi in/on/at.", "questions": [
+  {"q":"Lengkapi: \"They are ___ now.\" (bentuk -ing dari \"play\")","category":"Grammar · Continuous","options":["playing","play","plays","played"],"answer":0,"explain":"Present continuous: \"play\" → \"playing\"."},
+  {"q":"Lengkapi: \"They are ___ now.\" (bentuk -ing dari \"go\")","category":"Grammar · Continuous","options":["goed","gos","going","go"],"answer":2,"explain":"Present continuous: \"go\" → \"going\"."},
+  {"q":"Lengkapi: \"They are ___ now.\" (bentuk -ing dari \"run\")","category":"Grammar · Continuous","options":["runs","running","runed","run"],"answer":1,"explain":"Present continuous: \"run\" → \"running\"."},
+  {"q":"Lengkapi: \"They are ___ now.\" (bentuk -ing dari \"sit\")","category":"Grammar · Continuous","options":["sit","sits","sited","sitting"],"answer":3,"explain":"Present continuous: \"sit\" → \"sitting\"."},
+  {"q":"Lengkapi: \"They are ___ now.\" (bentuk -ing dari \"write\")","category":"Grammar · Continuous","options":["write","writes","writing","writeed"],"answer":2,"explain":"Present continuous: \"write\" → \"writing\"."},
+  {"q":"Lengkapi: \"They are ___ now.\" (bentuk -ing dari \"make\")","category":"Grammar · Continuous","options":["makes","making","makeed","make"],"answer":1,"explain":"Present continuous: \"make\" → \"making\"."},
+  {"q":"Lengkapi: \"They are ___ now.\" (bentuk -ing dari \"swim\")","category":"Grammar · Continuous","options":["swim","swimed","swimming","swims"],"answer":2,"explain":"Present continuous: \"swim\" → \"swimming\"."},
+  {"q":"Lengkapi: \"They are ___ now.\" (bentuk -ing dari \"read\")","category":"Grammar · Continuous","options":["readed","reading","reads","read"],"answer":1,"explain":"Present continuous: \"read\" → \"reading\"."},
+  {"q":"Lengkapi: \"They are ___ now.\" (bentuk -ing dari \"eat\")","category":"Grammar · Continuous","options":["eats","eated","eat","eating"],"answer":3,"explain":"Present continuous: \"eat\" → \"eating\"."},
+  {"q":"Lengkapi: \"They are ___ now.\" (bentuk -ing dari \"study\")","category":"Grammar · Continuous","options":["studyed","studys","studying","study"],"answer":2,"explain":"Present continuous: \"study\" → \"studying\"."},
+  {"q":"Lengkapi: \"They are ___ now.\" (bentuk -ing dari \"come\")","category":"Grammar · Continuous","options":["comes","come","coming","comeed"],"answer":2,"explain":"Present continuous: \"come\" → \"coming\"."},
+  {"q":"Lengkapi: \"They are ___ now.\" (bentuk -ing dari \"begin\")","category":"Grammar · Continuous","options":["beginning","begin","begins","begined"],"answer":0,"explain":"Present continuous: \"begin\" → \"beginning\"."},
+  {"q":"Lengkapi: \"They are ___ now.\" (bentuk -ing dari \"cook\")","category":"Grammar · Continuous","options":["cooked","cooks","cooking","cook"],"answer":2,"explain":"Present continuous: \"cook\" → \"cooking\"."},
+  {"q":"Lengkapi: \"They are ___ now.\" (bentuk -ing dari \"drink\")","category":"Grammar · Continuous","options":["drinks","drink","drinked","drinking"],"answer":3,"explain":"Present continuous: \"drink\" → \"drinking\"."},
+  {"q":"Lengkapi: \"They are ___ now.\" (bentuk -ing dari \"dance\")","category":"Grammar · Continuous","options":["danceed","dance","dancing","dances"],"answer":2,"explain":"Present continuous: \"dance\" → \"dancing\"."},
+  {"q":"We go to school ___ Monday.","category":"Grammar · Preposisi","options":["on","at","to","in"],"answer":0,"explain":"Hari tertentu → on."},
+  {"q":"I wake up ___ the morning.","category":"Grammar · Preposisi","options":["on","in","to","at"],"answer":1,"explain":"Bagian hari (morning/afternoon) → in."},
+  {"q":"The stars shine ___ night.","category":"Grammar · Preposisi","options":["to","at","on","in"],"answer":1,"explain":"'night' → at."},
+  {"q":"The class starts ___ 7 o’clock.","category":"Grammar · Preposisi","options":["on","in","at","to"],"answer":2,"explain":"Jam tertentu → at."},
+  {"q":"He was born ___ 2005.","category":"Grammar · Preposisi","options":["at","on","in","to"],"answer":2,"explain":"Tahun → in."},
+  {"q":"The book is ___ the table.","category":"Grammar · Preposisi","options":["to","on","at","in"],"answer":1,"explain":"Di atas permukaan → on."},
+  {"q":"The pen is ___ the box.","category":"Grammar · Preposisi","options":["at","in","to","on"],"answer":1,"explain":"Di dalam → in."},
+  {"q":"She is ___ home now.","category":"Grammar · Preposisi","options":["at","on","to","in"],"answer":0,"explain":"'home' → at."},
+  {"q":"We meet ___ the weekend.","category":"Grammar · Preposisi","options":["in","at","on","to"],"answer":2,"explain":"Akhir pekan (British: at) umum → on the weekend."},
+  {"q":"The cat is ___ the chair.","category":"Grammar · Preposisi","options":["in","to","on","at"],"answer":2,"explain":"Di atas → on."},
+  {"q":"I will see you ___ December.","category":"Grammar · Preposisi","options":["to","at","on","in"],"answer":3,"explain":"Bulan → in."},
+  {"q":"The party is ___ Friday evening.","category":"Grammar · Preposisi","options":["to","in","on","at"],"answer":2,"explain":"Hari + bagian hari tertentu → on."},
+  {"q":"He is good ___ math.","category":"Grammar · Preposisi","options":["on","in","to","at"],"answer":3,"explain":"'good at' → at."},
+  {"q":"There is a picture ___ the wall.","category":"Grammar · Preposisi","options":["to","on","in","at"],"answer":1,"explain":"Menempel di dinding → on."},
+  {"q":"The children are ___ the garden.","category":"Grammar · Preposisi","options":["at","to","in","on"],"answer":2,"explain":"Area/ruang → in."},
+]});
+
+/* ---------- Level 8 · Past Tense (Sulit) ---------- */
+window.QUIZ.levels.push({"level":8,"name":"Past Tense","difficulty":"Sulit","emoji":"🕰️","desc":"Kata kerja bentuk lampau (past tense).", "questions": [
+  {"q":"Bentuk lampau (past tense) dari \"go\" adalah…","category":"Grammar · Past Tense","options":["studied","played","goed","went"],"answer":3,"explain":"Past tense \"go\" adalah \"went\"."},
+  {"q":"Bentuk lampau (past tense) dari \"eat\" adalah…","category":"Grammar · Past Tense","options":["drank","ate","swam","said"],"answer":1,"explain":"Past tense \"eat\" adalah \"ate\"."},
+  {"q":"Bentuk lampau (past tense) dari \"see\" adalah…","category":"Grammar · Past Tense","options":["began","left","saw","broke"],"answer":2,"explain":"Past tense \"see\" adalah \"saw\"."},
+  {"q":"Bentuk lampau (past tense) dari \"come\" adalah…","category":"Grammar · Past Tense","options":["drove","came","got","swam"],"answer":1,"explain":"Past tense \"come\" adalah \"came\"."},
+  {"q":"Bentuk lampau (past tense) dari \"take\" adalah…","category":"Grammar · Past Tense","options":["took","sat","brought","got"],"answer":0,"explain":"Past tense \"take\" adalah \"took\"."},
+  {"q":"Bentuk lampau (past tense) dari \"make\" adalah…","category":"Grammar · Past Tense","options":["taught","felt","read","made"],"answer":3,"explain":"Past tense \"make\" adalah \"made\"."},
+  {"q":"Bentuk lampau (past tense) dari \"buy\" adalah…","category":"Grammar · Past Tense","options":["drove","stood","bought","began"],"answer":2,"explain":"Past tense \"buy\" adalah \"bought\"."},
+  {"q":"Bentuk lampau (past tense) dari \"bring\" adalah…","category":"Grammar · Past Tense","options":["made","brought","bought","wanted"],"answer":1,"explain":"Past tense \"bring\" adalah \"brought\"."},
+  {"q":"Bentuk lampau (past tense) dari \"think\" adalah…","category":"Grammar · Past Tense","options":["found","thought","swam","taught"],"answer":1,"explain":"Past tense \"think\" adalah \"thought\"."},
+  {"q":"Bentuk lampau (past tense) dari \"teach\" adalah…","category":"Grammar · Past Tense","options":["taught","swam","chose","won"],"answer":0,"explain":"Past tense \"teach\" adalah \"taught\"."},
+  {"q":"Bentuk lampau (past tense) dari \"write\" adalah…","category":"Grammar · Past Tense","options":["wrote","spoke","drove","taught"],"answer":0,"explain":"Past tense \"write\" adalah \"wrote\"."},
+  {"q":"Bentuk lampau (past tense) dari \"run\" adalah…","category":"Grammar · Past Tense","options":["won","broke","ran","read"],"answer":2,"explain":"Past tense \"run\" adalah \"ran\"."},
+  {"q":"Bentuk lampau (past tense) dari \"drink\" adalah…","category":"Grammar · Past Tense","options":["slept","flew","drank","stood"],"answer":2,"explain":"Past tense \"drink\" adalah \"drank\"."},
+  {"q":"Bentuk lampau (past tense) dari \"swim\" adalah…","category":"Grammar · Past Tense","options":["ate","swam","played","wanted"],"answer":1,"explain":"Past tense \"swim\" adalah \"swam\"."},
+  {"q":"Bentuk lampau (past tense) dari \"give\" adalah…","category":"Grammar · Past Tense","options":["gave","stood","left","spoke"],"answer":0,"explain":"Past tense \"give\" adalah \"gave\"."},
+  {"q":"Bentuk lampau (past tense) dari \"find\" adalah…","category":"Grammar · Past Tense","options":["found","made","took","began"],"answer":0,"explain":"Past tense \"find\" adalah \"found\"."},
+  {"q":"Bentuk lampau (past tense) dari \"get\" adalah…","category":"Grammar · Past Tense","options":["left","bought","got","broke"],"answer":2,"explain":"Past tense \"get\" adalah \"got\"."},
+  {"q":"Bentuk lampau (past tense) dari \"know\" adalah…","category":"Grammar · Past Tense","options":["bought","brought","drove","knew"],"answer":3,"explain":"Past tense \"know\" adalah \"knew\"."},
+  {"q":"Bentuk lampau (past tense) dari \"speak\" adalah…","category":"Grammar · Past Tense","options":["slept","spoke","took","gave"],"answer":1,"explain":"Past tense \"speak\" adalah \"spoke\"."},
+  {"q":"Bentuk lampau (past tense) dari \"drive\" adalah…","category":"Grammar · Past Tense","options":["felt","brought","drove","swam"],"answer":2,"explain":"Past tense \"drive\" adalah \"drove\"."},
+  {"q":"Bentuk lampau (past tense) dari \"fly\" adalah…","category":"Grammar · Past Tense","options":["met","slept","flew","drove"],"answer":2,"explain":"Past tense \"fly\" adalah \"flew\"."},
+  {"q":"Bentuk lampau (past tense) dari \"begin\" adalah…","category":"Grammar · Past Tense","options":["began","left","drove","chose"],"answer":0,"explain":"Past tense \"begin\" adalah \"began\"."},
+  {"q":"Bentuk lampau (past tense) dari \"break\" adalah…","category":"Grammar · Past Tense","options":["slept","broke","wrote","flew"],"answer":1,"explain":"Past tense \"break\" adalah \"broke\"."},
+  {"q":"Bentuk lampau (past tense) dari \"choose\" adalah…","category":"Grammar · Past Tense","options":["watched","chooseed","said","chose"],"answer":3,"explain":"Past tense \"choose\" adalah \"chose\"."},
+  {"q":"Bentuk lampau (past tense) dari \"feel\" adalah…","category":"Grammar · Past Tense","options":["spoke","swam","felt","feeled"],"answer":2,"explain":"Past tense \"feel\" adalah \"felt\"."},
+  {"q":"Bentuk lampau (past tense) dari \"leave\" adalah…","category":"Grammar · Past Tense","options":["taught","left","drank","leaveed"],"answer":1,"explain":"Past tense \"leave\" adalah \"left\"."},
+  {"q":"Bentuk lampau (past tense) dari \"meet\" adalah…","category":"Grammar · Past Tense","options":["began","met","flew","got"],"answer":1,"explain":"Past tense \"meet\" adalah \"met\"."},
+  {"q":"Bentuk lampau (past tense) dari \"pay\" adalah…","category":"Grammar · Past Tense","options":["came","wanted","paid","made"],"answer":2,"explain":"Past tense \"pay\" adalah \"paid\"."},
+  {"q":"Bentuk lampau (past tense) dari \"say\" adalah…","category":"Grammar · Past Tense","options":["said","won","ate","ran"],"answer":0,"explain":"Past tense \"say\" adalah \"said\"."},
+  {"q":"Bentuk lampau (past tense) dari \"sell\" adalah…","category":"Grammar · Past Tense","options":["watched","sold","paid","ate"],"answer":1,"explain":"Past tense \"sell\" adalah \"sold\"."},
+]});
+
+/* ---------- Level 9 · Comparative & Modals (Sulit) ---------- */
+window.QUIZ.levels.push({"level":9,"name":"Comparative & Modals","difficulty":"Sulit","emoji":"📈","desc":"Comparative, superlative, dan modal verbs.", "questions": [
+  {"q":"Bentuk comparative dari \"big\" adalah…","category":"Grammar · Comparative","options":["happier","more beautiful","bigger","faster"],"answer":2,"explain":"Comparative \"big\" → \"bigger\"."},
+  {"q":"Bentuk comparative dari \"small\" adalah…","category":"Grammar · Comparative","options":["smaller","heavier","bigger","easier"],"answer":0,"explain":"Comparative \"small\" → \"smaller\"."},
+  {"q":"Bentuk comparative dari \"tall\" adalah…","category":"Grammar · Comparative","options":["happier","faster","hotter","taller"],"answer":3,"explain":"Comparative \"tall\" → \"taller\"."},
+  {"q":"Bentuk comparative dari \"short\" adalah…","category":"Grammar · Comparative","options":["slower","more expensive","shorter","smaller"],"answer":2,"explain":"Comparative \"short\" → \"shorter\"."},
+  {"q":"Bentuk comparative dari \"fast\" adalah…","category":"Grammar · Comparative","options":["hotter","faster","heavier","more beautiful"],"answer":1,"explain":"Comparative \"fast\" → \"faster\"."},
+  {"q":"Bentuk comparative dari \"slow\" adalah…","category":"Grammar · Comparative","options":["bigger","worse","slower","colder"],"answer":2,"explain":"Comparative \"slow\" → \"slower\"."},
+  {"q":"Bentuk comparative dari \"hot\" adalah…","category":"Grammar · Comparative","options":["faster","bigger","hotter","better"],"answer":2,"explain":"Comparative \"hot\" → \"hotter\"."},
+  {"q":"Bentuk comparative dari \"cold\" adalah…","category":"Grammar · Comparative","options":["colder","bigger","taller","happier"],"answer":0,"explain":"Comparative \"cold\" → \"colder\"."},
+  {"q":"Bentuk comparative dari \"happy\" adalah…","category":"Grammar · Comparative","options":["worse","happier","heavier","bigger"],"answer":1,"explain":"Comparative \"happy\" → \"happier\"."},
+  {"q":"Bentuk comparative dari \"easy\" adalah…","category":"Grammar · Comparative","options":["better","easier","faster","colder"],"answer":1,"explain":"Comparative \"easy\" → \"easier\"."},
+  {"q":"Bentuk comparative dari \"good\" adalah…","category":"Grammar · Comparative","options":["taller","better","smaller","more expensive"],"answer":1,"explain":"Comparative \"good\" → \"better\"."},
+  {"q":"Bentuk comparative dari \"bad\" adalah…","category":"Grammar · Comparative","options":["happier","easier","worse","bigger"],"answer":2,"explain":"Comparative \"bad\" → \"worse\"."},
+  {"q":"Bentuk comparative dari \"beautiful\" adalah…","category":"Grammar · Comparative","options":["better","shorter","more beautiful","smaller"],"answer":2,"explain":"Comparative \"beautiful\" → \"more beautiful\"."},
+  {"q":"Bentuk comparative dari \"expensive\" adalah…","category":"Grammar · Comparative","options":["more expensive","slower","smaller","happier"],"answer":0,"explain":"Comparative \"expensive\" → \"more expensive\"."},
+  {"q":"Bentuk comparative dari \"heavy\" adalah…","category":"Grammar · Comparative","options":["slower","more beautiful","heavier","worse"],"answer":2,"explain":"Comparative \"heavy\" → \"heavier\"."},
+  {"q":"Bentuk superlative dari \"tall\" adalah…","category":"Grammar · Superlative","options":["easier","faster","slower","tallest"],"answer":3,"explain":"Superlative \"tall\" → \"the tallest\"."},
+  {"q":"Bentuk superlative dari \"big\" adalah…","category":"Grammar · Superlative","options":["fastest","most beautiful","biggest","hotter"],"answer":2,"explain":"Superlative \"big\" → \"the biggest\"."},
+  {"q":"Bentuk superlative dari \"small\" adalah…","category":"Grammar · Superlative","options":["worse","happier","smallest","better"],"answer":2,"explain":"Superlative \"small\" → \"the smallest\"."},
+  {"q":"Bentuk superlative dari \"good\" adalah…","category":"Grammar · Superlative","options":["bigger","best","colder","heavier"],"answer":1,"explain":"Superlative \"good\" → \"the best\"."},
+  {"q":"Bentuk superlative dari \"bad\" adalah…","category":"Grammar · Superlative","options":["easier","faster","biggest","worst"],"answer":3,"explain":"Superlative \"bad\" → \"the worst\"."},
+  {"q":"Bentuk superlative dari \"fast\" adalah…","category":"Grammar · Superlative","options":["fastest","faster","smaller","shorter"],"answer":0,"explain":"Superlative \"fast\" → \"the fastest\"."},
+  {"q":"Bentuk superlative dari \"happy\" adalah…","category":"Grammar · Superlative","options":["biggest","colder","happiest","more expensive"],"answer":2,"explain":"Superlative \"happy\" → \"the happiest\"."},
+  {"q":"Bentuk superlative dari \"beautiful\" adalah…","category":"Grammar · Superlative","options":["shorter","most beautiful","happiest","fastest"],"answer":1,"explain":"Superlative \"beautiful\" → \"the most beautiful\"."},
+  {"q":"You look sick. You ___ see a doctor.","category":"Grammar · Modals","options":["should","may","must","can"],"answer":0,"explain":"Saran → should."},
+  {"q":"I ___ swim very well when I was young.","category":"Grammar · Modals","options":["can","should","could","must"],"answer":2,"explain":"Kemampuan lampau → could."},
+  {"q":"Students ___ wear a uniform. It is a rule.","category":"Grammar · Modals","options":["should","must","may","can"],"answer":1,"explain":"Kewajiban/aturan → must."},
+  {"q":"___ I open the window, please?","category":"Grammar · Modals","options":["must","May","could","can"],"answer":1,"explain":"Meminta izin sopan → May."},
+  {"q":"She ___ speak three languages.","category":"Grammar · Modals","options":["should","may","can","must"],"answer":2,"explain":"Kemampuan → can."},
+  {"q":"It’s late. We ___ go home now.","category":"Grammar · Modals","options":["may","can","must","should"],"answer":3,"explain":"Saran → should."},
+  {"q":"You ___ not smoke here. It is forbidden.","category":"Grammar · Modals","options":["can","should","must","may"],"answer":2,"explain":"Larangan tegas → must not."},
+]});
+
+/* ---------- Level 10 · Idioms & Phrasal Verbs (Sangat Sulit) ---------- */
+window.QUIZ.levels.push({"level":10,"name":"Idioms & Phrasal Verbs","difficulty":"Sangat Sulit","emoji":"🔥","desc":"Idiom, phrasal verb, dan kosakata tingkat mahir.", "questions": [
+  {"q":"Idiom \"break a leg\" artinya…","category":"Idiom","options":["membocorkan rahasia","kurang sehat","menggoda / bercanda","semoga sukses"],"answer":3,"explain":"\"break a leg\" = semoga sukses."},
+  {"q":"Phrasal verb \"give up\" artinya…","category":"Phrasal Verb","options":["menyerah","bangun tidur","memakai (pakaian)","mencari"],"answer":0,"explain":"\"give up\" = menyerah."},
+  {"q":"Apa arti kata \"enormous\"?","category":"Advanced Vocab","options":["tulus","rapuh","sangat besar","dermawan"],"answer":2,"explain":"\"enormous\" = sangat besar."},
+  {"q":"Idiom \"piece of cake\" artinya…","category":"Idiom","options":["belajar dengan giat","sangat mudah","sangat mahal","begadang untuk bekerja/belajar"],"answer":1,"explain":"\"piece of cake\" = sangat mudah."},
+  {"q":"Phrasal verb \"look for\" artinya…","category":"Phrasal Verb","options":["melepas / lepas landas","kehabisan","mencari","bangun tidur"],"answer":2,"explain":"\"look for\" = mencari."},
+  {"q":"Apa arti kata \"ancient\"?","category":"Advanced Vocab","options":["bersyukur","kuno","penasaran","berani"],"answer":1,"explain":"\"ancient\" = kuno."},
+  {"q":"Idiom \"hit the books\" artinya…","category":"Idiom","options":["tiba-tiba gugup / ragu","berkah tersembunyi","belajar dengan giat","semoga sukses"],"answer":2,"explain":"\"hit the books\" = belajar dengan giat."},
+  {"q":"Phrasal verb \"turn on\" artinya…","category":"Phrasal Verb","options":["mematikan","mengetahui","menyalakan","menyerah"],"answer":2,"explain":"\"turn on\" = menyalakan."},
+  {"q":"Apa arti kata \"generous\"?","category":"Advanced Vocab","options":["bersyukur","dermawan","sangat besar","rapuh"],"answer":1,"explain":"\"generous\" = dermawan."},
+  {"q":"Idiom \"under the weather\" artinya…","category":"Idiom","options":["kurang sehat","semoga sukses","sangat jarang","belajar dengan giat"],"answer":0,"explain":"\"under the weather\" = kurang sehat."},
+  {"q":"Phrasal verb \"turn off\" artinya…","category":"Phrasal Verb","options":["memakai (pakaian)","mengetahui","mematikan","melepas / lepas landas"],"answer":2,"explain":"\"turn off\" = mematikan."},
+  {"q":"Apa arti kata \"honest\"?","category":"Advanced Vocab","options":["bersyukur","penasaran","jujur","dermawan"],"answer":2,"explain":"\"honest\" = jujur."},
+  {"q":"Idiom \"once in a blue moon\" artinya…","category":"Idiom","options":["belajar dengan giat","sangat jarang","sangat mahal","tiba-tiba gugup / ragu"],"answer":1,"explain":"\"once in a blue moon\" = sangat jarang."},
+  {"q":"Phrasal verb \"put on\" artinya…","category":"Phrasal Verb","options":["bangun tidur","memakai (pakaian)","kembali","mematikan"],"answer":1,"explain":"\"put on\" = memakai (pakaian)."},
+  {"q":"Apa arti kata \"brave\"?","category":"Advanced Vocab","options":["dermawan","berani","sangat besar","penasaran"],"answer":1,"explain":"\"brave\" = berani."},
+  {"q":"Idiom \"spill the beans\" artinya…","category":"Idiom","options":["pergi tidur","membocorkan rahasia","sangat mahal","mengambil jalan pintas asal-asalan"],"answer":1,"explain":"\"spill the beans\" = membocorkan rahasia."},
+  {"q":"Phrasal verb \"take off\" artinya…","category":"Phrasal Verb","options":["melanjutkan","mematikan","menyalakan","melepas / lepas landas"],"answer":3,"explain":"\"take off\" = melepas / lepas landas."},
+  {"q":"Apa arti kata \"curious\"?","category":"Advanced Vocab","options":["bersyukur","penasaran","kuno","sangat besar"],"answer":1,"explain":"\"curious\" = penasaran."},
+  {"q":"Idiom \"cost an arm and a leg\" artinya…","category":"Idiom","options":["mengakhiri pekerjaan hari itu","sangat mahal","menghadapi hal sulit dengan berani","pergi tidur"],"answer":1,"explain":"\"cost an arm and a leg\" = sangat mahal."},
+  {"q":"Phrasal verb \"find out\" artinya…","category":"Phrasal Verb","options":["mengetahui","melepas / lepas landas","kehabisan","menyerah"],"answer":0,"explain":"\"find out\" = mengetahui."},
+  {"q":"Apa arti kata \"fragile\"?","category":"Advanced Vocab","options":["bersyukur","tulus","penasaran","rapuh"],"answer":3,"explain":"\"fragile\" = rapuh."},
+  {"q":"Idiom \"call it a day\" artinya…","category":"Idiom","options":["tiba-tiba gugup / ragu","membocorkan rahasia","mengakhiri pekerjaan hari itu","berkah tersembunyi"],"answer":2,"explain":"\"call it a day\" = mengakhiri pekerjaan hari itu."},
+  {"q":"Phrasal verb \"run out of\" artinya…","category":"Phrasal Verb","options":["menjaga / merawat","mencari","melepas / lepas landas","kehabisan"],"answer":3,"explain":"\"run out of\" = kehabisan."},
+  {"q":"Apa arti kata \"grateful\"?","category":"Advanced Vocab","options":["bersyukur","berani","dermawan","tulus"],"answer":0,"explain":"\"grateful\" = bersyukur."},
+  {"q":"Idiom \"hit the sack\" artinya…","category":"Idiom","options":["kurang sehat","semoga sukses","berkah tersembunyi","pergi tidur"],"answer":3,"explain":"\"hit the sack\" = pergi tidur."},
+  {"q":"Phrasal verb \"look after\" artinya…","category":"Phrasal Verb","options":["menyalakan","menjaga / merawat","menyerah","mengetahui"],"answer":1,"explain":"\"look after\" = menjaga / merawat."},
+  {"q":"Apa arti kata \"ambitious\"?","category":"Advanced Vocab","options":["bersyukur","rapuh","jujur","ambisius"],"answer":3,"explain":"\"ambitious\" = ambisius."},
+  {"q":"Idiom \"bite the bullet\" artinya…","category":"Idiom","options":["membocorkan rahasia","menghadapi hal sulit dengan berani","begadang untuk bekerja/belajar","mengambil jalan pintas asal-asalan"],"answer":1,"explain":"\"bite the bullet\" = menghadapi hal sulit dengan berani."},
+  {"q":"Phrasal verb \"get up\" artinya…","category":"Phrasal Verb","options":["mencari","menyerah","bangun (dari tempat tidur)","muncul / datang"],"answer":2,"explain":"\"get up\" = bangun (dari tempat tidur)."},
+  {"q":"Apa arti kata \"sincere\"?","category":"Advanced Vocab","options":["penasaran","sangat besar","tulus","rapuh"],"answer":2,"explain":"\"sincere\" = tulus."},
+]});
+
+  </script>
+  <script>
+/* ================= QuizArena — game logic (mode 10 level) ================= */
+(function () {
+  "use strict";
+  const CONFIG = window.QUIZ || { title: "Quiz", description: "", timePerQuestion: 20, levels: [] };
+  const LEVELS = CONFIG.levels || [];
+  const KEYS = ["A", "B", "C", "D"];
+  const COLORS = ["var(--a0)", "var(--a1)", "var(--a2)", "var(--a3)"];
+  const APP_KEY = "quizarena_" + slug(CONFIG.title);
+
+  // ---- State ----
+  let currentLevel = null;          // index level yang dimainkan
+  let questions = [];               // 30 soal sesi ini (sudah diacak)
+  let idx = 0, score = 0, correct = 0, streak = 0, maxStreak = 0;
+  let timeLeft = CONFIG.timePerQuestion, timer = null, answered = false;
+  let history = [];
+
+  // ---- Elements ----
+  const $ = (id) => document.getElementById(id);
+  const screens = {
+    home: $("screen-home"),
+    levels: $("screen-levels"),
+    quiz: $("screen-quiz"),
+    result: $("screen-result"),
+  };
+
+  // ---- Init home ----
+  $("quiz-title").textContent = CONFIG.title;
+  $("quiz-desc").textContent = CONFIG.description;
+  document.title = CONFIG.title;
+  $("meta-count").textContent = LEVELS.length;
+  $("meta-qtotal").textContent = LEVELS.reduce((s, l) => s + l.questions.length, 0);
+  $("meta-time").textContent = CONFIG.timePerQuestion + "s";
+
+  $("btn-start").addEventListener("click", goToLevels);
+  $("player-name").addEventListener("keydown", (e) => { if (e.key === "Enter") goToLevels(); });
+  $("btn-back-home").addEventListener("click", () => show("home"));
+  $("btn-retry").addEventListener("click", () => { if (currentLevel != null) startLevel(currentLevel); });
+  $("btn-levels").addEventListener("click", goToLevels);
+  $("btn-review").addEventListener("click", toggleReview);
+  $("btn-quit").addEventListener("click", () => { clearInterval(timer); goToLevels(); });
+
+  // ---- Level select ----
+  function goToLevels() {
+    renderLevels();
+    show("levels");
+  }
+
+  function renderLevels() {
+    const name = ($("player-name").value || "").trim();
+    $("levels-greeting").textContent = name ? `Halo, ${name}! Pilih levelmu 👇` : "Pilih level yang ingin kamu mainkan 👇";
+    const grid = $("levels-grid");
+    grid.innerHTML = "";
+    LEVELS.forEach((lv, i) => {
+      const best = getBest(lv.level);
+      const card = document.createElement("button");
+      card.className = "level-card";
+      card.innerHTML =
+        `<span class="level-top"><span class="level-num">Level ${lv.level}</span><span class="level-emoji">${lv.emoji || "🎯"}</span></span>` +
+        `<span class="level-name">${esc(lv.name)}</span>` +
+        `<span class="level-desc">${esc(lv.desc || "")}</span>` +
+        `<span class="level-foot"><span class="level-diff">${esc(lv.difficulty)}</span><span class="level-best">${best > 0 ? "⭐ " + best : lv.questions.length + " soal"}</span></span>`;
+      card.addEventListener("click", () => startLevel(i));
+      grid.appendChild(card);
+    });
+  }
+
+  // ---- Quiz flow ----
+  function buildSession(level) {
+    let pool = level.questions.map((q) => ({ ...q, options: [...q.options] }));
+    if (CONFIG.shuffle) {
+      shuffle(pool);
+      pool = pool.map((q) => {
+        const paired = q.options.map((opt, i) => ({ opt, correct: i === q.answer }));
+        shuffle(paired);
+        return { ...q, options: paired.map((p) => p.opt), answer: paired.findIndex((p) => p.correct) };
+      });
+    }
+    return pool;
+  }
+
+  function startLevel(i) {
+    currentLevel = i;
+    const level = LEVELS[i];
+    questions = buildSession(level);
+    idx = 0; score = 0; correct = 0; streak = 0; maxStreak = 0; history = [];
+    $("score-live").textContent = "0";
+    $("quiz-level-tag").textContent = `Level ${level.level} · ${level.difficulty}`;
+    show("quiz");
+    renderQuestion();
+  }
+
+  function renderQuestion() {
+    answered = false;
+    const q = questions[idx];
+    $("progress-label").innerHTML = `Soal <b>${idx + 1}</b> / ${questions.length}`;
+    $("streak-pill").textContent = `🔥 ${streak}`;
+    $("progress-fill").style.width = ((idx) / questions.length) * 100 + "%";
+    $("question-tag").textContent = q.category || "Pilihan Ganda";
+    $("question-text").textContent = q.q;
+
+    const wrap = $("answers");
+    wrap.innerHTML = "";
+    q.options.forEach((opt, i) => {
+      const btn = document.createElement("button");
+      btn.className = "answer";
+      btn.style.setProperty("--c", COLORS[i % COLORS.length]);
+      btn.setAttribute("data-key", KEYS[i]);
+      btn.textContent = opt;
+      btn.addEventListener("click", (e) => selectAnswer(i, e));
+      wrap.appendChild(btn);
+    });
+
+    startTimer();
+  }
+
+  function startTimer() {
+    clearInterval(timer);
+    timeLeft = CONFIG.timePerQuestion;
+    updateTimerUI();
+    timer = setInterval(() => {
+      timeLeft--;
+      updateTimerUI();
+      if (timeLeft <= 0) { clearInterval(timer); if (!answered) lockOut(); }
+    }, 1000);
+  }
+
+  function updateTimerUI() {
+    const pct = (timeLeft / CONFIG.timePerQuestion) * 100;
+    const bar = $("timer-bar");
+    bar.style.width = pct + "%";
+    bar.classList.toggle("warn", pct <= 50 && pct > 25);
+    bar.classList.toggle("danger", pct <= 25);
+    $("timer-num").textContent = Math.max(0, timeLeft);
+  }
+
+  function selectAnswer(i, e) {
+    if (answered) return;
+    answered = true;
+    clearInterval(timer);
+    const q = questions[idx];
+    const buttons = [...document.querySelectorAll(".answer")];
+    buttons.forEach((b, bi) => {
+      b.classList.add("locked");
+      if (bi === q.answer) b.classList.add("correct");
+      else if (bi === i) b.classList.add("wrong");
+      else b.classList.add("dim");
+    });
+
+    const isCorrect = i === q.answer;
+    let gained = 0;
+    if (isCorrect) {
+      correct++;
+      streak++;
+      maxStreak = Math.max(maxStreak, streak);
+      const timeBonus = Math.round((timeLeft / CONFIG.timePerQuestion) * 50);
+      const streakBonus = Math.min(streak - 1, 5) * 10;
+      gained = 100 + timeBonus + streakBonus;
+      score += gained;
+      floatPoints(gained, e);
+    } else {
+      streak = 0;
+    }
+    $("score-live").textContent = score;
+    $("streak-pill").textContent = `🔥 ${streak}`;
+    history.push({ q: q.q, chosen: i, answer: q.answer, options: q.options, explain: q.explain, correct: isCorrect });
+
+    setTimeout(next, 1100);
+  }
+
+  function lockOut() {
+    answered = true;
+    const q = questions[idx];
+    [...document.querySelectorAll(".answer")].forEach((b, bi) => {
+      b.classList.add("locked");
+      if (bi === q.answer) b.classList.add("correct"); else b.classList.add("dim");
+    });
+    streak = 0;
+    $("streak-pill").textContent = `🔥 0`;
+    history.push({ q: q.q, chosen: -1, answer: q.answer, options: q.options, explain: q.explain, correct: false });
+    setTimeout(next, 1100);
+  }
+
+  function next() {
+    idx++;
+    if (idx >= questions.length) finish();
+    else renderQuestion();
+  }
+
+  function finish() {
+    $("progress-fill").style.width = "100%";
+    const level = LEVELS[currentLevel];
+    const total = questions.length;
+    const acc = total ? Math.round((correct / total) * 100) : 0;
+    $("result-score").textContent = score;
+    $("stat-correct").textContent = correct;
+    $("stat-wrong").textContent = total - correct;
+    $("stat-acc").textContent = acc + "%";
+    $("stat-streak").textContent = maxStreak;
+
+    const name = ($("player-name").value || "").trim();
+    let emoji = "🎉", title = "Kerja bagus!", sub = "Kamu menyelesaikan level ini.";
+    if (acc === 100) { emoji = "🏆"; title = "Sempurna!"; sub = "Semua jawaban benar. Luar biasa!"; }
+    else if (acc >= 70) { emoji = "🌟"; title = "Hebat!"; sub = "Skor kamu sangat bagus."; }
+    else if (acc >= 40) { emoji = "💪"; title = "Lumayan!"; sub = "Terus berlatih, kamu pasti bisa lebih baik."; }
+    else { emoji = "🌱"; title = "Tetap semangat!"; sub = "Coba lagi untuk meningkatkan skormu."; }
+    const isBest = score > getBest(level.level);
+    $("result-emoji").textContent = emoji;
+    $("result-title").textContent = name ? `${title} ${name}` : title;
+    $("result-sub").textContent = `Level ${level.level} · ${level.name}. ${sub}` + (isBest ? " 🎊 Rekor baru!" : "");
+
+    saveBest(level.level, score);
+    buildReview();
+    $("review").hidden = true;
+    $("btn-review").textContent = "Lihat Pembahasan";
+    show("result");
+  }
+
+  function buildReview() {
+    const wrap = $("review");
+    wrap.innerHTML = "";
+    history.forEach((h, n) => {
+      const item = document.createElement("div");
+      item.className = "review-item" + (h.correct ? "" : " is-wrong");
+      const yourAns = h.chosen === -1 ? "(waktu habis)" : h.options[h.chosen];
+      item.innerHTML =
+        `<div class="review-q">${n + 1}. ${esc(h.q)}</div>` +
+        `<div class="review-a ${h.correct ? "" : "wrong"}">Jawaban kamu: <strong>${esc(yourAns)}</strong></div>` +
+        (h.correct ? "" : `<div class="review-a">Jawaban benar: <strong>${esc(h.options[h.answer])}</strong></div>`) +
+        (h.explain ? `<div class="review-explain">💡 ${esc(h.explain)}</div>` : "");
+      wrap.appendChild(item);
+    });
+  }
+
+  function toggleReview() {
+    const r = $("review");
+    r.hidden = !r.hidden;
+    $("btn-review").textContent = r.hidden ? "Lihat Pembahasan" : "Sembunyikan Pembahasan";
+    if (!r.hidden) r.scrollIntoView({ behavior: "smooth", block: "nearest" });
+  }
+
+  function floatPoints(pts, e) {
+    const el = document.createElement("div");
+    el.className = "float-pts";
+    el.textContent = "+" + pts;
+    const x = e ? e.clientX : window.innerWidth / 2;
+    const y = e ? e.clientY : window.innerHeight / 2;
+    el.style.left = x + "px"; el.style.top = y + "px";
+    document.body.appendChild(el);
+    setTimeout(() => el.remove(), 1000);
+  }
+
+  // ---- helpers ----
+  function show(name) {
+    Object.values(screens).forEach((s) => s.classList.remove("is-active"));
+    screens[name].classList.add("is-active");
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }
+  function shuffle(arr) {
+    for (let i = arr.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [arr[i], arr[j]] = [arr[j], arr[i]];
+    }
+    return arr;
+  }
+  function bestKey(level) { return APP_KEY + "_best_L" + level; }
+  function getBest(level) { return Number(localStorage.getItem(bestKey(level)) || 0); }
+  function saveBest(level, s) { if (s > getBest(level)) localStorage.setItem(bestKey(level), String(s)); }
+  function slug(s) { return String(s).toLowerCase().replace(/[^a-z0-9]+/g, "_"); }
+  function esc(s) { const d = document.createElement("div"); d.textContent = s == null ? "" : s; return d.innerHTML; }
+})();
+
+  </script>
 </body>
 </html>
