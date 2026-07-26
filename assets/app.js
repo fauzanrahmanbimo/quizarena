@@ -55,11 +55,10 @@
       const card = document.createElement("button");
       card.className = "level-card";
       card.innerHTML =
-        `<span class="level-num">Level ${lv.level}</span>` +
-        `<span class="level-emoji">${lv.emoji || "🎯"}</span>` +
+        `<span class="level-top"><span class="level-num">Level ${lv.level}</span><span class="level-emoji">${lv.emoji || "🎯"}</span></span>` +
         `<span class="level-name">${esc(lv.name)}</span>` +
-        `<span class="level-diff">${esc(lv.difficulty)}</span>` +
-        `<span class="level-best">${best > 0 ? "⭐ Terbaik: " + best : lv.questions.length + " soal"}</span>`;
+        `<span class="level-desc">${esc(lv.desc || "")}</span>` +
+        `<span class="level-foot"><span class="level-diff">${esc(lv.difficulty)}</span><span class="level-best">${best > 0 ? "⭐ " + best : lv.questions.length + " soal"}</span></span>`;
       card.addEventListener("click", () => startLevel(i));
       grid.appendChild(card);
     });
