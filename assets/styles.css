@@ -267,3 +267,40 @@ body {
 @media (prefers-reduced-motion: reduce) {
   * { animation: none !important; transition: none !important; }
 }
+
+/* ---------- Level select ---------- */
+.levels-head { text-align: center; margin-bottom: 22px; position: relative; }
+.levels-title { font-family: var(--font-head); font-weight: 800; font-size: clamp(28px,6vw,40px); color: var(--teal); }
+.levels-greeting { color: var(--muted); font-weight: 600; margin-top: 6px; }
+.btn-text { position: absolute; left: 0; top: 6px; background: none; border: none; cursor: pointer; font-family: var(--font-head); font-weight: 700; font-size: 14px; color: var(--teal); padding: 8px 10px; border-radius: 12px; transition: background .2s; }
+.btn-text:hover { background: var(--cream-2); }
+
+.levels-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 16px; }
+.level-card {
+  position: relative; cursor: pointer; text-align: left;
+  background: var(--white); border: 2px solid var(--cream-2); border-radius: 20px;
+  padding: 18px 16px 16px; display: flex; flex-direction: column; gap: 4px;
+  box-shadow: 0 5px 0 var(--cream-2); transition: transform .1s, box-shadow .1s, border-color .2s;
+  font-family: var(--font-body);
+}
+.level-card:hover { transform: translateY(-3px); border-color: var(--lime); box-shadow: 0 8px 0 var(--lime-d); }
+.level-card:active { transform: translateY(2px); box-shadow: 0 3px 0 var(--lime-d); }
+.level-num { font-family: var(--font-head); font-weight: 800; font-size: 18px; color: var(--teal); }
+.level-emoji { position: absolute; top: 14px; right: 14px; font-size: 26px; }
+.level-name { font-family: var(--font-head); font-weight: 700; font-size: 15px; color: var(--ink); line-height: 1.2; margin-top: 2px; min-height: 36px; }
+.level-diff { display: inline-block; align-self: flex-start; font-size: 11px; font-weight: 700; color: #5a2018; background: var(--coral); padding: 3px 10px; border-radius: 999px; margin-top: 2px; }
+.level-best { font-size: 12px; font-weight: 600; color: var(--muted); margin-top: 6px; }
+
+/* level tag on quiz screen */
+.level-tag { font-family: var(--font-head); font-weight: 700; font-size: 13px; color: var(--teal); background: var(--white); display: inline-block; padding: 6px 14px; border-radius: 12px; box-shadow: var(--shadow-soft); margin-bottom: 14px; }
+
+/* soft button (review) */
+.btn--soft { background: var(--cream-2); color: var(--teal); box-shadow: 0 5px 0 #e2d8c2; }
+.btn--soft:active { box-shadow: 0 2px 0 #e2d8c2; }
+
+@media (max-width: 520px) {
+  .levels-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+  .level-name { min-height: 34px; font-size: 14px; }
+  .btn-text { position: static; display: inline-block; margin-bottom: 10px; }
+  .levels-head { text-align: center; }
+}
