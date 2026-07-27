@@ -329,6 +329,19 @@ body {
 /* ---- Tombol download modul PDF ---- */
 .pdf-dl{margin-top:12px;width:100%;display:inline-flex;align-items:center;justify-content:center;gap:8px;text-decoration:none;}
 
+/* ---- Seksi MATERI (di layar Pilih Level) ---- */
+.materi-head{margin-top:38px;text-align:center;}
+.materi-title{font-family:var(--font-head);font-size:26px;font-weight:800;color:var(--teal);letter-spacing:.5px;margin:0;}
+.materi-sub{font-family:var(--font-body);color:var(--muted);margin:6px 0 18px;font-size:14px;}
+.materi-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:14px;max-width:1040px;margin:0 auto;}
+.materi-card{display:flex;align-items:center;gap:12px;padding:14px 16px;background:var(--cream-2);border:2px solid rgba(23,63,58,.10);border-radius:16px;text-decoration:none;transition:transform .15s ease,box-shadow .15s ease,border-color .15s ease;}
+.materi-card:hover{transform:translateY(-3px);border-color:var(--lime-d);box-shadow:0 10px 22px rgba(23,63,58,.12);}
+.materi-emoji{font-size:26px;line-height:1;flex-shrink:0;}
+.materi-info{display:flex;flex-direction:column;flex:1;min-width:0;}
+.materi-lv{font-family:var(--font-body);font-size:12px;font-weight:600;color:var(--muted);}
+.materi-name{font-family:var(--font-head);font-size:15px;font-weight:700;color:var(--ink);line-height:1.2;}
+.materi-open{font-family:var(--font-body);font-size:12.5px;font-weight:700;color:var(--lime-d);flex-shrink:0;}
+
   </style>
 </head>
 <body>
@@ -366,8 +379,6 @@ body {
           <li><strong id="meta-qtotal">300</strong> Soal</li>
           <li><strong id="meta-time">20s</strong> / Soal</li>
         </ul>
-
-        <a class="btn btn--soft pdf-dl" href="modul-belajar.pdf" download>📘 Modul Belajar (PDF)</a>
       </div>
     </section>
 
@@ -379,6 +390,12 @@ body {
         <p class="levels-greeting" id="levels-greeting">Pilih level yang ingin kamu mainkan 👇</p>
       </div>
       <div class="levels-grid" id="levels-grid"></div>
+
+      <div class="materi-head">
+        <h2 class="materi-title">📚 MATERI</h2>
+        <p class="materi-sub">Baca ringkasan materi &amp; pembahasan tiap level — langsung terbuka di PDF reader.</p>
+      </div>
+      <div class="materi-grid" id="materi-grid"></div>
     </section>
 
     <!-- ============ QUIZ SCREEN ============ -->
@@ -838,6 +855,7 @@ window.QUIZ.levels.push({"level":10,"name":"Idioms & Phrasal Verbs","difficulty"
   // ---- Level select ----
   function goToLevels() {
     renderLevels();
+    renderMateri();
     show("levels");
   }
 
@@ -857,6 +875,24 @@ window.QUIZ.levels.push({"level":10,"name":"Idioms & Phrasal Verbs","difficulty"
         `<span class="level-foot"><span class="level-diff">${esc(lv.difficulty)}</span><span class="level-best">${best > 0 ? "⭐ " + best : lv.questions.length + " soal"}</span></span>`;
       card.addEventListener("click", () => startLevel(i));
       grid.appendChild(card);
+    });
+  }
+
+  function renderMateri() {
+    const grid = $("materi-grid");
+    if (!grid) return;
+    grid.innerHTML = "";
+    LEVELS.forEach((lv) => {
+      const a = document.createElement("a");
+      a.className = "materi-card";
+      a.href = "level-" + lv.level + ".pdf";
+      a.target = "_blank";
+      a.rel = "noopener";
+      a.innerHTML =
+        `<span class="materi-emoji">${lv.emoji || "\uD83D\uDCC4"}</span>` +
+        `<span class="materi-info"><span class="materi-lv">Materi Level ${lv.level}</span><span class="materi-name">${esc(lv.name)}</span></span>` +
+        `<span class="materi-open">Lihat PDF →</span>`;
+      grid.appendChild(a);
     });
   }
 
