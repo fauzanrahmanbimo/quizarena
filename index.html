@@ -42,10 +42,10 @@
   --font-head: "Baloo 2", "Fredoka", "Nunito", system-ui, -apple-system, "Segoe UI", sans-serif;
   --font-body: "Fredoka", "Nunito", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
 }
-
+​
 * { box-sizing: border-box; margin: 0; padding: 0; }
 html, body { height: 100%; }
-
+​
 body {
   font-family: var(--font-body);
   color: var(--ink);
@@ -58,14 +58,14 @@ body {
   position: relative;
   -webkit-font-smoothing: antialiased;
 }
-
+​
 /* ---------- Dekorasi lembut (moon & clouds) ---------- */
 .aurora { position: fixed; inset: 0; z-index: -1; overflow: hidden; }
 .blob { position: absolute; border-radius: 50%; opacity: .5; }
 .blob-1 { width: 220px; height: 220px; background: radial-gradient(circle at 35% 35%, transparent 58%, rgba(244,161,143,.20) 60%); top: -40px; left: -40px; }
 .blob-2 { width: 180px; height: 180px; background: radial-gradient(circle at 65% 35%, transparent 58%, rgba(164,233,242,.28) 60%); bottom: 40px; right: -30px; }
 .blob-3 { width: 120px; height: 120px; background: radial-gradient(circle at 50% 50%, rgba(132,224,110,.16), transparent 70%); top: 32vh; right: 12vw; }
-
+​
 /* ---------- Topbar / Brand ---------- */
 .topbar {
   width: 100%; max-width: 940px; margin: 0 auto;
@@ -81,7 +81,7 @@ body {
   background: var(--coral); padding: 9px 16px; border-radius: 14px;
   box-shadow: 0 4px 0 var(--coral-d);
 }
-
+​
 /* ---------- Layout ---------- */
 .app {
   width: 100%;
@@ -92,18 +92,18 @@ body {
   flex-direction: column;
   justify-content: center;
 }
-
+​
 .screen { display: none; animation: fadeUp .4s cubic-bezier(.2,.7,.2,1); }
 .screen.is-active { display: block; }
 @keyframes fadeUp { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
-
+​
 .card {
   background: var(--white);
   border-radius: var(--radius);
   padding: 32px;
   box-shadow: var(--shadow-soft);
 }
-
+​
 /* ---------- Home ---------- */
 .card--hero {
   text-align: center; padding: 44px 34px;
@@ -134,7 +134,7 @@ body {
   position: relative; z-index: 1;
   color: rgba(255,255,255,.82); font-size: 16px; line-height: 1.55; max-width: 460px; margin: 0 auto 28px;
 }
-
+​
 .field { position: relative; z-index: 1; text-align: left; max-width: 400px; margin: 0 auto 20px; }
 .field label { display: block; font-size: 13px; font-weight: 600; color: rgba(255,255,255,.7); margin-bottom: 8px; }
 .field input {
@@ -144,14 +144,14 @@ body {
 }
 .field input::placeholder { color: #9aa4a1; font-weight: 500; }
 .field input:focus { border-color: var(--lime); box-shadow: 0 0 0 4px rgba(132,224,110,.28); }
-
+​
 .meta-row { position: relative; z-index: 1; list-style: none; display: flex; justify-content: center; gap: 14px; margin-top: 28px; flex-wrap: wrap; }
 .meta-row li {
   color: rgba(255,255,255,.8); font-size: 13px; font-weight: 600;
   background: rgba(255,255,255,.08); border-radius: 16px; padding: 12px 18px; min-width: 92px;
 }
 .meta-row strong { display: block; font-size: 22px; font-family: var(--font-head); font-weight: 800; color: var(--white); }
-
+​
 /* ---------- Buttons ---------- */
 .btn {
   font-family: var(--font-head); font-size: 16px; font-weight: 700; cursor: pointer;
@@ -168,7 +168,7 @@ body {
 .btn--lg { position: relative; z-index: 1; width: 100%; max-width: 400px; padding: 16px 26px; font-size: 18px; }
 .btn-arrow { transition: transform .2s; }
 .btn--primary:hover .btn-arrow { transform: translateX(4px); }
-
+​
 /* ---------- Quiz top ---------- */
 .quiz-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; }
 .quiz-top__left { display: flex; gap: 10px; align-items: center; }
@@ -177,17 +177,17 @@ body {
 .pill--streak { color: #b5541f; }
 .score-chip { font-family: var(--font-head); font-size: 15px; font-weight: 700; color: var(--teal); background: var(--white); padding: 8px 15px; border-radius: 14px; box-shadow: var(--shadow-soft); }
 .score-chip strong { color: var(--amber); }
-
+​
 .progress-track { height: 12px; background: var(--cream-2); border-radius: 999px; overflow: hidden; margin-bottom: 18px; }
 .progress-fill { height: 100%; width: 0; background: var(--lime); border-radius: 999px; transition: width .4s ease; }
-
+​
 /* ---------- Timer ---------- */
 .timer { position: relative; height: 12px; background: var(--cream-2); border-radius: 999px; margin-bottom: 26px; }
 .timer-bar { height: 100%; width: 100%; border-radius: 999px; background: var(--mint-d); transition: width 1s linear, background .3s; }
 .timer-bar.warn { background: var(--amber); }
 .timer-bar.danger { background: var(--coral-d); }
 .timer-num { position: absolute; right: 2px; top: 16px; font-family: var(--font-head); font-size: 13px; font-weight: 700; color: var(--muted); }
-
+​
 /* ---------- Question ---------- */
 .card--question {
   margin-bottom: 18px; text-align: center; padding: 38px 30px;
@@ -203,7 +203,7 @@ body {
   color: #dff7d8; background: rgba(255,255,255,.12); padding: 6px 14px; border-radius: 12px; margin-bottom: 14px;
 }
 .question-text { position: relative; z-index: 1; font-family: var(--font-head); font-weight: 700; font-size: clamp(21px, 4.5vw, 29px); line-height: 1.25; }
-
+​
 /* ---------- Answers ---------- */
 .answers { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
 .answer {
@@ -230,11 +230,11 @@ body {
 .answer.wrong::before { background: var(--red); }
 .answer.wrong::after { content: "\2715"; position: absolute; right: 16px; font-weight: 800; color: var(--red); }
 .answer.dim { opacity: .5; }
-
+​
 /* floating points */
 .float-pts { position: fixed; font-family: var(--font-head); font-weight: 800; font-size: 28px; color: var(--green); pointer-events: none; z-index: 50; animation: floatPts 1s ease-out forwards; }
 @keyframes floatPts { 0% { opacity: 0; transform: translateY(0) scale(.8);} 20%{opacity:1;} 100% { opacity: 0; transform: translateY(-60px) scale(1.1);} }
-
+​
 /* ---------- Result ---------- */
 .card--result { text-align: center; padding: 44px 34px; background: var(--white); }
 .result-emoji { font-size: 64px; margin-bottom: 8px; animation: pop .5s cubic-bezier(.2,1.4,.4,1); }
@@ -244,15 +244,15 @@ body {
 .result-score { margin: 8px auto 26px; }
 .result-score__num { font-family: var(--font-head); font-weight: 800; font-size: 60px; line-height: 1; color: var(--amber); }
 .result-score__label { display: block; font-size: 13px; letter-spacing: 2px; color: var(--muted); font-weight: 600; margin-top: 4px; }
-
+​
 .stat-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 12px; margin-bottom: 26px; }
 .stat { background: var(--cream); border-radius: 18px; padding: 16px 8px; }
 .stat__num { display: block; font-family: var(--font-head); font-weight: 800; font-size: 24px; color: var(--teal); }
 .stat__label { font-size: 12px; color: var(--muted); font-weight: 600; margin-top: 2px; }
-
+​
 .result-actions { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
 .result-actions .btn { flex: 1; min-width: 150px; }
-
+​
 /* ---------- Review ---------- */
 .review { margin-top: 22px; display: flex; flex-direction: column; gap: 12px; }
 .review-item { background: var(--cream); border-left: 5px solid var(--green); border-radius: 16px; padding: 16px 18px; text-align: left; }
@@ -262,10 +262,10 @@ body {
 .review-a strong { color: var(--green); }
 .review-a.wrong strong { color: var(--red); }
 .review-explain { font-size: 14px; color: var(--muted); margin-top: 8px; font-weight: 500; line-height: 1.5; }
-
+​
 /* ---------- Footer ---------- */
 .foot { padding: 22px; font-size: 14px; color: var(--muted); font-weight: 600; text-align: center; }
-
+​
 /* ---------- Responsive ---------- */
 @media (max-width: 520px) {
   .answers { grid-template-columns: 1fr; }
@@ -275,18 +275,18 @@ body {
   .logo { font-size: 24px; }
   .brand-badge { display: none; }
 }
-
+​
 @media (prefers-reduced-motion: reduce) {
   * { animation: none !important; transition: none !important; }
 }
-
+​
 /* ---------- Level select ---------- */
 .levels-head { text-align: center; margin-bottom: 22px; position: relative; }
 .levels-title { font-family: var(--font-head); font-weight: 800; font-size: clamp(28px,6vw,40px); color: var(--teal); }
 .levels-greeting { color: var(--muted); font-weight: 600; margin-top: 6px; }
 .btn-text { position: absolute; left: 0; top: 6px; background: none; border: none; cursor: pointer; font-family: var(--font-head); font-weight: 700; font-size: 14px; color: var(--teal); padding: 8px 10px; border-radius: 12px; transition: background .2s; }
 .btn-text:hover { background: var(--cream-2); }
-
+​
 .levels-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 16px; }
 .level-card {
   position: relative; cursor: pointer; text-align: left;
@@ -302,21 +302,21 @@ body {
 .level-name { font-family: var(--font-head); font-weight: 700; font-size: 15px; color: var(--ink); line-height: 1.2; margin-top: 2px; min-height: 36px; }
 .level-diff { display: inline-block; align-self: flex-start; font-size: 11px; font-weight: 700; color: #5a2018; background: var(--coral); padding: 3px 10px; border-radius: 999px; margin-top: 2px; }
 .level-best { font-size: 12px; font-weight: 600; color: var(--muted); margin-top: 6px; }
-
+​
 /* level tag on quiz screen */
 .level-tag { font-family: var(--font-head); font-weight: 700; font-size: 13px; color: var(--teal); background: var(--white); display: inline-block; padding: 6px 14px; border-radius: 12px; box-shadow: var(--shadow-soft); margin-bottom: 14px; }
-
+​
 /* soft button (review) */
 .btn--soft { background: var(--cream-2); color: var(--teal); box-shadow: 0 5px 0 #e2d8c2; }
 .btn--soft:active { box-shadow: 0 2px 0 #e2d8c2; }
-
+​
 @media (max-width: 520px) {
   .levels-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
   .level-name { min-height: 34px; font-size: 14px; }
   .btn-text { position: static; display: inline-block; margin-bottom: 10px; }
   .levels-head { text-align: center; }
 }
-
+​
 /* ---------- Level card v2 (dengan deskripsi) ---------- */
 .level-card { min-height: 176px; }
 .level-top { display: flex; align-items: center; justify-content: space-between; }
@@ -325,7 +325,10 @@ body {
 .level-desc { font-size: 12.5px; color: var(--muted); font-weight: 500; line-height: 1.45; margin: 4px 0 10px; }
 .level-foot { margin-top: auto; display: flex; align-items: center; justify-content: space-between; gap: 8px; padding-top: 6px; }
 .level-foot .level-best { margin-top: 0; }
-
+​
+/* ---- Tombol download modul PDF ---- */
+.pdf-dl{margin-top:12px;width:100%;display:inline-flex;align-items:center;justify-content:center;gap:8px;text-decoration:none;}
+​
   </style>
 </head>
 <body>
@@ -334,13 +337,13 @@ body {
     <span class="blob blob-2"></span>
     <span class="blob blob-3"></span>
   </div>
-
+​
   <!-- ============ TOPBAR / BRAND ============ -->
   <header class="topbar">
     <div class="logo"><span class="q">Q</span><span class="u">u</span><span class="i">i</span><span class="z">z</span><span class="rest">Arena</span></div>
     <span class="brand-badge">⚡ 10 Level</span>
   </header>
-
+​
   <main class="app" id="app">
     <!-- ============ HOME SCREEN ============ -->
     <section class="screen screen--home is-active" id="screen-home">
@@ -348,24 +351,26 @@ body {
         <span class="badge">🌟 Bahasa Inggris · 10 Level</span>
         <h1 class="hero-title" id="quiz-title">QuizArena</h1>
         <p class="hero-subtitle" id="quiz-desc">Uji pengetahuanmu, kumpulkan poin, dan pecahkan rekor skor tertinggi.</p>
-
+​
         <div class="field">
           <label for="player-name">Nama kamu</label>
           <input type="text" id="player-name" placeholder="Ketik nama kamu…" maxlength="24" autocomplete="off" />
         </div>
-
+​
         <button class="btn btn--primary btn--lg" id="btn-start">
           Pilih Level <span class="btn-arrow">→</span>
         </button>
-
+​
         <ul class="meta-row" id="quiz-meta">
           <li><strong id="meta-count">10</strong> Level</li>
           <li><strong id="meta-qtotal">300</strong> Soal</li>
           <li><strong id="meta-time">20s</strong> / Soal</li>
         </ul>
+​
+        <a class="btn btn--soft pdf-dl" href="modul-belajar.pdf" download>📘 Modul Belajar (PDF)</a>
       </div>
     </section>
-
+​
     <!-- ============ LEVEL SELECT SCREEN ============ -->
     <section class="screen screen--levels" id="screen-levels">
       <div class="levels-head">
@@ -375,7 +380,7 @@ body {
       </div>
       <div class="levels-grid" id="levels-grid"></div>
     </section>
-
+​
     <!-- ============ QUIZ SCREEN ============ -->
     <section class="screen screen--quiz" id="screen-quiz">
       <header class="quiz-top">
@@ -388,56 +393,56 @@ body {
           <button class="btn-text" id="btn-quit">Keluar</button>
         </div>
       </header>
-
+​
       <div class="level-tag" id="quiz-level-tag">Level 1</div>
-
+​
       <div class="progress-track"><div class="progress-fill" id="progress-fill"></div></div>
-
+​
       <div class="timer">
         <div class="timer-bar" id="timer-bar"></div>
         <span class="timer-num" id="timer-num">20</span>
       </div>
-
+​
       <div class="card card--question">
         <p class="question-tag" id="question-tag">Pilihan Ganda</p>
         <h2 class="question-text" id="question-text">—</h2>
       </div>
-
+​
       <div class="answers" id="answers"></div>
     </section>
-
+​
     <!-- ============ RESULT SCREEN ============ -->
     <section class="screen screen--result" id="screen-result">
       <div class="card card--result">
         <div class="result-emoji" id="result-emoji">🎉</div>
         <h2 class="result-title" id="result-title">Kerja bagus!</h2>
         <p class="result-sub" id="result-sub">Ini hasil kuis kamu.</p>
-
+​
         <div class="result-score">
           <span class="result-score__num" id="result-score">0</span>
           <span class="result-score__label">POIN</span>
         </div>
-
+​
         <div class="stat-grid">
           <div class="stat"><span class="stat__num" id="stat-correct">0</span><span class="stat__label">Benar</span></div>
           <div class="stat"><span class="stat__num" id="stat-wrong">0</span><span class="stat__label">Salah</span></div>
           <div class="stat"><span class="stat__num" id="stat-acc">0%</span><span class="stat__label">Akurasi</span></div>
           <div class="stat"><span class="stat__num" id="stat-streak">0</span><span class="stat__label">Streak Maks</span></div>
         </div>
-
+​
         <div class="result-actions">
           <button class="btn btn--primary" id="btn-retry">Ulangi Level</button>
           <button class="btn btn--ghost" id="btn-levels">Pilih Level</button>
           <button class="btn btn--soft" id="btn-review">Lihat Pembahasan</button>
         </div>
       </div>
-
+​
       <div class="review" id="review" hidden></div>
     </section>
   </main>
-
+​
   <footer class="foot">Dibuat dengan ⚡ QuizArena · Deploy di Vercel</footer>
-
+​
   <script>
 /* =============================================================
    DATA KUIS — 10 LEVEL x 30 SOAL (Bahasa Inggris Dasar → Mahir)
@@ -446,7 +451,7 @@ body {
    answer = index jawaban benar (0 = opsi pertama).
    ============================================================= */
 window.QUIZ = {"title":"QuizArena — English Levels","description":"Kuis Bahasa Inggris 10 level bertingkat. Pilih level, jawab 30 soal, dan kumpulkan poin!","timePerQuestion":20,"shuffle":true,"levels":[]};
-
+​
 /* ---------- Level 1 · Kata Dasar & Warna (Sangat Mudah) ---------- */
 window.QUIZ.levels.push({"level":1,"name":"Kata Dasar & Warna","difficulty":"Sangat Mudah","emoji":"🌱","desc":"Kosakata paling dasar: benda, warna, dan angka.", "questions": [
   {"q":"Apa arti kata \"cat\"?","category":"Vocabulary","options":["pintu","hijau","putih","kucing"],"answer":3,"explain":"\"cat\" artinya kucing."},
@@ -480,7 +485,7 @@ window.QUIZ.levels.push({"level":1,"name":"Kata Dasar & Warna","difficulty":"San
   {"q":"Apa arti kata \"apple\"?","category":"Vocabulary","options":["tiga","sapi","apel","lima"],"answer":2,"explain":"\"apple\" artinya apel."},
   {"q":"Apa arti kata \"banana\"?","category":"Vocabulary","options":["satu","pisang","bintang","buku"],"answer":1,"explain":"\"banana\" artinya pisang."},
 ]});
-
+​
 /* ---------- Level 2 · Kata Sehari-hari (Mudah) ---------- */
 window.QUIZ.levels.push({"level":2,"name":"Kata Sehari-hari","difficulty":"Mudah","emoji":"🐣","desc":"Kata umum sehari-hari: keluarga, tempat, dan waktu.", "questions": [
   {"q":"Bahasa Inggris dari \"ibu\" adalah…","category":"Vocabulary","options":["year","village","mother","road"],"answer":2,"explain":"\"ibu\" dalam Bahasa Inggris adalah \"mother\"."},
@@ -514,7 +519,7 @@ window.QUIZ.levels.push({"level":2,"name":"Kata Sehari-hari","difficulty":"Mudah
   {"q":"Bahasa Inggris dari \"tahun\" adalah…","category":"Vocabulary","options":["mother","work","year","sister"],"answer":2,"explain":"\"tahun\" dalam Bahasa Inggris adalah \"year\"."},
   {"q":"Bahasa Inggris dari \"hari\" adalah…","category":"Vocabulary","options":["house","afternoon","money","day"],"answer":3,"explain":"\"hari\" dalam Bahasa Inggris adalah \"day\"."},
 ]});
-
+​
 /* ---------- Level 3 · Lawan Kata (Mudah) ---------- */
 window.QUIZ.levels.push({"level":3,"name":"Lawan Kata","difficulty":"Mudah","emoji":"🌤️","desc":"Latihan lawan kata (antonim) yang sering dipakai.", "questions": [
   {"q":"Lawan kata dari \"big\" adalah…","category":"Antonim","options":["night","low","hate","small"],"answer":3,"explain":"Lawan kata \"big\" adalah \"small\"."},
@@ -548,7 +553,7 @@ window.QUIZ.levels.push({"level":3,"name":"Lawan Kata","difficulty":"Mudah","emo
   {"q":"Lawan kata dari \"quiet\" adalah…","category":"Antonim","options":["closed","loud","end","false"],"answer":1,"explain":"Lawan kata \"quiet\" adalah \"loud\"."},
   {"q":"Lawan kata dari \"young\" adalah…","category":"Antonim","options":["slow","poor","old","difficult"],"answer":2,"explain":"Lawan kata \"young\" adalah \"old\"."},
 ]});
-
+​
 /* ---------- Level 4 · Artikel & Jamak (Cukup Mudah) ---------- */
 window.QUIZ.levels.push({"level":4,"name":"Artikel & Jamak","difficulty":"Cukup Mudah","emoji":"📗","desc":"Artikel a/an dan bentuk jamak kata benda.", "questions": [
   {"q":"Lengkapi: \"This is ___ apple.\"","category":"Grammar · Artikel","options":["the","a","an","some"],"answer":2,"explain":"Diawali bunyi vokal → pakai 'an'."},
@@ -582,7 +587,7 @@ window.QUIZ.levels.push({"level":4,"name":"Artikel & Jamak","difficulty":"Cukup 
   {"q":"Lengkapi: \"This is ___ pen.\"","category":"Grammar · Artikel","options":["the","some","a","an"],"answer":2,"explain":"Diawali bunyi konsonan → pakai 'a'."},
   {"q":"Bentuk jamak dari \"book\" adalah…","category":"Grammar · Jamak","options":["boys","women","leaves","books"],"answer":3,"explain":"Jamak dari \"book\" adalah \"books\"."},
 ]});
-
+​
 /* ---------- Level 5 · To Be & This/That (Menengah) ---------- */
 window.QUIZ.levels.push({"level":5,"name":"To Be & This/That","difficulty":"Menengah","emoji":"🧩","desc":"Kata kerja to be dan this/that/these/those.", "questions": [
   {"q":"Lengkapi: \"I ___ happy.\"","category":"Grammar · To Be","options":["am","be","is","are"],"answer":0,"explain":"Subjek \"I\" memakai \"am\"."},
@@ -616,7 +621,7 @@ window.QUIZ.levels.push({"level":5,"name":"To Be & This/That","difficulty":"Mene
   {"q":"___ is a beautiful flower here. (satu, dekat)","category":"Grammar · This/That","options":["This","That","These","Those"],"answer":0,"explain":"Tunggal & dekat → This."},
   {"q":"___ students there are new. (banyak, jauh)","category":"Grammar · This/That","options":["That","Those","This","These"],"answer":1,"explain":"Jamak & jauh → Those."},
 ]});
-
+​
 /* ---------- Level 6 · Simple Present (Menengah) ---------- */
 window.QUIZ.levels.push({"level":6,"name":"Simple Present","difficulty":"Menengah","emoji":"⏱️","desc":"Simple present: akhiran -s/-es dan do/does.", "questions": [
   {"q":"Subjek \"He/She\", bentuk simple present yang benar dari \"play\" adalah…","category":"Grammar · Simple Present","options":["playes","playing","play","plays"],"answer":3,"explain":"Orang ketiga tunggal: \"play\" → \"plays\"."},
@@ -650,7 +655,7 @@ window.QUIZ.levels.push({"level":6,"name":"Simple Present","difficulty":"Menenga
   {"q":"___ Maria sing?","category":"Grammar · Do/Does","options":["Is","Does","Do","Are"],"answer":1,"explain":"He/She/It → Does."},
   {"q":"___ your friends come?","category":"Grammar · Do/Does","options":["Do","Are","Is","Does"],"answer":0,"explain":"I/You/We/They → Do."},
 ]});
-
+​
 /* ---------- Level 7 · Continuous & Preposisi (Menengah+) ---------- */
 window.QUIZ.levels.push({"level":7,"name":"Continuous & Preposisi","difficulty":"Menengah+","emoji":"🌀","desc":"Present continuous (-ing) dan preposisi in/on/at.", "questions": [
   {"q":"Lengkapi: \"They are ___ now.\" (bentuk -ing dari \"play\")","category":"Grammar · Continuous","options":["playing","play","plays","played"],"answer":0,"explain":"Present continuous: \"play\" → \"playing\"."},
@@ -684,7 +689,7 @@ window.QUIZ.levels.push({"level":7,"name":"Continuous & Preposisi","difficulty":
   {"q":"There is a picture ___ the wall.","category":"Grammar · Preposisi","options":["to","on","in","at"],"answer":1,"explain":"Menempel di dinding → on."},
   {"q":"The children are ___ the garden.","category":"Grammar · Preposisi","options":["at","to","in","on"],"answer":2,"explain":"Area/ruang → in."},
 ]});
-
+​
 /* ---------- Level 8 · Past Tense (Sulit) ---------- */
 window.QUIZ.levels.push({"level":8,"name":"Past Tense","difficulty":"Sulit","emoji":"🕰️","desc":"Kata kerja bentuk lampau (past tense).", "questions": [
   {"q":"Bentuk lampau (past tense) dari \"go\" adalah…","category":"Grammar · Past Tense","options":["studied","played","goed","went"],"answer":3,"explain":"Past tense \"go\" adalah \"went\"."},
@@ -718,7 +723,7 @@ window.QUIZ.levels.push({"level":8,"name":"Past Tense","difficulty":"Sulit","emo
   {"q":"Bentuk lampau (past tense) dari \"say\" adalah…","category":"Grammar · Past Tense","options":["said","won","ate","ran"],"answer":0,"explain":"Past tense \"say\" adalah \"said\"."},
   {"q":"Bentuk lampau (past tense) dari \"sell\" adalah…","category":"Grammar · Past Tense","options":["watched","sold","paid","ate"],"answer":1,"explain":"Past tense \"sell\" adalah \"sold\"."},
 ]});
-
+​
 /* ---------- Level 9 · Comparative & Modals (Sulit) ---------- */
 window.QUIZ.levels.push({"level":9,"name":"Comparative & Modals","difficulty":"Sulit","emoji":"📈","desc":"Comparative, superlative, dan modal verbs.", "questions": [
   {"q":"Bentuk comparative dari \"big\" adalah…","category":"Grammar · Comparative","options":["happier","more beautiful","bigger","faster"],"answer":2,"explain":"Comparative \"big\" → \"bigger\"."},
@@ -752,7 +757,7 @@ window.QUIZ.levels.push({"level":9,"name":"Comparative & Modals","difficulty":"S
   {"q":"It’s late. We ___ go home now.","category":"Grammar · Modals","options":["may","can","must","should"],"answer":3,"explain":"Saran → should."},
   {"q":"You ___ not smoke here. It is forbidden.","category":"Grammar · Modals","options":["can","should","must","may"],"answer":2,"explain":"Larangan tegas → must not."},
 ]});
-
+​
 /* ---------- Level 10 · Idioms & Phrasal Verbs (Sangat Sulit) ---------- */
 window.QUIZ.levels.push({"level":10,"name":"Idioms & Phrasal Verbs","difficulty":"Sangat Sulit","emoji":"🔥","desc":"Idiom, phrasal verb, dan kosakata tingkat mahir.", "questions": [
   {"q":"Idiom \"break a leg\" artinya…","category":"Idiom","options":["membocorkan rahasia","kurang sehat","menggoda / bercanda","semoga sukses"],"answer":3,"explain":"\"break a leg\" = semoga sukses."},
@@ -786,7 +791,7 @@ window.QUIZ.levels.push({"level":10,"name":"Idioms & Phrasal Verbs","difficulty"
   {"q":"Phrasal verb \"get up\" artinya…","category":"Phrasal Verb","options":["mencari","menyerah","bangun (dari tempat tidur)","muncul / datang"],"answer":2,"explain":"\"get up\" = bangun (dari tempat tidur)."},
   {"q":"Apa arti kata \"sincere\"?","category":"Advanced Vocab","options":["penasaran","sangat besar","tulus","rapuh"],"answer":2,"explain":"\"sincere\" = tulus."},
 ]});
-
+​
   </script>
   <script>
 /* ================= QuizArena — game logic (mode 10 level) ================= */
@@ -797,14 +802,14 @@ window.QUIZ.levels.push({"level":10,"name":"Idioms & Phrasal Verbs","difficulty"
   const KEYS = ["A", "B", "C", "D"];
   const COLORS = ["var(--a0)", "var(--a1)", "var(--a2)", "var(--a3)"];
   const APP_KEY = "quizarena_" + slug(CONFIG.title);
-
+​
   // ---- State ----
   let currentLevel = null;          // index level yang dimainkan
   let questions = [];               // 30 soal sesi ini (sudah diacak)
   let idx = 0, score = 0, correct = 0, streak = 0, maxStreak = 0;
   let timeLeft = CONFIG.timePerQuestion, timer = null, answered = false;
   let history = [];
-
+​
   // ---- Elements ----
   const $ = (id) => document.getElementById(id);
   const screens = {
@@ -813,7 +818,7 @@ window.QUIZ.levels.push({"level":10,"name":"Idioms & Phrasal Verbs","difficulty"
     quiz: $("screen-quiz"),
     result: $("screen-result"),
   };
-
+​
   // ---- Init home ----
   $("quiz-title").textContent = CONFIG.title;
   $("quiz-desc").textContent = CONFIG.description;
@@ -821,7 +826,7 @@ window.QUIZ.levels.push({"level":10,"name":"Idioms & Phrasal Verbs","difficulty"
   $("meta-count").textContent = LEVELS.length;
   $("meta-qtotal").textContent = LEVELS.reduce((s, l) => s + l.questions.length, 0);
   $("meta-time").textContent = CONFIG.timePerQuestion + "s";
-
+​
   $("btn-start").addEventListener("click", goToLevels);
   $("player-name").addEventListener("keydown", (e) => { if (e.key === "Enter") goToLevels(); });
   $("btn-back-home").addEventListener("click", () => show("home"));
@@ -829,13 +834,13 @@ window.QUIZ.levels.push({"level":10,"name":"Idioms & Phrasal Verbs","difficulty"
   $("btn-levels").addEventListener("click", goToLevels);
   $("btn-review").addEventListener("click", toggleReview);
   $("btn-quit").addEventListener("click", () => { clearInterval(timer); goToLevels(); });
-
+​
   // ---- Level select ----
   function goToLevels() {
     renderLevels();
     show("levels");
   }
-
+​
   function renderLevels() {
     const name = ($("player-name").value || "").trim();
     $("levels-greeting").textContent = name ? `Halo, ${name}! Pilih levelmu 👇` : "Pilih level yang ingin kamu mainkan 👇";
@@ -854,7 +859,7 @@ window.QUIZ.levels.push({"level":10,"name":"Idioms & Phrasal Verbs","difficulty"
       grid.appendChild(card);
     });
   }
-
+​
   // ---- Quiz flow ----
   function buildSession(level) {
     let pool = level.questions.map((q) => ({ ...q, options: [...q.options] }));
@@ -868,7 +873,7 @@ window.QUIZ.levels.push({"level":10,"name":"Idioms & Phrasal Verbs","difficulty"
     }
     return pool;
   }
-
+​
   function startLevel(i) {
     currentLevel = i;
     const level = LEVELS[i];
@@ -879,7 +884,7 @@ window.QUIZ.levels.push({"level":10,"name":"Idioms & Phrasal Verbs","difficulty"
     show("quiz");
     renderQuestion();
   }
-
+​
   function renderQuestion() {
     answered = false;
     const q = questions[idx];
@@ -888,7 +893,7 @@ window.QUIZ.levels.push({"level":10,"name":"Idioms & Phrasal Verbs","difficulty"
     $("progress-fill").style.width = ((idx) / questions.length) * 100 + "%";
     $("question-tag").textContent = q.category || "Pilihan Ganda";
     $("question-text").textContent = q.q;
-
+​
     const wrap = $("answers");
     wrap.innerHTML = "";
     q.options.forEach((opt, i) => {
@@ -900,10 +905,10 @@ window.QUIZ.levels.push({"level":10,"name":"Idioms & Phrasal Verbs","difficulty"
       btn.addEventListener("click", (e) => selectAnswer(i, e));
       wrap.appendChild(btn);
     });
-
+​
     startTimer();
   }
-
+​
   function startTimer() {
     clearInterval(timer);
     timeLeft = CONFIG.timePerQuestion;
@@ -914,7 +919,7 @@ window.QUIZ.levels.push({"level":10,"name":"Idioms & Phrasal Verbs","difficulty"
       if (timeLeft <= 0) { clearInterval(timer); if (!answered) lockOut(); }
     }, 1000);
   }
-
+​
   function updateTimerUI() {
     const pct = (timeLeft / CONFIG.timePerQuestion) * 100;
     const bar = $("timer-bar");
@@ -923,7 +928,7 @@ window.QUIZ.levels.push({"level":10,"name":"Idioms & Phrasal Verbs","difficulty"
     bar.classList.toggle("danger", pct <= 25);
     $("timer-num").textContent = Math.max(0, timeLeft);
   }
-
+​
   function selectAnswer(i, e) {
     if (answered) return;
     answered = true;
@@ -936,7 +941,7 @@ window.QUIZ.levels.push({"level":10,"name":"Idioms & Phrasal Verbs","difficulty"
       else if (bi === i) b.classList.add("wrong");
       else b.classList.add("dim");
     });
-
+​
     const isCorrect = i === q.answer;
     let gained = 0;
     if (isCorrect) {
@@ -954,10 +959,10 @@ window.QUIZ.levels.push({"level":10,"name":"Idioms & Phrasal Verbs","difficulty"
     $("score-live").textContent = score;
     $("streak-pill").textContent = `🔥 ${streak}`;
     history.push({ q: q.q, chosen: i, answer: q.answer, options: q.options, explain: q.explain, correct: isCorrect });
-
+​
     setTimeout(next, 1100);
   }
-
+​
   function lockOut() {
     answered = true;
     const q = questions[idx];
@@ -970,13 +975,13 @@ window.QUIZ.levels.push({"level":10,"name":"Idioms & Phrasal Verbs","difficulty"
     history.push({ q: q.q, chosen: -1, answer: q.answer, options: q.options, explain: q.explain, correct: false });
     setTimeout(next, 1100);
   }
-
+​
   function next() {
     idx++;
     if (idx >= questions.length) finish();
     else renderQuestion();
   }
-
+​
   function finish() {
     $("progress-fill").style.width = "100%";
     const level = LEVELS[currentLevel];
@@ -987,7 +992,7 @@ window.QUIZ.levels.push({"level":10,"name":"Idioms & Phrasal Verbs","difficulty"
     $("stat-wrong").textContent = total - correct;
     $("stat-acc").textContent = acc + "%";
     $("stat-streak").textContent = maxStreak;
-
+​
     const name = ($("player-name").value || "").trim();
     let emoji = "🎉", title = "Kerja bagus!", sub = "Kamu menyelesaikan level ini.";
     if (acc === 100) { emoji = "🏆"; title = "Sempurna!"; sub = "Semua jawaban benar. Luar biasa!"; }
@@ -998,14 +1003,14 @@ window.QUIZ.levels.push({"level":10,"name":"Idioms & Phrasal Verbs","difficulty"
     $("result-emoji").textContent = emoji;
     $("result-title").textContent = name ? `${title} ${name}` : title;
     $("result-sub").textContent = `Level ${level.level} · ${level.name}. ${sub}` + (isBest ? " 🎊 Rekor baru!" : "");
-
+​
     saveBest(level.level, score);
     buildReview();
     $("review").hidden = true;
     $("btn-review").textContent = "Lihat Pembahasan";
     show("result");
   }
-
+​
   function buildReview() {
     const wrap = $("review");
     wrap.innerHTML = "";
@@ -1021,14 +1026,14 @@ window.QUIZ.levels.push({"level":10,"name":"Idioms & Phrasal Verbs","difficulty"
       wrap.appendChild(item);
     });
   }
-
+​
   function toggleReview() {
     const r = $("review");
     r.hidden = !r.hidden;
     $("btn-review").textContent = r.hidden ? "Lihat Pembahasan" : "Sembunyikan Pembahasan";
     if (!r.hidden) r.scrollIntoView({ behavior: "smooth", block: "nearest" });
   }
-
+​
   function floatPoints(pts, e) {
     const el = document.createElement("div");
     el.className = "float-pts";
@@ -1039,7 +1044,7 @@ window.QUIZ.levels.push({"level":10,"name":"Idioms & Phrasal Verbs","difficulty"
     document.body.appendChild(el);
     setTimeout(() => el.remove(), 1000);
   }
-
+​
   // ---- helpers ----
   function show(name) {
     Object.values(screens).forEach((s) => s.classList.remove("is-active"));
@@ -1059,7 +1064,8 @@ window.QUIZ.levels.push({"level":10,"name":"Idioms & Phrasal Verbs","difficulty"
   function slug(s) { return String(s).toLowerCase().replace(/[^a-z0-9]+/g, "_"); }
   function esc(s) { const d = document.createElement("div"); d.textContent = s == null ? "" : s; return d.innerHTML; }
 })();
-
+​
   </script>
 </body>
 </html>
+​
