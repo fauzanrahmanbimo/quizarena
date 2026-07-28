@@ -2,10 +2,18 @@
 <html lang="id">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="QuizArena — kuis Bahasa Inggris 10 level bertingkat. Pilih level, jawab, dan kejar skor tertinggi!" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
   <title>QuizArena — English Levels</title>
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>" />
+  <meta name="description" content="QuizArena — kuis Bahasa Inggris dasar 10 level (300 soal) dengan materi, pembahasan, mode 2 pemain, papan skor, dan skor bintang." />
+  <meta name="theme-color" content="#173F3A" />
+  <meta name="color-scheme" content="light dark" />
+  <!-- Open Graph / social -->
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="QuizArena — English Levels" />
+  <meta property="og:description" content="Kuis Bahasa Inggris dasar 10 level dengan materi, pembahasan, mode VS, dan papan skor." />
+  <meta name="twitter:card" content="summary" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%E2%9A%A1%3C/text%3E%3C/svg%3E" />
+  <link rel="manifest" href="data:application/manifest+json,%7B%22name%22%3A%22QuizArena%22%2C%22short_name%22%3A%22QuizArena%22%2C%22start_url%22%3A%22.%22%2C%22display%22%3A%22standalone%22%2C%22background_color%22%3A%22%23FBF5E9%22%2C%22theme_color%22%3A%22%23173F3A%22%2C%22icons%22%3A%5B%5D%7D" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Fredoka:wght@400;500;600;700&display=swap" rel="stylesheet" />
@@ -342,119 +350,275 @@ body {
 .materi-name{font-family:var(--font-head);font-size:15px;font-weight:700;color:var(--ink);line-height:1.2;}
 .materi-open{font-family:var(--font-body);font-size:12.5px;font-weight:700;color:var(--lime-d);flex-shrink:0;}
 
+/* ================= v3 additions ================= */
+.top-actions{display:flex;align-items:center;gap:10px;}
+.icon-btn{width:42px;height:42px;border-radius:14px;border:none;cursor:pointer;background:var(--white);box-shadow:var(--shadow-soft);font-size:18px;line-height:1;transition:transform .1s;}
+.icon-btn:active{transform:translateY(2px);}
+
+/* segmented controls */
+.seg{position:relative;z-index:1;display:flex;gap:8px;max-width:400px;margin:0 auto 14px;background:rgba(255,255,255,.10);padding:6px;border-radius:16px;}
+.seg-btn{flex:1;border:none;cursor:pointer;font-family:var(--font-head);font-weight:700;font-size:14px;padding:11px 10px;border-radius:12px;background:transparent;color:rgba(255,255,255,.75);transition:background .2s,color .2s;}
+.seg-btn.is-on{background:var(--lime);color:#123f0d;box-shadow:0 3px 0 var(--lime-d);}
+.home-links{position:relative;z-index:1;margin-top:22px;}
+.home-links .btn-text{position:static;color:#dff7d8;}
+.home-links .btn-text:hover{background:rgba(255,255,255,.10);}
+
+/* overall progress */
+.overall{max-width:420px;margin:16px auto 0;}
+.overall-bar{height:12px;background:var(--cream-2);border-radius:999px;overflow:hidden;}
+.overall-fill{height:100%;width:0;background:linear-gradient(90deg,var(--lime),var(--mint-d));border-radius:999px;transition:width .5s ease;}
+.overall-label{display:block;margin-top:8px;font-size:13px;font-weight:600;color:var(--muted);}
+
+/* level card states */
+.level-stars{display:block;margin:6px 0 2px;}
+.stars .star{color:#d9cdb5;font-size:15px;letter-spacing:1px;}
+.stars .star.on{color:var(--amber);}
+.stars--big .star{font-size:30px;}
+.level-card.is-locked{opacity:.72;filter:grayscale(.25);}
+.level-card.is-locked:hover{transform:none;border-color:var(--cream-2);box-shadow:0 5px 0 var(--cream-2);}
+.level-card.is-done{border-color:var(--lime-d);}
+.level-card.is-done::after{content:"\2713";position:absolute;top:12px;right:14px;width:22px;height:22px;border-radius:50%;background:var(--green);color:#fff;font-size:13px;font-weight:800;display:grid;place-items:center;}
+.level-card.is-done .level-emoji{display:none;}
+.shake{animation:shake .4s;}
+@keyframes shake{0%,100%{transform:translateX(0);}20%,60%{transform:translateX(-6px);}40%,80%{transform:translateX(6px);}}
+
+/* learn screen */
+.card--learn{padding:30px 30px 26px;}
+.learn-head{display:flex;gap:16px;align-items:flex-start;margin:8px 0 18px;}
+.learn-emoji{font-size:44px;line-height:1;}
+.learn-lv{font-size:13px;font-weight:700;color:var(--muted);}
+.learn-name{font-family:var(--font-head);font-weight:800;font-size:26px;color:var(--teal);line-height:1.15;margin:2px 0 4px;}
+.learn-desc{color:var(--muted);font-weight:500;font-size:14px;}
+.learn-title{font-family:var(--font-head);font-weight:800;color:var(--teal);font-size:19px;margin:6px 0 10px;}
+.learn-list{list-style:none;display:flex;flex-direction:column;gap:10px;}
+.learn-list li{background:var(--cream);border-left:5px solid var(--lime-d);border-radius:14px;padding:12px 16px;font-size:14.5px;line-height:1.55;color:var(--ink);font-weight:500;}
+.learn-list li b{color:var(--teal);}
+.learn-actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:20px;}
+.learn-actions .btn{flex:1;min-width:170px;text-decoration:none;}
+
+/* vs bar */
+.vs-bar{display:flex;align-items:center;justify-content:center;gap:12px;margin-bottom:14px;font-family:var(--font-head);font-weight:700;}
+.vs-player{background:var(--white);padding:8px 16px;border-radius:14px;box-shadow:var(--shadow-soft);color:var(--muted);border:2px solid transparent;}
+.vs-player strong{color:var(--amber);}
+.vs-player.is-turn{border-color:var(--lime);color:var(--teal);}
+.vs-mid{font-size:13px;color:var(--coral-d);}
+
+/* type mode */
+.type-box{display:flex;gap:10px;margin-top:4px;}
+.type-box input{flex:1;padding:16px 18px;font-size:17px;font-family:var(--font-body);font-weight:600;color:var(--ink);background:var(--white);border:2px solid var(--cream-2);border-radius:16px;outline:none;transition:border-color .2s,box-shadow .2s;}
+.type-box input:focus{border-color:var(--lime);box-shadow:0 0 0 4px rgba(132,224,110,.25);}
+
+/* explanation + next */
+.explain-box{margin-top:16px;border-radius:16px;padding:16px 18px;text-align:left;font-weight:500;line-height:1.5;}
+.explain-box.is-ok{background:var(--green-soft);border:2px solid var(--green);}
+.explain-box.is-no{background:var(--red-soft);border:2px solid var(--red);}
+.explain-head{font-family:var(--font-head);font-weight:800;font-size:16px;margin-bottom:4px;color:var(--ink);}
+.explain-line{font-size:14px;color:var(--ink);}
+.explain-line b{color:var(--teal);}
+.explain-why{margin-top:8px;font-size:14px;color:var(--muted);}
+.next-btn{width:100%;max-width:none;margin-top:16px;}
+
+/* result stars + share */
+.stars--big{display:inline-flex;gap:6px;margin-bottom:10px;}
+.review-who{font-size:12px;color:var(--coral-d);font-weight:700;}
+
+/* board screen */
+.card--board{padding:30px;}
+.board-title{font-family:var(--font-head);font-weight:800;color:var(--teal);font-size:22px;margin:6px 0 14px;text-align:center;}
+.stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:20px;}
+.board-list{list-style:none;display:flex;flex-direction:column;gap:8px;}
+.board-row{display:flex;align-items:center;gap:12px;background:var(--cream);border-radius:14px;padding:12px 16px;}
+.board-row.top{background:var(--green-soft);}
+.board-rank{font-family:var(--font-head);font-weight:800;font-size:18px;width:34px;text-align:center;}
+.board-name{flex:1;font-weight:700;color:var(--ink);}
+.board-meta{font-size:12.5px;color:var(--muted);font-weight:600;}
+.board-score{font-family:var(--font-head);font-weight:800;color:var(--amber);font-size:18px;min-width:56px;text-align:right;}
+.board-empty{text-align:center;color:var(--muted);padding:20px;font-weight:600;}
+.board-sep{border:none;border-top:2px dashed var(--cream-2);margin:24px 0 18px;}
+.search-input{width:100%;padding:14px 16px;font-size:16px;font-family:var(--font-body);font-weight:600;color:var(--ink);background:var(--cream);border:2px solid var(--cream-2);border-radius:14px;outline:none;}
+.search-input:focus{border-color:var(--lime);box-shadow:0 0 0 4px rgba(132,224,110,.22);}
+.search-results{margin-top:14px;display:flex;flex-direction:column;gap:10px;max-height:44vh;overflow-y:auto;}
+.search-item{background:var(--cream);border-radius:14px;padding:12px 16px;border-left:5px solid var(--mint-d);}
+.search-q{font-family:var(--font-head);font-weight:700;color:var(--teal);}
+.search-lv{font-size:11px;color:var(--muted);background:var(--cream-2);padding:2px 8px;border-radius:999px;margin-left:6px;}
+.search-ans{font-size:14px;color:var(--green);font-weight:700;margin-top:4px;}
+.search-exp{font-size:13px;color:var(--muted);margin-top:2px;}
+.search-hint{color:var(--muted);font-weight:500;text-align:center;padding:16px;}
+
+/* confetti + toast */
+.confetti-canvas{position:fixed;inset:0;width:100vw;height:100vh;pointer-events:none;z-index:60;}
+.toast{position:fixed;left:50%;bottom:26px;transform:translateX(-50%) translateY(20px);background:var(--teal);color:#fff;font-weight:600;font-size:14px;padding:12px 20px;border-radius:14px;box-shadow:0 10px 30px rgba(0,0,0,.25);opacity:0;transition:opacity .3s,transform .3s;z-index:70;max-width:90vw;text-align:center;}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
+
+@media (max-width:520px){.stats-row{grid-template-columns:repeat(2,1fr);}.seg{flex-direction:column;}.learn-actions .btn{min-width:0;}}
+
+/* ================= Dark mode ================= */
+html.dark{--cream:#14211E;--cream-2:#22332E;--white:#1B2A26;--ink:#EAF3EF;--muted:#9DB0AA;--shadow-soft:0 12px 34px rgba(0,0,0,.38);--green-soft:#17351F;--red-soft:#3A2019;}
+html.dark body{background:var(--cream);}
+html.dark .pill,html.dark .score-chip,html.dark .btn-text,html.dark .levels-title,html.dark .level-num,html.dark .level-tag,html.dark .result-title,html.dark .stat__num,html.dark .materi-title,html.dark .board-title,html.dark .learn-name,html.dark .learn-title,html.dark .level-best,html.dark .search-q,html.dark .vs-player.is-turn,html.dark .explain-line b,html.dark .learn-list li b{color:#EAF3EF;}
+html.dark .btn--soft{color:#EAF3EF;box-shadow:0 5px 0 #0d1a17;}
+html.dark .icon-btn{background:var(--cream-2);}
+html.dark .search-lv{color:#cfe0da;}
+
+/* Pastikan atribut hidden selalu menang atas display kustom */
+[hidden]{display:none !important;}
+
   </style>
 </head>
 <body>
-  <div class="aurora" aria-hidden="true">
-    <span class="blob blob-1"></span>
-    <span class="blob blob-2"></span>
-    <span class="blob blob-3"></span>
-  </div>
+  <div class="aurora"><span class="blob blob-1"></span><span class="blob blob-2"></span><span class="blob blob-3"></span></div>
 
-  <!-- ============ TOPBAR / BRAND ============ -->
   <header class="topbar">
     <div class="logo"><span class="q">Q</span><span class="u">u</span><span class="i">i</span><span class="z">z</span><span class="rest">Arena</span></div>
-    <span class="brand-badge">⚡ 10 Level</span>
+    <div class="top-actions">
+      <button class="icon-btn" id="btn-sound" title="Suara" aria-label="Suara">🔊</button>
+      <button class="icon-btn" id="btn-theme" title="Mode gelap" aria-label="Mode gelap">🌙</button>
+      <span class="brand-badge">⚡ 10 Level</span>
+    </div>
   </header>
 
-  <main class="app" id="app">
-    <!-- ============ HOME SCREEN ============ -->
+  <main class="app">
+    <!-- HOME -->
     <section class="screen screen--home is-active" id="screen-home">
       <div class="card card--hero">
         <span class="badge">🌟 Bahasa Inggris · 10 Level</span>
         <h1 class="hero-title" id="quiz-title">QuizArena</h1>
-        <p class="hero-subtitle" id="quiz-desc">Uji pengetahuanmu, kumpulkan poin, dan pecahkan rekor skor tertinggi.</p>
+        <p class="hero-subtitle" id="quiz-desc">Uji kemampuan Bahasa Inggrismu!</p>
 
         <div class="field">
-          <label for="player-name">Nama kamu</label>
-          <input type="text" id="player-name" placeholder="Ketik nama kamu…" maxlength="24" autocomplete="off" />
+          <label for="player-name">Nama pemain 1</label>
+          <input id="player-name" type="text" placeholder="Tulis namamu…" maxlength="24" autocomplete="off" />
+        </div>
+        <div class="field" id="field-p2" hidden>
+          <label for="player-name-2">Nama pemain 2</label>
+          <input id="player-name-2" type="text" placeholder="Nama lawan…" maxlength="24" autocomplete="off" />
         </div>
 
-        <button class="btn btn--primary btn--lg" id="btn-start">
-          Pilih Level <span class="btn-arrow">→</span>
-        </button>
+        <div class="seg" id="seg-players">
+          <button class="seg-btn is-on" data-players="1">👤 1 Pemain</button>
+          <button class="seg-btn" data-players="2">👥 2 Pemain (VS)</button>
+        </div>
+        <div class="seg" id="seg-mode">
+          <button class="seg-btn is-on" data-mode="mc">🔘 Pilihan Ganda</button>
+          <button class="seg-btn" data-mode="type">⌨️ Ketik Jawaban</button>
+        </div>
+
+        <button class="btn btn--primary btn--lg" id="btn-start">Pilih Level <span class="btn-arrow">→</span></button>
 
         <ul class="meta-row" id="quiz-meta">
           <li><strong id="meta-count">10</strong> Level</li>
           <li><strong id="meta-qtotal">300</strong> Soal</li>
-          <li><strong id="meta-time">20s</strong> / Soal</li>
+          <li><strong id="meta-time">20s</strong> / soal</li>
         </ul>
+        <div class="home-links">
+          <button class="btn-text" id="btn-board">🏆 Papan Skor & Statistik</button>
+        </div>
       </div>
     </section>
 
-    <!-- ============ LEVEL SELECT SCREEN ============ -->
+    <!-- LEVELS -->
     <section class="screen screen--levels" id="screen-levels">
       <div class="levels-head">
         <button class="btn-text" id="btn-back-home">← Ganti nama</button>
         <h2 class="levels-title">Pilih Level</h2>
-        <p class="levels-greeting" id="levels-greeting">Pilih level yang ingin kamu mainkan 👇</p>
+        <p class="levels-greeting" id="levels-greeting">Pilih levelmu 👇</p>
+        <div class="overall">
+          <div class="overall-bar"><div class="overall-fill" id="overall-fill"></div></div>
+          <span class="overall-label" id="overall-label">0 / 10 level selesai</span>
+        </div>
       </div>
       <div class="levels-grid" id="levels-grid"></div>
 
       <div class="materi-head">
         <h2 class="materi-title">📚 MATERI</h2>
-        <p class="materi-sub">Baca ringkasan materi &amp; pembahasan tiap level — langsung terbuka di PDF reader.</p>
+        <p class="materi-sub">Baca ringkasan materi & pembahasan tiap level — langsung terbuka di PDF reader.</p>
       </div>
       <div class="materi-grid" id="materi-grid"></div>
     </section>
 
-    <!-- ============ QUIZ SCREEN ============ -->
+    <!-- LEARN -->
+    <section class="screen screen--learn" id="screen-learn">
+      <div class="card card--learn">
+        <button class="btn-text" id="btn-learn-back" style="position:static;margin-bottom:6px;">← Kembali</button>
+        <div class="learn-head" id="learn-head"></div>
+        <h3 class="learn-title">Ringkasan Materi</h3>
+        <ul class="learn-list" id="learn-list"></ul>
+        <div class="learn-actions">
+          <a class="btn btn--soft" id="learn-pdf" href="#" target="_blank" rel="noopener">📄 Buka PDF lengkap</a>
+          <button class="btn btn--primary" id="btn-learn-start">Mulai Kuis →</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- QUIZ -->
     <section class="screen screen--quiz" id="screen-quiz">
       <header class="quiz-top">
         <div class="quiz-top__left">
-          <span class="pill" id="progress-label">Soal 1 / 30</span>
+          <span class="pill" id="progress-label">Soal <b>1</b> / 30</span>
           <span class="pill pill--streak" id="streak-pill">🔥 0</span>
         </div>
-        <div class="quiz-top__right">
-          <span class="score-chip">⭐ <strong id="score-live">0</strong></span>
-          <button class="btn-text" id="btn-quit">Keluar</button>
+        <div class="quiz-top__right" style="display:flex;align-items:center;gap:10px;">
+          <span class="score-chip" id="score-chip">⭐ <strong id="score-live">0</strong></span>
+          <button class="btn-text" id="btn-quit" style="position:static;">Keluar</button>
         </div>
       </header>
-
+      <div class="vs-bar" id="vs-bar" hidden></div>
       <div class="level-tag" id="quiz-level-tag">Level 1</div>
-
       <div class="progress-track"><div class="progress-fill" id="progress-fill"></div></div>
-
-      <div class="timer">
-        <div class="timer-bar" id="timer-bar"></div>
-        <span class="timer-num" id="timer-num">20</span>
-      </div>
-
+      <div class="timer"><div class="timer-bar" id="timer-bar"></div><span class="timer-num" id="timer-num">20</span></div>
       <div class="card card--question">
         <p class="question-tag" id="question-tag">Pilihan Ganda</p>
         <h2 class="question-text" id="question-text">—</h2>
       </div>
-
       <div class="answers" id="answers"></div>
+      <form class="type-box" id="type-box" hidden>
+        <input id="type-input" placeholder="Ketik jawabanmu…" autocomplete="off" />
+        <button class="btn btn--primary" id="type-submit" type="submit">Jawab</button>
+      </form>
+      <div class="explain-box" id="explain-box" hidden></div>
+      <button class="btn btn--primary next-btn" id="btn-next" hidden>Lanjut →</button>
     </section>
 
-    <!-- ============ RESULT SCREEN ============ -->
+    <!-- RESULT -->
     <section class="screen screen--result" id="screen-result">
       <div class="card card--result">
         <div class="result-emoji" id="result-emoji">🎉</div>
+        <div id="result-stars"></div>
         <h2 class="result-title" id="result-title">Kerja bagus!</h2>
-        <p class="result-sub" id="result-sub">Ini hasil kuis kamu.</p>
-
-        <div class="result-score">
-          <span class="result-score__num" id="result-score">0</span>
-          <span class="result-score__label">POIN</span>
-        </div>
-
-        <div class="stat-grid">
+        <p class="result-sub" id="result-sub">—</p>
+        <div class="result-score"><span class="result-score__num" id="result-score">0</span><span class="result-score__label">POIN</span></div>
+        <div class="stat-grid" id="result-stats-grid">
           <div class="stat"><span class="stat__num" id="stat-correct">0</span><span class="stat__label">Benar</span></div>
           <div class="stat"><span class="stat__num" id="stat-wrong">0</span><span class="stat__label">Salah</span></div>
           <div class="stat"><span class="stat__num" id="stat-acc">0%</span><span class="stat__label">Akurasi</span></div>
           <div class="stat"><span class="stat__num" id="stat-streak">0</span><span class="stat__label">Streak Maks</span></div>
         </div>
-
         <div class="result-actions">
-          <button class="btn btn--primary" id="btn-retry">Ulangi Level</button>
-          <button class="btn btn--ghost" id="btn-levels">Pilih Level</button>
+          <button class="btn btn--primary" id="btn-next-level">Level Berikutnya →</button>
+          <button class="btn btn--ghost" id="btn-retry">Ulangi</button>
+          <button class="btn btn--soft" id="btn-levels">Pilih Level</button>
+        </div>
+        <div class="result-actions" style="margin-top:12px;">
+          <button class="btn btn--soft" id="btn-share">📤 Bagikan Skor</button>
           <button class="btn btn--soft" id="btn-review">Lihat Pembahasan</button>
         </div>
       </div>
-
       <div class="review" id="review" hidden></div>
+    </section>
+
+    <!-- BOARD -->
+    <section class="screen screen--board" id="screen-board">
+      <div class="card card--board">
+        <button class="btn-text" id="btn-board-back" style="position:static;margin-bottom:6px;">← Kembali</button>
+        <h2 class="board-title">🏆 Papan Skor</h2>
+        <div class="stats-row" id="stats-row"></div>
+        <ol class="board-list" id="board-list"></ol>
+        <div style="text-align:center;margin-top:12px;"><button class="btn-text" id="btn-clear-board" style="position:static;color:var(--red);">Hapus papan skor</button></div>
+        <hr class="board-sep" />
+        <h3 class="board-title">🔎 Cari Soal / Kata</h3>
+        <input id="search-input" class="search-input" placeholder="Ketik kata, misal: cat, went, big…" autocomplete="off" />
+        <div class="search-results" id="search-results"></div>
+      </div>
     </section>
   </main>
 
@@ -811,32 +975,42 @@ window.QUIZ.levels.push({"level":10,"name":"Idioms & Phrasal Verbs","difficulty"
 
   </script>
   <script>
-/* ================= QuizArena — game logic (mode 10 level) ================= */
+/* ================= QuizArena — game logic v3 =================
+   Fitur: level terkunci, bintang, progress, suara, confetti, belajar dulu,
+   mode ketik, 2 pemain (VS), papan skor, statistik, share, cari soal, dark mode.
+============================================================== */
 (function () {
   "use strict";
   const CONFIG = window.QUIZ || { title: "Quiz", description: "", timePerQuestion: 20, levels: [] };
   const LEVELS = CONFIG.levels || [];
+  const MATERI = {"1":["Level ini melatih kosakata paling dasar: nama benda, hewan, warna, dan angka 1-5.","<b>Benda &amp; hewan:</b> cat (kucing), dog (anjing), bird (burung), fish (ikan), cow (sapi), book (buku), pen (pena), bag (tas), door (pintu), chair (kursi), table (meja).","<b>Warna:</b> red (merah), blue (biru), green (hijau), yellow (kuning), black (hitam), white (putih).","<b>Angka:</b> one (1), two (2), three (3), four (4), five (5).","<b>Alam &amp; makanan:</b> sun (matahari), moon (bulan), star (bintang), water (air), milk (susu), rice (nasi), apple (apel), banana (pisang).","<b>Tips:</b> hafalkan sedikit demi sedikit sambil membayangkan gambar bendanya."],"2":["Kosakata umum sehari-hari tentang keluarga, tempat, kendaraan, dan waktu.","<b>Keluarga &amp; orang:</b> mother (ibu), father (ayah), brother, sister, family, friend, teacher, student.","<b>Tempat:</b> school, house, room, kitchen, market, city, village, road.","<b>Kendaraan:</b> car (mobil), bus, bike (sepeda), train (kereta).","<b>Waktu:</b> morning (pagi), afternoon (siang), evening (sore), night (malam), today, day, week, month, year, Monday."],"3":["Melatih antonim (lawan kata) yang paling sering dipakai.","<b>Sifat:</b> big-small, hot-cold, fast-slow, tall-short, happy-sad, good-bad, rich-poor, easy-difficult.","<b>Keadaan:</b> open-closed, up-down, day-night, clean-dirty, full-empty, high-low, near-far, wet-dry, light-dark, early-late.","<b>Kata kerja:</b> win-lose, buy-sell, love-hate, push-pull, begin-end.","<b>Tips:</b> pelajari antonim secara berpasangan supaya lebih mudah diingat."],"4":["<b>Artikel a / an:</b> pakai 'an' sebelum kata berawalan BUNYI vokal (a, i, u, e, o) - contoh: an apple, an hour, an umbrella. Pakai 'a' sebelum bunyi konsonan - contoh: a book, a car.","<b>Jamak beraturan:</b> +s (book->books); +es untuk akhiran s/x/ch/sh (box->boxes, class->classes, dish->dishes); y->ies bila didahului konsonan (baby->babies, city->cities); f/fe->ves (leaf->leaves, knife->knives).","<b>Jamak tak beraturan:</b> man->men, woman->women, child->children, foot->feet, tooth->teeth, mouse->mice."],"5":["<b>Kata kerja 'to be':</b> I -> am; He/She/It &amp; subjek tunggal -> is; You/We/They &amp; subjek jamak -> are.","<b>Contoh:</b> I am happy, You are happy, He is happy, The dogs are happy, My friend is happy.","<b>This/These/That/Those:</b> This = ini (tunggal, dekat), These = ini (jamak, dekat), That = itu (tunggal, jauh), Those = itu (jamak, jauh)."],"6":["<b>Simple Present:</b> untuk orang ketiga tunggal (He/She/It), kata kerja diberi akhiran -s/-es/-ies.","<b>Aturan:</b> umumnya +s (play->plays); +es untuk akhiran o/s/x/ch/sh (go->goes, watch->watches, fix->fixes); y->ies bila didahului konsonan (study->studies, fly->flies). Khusus: have->has.","<b>Pertanyaan:</b> pakai Do untuk I/You/We/They, dan Does untuk He/She/It. Contoh: Do you speak English? Does she like coffee?"],"7":["<b>Present Continuous:</b> be (am/is/are) + kata kerja-ING untuk aksi yang sedang berlangsung sekarang.","<b>Aturan -ing:</b> umumnya +ing (play->playing); huruf -e di akhir dihapus (write->writing, make->making); konsonan akhir digandakan pada kata pendek (run->running, sit->sitting, swim->swimming, begin->beginning).","<b>Preposisi waktu:</b> IN (bulan, tahun, bagian hari: in May, in 2005, in the morning), ON (hari/tanggal: on Monday), AT (jam &amp; 'night': at 7, at night).","<b>Preposisi tempat:</b> IN (di dalam), ON (di atas permukaan/menempel), AT (di titik/lokasi: at home)."],"8":["<b>Past Tense:</b> bentuk lampau kata kerja tak beraturan (irregular) yang paling umum.","go->went, eat->ate, see->saw, come->came, take->took, make->made, buy->bought, bring->brought, think->thought, teach->taught.","write->wrote, run->ran, drink->drank, swim->swam, give->gave, find->found, get->got, know->knew, speak->spoke, drive->drove.","fly->flew, begin->began, break->broke, choose->chose, feel->felt, leave->left, meet->met, pay->paid, say->said, sell->sold.","<b>Tips:</b> kata kerja irregular wajib dihafal karena tidak mengikuti pola -ed."],"9":["<b>Comparative (lebih ...):</b> kata pendek +er (big->bigger, tall->taller); kata panjang pakai 'more' (more beautiful, more expensive). Irregular: good->better, bad->worse.","<b>Superlative (paling ...):</b> kata pendek +est (the tallest, the biggest); kata panjang pakai 'most' (the most beautiful). Irregular: good->best, bad->worst.","<b>Modal verbs:</b> can (bisa/kemampuan), could (bisa - lampau/sopan), may (izin sopan), must (wajib/keharusan), should (sebaiknya/saran), must not (larangan tegas)."],"10":["<b>Idiom:</b> ungkapan yang maknanya tidak harfiah. break a leg (semoga sukses), piece of cake (sangat mudah), under the weather (kurang sehat), once in a blue moon (sangat jarang), spill the beans (membocorkan rahasia), cost an arm and a leg (sangat mahal), call it a day (mengakhiri pekerjaan), hit the sack (pergi tidur), bite the bullet (menghadapi hal sulit dengan berani), hit the books (belajar giat).","<b>Phrasal verbs:</b> give up (menyerah), look for (mencari), turn on/off (menyalakan/mematikan), put on (memakai), take off (melepas/lepas landas), find out (mengetahui), run out of (kehabisan), look after (merawat), get up (bangun).","<b>Kosakata mahir:</b> enormous (sangat besar), ancient (kuno), generous (dermawan), honest (jujur), brave (berani), curious (penasaran), fragile (rapuh), grateful (bersyukur), ambitious (ambisius), sincere (tulus)."]};
   const KEYS = ["A", "B", "C", "D"];
   const COLORS = ["var(--a0)", "var(--a1)", "var(--a2)", "var(--a3)"];
-  const APP_KEY = "quizarena_" + slug(CONFIG.title);
+  const APP = "quizarena_" + slug(CONFIG.title);
+  const PASS = 60; // % akurasi minimal untuk lulus & membuka level berikutnya
 
-  // ---- State ----
-  let currentLevel = null;          // index level yang dimainkan
-  let questions = [];               // 30 soal sesi ini (sudah diacak)
-  let idx = 0, score = 0, correct = 0, streak = 0, maxStreak = 0;
-  let timeLeft = CONFIG.timePerQuestion, timer = null, answered = false;
+  // ---------- State ----------
+  let qmode = "mc";          // "mc" | "type"
+  let vs = false;            // 2 pemain
+  let players = [];          // [{name, score, correct, streak, maxStreak}]
+  let currentLevel = null;   // index level aktif
+  let questions = [];
+  let idx = 0, answered = false;
+  let timeLeft = CONFIG.timePerQuestion, timer = null;
   let history = [];
 
-  // ---- Elements ----
   const $ = (id) => document.getElementById(id);
   const screens = {
-    home: $("screen-home"),
-    levels: $("screen-levels"),
-    quiz: $("screen-quiz"),
-    result: $("screen-result"),
+    home: $("screen-home"), levels: $("screen-levels"), learn: $("screen-learn"),
+    quiz: $("screen-quiz"), result: $("screen-result"), board: $("screen-board"),
   };
 
-  // ---- Init home ----
+  // ---------- Settings ----------
+  let soundOn = localStorage.getItem(APP + "_sound") !== "0";
+  applyTheme(localStorage.getItem(APP + "_theme") || "light");
+  updateSoundBtn();
+
+  // ---------- Init home ----------
   $("quiz-title").textContent = CONFIG.title;
   $("quiz-desc").textContent = CONFIG.description;
   document.title = CONFIG.title;
@@ -844,36 +1018,84 @@ window.QUIZ.levels.push({"level":10,"name":"Idioms & Phrasal Verbs","difficulty"
   $("meta-qtotal").textContent = LEVELS.reduce((s, l) => s + l.questions.length, 0);
   $("meta-time").textContent = CONFIG.timePerQuestion + "s";
 
+  // ---------- Events ----------
+  $("btn-theme").addEventListener("click", toggleTheme);
+  $("btn-sound").addEventListener("click", toggleSound);
   $("btn-start").addEventListener("click", goToLevels);
   $("player-name").addEventListener("keydown", (e) => { if (e.key === "Enter") goToLevels(); });
+  $("btn-board").addEventListener("click", openBoard);
   $("btn-back-home").addEventListener("click", () => show("home"));
+  $("btn-board-back").addEventListener("click", goToLevels);
+  $("btn-learn-back").addEventListener("click", goToLevels);
+  $("btn-learn-start").addEventListener("click", () => { if (currentLevel != null) startLevel(currentLevel); });
+  $("btn-next").addEventListener("click", next);
   $("btn-retry").addEventListener("click", () => { if (currentLevel != null) startLevel(currentLevel); });
   $("btn-levels").addEventListener("click", goToLevels);
+  $("btn-next-level").addEventListener("click", () => {
+    if (currentLevel != null && currentLevel + 1 < LEVELS.length) { currentLevel += 1; openLearn(currentLevel); }
+  });
   $("btn-review").addEventListener("click", toggleReview);
+  $("btn-share").addEventListener("click", shareResult);
   $("btn-quit").addEventListener("click", () => { clearInterval(timer); goToLevels(); });
+  $("btn-clear-board").addEventListener("click", () => {
+    if (confirm("Hapus semua skor di papan skor?")) { localStorage.removeItem(APP + "_board"); renderBoard(); }
+  });
+  $("type-box").addEventListener("submit", (e) => { e.preventDefault(); submitTyped(); });
+  $("search-input").addEventListener("input", (e) => renderSearch(e.target.value));
 
-  // ---- Level select ----
+  // segmented controls
+  document.querySelectorAll("#seg-players .seg-btn").forEach((b) => {
+    b.addEventListener("click", () => {
+      document.querySelectorAll("#seg-players .seg-btn").forEach((x) => x.classList.remove("is-on"));
+      b.classList.add("is-on");
+      vs = b.dataset.players === "2";
+      $("field-p2").hidden = !vs;
+      playClick();
+    });
+  });
+  document.querySelectorAll("#seg-mode .seg-btn").forEach((b) => {
+    b.addEventListener("click", () => {
+      document.querySelectorAll("#seg-mode .seg-btn").forEach((x) => x.classList.remove("is-on"));
+      b.classList.add("is-on");
+      qmode = b.dataset.mode;
+      playClick();
+    });
+  });
+
+  // ---------- Navigation ----------
   function goToLevels() {
     renderLevels();
     renderMateri();
+    updateOverall();
     show("levels");
   }
 
   function renderLevels() {
-    const name = ($("player-name").value || "").trim();
-    $("levels-greeting").textContent = name ? `Halo, ${name}! Pilih levelmu 👇` : "Pilih level yang ingin kamu mainkan 👇";
+    const name = playerName(0);
+    $("levels-greeting").textContent = name ? `Halo, ${name}! Pilih levelmu \uD83D\uDC47` : "Pilih level yang ingin kamu mainkan \uD83D\uDC47";
     const grid = $("levels-grid");
     grid.innerHTML = "";
     LEVELS.forEach((lv, i) => {
+      const unlocked = isUnlocked(i);
       const best = getBest(lv.level);
+      const stars = getStars(lv.level);
       const card = document.createElement("button");
-      card.className = "level-card";
+      card.className = "level-card" + (unlocked ? "" : " is-locked") + (isPassed(lv.level) ? " is-done" : "");
+      const starHtml = `<span class="level-stars">${starRow(stars)}</span>`;
+      const footRight = unlocked
+        ? (best > 0 ? `\u2B50 ${best}` : lv.questions.length + " soal")
+        : "\uD83D\uDD12 Terkunci";
       card.innerHTML =
-        `<span class="level-top"><span class="level-num">Level ${lv.level}</span><span class="level-emoji">${lv.emoji || "🎯"}</span></span>` +
+        `<span class="level-top"><span class="level-num">Level ${lv.level}</span><span class="level-emoji">${unlocked ? (lv.emoji || "\uD83C\uDFAF") : "\uD83D\uDD12"}</span></span>` +
         `<span class="level-name">${esc(lv.name)}</span>` +
         `<span class="level-desc">${esc(lv.desc || "")}</span>` +
-        `<span class="level-foot"><span class="level-diff">${esc(lv.difficulty)}</span><span class="level-best">${best > 0 ? "⭐ " + best : lv.questions.length + " soal"}</span></span>`;
-      card.addEventListener("click", () => startLevel(i));
+        starHtml +
+        `<span class="level-foot"><span class="level-diff">${esc(lv.difficulty)}</span><span class="level-best">${footRight}</span></span>`;
+      card.addEventListener("click", () => {
+        if (!unlocked) { shake(card); toast("Selesaikan level sebelumnya dulu untuk membuka level ini \uD83D\uDD13"); playWrong(); return; }
+        playClick();
+        openLearn(i);
+      });
       grid.appendChild(card);
     });
   }
@@ -891,12 +1113,41 @@ window.QUIZ.levels.push({"level":10,"name":"Idioms & Phrasal Verbs","difficulty"
       a.innerHTML =
         `<span class="materi-emoji">${lv.emoji || "\uD83D\uDCC4"}</span>` +
         `<span class="materi-info"><span class="materi-lv">Materi Level ${lv.level}</span><span class="materi-name">${esc(lv.name)}</span></span>` +
-        `<span class="materi-open">Lihat PDF →</span>`;
+        `<span class="materi-open">Lihat PDF \u2192</span>`;
       grid.appendChild(a);
     });
   }
 
-  // ---- Quiz flow ----
+  function updateOverall() {
+    const done = LEVELS.filter((l) => isPassed(l.level)).length;
+    $("overall-fill").style.width = (done / LEVELS.length) * 100 + "%";
+    const totalStars = LEVELS.reduce((s, l) => s + getStars(l.level), 0);
+    $("overall-label").textContent = `${done} / ${LEVELS.length} level selesai \u00B7 \u2B50 ${totalStars}/${LEVELS.length * 3}`;
+  }
+
+  // ---------- Learn (Belajar dulu) ----------
+  function openLearn(i) {
+    currentLevel = i;
+    const lv = LEVELS[i];
+    $("learn-head").innerHTML =
+      `<span class="learn-emoji">${lv.emoji || "\uD83D\uDCD8"}</span>` +
+      `<div><div class="learn-lv">Level ${lv.level} \u00B7 ${esc(lv.difficulty)}</div>` +
+      `<h2 class="learn-name">${esc(lv.name)}</h2>` +
+      `<p class="learn-desc">${esc(lv.desc || "")}</p></div>`;
+    const list = $("learn-list");
+    list.innerHTML = "";
+    const items = MATERI[String(lv.level)] || [];
+    items.forEach((html) => {
+      const li = document.createElement("li");
+      li.innerHTML = html; // konten materi tepercaya milik sendiri
+      list.appendChild(li);
+    });
+    $("learn-pdf").href = "level-" + lv.level + ".pdf";
+    $("btn-learn-start").textContent = `Mulai Kuis Level ${lv.level} \u2192`;
+    show("learn");
+  }
+
+  // ---------- Quiz ----------
   function buildSession(level) {
     let pool = level.questions.map((q) => ({ ...q, options: [...q.options] }));
     if (CONFIG.shuffle) {
@@ -914,34 +1165,59 @@ window.QUIZ.levels.push({"level":10,"name":"Idioms & Phrasal Verbs","difficulty"
     currentLevel = i;
     const level = LEVELS[i];
     questions = buildSession(level);
-    idx = 0; score = 0; correct = 0; streak = 0; maxStreak = 0; history = [];
-    $("score-live").textContent = "0";
-    $("quiz-level-tag").textContent = `Level ${level.level} · ${level.difficulty}`;
+    idx = 0; history = [];
+    players = vs
+      ? [mkPlayer(playerName(0) || "Pemain 1"), mkPlayer(playerName(1) || "Pemain 2")]
+      : [mkPlayer(playerName(0) || "Kamu")];
+    $("quiz-level-tag").textContent = `Level ${level.level} \u00B7 ${level.difficulty}` + (vs ? "  \u00B7  \uD83C\uDD9A VS" : "");
+    $("vs-bar").hidden = !vs;
     show("quiz");
     renderQuestion();
   }
+
+  function cp() { return vs ? (idx % players.length) : 0; }
 
   function renderQuestion() {
     answered = false;
     const q = questions[idx];
     $("progress-label").innerHTML = `Soal <b>${idx + 1}</b> / ${questions.length}`;
-    $("streak-pill").textContent = `🔥 ${streak}`;
-    $("progress-fill").style.width = ((idx) / questions.length) * 100 + "%";
-    $("question-tag").textContent = q.category || "Pilihan Ganda";
+    $("progress-fill").style.width = (idx / questions.length) * 100 + "%";
+    $("question-tag").textContent = q.category || (qmode === "type" ? "Ketik Jawaban" : "Pilihan Ganda");
     $("question-text").textContent = q.q;
+    $("explain-box").hidden = true;
+    $("btn-next").hidden = true;
+
+    const player = players[cp()];
+    $("streak-pill").textContent = `\uD83D\uDD25 ${player.streak}`;
+    $("score-live").textContent = player.score;
+    if (vs) {
+      $("vs-bar").innerHTML =
+        players.map((p, i) => `<span class="vs-player ${i === cp() ? "is-turn" : ""}">${esc(p.name)}: <strong>${p.score}</strong></span>`).join("<span class=\"vs-mid\">VS</span>");
+    }
 
     const wrap = $("answers");
-    wrap.innerHTML = "";
-    q.options.forEach((opt, i) => {
-      const btn = document.createElement("button");
-      btn.className = "answer";
-      btn.style.setProperty("--c", COLORS[i % COLORS.length]);
-      btn.setAttribute("data-key", KEYS[i]);
-      btn.textContent = opt;
-      btn.addEventListener("click", (e) => selectAnswer(i, e));
-      wrap.appendChild(btn);
-    });
-
+    const typeBox = $("type-box");
+    if (qmode === "type") {
+      wrap.innerHTML = ""; wrap.hidden = true;
+      typeBox.hidden = false;
+      $("type-input").value = "";
+      $("type-input").disabled = false;
+      $("type-submit").disabled = false;
+      setTimeout(() => $("type-input").focus(), 50);
+    } else {
+      typeBox.hidden = true;
+      wrap.hidden = false;
+      wrap.innerHTML = "";
+      q.options.forEach((opt, i) => {
+        const btn = document.createElement("button");
+        btn.className = "answer";
+        btn.style.setProperty("--c", COLORS[i % COLORS.length]);
+        btn.setAttribute("data-key", KEYS[i]);
+        btn.textContent = opt;
+        btn.addEventListener("click", (e) => selectAnswer(i, e));
+        wrap.appendChild(btn);
+      });
+    }
     startTimer();
   }
 
@@ -955,7 +1231,6 @@ window.QUIZ.levels.push({"level":10,"name":"Idioms & Phrasal Verbs","difficulty"
       if (timeLeft <= 0) { clearInterval(timer); if (!answered) lockOut(); }
     }, 1000);
   }
-
   function updateTimerUI() {
     const pct = (timeLeft / CONFIG.timePerQuestion) * 100;
     const bar = $("timer-bar");
@@ -965,82 +1240,140 @@ window.QUIZ.levels.push({"level":10,"name":"Idioms & Phrasal Verbs","difficulty"
     $("timer-num").textContent = Math.max(0, timeLeft);
   }
 
-  function selectAnswer(i, e) {
+  function grade(isCorrect, chosenIdx, typedText, e) {
     if (answered) return;
     answered = true;
     clearInterval(timer);
     const q = questions[idx];
-    const buttons = [...document.querySelectorAll(".answer")];
-    buttons.forEach((b, bi) => {
-      b.classList.add("locked");
-      if (bi === q.answer) b.classList.add("correct");
-      else if (bi === i) b.classList.add("wrong");
-      else b.classList.add("dim");
-    });
+    const player = players[cp()];
 
-    const isCorrect = i === q.answer;
+    if (qmode === "mc") {
+      const buttons = [...document.querySelectorAll(".answer")];
+      buttons.forEach((b, bi) => {
+        b.classList.add("locked");
+        if (bi === q.answer) b.classList.add("correct");
+        else if (bi === chosenIdx) b.classList.add("wrong");
+        else b.classList.add("dim");
+      });
+    } else {
+      $("type-input").disabled = true;
+      $("type-submit").disabled = true;
+    }
+
     let gained = 0;
     if (isCorrect) {
-      correct++;
-      streak++;
-      maxStreak = Math.max(maxStreak, streak);
+      player.correct++;
+      player.streak++;
+      player.maxStreak = Math.max(player.maxStreak, player.streak);
       const timeBonus = Math.round((timeLeft / CONFIG.timePerQuestion) * 50);
-      const streakBonus = Math.min(streak - 1, 5) * 10;
+      const streakBonus = Math.min(player.streak - 1, 5) * 10;
       gained = 100 + timeBonus + streakBonus;
-      score += gained;
+      player.score += gained;
       floatPoints(gained, e);
+      playCorrect();
     } else {
-      streak = 0;
+      player.streak = 0;
+      playWrong();
     }
-    $("score-live").textContent = score;
-    $("streak-pill").textContent = `🔥 ${streak}`;
-    history.push({ q: q.q, chosen: i, answer: q.answer, options: q.options, explain: q.explain, correct: isCorrect });
+    $("score-live").textContent = player.score;
+    $("streak-pill").textContent = `\uD83D\uDD25 ${player.streak}`;
 
-    setTimeout(next, 1100);
+    // explanation box
+    const correctText = q.options[q.answer];
+    const you = qmode === "type" ? (typedText || "(kosong)") : (chosenIdx === -1 ? "(waktu habis)" : q.options[chosenIdx]);
+    $("explain-box").className = "explain-box " + (isCorrect ? "is-ok" : "is-no");
+    $("explain-box").innerHTML =
+      `<div class="explain-head">${isCorrect ? "\u2705 Benar!" : "\u274C Belum tepat"}</div>` +
+      (isCorrect ? "" : `<div class="explain-line">Jawabanmu: <b>${esc(you)}</b></div><div class="explain-line">Jawaban benar: <b>${esc(correctText)}</b></div>`) +
+      (q.explain ? `<div class="explain-why">\uD83D\uDCA1 ${esc(q.explain)}</div>` : "");
+    $("explain-box").hidden = false;
+
+    history.push({ q: q.q, you: you, answer: correctText, explain: q.explain, correct: isCorrect, player: player.name });
+
+    $("btn-next").textContent = (idx + 1 >= questions.length) ? "Lihat Hasil \uD83C\uDF89" : "Lanjut \u2192";
+    $("btn-next").hidden = false;
+    if (vs) {
+      $("vs-bar").innerHTML =
+        players.map((p, i) => `<span class="vs-player ${i === cp() ? "is-turn" : ""}">${esc(p.name)}: <strong>${p.score}</strong></span>`).join("<span class=\"vs-mid\">VS</span>");
+    }
   }
 
-  function lockOut() {
-    answered = true;
-    const q = questions[idx];
-    [...document.querySelectorAll(".answer")].forEach((b, bi) => {
-      b.classList.add("locked");
-      if (bi === q.answer) b.classList.add("correct"); else b.classList.add("dim");
-    });
-    streak = 0;
-    $("streak-pill").textContent = `🔥 0`;
-    history.push({ q: q.q, chosen: -1, answer: q.answer, options: q.options, explain: q.explain, correct: false });
-    setTimeout(next, 1100);
+  function selectAnswer(i, e) { grade(i === questions[idx].answer, i, null, e); }
+  function submitTyped() {
+    if (answered) return;
+    const val = $("type-input").value;
+    const correctText = questions[idx].options[questions[idx].answer];
+    grade(normalize(val) === normalize(correctText), -1, val, null);
   }
+  function lockOut() { grade(false, -1, qmode === "type" ? $("type-input").value : null, null); }
 
   function next() {
+    playClick();
     idx++;
     if (idx >= questions.length) finish();
     else renderQuestion();
   }
 
+  // ---------- Result ----------
   function finish() {
+    clearInterval(timer);
     $("progress-fill").style.width = "100%";
     const level = LEVELS[currentLevel];
-    const total = questions.length;
-    const acc = total ? Math.round((correct / total) * 100) : 0;
-    $("result-score").textContent = score;
-    $("stat-correct").textContent = correct;
-    $("stat-wrong").textContent = total - correct;
-    $("stat-acc").textContent = acc + "%";
-    $("stat-streak").textContent = maxStreak;
+    const perPlayerTotal = vs ? Math.ceil(questions.length / players.length) : questions.length;
 
-    const name = ($("player-name").value || "").trim();
-    let emoji = "🎉", title = "Kerja bagus!", sub = "Kamu menyelesaikan level ini.";
-    if (acc === 100) { emoji = "🏆"; title = "Sempurna!"; sub = "Semua jawaban benar. Luar biasa!"; }
-    else if (acc >= 70) { emoji = "🌟"; title = "Hebat!"; sub = "Skor kamu sangat bagus."; }
-    else if (acc >= 40) { emoji = "💪"; title = "Lumayan!"; sub = "Terus berlatih, kamu pasti bisa lebih baik."; }
-    else { emoji = "🌱"; title = "Tetap semangat!"; sub = "Coba lagi untuk meningkatkan skormu."; }
-    const isBest = score > getBest(level.level);
-    $("result-emoji").textContent = emoji;
-    $("result-title").textContent = name ? `${title} ${name}` : title;
-    $("result-sub").textContent = `Level ${level.level} · ${level.name}. ${sub}` + (isBest ? " 🎊 Rekor baru!" : "");
+    if (vs) {
+      const [a, b] = players;
+      let winner;
+      if (a.score > b.score) winner = a; else if (b.score > a.score) winner = b; else winner = null;
+      $("result-emoji").textContent = winner ? "\uD83C\uDFC6" : "\uD83E\uDD1D";
+      $("result-stars").innerHTML = "";
+      $("result-title").textContent = winner ? `${winner.name} menang!` : "Seri!";
+      $("result-sub").textContent = `Level ${level.level} \u00B7 ${a.name}: ${a.score} poin \u2014 ${b.name}: ${b.score} poin.`;
+      $("result-score").textContent = Math.max(a.score, b.score);
+      $("stat-correct").textContent = a.correct + "/" + b.correct;
+      setStatLabels("Benar A/B", "Skor A", "Skor B", "Streak");
+      $("stat-wrong").textContent = a.score;
+      $("stat-acc").textContent = b.score;
+      $("stat-streak").textContent = Math.max(a.maxStreak, b.maxStreak);
+      $("btn-next-level").hidden = true;
+      if (winner) confetti();
+      playWin();
+    } else {
+      const p = players[0];
+      const total = questions.length;
+      const acc = total ? Math.round((p.correct / total) * 100) : 0;
+      const stars = acc >= 90 ? 3 : acc >= 75 ? 2 : acc >= PASS ? 1 : 0;
+      const passedNow = acc >= PASS;
+      setStatLabels("Benar", "Salah", "Akurasi", "Streak Maks");
+      $("result-score").textContent = p.score;
+      $("stat-correct").textContent = p.correct;
+      $("stat-wrong").textContent = total - p.correct;
+      $("stat-acc").textContent = acc + "%";
+      $("stat-streak").textContent = p.maxStreak;
+      $("result-stars").innerHTML = starRow(stars, true);
 
-    saveBest(level.level, score);
+      let emoji = "\uD83C\uDF31", title = "Tetap semangat!", sub = "Coba lagi untuk meningkatkan skormu.";
+      if (acc === 100) { emoji = "\uD83C\uDFC6"; title = "Sempurna!"; sub = "Semua benar. Luar biasa!"; }
+      else if (acc >= 75) { emoji = "\uD83C\uDF1F"; title = "Hebat!"; sub = "Skormu sangat bagus."; }
+      else if (acc >= PASS) { emoji = "\uD83C\uDF89"; title = "Lulus!"; sub = "Kamu lolos level ini."; }
+      else { emoji = "\uD83D\uDCAA"; title = "Hampir!"; sub = `Perlu ${PASS}% untuk lulus. Ayo coba lagi!`; }
+      const wasBest = p.score > getBest(level.level);
+      $("result-emoji").textContent = emoji;
+      $("result-title").textContent = p.name ? `${title} ${p.name}` : title;
+      $("result-sub").textContent = `Level ${level.level} \u00B7 ${level.name}. ${sub}` + (wasBest ? " \uD83C\uDF8A Rekor baru!" : "");
+
+      saveBest(level.level, p.score);
+      if (stars > getStars(level.level)) localStorage.setItem(APP + "_stars_L" + level.level, String(stars));
+      if (passedNow) localStorage.setItem(APP + "_pass_L" + level.level, "1");
+      bumpStats(total, p.correct);
+      addToBoard(p.name, level, p.score, acc);
+
+      const hasNext = currentLevel + 1 < LEVELS.length;
+      $("btn-next-level").hidden = !(passedNow && hasNext);
+      if (passedNow) confetti();
+      passedNow ? playWin() : playWrong();
+    }
+
     buildReview();
     $("review").hidden = true;
     $("btn-review").textContent = "Lihat Pembahasan";
@@ -1053,16 +1386,14 @@ window.QUIZ.levels.push({"level":10,"name":"Idioms & Phrasal Verbs","difficulty"
     history.forEach((h, n) => {
       const item = document.createElement("div");
       item.className = "review-item" + (h.correct ? "" : " is-wrong");
-      const yourAns = h.chosen === -1 ? "(waktu habis)" : h.options[h.chosen];
       item.innerHTML =
-        `<div class="review-q">${n + 1}. ${esc(h.q)}</div>` +
-        `<div class="review-a ${h.correct ? "" : "wrong"}">Jawaban kamu: <strong>${esc(yourAns)}</strong></div>` +
-        (h.correct ? "" : `<div class="review-a">Jawaban benar: <strong>${esc(h.options[h.answer])}</strong></div>`) +
-        (h.explain ? `<div class="review-explain">💡 ${esc(h.explain)}</div>` : "");
+        `<div class="review-q">${n + 1}. ${esc(h.q)}${vs ? ` <span class="review-who">(${esc(h.player)})</span>` : ""}</div>` +
+        `<div class="review-a ${h.correct ? "" : "wrong"}">Jawaban ${h.correct ? "kamu (benar)" : "kamu"}: <strong>${esc(h.you)}</strong></div>` +
+        (h.correct ? "" : `<div class="review-a">Jawaban benar: <strong>${esc(h.answer)}</strong></div>`) +
+        (h.explain ? `<div class="review-explain">\uD83D\uDCA1 ${esc(h.explain)}</div>` : "");
       wrap.appendChild(item);
     });
   }
-
   function toggleReview() {
     const r = $("review");
     r.hidden = !r.hidden;
@@ -1070,33 +1401,186 @@ window.QUIZ.levels.push({"level":10,"name":"Idioms & Phrasal Verbs","difficulty"
     if (!r.hidden) r.scrollIntoView({ behavior: "smooth", block: "nearest" });
   }
 
+  function shareResult() {
+    const level = LEVELS[currentLevel];
+    const score = $("result-score").textContent;
+    const text = `Aku dapat ${score} poin di Level ${level.level} (${level.name}) \u2014 QuizArena! \uD83C\uDFAF Coba juga: ${location.href}`;
+    if (navigator.share) {
+      navigator.share({ title: "QuizArena", text }).catch(() => {});
+    } else if (navigator.clipboard) {
+      navigator.clipboard.writeText(text).then(() => toast("Skor disalin ke clipboard \uD83D\uDCCB")).catch(() => toast(text));
+    } else {
+      toast(text);
+    }
+  }
+
+  // ---------- Board / Stats / Search ----------
+  function openBoard() { renderBoard(); renderStats(); $("search-input").value = ""; renderSearch(""); show("board"); }
+
+  function renderBoard() {
+    const list = getBoard();
+    const ol = $("board-list");
+    ol.innerHTML = "";
+    if (!list.length) { ol.innerHTML = '<li class="board-empty">Belum ada skor. Main dulu yuk! \uD83C\uDFAE</li>'; return; }
+    list.forEach((e, i) => {
+      const li = document.createElement("li");
+      li.className = "board-row" + (i < 3 ? " top" : "");
+      const medal = ["\uD83E\uDD47", "\uD83E\uDD48", "\uD83E\uDD49"][i] || (i + 1) + ".";
+      li.innerHTML =
+        `<span class="board-rank">${medal}</span>` +
+        `<span class="board-name">${esc(e.name)}</span>` +
+        `<span class="board-meta">Lv ${e.level} \u00B7 ${e.acc}%</span>` +
+        `<span class="board-score">${e.score}</span>`;
+      ol.appendChild(li);
+    });
+  }
+
+  function renderStats() {
+    const st = getStats();
+    const acc = st.answered ? Math.round((st.correct / st.answered) * 100) : 0;
+    const done = LEVELS.filter((l) => isPassed(l.level)).length;
+    const stars = LEVELS.reduce((s, l) => s + getStars(l.level), 0);
+    $("stats-row").innerHTML =
+      statCard(st.answered, "Soal dijawab") +
+      statCard(acc + "%", "Akurasi") +
+      statCard(done + "/" + LEVELS.length, "Level lulus") +
+      statCard("\u2B50 " + stars, "Total bintang");
+  }
+
+  function renderSearch(term) {
+    const box = $("search-results");
+    const t = normalize(term);
+    box.innerHTML = "";
+    if (t.length < 2) { box.innerHTML = '<p class="search-hint">Ketik minimal 2 huruf untuk mencari di 300 soal.</p>'; return; }
+    let count = 0;
+    for (const lv of LEVELS) {
+      for (const q of lv.questions) {
+        const hay = normalize(q.q + " " + q.options.join(" ") + " " + (q.explain || ""));
+        if (hay.includes(t)) {
+          count++;
+          const div = document.createElement("div");
+          div.className = "search-item";
+          div.innerHTML =
+            `<div class="search-q">${esc(q.q)} <span class="search-lv">Lv ${lv.level}</span></div>` +
+            `<div class="search-ans">\u2705 ${esc(q.options[q.answer])}</div>` +
+            (q.explain ? `<div class="search-exp">${esc(q.explain)}</div>` : "");
+          box.appendChild(div);
+          if (count >= 40) break;
+        }
+      }
+      if (count >= 40) break;
+    }
+    if (!count) box.innerHTML = '<p class="search-hint">Tidak ada hasil untuk "' + esc(term) + '".</p>';
+  }
+
+  // ---------- Sound (WebAudio) ----------
+  let actx = null;
+  function ac() { if (!actx) { try { actx = new (window.AudioContext || window.webkitAudioContext)(); } catch (e) {} } return actx; }
+  function beep(freq, dur, type, when, gain) {
+    const c = ac(); if (!c) return;
+    const o = c.createOscillator(), g = c.createGain();
+    o.type = type || "sine"; o.frequency.value = freq;
+    const t = c.currentTime + (when || 0);
+    g.gain.setValueAtTime(0.0001, t);
+    g.gain.exponentialRampToValueAtTime(gain || 0.15, t + 0.02);
+    g.gain.exponentialRampToValueAtTime(0.0001, t + dur);
+    o.connect(g); g.connect(c.destination);
+    o.start(t); o.stop(t + dur + 0.02);
+  }
+  function playCorrect() { if (!soundOn) return; beep(660, 0.12, "sine", 0); beep(990, 0.16, "sine", 0.1); }
+  function playWrong() { if (!soundOn) return; beep(200, 0.22, "sawtooth", 0, 0.12); }
+  function playClick() { if (!soundOn) return; beep(440, 0.05, "triangle", 0, 0.08); }
+  function playWin() { if (!soundOn) return;[523, 659, 784, 1047].forEach((f, i) => beep(f, 0.18, "sine", i * 0.12)); }
+
+  // ---------- Confetti ----------
+  function confetti() {
+    const cv = document.createElement("canvas");
+    cv.className = "confetti-canvas";
+    document.body.appendChild(cv);
+    const ctx = cv.getContext("2d");
+    const dpr = window.devicePixelRatio || 1;
+    function size() { cv.width = innerWidth * dpr; cv.height = innerHeight * dpr; ctx.setTransform(dpr, 0, 0, dpr, 0, 0); }
+    size();
+    const cols = ["#F1699B", "#54C6E6", "#F6A62A", "#57C77F", "#84E06E"];
+    const parts = Array.from({ length: 140 }, () => ({
+      x: Math.random() * innerWidth, y: -20 - Math.random() * innerHeight * 0.4,
+      r: 4 + Math.random() * 6, c: cols[(Math.random() * cols.length) | 0],
+      vy: 2 + Math.random() * 3.5, vx: -1.5 + Math.random() * 3, rot: Math.random() * 6.28, vr: -0.2 + Math.random() * 0.4,
+    }));
+    const start = performance.now();
+    (function frame(now) {
+      const t = now - start;
+      ctx.clearRect(0, 0, innerWidth, innerHeight);
+      parts.forEach((p) => {
+        p.x += p.vx; p.y += p.vy; p.rot += p.vr;
+        ctx.save(); ctx.translate(p.x, p.y); ctx.rotate(p.rot);
+        ctx.fillStyle = p.c; ctx.fillRect(-p.r / 2, -p.r / 2, p.r, p.r * 0.6); ctx.restore();
+      });
+      if (t < 2600) requestAnimationFrame(frame); else cv.remove();
+    })(start);
+  }
+
+  // ---------- Theme & sound toggles ----------
+  function applyTheme(mode) {
+    document.documentElement.classList.toggle("dark", mode === "dark");
+    const b = $("btn-theme"); if (b) b.textContent = mode === "dark" ? "\u2600\uFE0F" : "\uD83C\uDF19";
+  }
+  function toggleTheme() {
+    const dark = !document.documentElement.classList.contains("dark");
+    applyTheme(dark ? "dark" : "light");
+    localStorage.setItem(APP + "_theme", dark ? "dark" : "light");
+    playClick();
+  }
+  function updateSoundBtn() { const b = $("btn-sound"); if (b) b.textContent = soundOn ? "\uD83D\uDD0A" : "\uD83D\uDD07"; }
+  function toggleSound() { soundOn = !soundOn; localStorage.setItem(APP + "_sound", soundOn ? "1" : "0"); updateSoundBtn(); if (soundOn) playClick(); }
+
+  // ---------- Storage helpers ----------
+  function isPassed(level) { return localStorage.getItem(APP + "_pass_L" + level) === "1"; }
+  function isUnlocked(i) { return i === 0 || isPassed(LEVELS[i - 1].level); }
+  function getStars(level) { return Number(localStorage.getItem(APP + "_stars_L" + level) || 0); }
+  function getBest(level) { return Number(localStorage.getItem(APP + "_best_L" + level) || 0); }
+  function saveBest(level, s) { if (s > getBest(level)) localStorage.setItem(APP + "_best_L" + level, String(s)); }
+  function getStats() { try { return JSON.parse(localStorage.getItem(APP + "_stats")) || { answered: 0, correct: 0 }; } catch (e) { return { answered: 0, correct: 0 }; } }
+  function bumpStats(a, c) { const s = getStats(); s.answered += a; s.correct += c; localStorage.setItem(APP + "_stats", JSON.stringify(s)); }
+  function getBoard() { try { return JSON.parse(localStorage.getItem(APP + "_board")) || []; } catch (e) { return []; } }
+  function addToBoard(name, level, score, acc) {
+    const b = getBoard();
+    b.push({ name: name || "Kamu", level: level.level, score, acc });
+    b.sort((x, y) => y.score - x.score);
+    localStorage.setItem(APP + "_board", JSON.stringify(b.slice(0, 10)));
+  }
+
+  // ---------- UI helpers ----------
+  function mkPlayer(name) { return { name, score: 0, correct: 0, streak: 0, maxStreak: 0 }; }
+  function playerName(i) { const el = $(i === 0 ? "player-name" : "player-name-2"); return el ? (el.value || "").trim() : ""; }
+  function starRow(n, big) { let s = ""; for (let i = 0; i < 3; i++) s += `<span class="star ${i < n ? "on" : ""}">\u2605</span>`; return `<span class="stars${big ? " stars--big" : ""}">${s}</span>`; }
+  function statCard(num, label) { return `<div class="stat"><span class="stat__num">${num}</span><span class="stat__label">${label}</span></div>`; }
+  function setStatLabels(a, b, c, d) {
+    const labels = document.querySelectorAll("#result-stats-grid .stat__label");
+    if (labels.length === 4) { labels[0].textContent = a; labels[1].textContent = b; labels[2].textContent = c; labels[3].textContent = d; }
+  }
   function floatPoints(pts, e) {
     const el = document.createElement("div");
-    el.className = "float-pts";
-    el.textContent = "+" + pts;
-    const x = e ? e.clientX : window.innerWidth / 2;
-    const y = e ? e.clientY : window.innerHeight / 2;
-    el.style.left = x + "px"; el.style.top = y + "px";
+    el.className = "float-pts"; el.textContent = "+" + pts;
+    el.style.left = (e ? e.clientX : innerWidth / 2) + "px";
+    el.style.top = (e ? e.clientY : innerHeight / 2) + "px";
     document.body.appendChild(el);
     setTimeout(() => el.remove(), 1000);
   }
-
-  // ---- helpers ----
+  function toast(msg) {
+    let t = document.querySelector(".toast");
+    if (!t) { t = document.createElement("div"); t.className = "toast"; document.body.appendChild(t); }
+    t.textContent = msg; t.classList.add("show");
+    clearTimeout(t._h); t._h = setTimeout(() => t.classList.remove("show"), 2600);
+  }
+  function shake(el) { el.classList.remove("shake"); void el.offsetWidth; el.classList.add("shake"); }
   function show(name) {
-    Object.values(screens).forEach((s) => s.classList.remove("is-active"));
+    Object.values(screens).forEach((s) => s && s.classList.remove("is-active"));
     screens[name].classList.add("is-active");
     window.scrollTo({ top: 0, behavior: "smooth" });
   }
-  function shuffle(arr) {
-    for (let i = arr.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [arr[i], arr[j]] = [arr[j], arr[i]];
-    }
-    return arr;
-  }
-  function bestKey(level) { return APP_KEY + "_best_L" + level; }
-  function getBest(level) { return Number(localStorage.getItem(bestKey(level)) || 0); }
-  function saveBest(level, s) { if (s > getBest(level)) localStorage.setItem(bestKey(level), String(s)); }
+  function shuffle(arr) { for (let i = arr.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [arr[i], arr[j]] = [arr[j], arr[i]]; } return arr; }
+  function normalize(s) { return String(s == null ? "" : s).toLowerCase().trim().replace(/[\s\.,!\?\"'\u2019]+/g, " ").replace(/\s+/g, " ").trim(); }
   function slug(s) { return String(s).toLowerCase().replace(/[^a-z0-9]+/g, "_"); }
   function esc(s) { const d = document.createElement("div"); d.textContent = s == null ? "" : s; return d.innerHTML; }
 })();
