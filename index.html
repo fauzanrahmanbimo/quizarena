@@ -4,13 +4,15 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
   <title>QuizArena — English Levels</title>
-  <meta name="description" content="QuizArena — kuis Bahasa Inggris dasar 10 level (300 soal) dengan materi, pembahasan, mode 2 pemain, papan skor, dan skor bintang." />
+  <meta name="description" content="QuizArena — kuis Bahasa Inggris dasar 10 level (300 soal) dengan materi, pembahasan, audio pengucapan, mode 2 pemain, papan skor, pencapaian, dan sertifikat." />
   <meta name="theme-color" content="#173F3A" />
   <meta name="color-scheme" content="light dark" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-title" content="QuizArena" />
   <!-- Open Graph / social -->
   <meta property="og:type" content="website" />
   <meta property="og:title" content="QuizArena — English Levels" />
-  <meta property="og:description" content="Kuis Bahasa Inggris dasar 10 level dengan materi, pembahasan, mode VS, dan papan skor." />
+  <meta property="og:description" content="Kuis Bahasa Inggris dasar 10 level dengan materi, pembahasan, audio, mode VS, papan skor & sertifikat." />
   <meta name="twitter:card" content="summary" />
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%E2%9A%A1%3C/text%3E%3C/svg%3E" />
   <link rel="manifest" href="data:application/manifest+json,%7B%22name%22%3A%22QuizArena%22%2C%22short_name%22%3A%22QuizArena%22%2C%22start_url%22%3A%22.%22%2C%22display%22%3A%22standalone%22%2C%22background_color%22%3A%22%23FBF5E9%22%2C%22theme_color%22%3A%22%23173F3A%22%2C%22icons%22%3A%5B%5D%7D" />
@@ -463,6 +465,64 @@ html.dark .search-lv{color:#cfe0da;}
 /* Pastikan atribut hidden selalu menang atas display kustom */
 [hidden]{display:none !important;}
 
+/* =============================================================
+   v4 additions: audio, streak, latihan, pencapaian, sertifikat,
+   insight, aksesibilitas, transisi.
+   ============================================================= */
+.streak-chip{position:relative;z-index:1;display:inline-block;margin:0 auto 22px;font-family:var(--font-head);font-weight:700;font-size:14px;color:#ffe;background:rgba(240,166,42,.18);border:1px solid rgba(240,166,42,.45);padding:8px 16px;border-radius:999px;}
+.toggle-btn{position:relative;z-index:1;display:block;width:100%;max-width:400px;margin:0 auto 4px;font-family:var(--font-head);font-weight:600;font-size:14px;color:rgba(255,255,255,.85);background:rgba(255,255,255,.08);border:2px solid rgba(255,255,255,.16);border-radius:14px;padding:11px 16px;cursor:pointer;transition:background .2s,border-color .2s;}
+.toggle-btn:hover{background:rgba(255,255,255,.14);}
+.toggle-btn.is-on{background:rgba(132,224,110,.2);border-color:rgba(132,224,110,.5);color:#dff7d8;}
+
+/* Practice row */
+.practice-row{display:flex;gap:12px;flex-wrap:wrap;justify-content:center;margin:6px 0 8px;}
+.practice-row .btn{flex:1;min-width:180px;}
+.btn--soft{background:var(--cream-2);color:var(--teal);box-shadow:0 4px 0 #e3d8c0;}
+.btn--soft:active{box-shadow:0 2px 0 #e3d8c0;}
+.btn:disabled{cursor:not-allowed;box-shadow:none;filter:grayscale(.3);}
+
+/* Speaker buttons */
+.speak-btn{position:absolute;top:16px;right:16px;width:40px;height:40px;border:none;border-radius:12px;background:rgba(255,255,255,.14);color:#fff;font-size:18px;cursor:pointer;transition:background .2s,transform .08s;}
+.speak-btn:hover{background:rgba(255,255,255,.26);}
+.speak-btn:active{transform:scale(.92);}
+.card--question{position:relative;}
+.opt-speak{display:inline-flex;align-items:center;justify-content:center;min-width:26px;height:26px;margin-left:6px;border-radius:8px;font-size:15px;opacity:.7;cursor:pointer;transition:opacity .2s,background .2s;}
+.opt-speak:hover{opacity:1;background:rgba(0,0,0,.06);}
+.answer{position:relative;display:flex;align-items:center;justify-content:space-between;gap:8px;}
+.answer .opt-speak{flex:0 0 auto;}
+
+/* Achievements */
+.board-title-row{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:6px;}
+.ach-count{font-family:var(--font-head);font-weight:800;font-size:14px;color:var(--teal);background:var(--green-soft);padding:5px 12px;border-radius:999px;}
+.ach-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:12px;margin-top:12px;}
+.ach{display:flex;flex-direction:column;align-items:center;text-align:center;gap:4px;padding:14px 10px;border-radius:16px;background:var(--cream-2);opacity:.55;filter:grayscale(.6);transition:transform .15s;}
+.ach.got{opacity:1;filter:none;background:var(--green-soft);box-shadow:0 4px 14px rgba(63,167,106,.14);}
+.ach.got:hover{transform:translateY(-3px);}
+.ach-icon{font-size:30px;line-height:1;}
+.ach-name{font-family:var(--font-head);font-weight:700;font-size:13px;color:var(--ink);}
+.ach-desc{font-size:11px;color:var(--muted);line-height:1.3;}
+
+/* Insights */
+.insights{margin-top:10px;}
+.insights-lead{font-size:13px;color:var(--muted);margin-bottom:8px;}
+.insight-row{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:10px 14px;border-radius:12px;background:var(--cream-2);margin-bottom:8px;font-weight:600;font-size:14px;color:var(--ink);}
+.insight-n{font-family:var(--font-head);font-weight:800;color:var(--coral-d);background:var(--red-soft);padding:3px 10px;border-radius:999px;font-size:13px;}
+
+/* Certificate */
+.cert-wrap{width:100%;overflow:auto;border-radius:14px;}
+.cert-canvas{width:100%;height:auto;max-width:100%;border-radius:14px;box-shadow:var(--shadow-soft);display:block;}
+
+/* Accessibility: focus rings */
+:focus-visible{outline:3px solid var(--mint-d);outline-offset:2px;}
+.level-card:focus-visible,.answer:focus-visible{outline:3px solid var(--lime-d);outline-offset:2px;}
+
+/* Dark tweaks for v4 */
+html.dark .btn--soft{background:#28382f;color:var(--ink);box-shadow:0 4px 0 #16221d;}
+html.dark .ach{background:#22332e;}
+html.dark .ach.got{background:#17351f;}
+html.dark .insight-row{background:#22332e;}
+html.dark .opt-speak:hover{background:rgba(255,255,255,.1);}
+
   </style>
 </head>
 <body>
@@ -484,6 +544,7 @@ html.dark .search-lv{color:#cfe0da;}
         <span class="badge">🌟 Bahasa Inggris · 10 Level</span>
         <h1 class="hero-title" id="quiz-title">QuizArena</h1>
         <p class="hero-subtitle" id="quiz-desc">Uji kemampuan Bahasa Inggrismu!</p>
+        <div class="streak-chip" id="streak-home">🔥 Mulai streak hari ini!</div>
 
         <div class="field">
           <label for="player-name">Nama pemain 1</label>
@@ -502,6 +563,7 @@ html.dark .search-lv{color:#cfe0da;}
           <button class="seg-btn is-on" data-mode="mc">🔘 Pilihan Ganda</button>
           <button class="seg-btn" data-mode="type">⌨️ Ketik Jawaban</button>
         </div>
+        <button class="toggle-btn" id="btn-autoread">🔊 Baca soal otomatis: OFF</button>
 
         <button class="btn btn--primary btn--lg" id="btn-start">Pilih Level <span class="btn-arrow">→</span></button>
 
@@ -511,7 +573,7 @@ html.dark .search-lv{color:#cfe0da;}
           <li><strong id="meta-time">20s</strong> / soal</li>
         </ul>
         <div class="home-links">
-          <button class="btn-text" id="btn-board">🏆 Papan Skor & Statistik</button>
+          <button class="btn-text" id="btn-board">🏆 Papan Skor · Pencapaian · Statistik</button>
         </div>
       </div>
     </section>
@@ -528,6 +590,11 @@ html.dark .search-lv{color:#cfe0da;}
         </div>
       </div>
       <div class="levels-grid" id="levels-grid"></div>
+
+      <div class="practice-row">
+        <button class="btn btn--ghost" id="btn-free">🎯 Latihan Bebas</button>
+        <button class="btn btn--soft" id="btn-hard">🔁 Ulang Soal Sulit (<span id="hard-count">0</span>)</button>
+      </div>
 
       <div class="materi-head">
         <h2 class="materi-title">📚 MATERI</h2>
@@ -565,8 +632,9 @@ html.dark .search-lv{color:#cfe0da;}
       <div class="vs-bar" id="vs-bar" hidden></div>
       <div class="level-tag" id="quiz-level-tag">Level 1</div>
       <div class="progress-track"><div class="progress-fill" id="progress-fill"></div></div>
-      <div class="timer"><div class="timer-bar" id="timer-bar"></div><span class="timer-num" id="timer-num">20</span></div>
+      <div class="timer" id="timer"><div class="timer-bar" id="timer-bar"></div><span class="timer-num" id="timer-num">20</span></div>
       <div class="card card--question">
+        <button class="speak-btn" id="btn-speak" title="Dengar soal" aria-label="Dengar soal">🔊</button>
         <p class="question-tag" id="question-tag">Pilihan Ganda</p>
         <h2 class="question-text" id="question-text">—</h2>
       </div>
@@ -614,10 +682,32 @@ html.dark .search-lv{color:#cfe0da;}
         <div class="stats-row" id="stats-row"></div>
         <ol class="board-list" id="board-list"></ol>
         <div style="text-align:center;margin-top:12px;"><button class="btn-text" id="btn-clear-board" style="position:static;color:var(--red);">Hapus papan skor</button></div>
+
+        <hr class="board-sep" />
+        <div class="board-title-row"><h3 class="board-title">🏅 Pencapaian</h3><span class="ach-count" id="ach-count">0/9</span></div>
+        <div class="ach-grid" id="ach-grid"></div>
+        <button class="btn btn--primary" id="btn-cert" hidden style="width:100%;margin-top:16px;">🎓 Ambil Sertifikat</button>
+
+        <hr class="board-sep" />
+        <h3 class="board-title">📊 Insight Belajar</h3>
+        <div class="insights" id="insights"></div>
+
         <hr class="board-sep" />
         <h3 class="board-title">🔎 Cari Soal / Kata</h3>
         <input id="search-input" class="search-input" placeholder="Ketik kata, misal: cat, went, big…" autocomplete="off" />
         <div class="search-results" id="search-results"></div>
+      </div>
+    </section>
+
+    <!-- CERTIFICATE -->
+    <section class="screen screen--cert" id="screen-cert">
+      <div class="card card--cert">
+        <button class="btn-text" id="btn-cert-back" style="position:static;margin-bottom:10px;">← Kembali</button>
+        <h2 class="board-title" style="text-align:center;">🎓 Sertifikatmu</h2>
+        <div class="cert-wrap"><canvas id="cert-canvas" width="1200" height="850" class="cert-canvas"></canvas></div>
+        <div class="learn-actions" style="margin-top:16px;">
+          <a class="btn btn--primary" id="btn-cert-dl" download="sertifikat-quizarena.png" href="#">⬇️ Download Sertifikat (PNG)</a>
+        </div>
       </div>
     </section>
   </main>
@@ -975,9 +1065,11 @@ window.QUIZ.levels.push({"level":10,"name":"Idioms & Phrasal Verbs","difficulty"
 
   </script>
   <script>
-/* ================= QuizArena — game logic v3 =================
-   Fitur: level terkunci, bintang, progress, suara, confetti, belajar dulu,
-   mode ketik, 2 pemain (VS), papan skor, statistik, share, cari soal, dark mode.
+/* ================= QuizArena — game logic v4 =================
+   v3: level terkunci, bintang, progress, suara, confetti, belajar, ketik, VS,
+       papan skor, statistik, share, cari soal, dark mode.
+   v4: audio pengucapan (TTS), streak harian, pencapaian/lencana, sertifikat,
+       latihan bebas, ulang soal sulit (adaptif), insights, aksesibilitas, offline.
 ============================================================== */
 (function () {
   "use strict";
@@ -987,13 +1079,27 @@ window.QUIZ.levels.push({"level":10,"name":"Idioms & Phrasal Verbs","difficulty"
   const KEYS = ["A", "B", "C", "D"];
   const COLORS = ["var(--a0)", "var(--a1)", "var(--a2)", "var(--a3)"];
   const APP = "quizarena_" + slug(CONFIG.title);
-  const PASS = 60; // % akurasi minimal untuk lulus & membuka level berikutnya
+  const PASS = 60;
+
+  const ACHIEVEMENTS = [
+    { id: "first", icon: "\uD83C\uDF1F", name: "Langkah Pertama", desc: "Selesaikan satu kuis", test: (c) => c.answered > 0 },
+    { id: "passL1", icon: "\u2705", name: "Mulai Naik", desc: "Lulus Level 1", test: (c) => c.passed >= 1 },
+    { id: "half", icon: "\u26F0\uFE0F", name: "Setengah Jalan", desc: "Lulus 5 level", test: (c) => c.passed >= 5 },
+    { id: "perfect", icon: "\uD83D\uDCAF", name: "Sempurna", desc: "Skor 100% di satu level", test: (c) => c.perfect },
+    { id: "stars15", icon: "\u2B50", name: "Kolektor Bintang", desc: "Kumpulkan 15 bintang", test: (c) => c.stars >= 15 },
+    { id: "vocab200", icon: "\uD83D\uDCDA", name: "Ahli Kosakata", desc: "200 jawaban benar", test: (c) => c.correct >= 200 },
+    { id: "streak3", icon: "\uD83D\uDD25", name: "Rajin", desc: "Belajar 3 hari beruntun", test: (c) => c.bestStreak >= 3 },
+    { id: "streak7", icon: "\uD83C\uDFC6", name: "Tak Terbendung", desc: "Belajar 7 hari beruntun", test: (c) => c.bestStreak >= 7 },
+    { id: "champion", icon: "\uD83D\uDC51", name: "Juara Arena", desc: "Lulus semua 10 level", test: (c) => c.passed >= LEVELS.length },
+  ];
 
   // ---------- State ----------
-  let qmode = "mc";          // "mc" | "type"
-  let vs = false;            // 2 pemain
-  let players = [];          // [{name, score, correct, streak, maxStreak}]
-  let currentLevel = null;   // index level aktif
+  let qmode = "mc";              // "mc" | "type"
+  let vs = false;
+  let autoRead = localStorage.getItem(APP + "_autoread") === "1";
+  let practice = null;           // null | "free" | "hard"
+  let players = [];
+  let currentLevel = null;
   let questions = [];
   let idx = 0, answered = false;
   let timeLeft = CONFIG.timePerQuestion, timer = null;
@@ -1002,13 +1108,14 @@ window.QUIZ.levels.push({"level":10,"name":"Idioms & Phrasal Verbs","difficulty"
   const $ = (id) => document.getElementById(id);
   const screens = {
     home: $("screen-home"), levels: $("screen-levels"), learn: $("screen-learn"),
-    quiz: $("screen-quiz"), result: $("screen-result"), board: $("screen-board"),
+    quiz: $("screen-quiz"), result: $("screen-result"), board: $("screen-board"), cert: $("screen-cert"),
   };
 
   // ---------- Settings ----------
   let soundOn = localStorage.getItem(APP + "_sound") !== "0";
   applyTheme(localStorage.getItem(APP + "_theme") || "light");
   updateSoundBtn();
+  updateAutoReadBtn();
 
   // ---------- Init home ----------
   $("quiz-title").textContent = CONFIG.title;
@@ -1017,10 +1124,12 @@ window.QUIZ.levels.push({"level":10,"name":"Idioms & Phrasal Verbs","difficulty"
   $("meta-count").textContent = LEVELS.length;
   $("meta-qtotal").textContent = LEVELS.reduce((s, l) => s + l.questions.length, 0);
   $("meta-time").textContent = CONFIG.timePerQuestion + "s";
+  renderStreakHome();
 
   // ---------- Events ----------
   $("btn-theme").addEventListener("click", toggleTheme);
   $("btn-sound").addEventListener("click", toggleSound);
+  $("btn-autoread").addEventListener("click", toggleAutoRead);
   $("btn-start").addEventListener("click", goToLevels);
   $("player-name").addEventListener("keydown", (e) => { if (e.key === "Enter") goToLevels(); });
   $("btn-board").addEventListener("click", openBoard);
@@ -1029,7 +1138,7 @@ window.QUIZ.levels.push({"level":10,"name":"Idioms & Phrasal Verbs","difficulty"
   $("btn-learn-back").addEventListener("click", goToLevels);
   $("btn-learn-start").addEventListener("click", () => { if (currentLevel != null) startLevel(currentLevel); });
   $("btn-next").addEventListener("click", next);
-  $("btn-retry").addEventListener("click", () => { if (currentLevel != null) startLevel(currentLevel); });
+  $("btn-retry").addEventListener("click", retry);
   $("btn-levels").addEventListener("click", goToLevels);
   $("btn-next-level").addEventListener("click", () => {
     if (currentLevel != null && currentLevel + 1 < LEVELS.length) { currentLevel += 1; openLearn(currentLevel); }
@@ -1042,8 +1151,12 @@ window.QUIZ.levels.push({"level":10,"name":"Idioms & Phrasal Verbs","difficulty"
   });
   $("type-box").addEventListener("submit", (e) => { e.preventDefault(); submitTyped(); });
   $("search-input").addEventListener("input", (e) => renderSearch(e.target.value));
+  $("btn-speak").addEventListener("click", () => speakText(questions[idx] && questions[idx].q));
+  $("btn-free").addEventListener("click", () => startPractice("free"));
+  $("btn-hard").addEventListener("click", () => startPractice("hard"));
+  $("btn-cert").addEventListener("click", openCertificate);
+  $("btn-cert-back").addEventListener("click", openBoard);
 
-  // segmented controls
   document.querySelectorAll("#seg-players .seg-btn").forEach((b) => {
     b.addEventListener("click", () => {
       document.querySelectorAll("#seg-players .seg-btn").forEach((x) => x.classList.remove("is-on"));
@@ -1062,13 +1175,27 @@ window.QUIZ.levels.push({"level":10,"name":"Idioms & Phrasal Verbs","difficulty"
     });
   });
 
-  // ---------- Navigation ----------
-  function goToLevels() {
-    renderLevels();
-    renderMateri();
-    updateOverall();
-    show("levels");
+  // keyboard accessibility during quiz
+  document.addEventListener("keydown", (e) => {
+    if (!screens.quiz.classList.contains("is-active")) return;
+    if (e.target && (e.target.id === "type-input")) return;
+    if (!answered && qmode === "mc") {
+      let n = -1;
+      if (e.key >= "1" && e.key <= "4") n = Number(e.key) - 1;
+      else { const k = e.key.toLowerCase(); if ("abcd".includes(k)) n = "abcd".indexOf(k); }
+      if (n >= 0) { const btns = document.querySelectorAll("#answers .answer"); if (btns[n]) { btns[n].click(); e.preventDefault(); } }
+    } else if (answered && (e.key === "Enter" || e.key === " ")) {
+      if (!$("btn-next").hidden) { next(); e.preventDefault(); }
+    }
+  });
+
+  // service worker (offline) — optional, aman bila file tidak ada
+  if ("serviceWorker" in navigator) {
+    window.addEventListener("load", () => { navigator.serviceWorker.register("service-worker.js").catch(() => {}); });
   }
+
+  // ---------- Navigation ----------
+  function goToLevels() { practice = null; renderLevels(); renderMateri(); updateOverall(); renderPracticeRow(); show("levels"); }
 
   function renderLevels() {
     const name = playerName(0);
@@ -1081,23 +1208,27 @@ window.QUIZ.levels.push({"level":10,"name":"Idioms & Phrasal Verbs","difficulty"
       const stars = getStars(lv.level);
       const card = document.createElement("button");
       card.className = "level-card" + (unlocked ? "" : " is-locked") + (isPassed(lv.level) ? " is-done" : "");
-      const starHtml = `<span class="level-stars">${starRow(stars)}</span>`;
-      const footRight = unlocked
-        ? (best > 0 ? `\u2B50 ${best}` : lv.questions.length + " soal")
-        : "\uD83D\uDD12 Terkunci";
+      card.setAttribute("aria-label", `Level ${lv.level}: ${lv.name}. ${unlocked ? (isPassed(lv.level) ? "Selesai" : "Terbuka") : "Terkunci"}`);
+      const footRight = unlocked ? (best > 0 ? `\u2B50 ${best}` : lv.questions.length + " soal") : "\uD83D\uDD12 Terkunci";
       card.innerHTML =
         `<span class="level-top"><span class="level-num">Level ${lv.level}</span><span class="level-emoji">${unlocked ? (lv.emoji || "\uD83C\uDFAF") : "\uD83D\uDD12"}</span></span>` +
         `<span class="level-name">${esc(lv.name)}</span>` +
         `<span class="level-desc">${esc(lv.desc || "")}</span>` +
-        starHtml +
+        `<span class="level-stars">${starRow(stars)}</span>` +
         `<span class="level-foot"><span class="level-diff">${esc(lv.difficulty)}</span><span class="level-best">${footRight}</span></span>`;
       card.addEventListener("click", () => {
         if (!unlocked) { shake(card); toast("Selesaikan level sebelumnya dulu untuk membuka level ini \uD83D\uDD13"); playWrong(); return; }
-        playClick();
-        openLearn(i);
+        playClick(); openLearn(i);
       });
       grid.appendChild(card);
     });
+  }
+
+  function renderPracticeRow() {
+    const hard = getMissed().length;
+    $("hard-count").textContent = hard;
+    $("btn-hard").disabled = hard === 0;
+    $("btn-hard").style.opacity = hard === 0 ? ".55" : "1";
   }
 
   function renderMateri() {
@@ -1107,9 +1238,7 @@ window.QUIZ.levels.push({"level":10,"name":"Idioms & Phrasal Verbs","difficulty"
     LEVELS.forEach((lv) => {
       const a = document.createElement("a");
       a.className = "materi-card";
-      a.href = "level-" + lv.level + ".pdf";
-      a.target = "_blank";
-      a.rel = "noopener";
+      a.href = "level-" + lv.level + ".pdf"; a.target = "_blank"; a.rel = "noopener";
       a.innerHTML =
         `<span class="materi-emoji">${lv.emoji || "\uD83D\uDCC4"}</span>` +
         `<span class="materi-info"><span class="materi-lv">Materi Level ${lv.level}</span><span class="materi-name">${esc(lv.name)}</span></span>` +
@@ -1125,9 +1254,9 @@ window.QUIZ.levels.push({"level":10,"name":"Idioms & Phrasal Verbs","difficulty"
     $("overall-label").textContent = `${done} / ${LEVELS.length} level selesai \u00B7 \u2B50 ${totalStars}/${LEVELS.length * 3}`;
   }
 
-  // ---------- Learn (Belajar dulu) ----------
+  // ---------- Learn ----------
   function openLearn(i) {
-    currentLevel = i;
+    currentLevel = i; practice = null;
     const lv = LEVELS[i];
     $("learn-head").innerHTML =
       `<span class="learn-emoji">${lv.emoji || "\uD83D\uDCD8"}</span>` +
@@ -1136,20 +1265,16 @@ window.QUIZ.levels.push({"level":10,"name":"Idioms & Phrasal Verbs","difficulty"
       `<p class="learn-desc">${esc(lv.desc || "")}</p></div>`;
     const list = $("learn-list");
     list.innerHTML = "";
-    const items = MATERI[String(lv.level)] || [];
-    items.forEach((html) => {
-      const li = document.createElement("li");
-      li.innerHTML = html; // konten materi tepercaya milik sendiri
-      list.appendChild(li);
-    });
+    (MATERI[String(lv.level)] || []).forEach((html) => { const li = document.createElement("li"); li.innerHTML = html; list.appendChild(li); });
     $("learn-pdf").href = "level-" + lv.level + ".pdf";
     $("btn-learn-start").textContent = `Mulai Kuis Level ${lv.level} \u2192`;
     show("learn");
   }
 
-  // ---------- Quiz ----------
-  function buildSession(level) {
-    let pool = level.questions.map((q) => ({ ...q, options: [...q.options] }));
+  // ---------- Sessions ----------
+  function withIds(list, level) { return list.map((q, i) => ({ ...q, options: [...q.options], _id: level + "_" + i })); }
+  function shuffleSession(list) {
+    let pool = list.map((q) => ({ ...q, options: [...q.options] }));
     if (CONFIG.shuffle) {
       shuffle(pool);
       pool = pool.map((q) => {
@@ -1162,19 +1287,46 @@ window.QUIZ.levels.push({"level":10,"name":"Idioms & Phrasal Verbs","difficulty"
   }
 
   function startLevel(i) {
-    currentLevel = i;
+    currentLevel = i; practice = null;
     const level = LEVELS[i];
-    questions = buildSession(level);
+    questions = shuffleSession(withIds(level.questions, level.level));
+    beginSession(`Level ${level.level} \u00B7 ${level.difficulty}` + (vs ? "  \u00B7  \uD83C\uDD9A VS" : ""));
+  }
+
+  function startPractice(kind) {
+    let pool = [];
+    if (kind === "free") {
+      LEVELS.forEach((lv) => { pool = pool.concat(withIds(lv.questions, lv.level)); });
+      pool = shuffle(pool).slice(0, 25);
+    } else {
+      const missed = getMissed();
+      missed.forEach((id) => { const q = resolveQuestion(id); if (q) pool.push(q); });
+      if (!pool.length) { toast("Belum ada soal sulit \u2014 main dulu untuk mengumpulkannya \uD83D\uDE09"); return; }
+      pool = pool.slice(0, 30);
+    }
+    practice = kind;
+    vs = false; // practice selalu 1 pemain
+    questions = shuffleSession(pool);
+    beginSession(kind === "free" ? "\uD83C\uDFAF Latihan Bebas \u00B7 Tanpa Waktu" : "\uD83D\uDD01 Ulang Soal Sulit \u00B7 Tanpa Waktu");
+  }
+
+  function beginSession(tag) {
     idx = 0; history = [];
     players = vs
       ? [mkPlayer(playerName(0) || "Pemain 1"), mkPlayer(playerName(1) || "Pemain 2")]
       : [mkPlayer(playerName(0) || "Kamu")];
-    $("quiz-level-tag").textContent = `Level ${level.level} \u00B7 ${level.difficulty}` + (vs ? "  \u00B7  \uD83C\uDD9A VS" : "");
+    $("quiz-level-tag").textContent = tag;
     $("vs-bar").hidden = !vs;
     show("quiz");
     renderQuestion();
   }
 
+  function retry() {
+    if (practice) startPractice(practice);
+    else if (currentLevel != null) startLevel(currentLevel);
+  }
+
+  function noTimer() { return practice !== null; }
   function cp() { return vs ? (idx % players.length) : 0; }
 
   function renderQuestion() {
@@ -1190,46 +1342,50 @@ window.QUIZ.levels.push({"level":10,"name":"Idioms & Phrasal Verbs","difficulty"
     const player = players[cp()];
     $("streak-pill").textContent = `\uD83D\uDD25 ${player.streak}`;
     $("score-live").textContent = player.score;
-    if (vs) {
-      $("vs-bar").innerHTML =
-        players.map((p, i) => `<span class="vs-player ${i === cp() ? "is-turn" : ""}">${esc(p.name)}: <strong>${p.score}</strong></span>`).join("<span class=\"vs-mid\">VS</span>");
-    }
+    renderVsBar();
 
     const wrap = $("answers");
     const typeBox = $("type-box");
     if (qmode === "type") {
       wrap.innerHTML = ""; wrap.hidden = true;
       typeBox.hidden = false;
-      $("type-input").value = "";
-      $("type-input").disabled = false;
-      $("type-submit").disabled = false;
+      $("type-input").value = ""; $("type-input").disabled = false; $("type-submit").disabled = false;
       setTimeout(() => $("type-input").focus(), 50);
     } else {
-      typeBox.hidden = true;
-      wrap.hidden = false;
-      wrap.innerHTML = "";
+      typeBox.hidden = true; wrap.hidden = false; wrap.innerHTML = "";
       q.options.forEach((opt, i) => {
         const btn = document.createElement("button");
         btn.className = "answer";
         btn.style.setProperty("--c", COLORS[i % COLORS.length]);
         btn.setAttribute("data-key", KEYS[i]);
-        btn.textContent = opt;
-        btn.addEventListener("click", (e) => selectAnswer(i, e));
+        btn.setAttribute("aria-label", `Pilihan ${KEYS[i]}: ${opt}`);
+        btn.innerHTML = `<span class="answer-text">${esc(opt)}</span><span class="opt-speak" role="button" aria-label="Dengar pilihan" title="Dengar">\uD83D\uDD0A</span>`;
+        btn.addEventListener("click", (e) => {
+          if (e.target.closest(".opt-speak")) { e.stopPropagation(); speakText(opt); return; }
+          selectAnswer(i, e);
+        });
         wrap.appendChild(btn);
       });
     }
     startTimer();
+    if (autoRead) setTimeout(() => speakText(q.q), 250);
+  }
+
+  function renderVsBar() {
+    if (!vs) return;
+    $("vs-bar").innerHTML = players.map((p, i) =>
+      `<span class="vs-player ${i === cp() ? "is-turn" : ""}">${esc(p.name)}: <strong>${p.score}</strong></span>`
+    ).join('<span class="vs-mid">VS</span>');
   }
 
   function startTimer() {
     clearInterval(timer);
+    const t = $("timer");
+    if (noTimer()) { t.hidden = true; return; }
+    t.hidden = false;
     timeLeft = CONFIG.timePerQuestion;
     updateTimerUI();
-    timer = setInterval(() => {
-      timeLeft--;
-      updateTimerUI();
-      if (timeLeft <= 0) { clearInterval(timer); if (!answered) lockOut(); }
-    }, 1000);
+    timer = setInterval(() => { timeLeft--; updateTimerUI(); if (timeLeft <= 0) { clearInterval(timer); if (!answered) lockOut(); } }, 1000);
   }
   function updateTimerUI() {
     const pct = (timeLeft / CONFIG.timePerQuestion) * 100;
@@ -1248,54 +1404,43 @@ window.QUIZ.levels.push({"level":10,"name":"Idioms & Phrasal Verbs","difficulty"
     const player = players[cp()];
 
     if (qmode === "mc") {
-      const buttons = [...document.querySelectorAll(".answer")];
-      buttons.forEach((b, bi) => {
+      [...document.querySelectorAll(".answer")].forEach((b, bi) => {
         b.classList.add("locked");
         if (bi === q.answer) b.classList.add("correct");
         else if (bi === chosenIdx) b.classList.add("wrong");
         else b.classList.add("dim");
       });
-    } else {
-      $("type-input").disabled = true;
-      $("type-submit").disabled = true;
-    }
+    } else { $("type-input").disabled = true; $("type-submit").disabled = true; }
 
     let gained = 0;
     if (isCorrect) {
-      player.correct++;
-      player.streak++;
-      player.maxStreak = Math.max(player.maxStreak, player.streak);
-      const timeBonus = Math.round((timeLeft / CONFIG.timePerQuestion) * 50);
-      const streakBonus = Math.min(player.streak - 1, 5) * 10;
-      gained = 100 + timeBonus + streakBonus;
-      player.score += gained;
-      floatPoints(gained, e);
-      playCorrect();
+      player.correct++; player.streak++; player.maxStreak = Math.max(player.maxStreak, player.streak);
+      if (practice) gained = 100;
+      else { const timeBonus = Math.round((timeLeft / CONFIG.timePerQuestion) * 50); const streakBonus = Math.min(player.streak - 1, 5) * 10; gained = 100 + timeBonus + streakBonus; }
+      player.score += gained; floatPoints(gained, e); playCorrect();
+      if (q._id && !vs) removeMissed(q._id);
     } else {
-      player.streak = 0;
-      playWrong();
+      player.streak = 0; playWrong();
+      if (q._id && !vs) addMissed(q._id);
     }
     $("score-live").textContent = player.score;
     $("streak-pill").textContent = `\uD83D\uDD25 ${player.streak}`;
 
-    // explanation box
     const correctText = q.options[q.answer];
     const you = qmode === "type" ? (typedText || "(kosong)") : (chosenIdx === -1 ? "(waktu habis)" : q.options[chosenIdx]);
     $("explain-box").className = "explain-box " + (isCorrect ? "is-ok" : "is-no");
     $("explain-box").innerHTML =
       `<div class="explain-head">${isCorrect ? "\u2705 Benar!" : "\u274C Belum tepat"}</div>` +
-      (isCorrect ? "" : `<div class="explain-line">Jawabanmu: <b>${esc(you)}</b></div><div class="explain-line">Jawaban benar: <b>${esc(correctText)}</b></div>`) +
+      (isCorrect ? "" : `<div class="explain-line">Jawabanmu: <b>${esc(you)}</b></div><div class="explain-line">Jawaban benar: <b>${esc(correctText)}</b> <span class="opt-speak" id="speak-correct" role="button" title="Dengar">\uD83D\uDD0A</span></div>`) +
       (q.explain ? `<div class="explain-why">\uD83D\uDCA1 ${esc(q.explain)}</div>` : "");
     $("explain-box").hidden = false;
+    const sc = $("speak-correct"); if (sc) sc.addEventListener("click", () => speakText(correctText));
 
-    history.push({ q: q.q, you: you, answer: correctText, explain: q.explain, correct: isCorrect, player: player.name });
-
+    history.push({ q: q.q, you, answer: correctText, explain: q.explain, correct: isCorrect, player: player.name });
     $("btn-next").textContent = (idx + 1 >= questions.length) ? "Lihat Hasil \uD83C\uDF89" : "Lanjut \u2192";
     $("btn-next").hidden = false;
-    if (vs) {
-      $("vs-bar").innerHTML =
-        players.map((p, i) => `<span class="vs-player ${i === cp() ? "is-turn" : ""}">${esc(p.name)}: <strong>${p.score}</strong></span>`).join("<span class=\"vs-mid\">VS</span>");
-    }
+    $("btn-next").focus();
+    renderVsBar();
   }
 
   function selectAnswer(i, e) { grade(i === questions[idx].answer, i, null, e); }
@@ -1307,73 +1452,80 @@ window.QUIZ.levels.push({"level":10,"name":"Idioms & Phrasal Verbs","difficulty"
   }
   function lockOut() { grade(false, -1, qmode === "type" ? $("type-input").value : null, null); }
 
-  function next() {
-    playClick();
-    idx++;
-    if (idx >= questions.length) finish();
-    else renderQuestion();
-  }
+  function next() { playClick(); idx++; if (idx >= questions.length) finish(); else renderQuestion(); }
 
   // ---------- Result ----------
   function finish() {
     clearInterval(timer);
     $("progress-fill").style.width = "100%";
-    const level = LEVELS[currentLevel];
-    const perPlayerTotal = vs ? Math.ceil(questions.length / players.length) : questions.length;
+    updateStreak();
 
-    if (vs) {
-      const [a, b] = players;
-      let winner;
-      if (a.score > b.score) winner = a; else if (b.score > a.score) winner = b; else winner = null;
-      $("result-emoji").textContent = winner ? "\uD83C\uDFC6" : "\uD83E\uDD1D";
+    if (vs) return finishVs();
+
+    const p = players[0];
+    const total = questions.length;
+    const acc = total ? Math.round((p.correct / total) * 100) : 0;
+    setStatLabels("Benar", "Salah", "Akurasi", "Streak Maks");
+    $("result-score").textContent = p.score;
+    $("stat-correct").textContent = p.correct;
+    $("stat-wrong").textContent = total - p.correct;
+    $("stat-acc").textContent = acc + "%";
+    $("stat-streak").textContent = p.maxStreak;
+    bumpStats(total, p.correct);
+    if (p.maxStreak > getNum("_bestStreak")) localStorage.setItem(APP + "_bestStreak", String(p.maxStreak));
+
+    if (practice) {
+      $("result-emoji").textContent = "\uD83C\uDF93";
       $("result-stars").innerHTML = "";
-      $("result-title").textContent = winner ? `${winner.name} menang!` : "Seri!";
-      $("result-sub").textContent = `Level ${level.level} \u00B7 ${a.name}: ${a.score} poin \u2014 ${b.name}: ${b.score} poin.`;
-      $("result-score").textContent = Math.max(a.score, b.score);
-      $("stat-correct").textContent = a.correct + "/" + b.correct;
-      setStatLabels("Benar A/B", "Skor A", "Skor B", "Streak");
-      $("stat-wrong").textContent = a.score;
-      $("stat-acc").textContent = b.score;
-      $("stat-streak").textContent = Math.max(a.maxStreak, b.maxStreak);
+      $("result-title").textContent = practice === "free" ? "Latihan selesai!" : "Sesi ulang selesai!";
+      $("result-sub").textContent = `Kamu menjawab ${p.correct}/${total} benar (${acc}%). ` + (practice === "hard" ? "Soal yang benar dihapus dari daftar sulit \uD83D\uDC4D" : "Terus asah kemampuanmu!");
       $("btn-next-level").hidden = true;
-      if (winner) confetti();
-      playWin();
     } else {
-      const p = players[0];
-      const total = questions.length;
-      const acc = total ? Math.round((p.correct / total) * 100) : 0;
+      const level = LEVELS[currentLevel];
       const stars = acc >= 90 ? 3 : acc >= 75 ? 2 : acc >= PASS ? 1 : 0;
       const passedNow = acc >= PASS;
-      setStatLabels("Benar", "Salah", "Akurasi", "Streak Maks");
-      $("result-score").textContent = p.score;
-      $("stat-correct").textContent = p.correct;
-      $("stat-wrong").textContent = total - p.correct;
-      $("stat-acc").textContent = acc + "%";
-      $("stat-streak").textContent = p.maxStreak;
-      $("result-stars").innerHTML = starRow(stars, true);
-
-      let emoji = "\uD83C\uDF31", title = "Tetap semangat!", sub = "Coba lagi untuk meningkatkan skormu.";
+      let emoji = "\uD83D\uDCAA", title = "Hampir!", sub = `Perlu ${PASS}% untuk lulus. Ayo coba lagi!`;
       if (acc === 100) { emoji = "\uD83C\uDFC6"; title = "Sempurna!"; sub = "Semua benar. Luar biasa!"; }
       else if (acc >= 75) { emoji = "\uD83C\uDF1F"; title = "Hebat!"; sub = "Skormu sangat bagus."; }
       else if (acc >= PASS) { emoji = "\uD83C\uDF89"; title = "Lulus!"; sub = "Kamu lolos level ini."; }
-      else { emoji = "\uD83D\uDCAA"; title = "Hampir!"; sub = `Perlu ${PASS}% untuk lulus. Ayo coba lagi!`; }
       const wasBest = p.score > getBest(level.level);
       $("result-emoji").textContent = emoji;
+      $("result-stars").innerHTML = starRow(stars, true);
       $("result-title").textContent = p.name ? `${title} ${p.name}` : title;
       $("result-sub").textContent = `Level ${level.level} \u00B7 ${level.name}. ${sub}` + (wasBest ? " \uD83C\uDF8A Rekor baru!" : "");
-
       saveBest(level.level, p.score);
       if (stars > getStars(level.level)) localStorage.setItem(APP + "_stars_L" + level.level, String(stars));
       if (passedNow) localStorage.setItem(APP + "_pass_L" + level.level, "1");
-      bumpStats(total, p.correct);
+      if (acc === 100) localStorage.setItem(APP + "_perfect", "1");
       addToBoard(p.name, level, p.score, acc);
-
       const hasNext = currentLevel + 1 < LEVELS.length;
       $("btn-next-level").hidden = !(passedNow && hasNext);
       if (passedNow) confetti();
       passedNow ? playWin() : playWrong();
     }
+    afterFinish();
+  }
 
+  function finishVs() {
+    const [a, b] = players;
+    const winner = a.score > b.score ? a : b.score > a.score ? b : null;
+    setStatLabels("Benar A/B", "Skor " + a.name, "Skor " + b.name, "Streak");
+    $("result-emoji").textContent = winner ? "\uD83C\uDFC6" : "\uD83E\uDD1D";
+    $("result-stars").innerHTML = "";
+    $("result-title").textContent = winner ? `${winner.name} menang!` : "Seri!";
+    $("result-sub").textContent = `${a.name}: ${a.score} \u2014 ${b.name}: ${b.score}`;
+    $("result-score").textContent = Math.max(a.score, b.score);
+    $("stat-correct").textContent = a.correct + "/" + b.correct;
+    $("stat-wrong").textContent = a.score;
+    $("stat-acc").textContent = b.score;
+    $("stat-streak").textContent = Math.max(a.maxStreak, b.maxStreak);
+    $("btn-next-level").hidden = true;
+    if (winner) confetti();
+    playWin();
+    afterFinish();
+  }
+
+  function afterFinish() {
     buildReview();
     $("review").hidden = true;
     $("btn-review").textContent = "Lihat Pembahasan";
@@ -1388,7 +1540,7 @@ window.QUIZ.levels.push({"level":10,"name":"Idioms & Phrasal Verbs","difficulty"
       item.className = "review-item" + (h.correct ? "" : " is-wrong");
       item.innerHTML =
         `<div class="review-q">${n + 1}. ${esc(h.q)}${vs ? ` <span class="review-who">(${esc(h.player)})</span>` : ""}</div>` +
-        `<div class="review-a ${h.correct ? "" : "wrong"}">Jawaban ${h.correct ? "kamu (benar)" : "kamu"}: <strong>${esc(h.you)}</strong></div>` +
+        `<div class="review-a ${h.correct ? "" : "wrong"}">Jawaban kamu: <strong>${esc(h.you)}</strong></div>` +
         (h.correct ? "" : `<div class="review-a">Jawaban benar: <strong>${esc(h.answer)}</strong></div>`) +
         (h.explain ? `<div class="review-explain">\uD83D\uDCA1 ${esc(h.explain)}</div>` : "");
       wrap.appendChild(item);
@@ -1402,20 +1554,16 @@ window.QUIZ.levels.push({"level":10,"name":"Idioms & Phrasal Verbs","difficulty"
   }
 
   function shareResult() {
-    const level = LEVELS[currentLevel];
     const score = $("result-score").textContent;
-    const text = `Aku dapat ${score} poin di Level ${level.level} (${level.name}) \u2014 QuizArena! \uD83C\uDFAF Coba juga: ${location.href}`;
-    if (navigator.share) {
-      navigator.share({ title: "QuizArena", text }).catch(() => {});
-    } else if (navigator.clipboard) {
-      navigator.clipboard.writeText(text).then(() => toast("Skor disalin ke clipboard \uD83D\uDCCB")).catch(() => toast(text));
-    } else {
-      toast(text);
-    }
+    const label = practice ? "Latihan" : (currentLevel != null ? "Level " + LEVELS[currentLevel].level : "");
+    const text = `Aku dapat ${score} poin di ${label} \u2014 QuizArena! \uD83C\uDFAF Coba juga: ${location.href}`;
+    if (navigator.share) navigator.share({ title: "QuizArena", text }).catch(() => {});
+    else if (navigator.clipboard) navigator.clipboard.writeText(text).then(() => toast("Skor disalin ke clipboard \uD83D\uDCCB")).catch(() => toast(text));
+    else toast(text);
   }
 
-  // ---------- Board / Stats / Search ----------
-  function openBoard() { renderBoard(); renderStats(); $("search-input").value = ""; renderSearch(""); show("board"); }
+  // ---------- Board / Stats / Achievements / Insights / Search ----------
+  function openBoard() { renderBoard(); renderStats(); renderAchievements(); renderInsights(); renderCertBtn(); $("search-input").value = ""; renderSearch(""); show("board"); }
 
   function renderBoard() {
     const list = getBoard();
@@ -1427,24 +1575,57 @@ window.QUIZ.levels.push({"level":10,"name":"Idioms & Phrasal Verbs","difficulty"
       li.className = "board-row" + (i < 3 ? " top" : "");
       const medal = ["\uD83E\uDD47", "\uD83E\uDD48", "\uD83E\uDD49"][i] || (i + 1) + ".";
       li.innerHTML =
-        `<span class="board-rank">${medal}</span>` +
-        `<span class="board-name">${esc(e.name)}</span>` +
-        `<span class="board-meta">Lv ${e.level} \u00B7 ${e.acc}%</span>` +
-        `<span class="board-score">${e.score}</span>`;
+        `<span class="board-rank">${medal}</span><span class="board-name">${esc(e.name)}</span>` +
+        `<span class="board-meta">Lv ${e.level} \u00B7 ${e.acc}%</span><span class="board-score">${e.score}</span>`;
       ol.appendChild(li);
     });
   }
 
-  function renderStats() {
+  function ctx() {
     const st = getStats();
-    const acc = st.answered ? Math.round((st.correct / st.answered) * 100) : 0;
-    const done = LEVELS.filter((l) => isPassed(l.level)).length;
-    const stars = LEVELS.reduce((s, l) => s + getStars(l.level), 0);
+    return {
+      answered: st.answered, correct: st.correct,
+      passed: LEVELS.filter((l) => isPassed(l.level)).length,
+      stars: LEVELS.reduce((s, l) => s + getStars(l.level), 0),
+      perfect: localStorage.getItem(APP + "_perfect") === "1",
+      bestStreak: getNum("_bestStreak"),
+    };
+  }
+
+  function renderStats() {
+    const c = ctx();
+    const acc = c.answered ? Math.round((c.correct / c.answered) * 100) : 0;
     $("stats-row").innerHTML =
-      statCard(st.answered, "Soal dijawab") +
-      statCard(acc + "%", "Akurasi") +
-      statCard(done + "/" + LEVELS.length, "Level lulus") +
-      statCard("\u2B50 " + stars, "Total bintang");
+      statCard(c.answered, "Soal dijawab") + statCard(acc + "%", "Akurasi") +
+      statCard(c.passed + "/" + LEVELS.length, "Level lulus") + statCard("\uD83D\uDD25 " + getNum("_streak"), "Streak hari");
+  }
+
+  function renderAchievements() {
+    const c = ctx();
+    const grid = $("ach-grid");
+    grid.innerHTML = "";
+    ACHIEVEMENTS.forEach((a) => {
+      const got = a.test(c);
+      const d = document.createElement("div");
+      d.className = "ach" + (got ? " got" : "");
+      d.innerHTML = `<span class="ach-icon">${got ? a.icon : "\uD83D\uDD12"}</span><span class="ach-name">${a.name}</span><span class="ach-desc">${a.desc}</span>`;
+      grid.appendChild(d);
+    });
+    const got = ACHIEVEMENTS.filter((a) => a.test(c)).length;
+    $("ach-count").textContent = got + "/" + ACHIEVEMENTS.length;
+  }
+
+  function renderInsights() {
+    const missed = getMissed();
+    const box = $("insights");
+    if (!missed.length) { box.innerHTML = '<p class="search-hint">Belum ada data. Mainkan beberapa level untuk melihat level tersulitmu.</p>'; return; }
+    const byLevel = {};
+    missed.forEach((id) => { const lvl = id.split("_")[0]; byLevel[lvl] = (byLevel[lvl] || 0) + 1; });
+    const rows = Object.keys(byLevel).map((lvl) => ({ lvl: Number(lvl), n: byLevel[lvl] })).sort((a, b) => b.n - a.n);
+    box.innerHTML = '<p class="insights-lead">Soal yang masih perlu kamu ulang:</p>' + rows.map((r) => {
+      const lv = LEVELS.find((l) => l.level === r.lvl);
+      return `<div class="insight-row"><span>Level ${r.lvl}${lv ? " \u00B7 " + esc(lv.name) : ""}</span><span class="insight-n">${r.n} soal</span></div>`;
+    }).join("");
   }
 
   function renderSearch(term) {
@@ -1455,14 +1636,13 @@ window.QUIZ.levels.push({"level":10,"name":"Idioms & Phrasal Verbs","difficulty"
     let count = 0;
     for (const lv of LEVELS) {
       for (const q of lv.questions) {
-        const hay = normalize(q.q + " " + q.options.join(" ") + " " + (q.explain || ""));
-        if (hay.includes(t)) {
+        if (normalize(q.q + " " + q.options.join(" ") + " " + (q.explain || "")).includes(t)) {
           count++;
           const div = document.createElement("div");
           div.className = "search-item";
           div.innerHTML =
             `<div class="search-q">${esc(q.q)} <span class="search-lv">Lv ${lv.level}</span></div>` +
-            `<div class="search-ans">\u2705 ${esc(q.options[q.answer])}</div>` +
+            `<div class="search-ans">\u2705 ${esc(q.options[q.answer])} <span class="opt-speak" role="button" title="Dengar" data-say="${esc(q.options[q.answer])}">\uD83D\uDD0A</span></div>` +
             (q.explain ? `<div class="search-exp">${esc(q.explain)}</div>` : "");
           box.appendChild(div);
           if (count >= 40) break;
@@ -1471,9 +1651,44 @@ window.QUIZ.levels.push({"level":10,"name":"Idioms & Phrasal Verbs","difficulty"
       if (count >= 40) break;
     }
     if (!count) box.innerHTML = '<p class="search-hint">Tidak ada hasil untuk "' + esc(term) + '".</p>';
+    box.querySelectorAll(".opt-speak[data-say]").forEach((el) => el.addEventListener("click", () => speakText(el.getAttribute("data-say"))));
   }
 
-  // ---------- Sound (WebAudio) ----------
+  // ---------- Certificate ----------
+  function renderCertBtn() { $("btn-cert").hidden = ctx().passed < LEVELS.length; }
+  function openCertificate() {
+    const cv = $("cert-canvas");
+    const g = cv.getContext("2d");
+    const W = cv.width, H = cv.height;
+    g.fillStyle = "#FBF5E9"; g.fillRect(0, 0, W, H);
+    g.strokeStyle = "#173F3A"; g.lineWidth = 14; g.strokeRect(28, 28, W - 56, H - 56);
+    g.strokeStyle = "#84E06E"; g.lineWidth = 4; g.strokeRect(48, 48, W - 96, H - 96);
+    g.textAlign = "center";
+    g.fillStyle = "#173F3A"; g.font = "bold 40px Georgia, serif";
+    g.fillText("\u26A1 QuizArena", W / 2, 140);
+    g.font = "28px Georgia, serif"; g.fillStyle = "#6E7C77";
+    g.fillText("SERTIFIKAT PENYELESAIAN", W / 2, 200);
+    g.font = "22px Georgia, serif"; g.fillStyle = "#1E2B29";
+    g.fillText("Diberikan kepada", W / 2, 300);
+    const name = playerName(0) || getBoard()[0] && getBoard()[0].name || "Pemain";
+    g.font = "bold 64px Georgia, serif"; g.fillStyle = "#173F3A";
+    g.fillText(name, W / 2, 380);
+    g.strokeStyle = "#E7745C"; g.lineWidth = 3; g.beginPath(); g.moveTo(W / 2 - 260, 405); g.lineTo(W / 2 + 260, 405); g.stroke();
+    g.font = "24px Georgia, serif"; g.fillStyle = "#1E2B29";
+    g.fillText("atas keberhasilan menyelesaikan seluruh 10 level", W / 2, 470);
+    g.fillText("Kuis Bahasa Inggris Dasar QuizArena", W / 2, 508);
+    const stars = LEVELS.reduce((s, l) => s + getStars(l.level), 0);
+    g.font = "bold 30px Georgia, serif"; g.fillStyle = "#F0A62A";
+    g.fillText("\u2605 ".repeat(3) + `  Total ${stars}/30 bintang`, W / 2, 590);
+    const d = new Date();
+    g.font = "20px Georgia, serif"; g.fillStyle = "#6E7C77";
+    g.fillText("Tanggal: " + d.toLocaleDateString("id-ID", { day: "numeric", month: "long", year: "numeric" }), W / 2, 700);
+    g.fillText("QuizArena \u00B7 Belajar bahasa dengan menyenangkan", W / 2, 760);
+    $("btn-cert-dl").href = cv.toDataURL("image/png");
+    show("cert");
+  }
+
+  // ---------- Sound ----------
   let actx = null;
   function ac() { if (!actx) { try { actx = new (window.AudioContext || window.webkitAudioContext)(); } catch (e) {} } return actx; }
   function beep(freq, dur, type, when, gain) {
@@ -1484,57 +1699,73 @@ window.QUIZ.levels.push({"level":10,"name":"Idioms & Phrasal Verbs","difficulty"
     g.gain.setValueAtTime(0.0001, t);
     g.gain.exponentialRampToValueAtTime(gain || 0.15, t + 0.02);
     g.gain.exponentialRampToValueAtTime(0.0001, t + dur);
-    o.connect(g); g.connect(c.destination);
-    o.start(t); o.stop(t + dur + 0.02);
+    o.connect(g); g.connect(c.destination); o.start(t); o.stop(t + dur + 0.02);
   }
-  function playCorrect() { if (!soundOn) return; beep(660, 0.12, "sine", 0); beep(990, 0.16, "sine", 0.1); }
-  function playWrong() { if (!soundOn) return; beep(200, 0.22, "sawtooth", 0, 0.12); }
-  function playClick() { if (!soundOn) return; beep(440, 0.05, "triangle", 0, 0.08); }
-  function playWin() { if (!soundOn) return;[523, 659, 784, 1047].forEach((f, i) => beep(f, 0.18, "sine", i * 0.12)); }
+  function playCorrect() { if (soundOn) { beep(660, 0.12, "sine", 0); beep(990, 0.16, "sine", 0.1); } }
+  function playWrong() { if (soundOn) beep(200, 0.22, "sawtooth", 0, 0.12); }
+  function playClick() { if (soundOn) beep(440, 0.05, "triangle", 0, 0.08); }
+  function playWin() { if (soundOn)[523, 659, 784, 1047].forEach((f, i) => beep(f, 0.18, "sine", i * 0.12)); }
+
+  // ---------- Speech (TTS) ----------
+  function speakText(raw) {
+    if (!raw || !("speechSynthesis" in window)) return;
+    const m = String(raw).match(/"([^"]+)"|'([^']+)'/);
+    const text = m ? (m[1] || m[2]) : String(raw);
+    try { const u = new SpeechSynthesisUtterance(text); u.lang = "en-US"; u.rate = 0.92; speechSynthesis.cancel(); speechSynthesis.speak(u); } catch (e) {}
+  }
 
   // ---------- Confetti ----------
   function confetti() {
     const cv = document.createElement("canvas");
-    cv.className = "confetti-canvas";
-    document.body.appendChild(cv);
-    const ctx = cv.getContext("2d");
-    const dpr = window.devicePixelRatio || 1;
-    function size() { cv.width = innerWidth * dpr; cv.height = innerHeight * dpr; ctx.setTransform(dpr, 0, 0, dpr, 0, 0); }
+    cv.className = "confetti-canvas"; document.body.appendChild(cv);
+    const ctx2 = cv.getContext("2d"), dpr = window.devicePixelRatio || 1;
+    function size() { cv.width = innerWidth * dpr; cv.height = innerHeight * dpr; ctx2.setTransform(dpr, 0, 0, dpr, 0, 0); }
     size();
     const cols = ["#F1699B", "#54C6E6", "#F6A62A", "#57C77F", "#84E06E"];
-    const parts = Array.from({ length: 140 }, () => ({
-      x: Math.random() * innerWidth, y: -20 - Math.random() * innerHeight * 0.4,
-      r: 4 + Math.random() * 6, c: cols[(Math.random() * cols.length) | 0],
-      vy: 2 + Math.random() * 3.5, vx: -1.5 + Math.random() * 3, rot: Math.random() * 6.28, vr: -0.2 + Math.random() * 0.4,
-    }));
+    const parts = Array.from({ length: 140 }, () => ({ x: Math.random() * innerWidth, y: -20 - Math.random() * innerHeight * 0.4, r: 4 + Math.random() * 6, c: cols[(Math.random() * cols.length) | 0], vy: 2 + Math.random() * 3.5, vx: -1.5 + Math.random() * 3, rot: Math.random() * 6.28, vr: -0.2 + Math.random() * 0.4 }));
     const start = performance.now();
     (function frame(now) {
-      const t = now - start;
-      ctx.clearRect(0, 0, innerWidth, innerHeight);
-      parts.forEach((p) => {
-        p.x += p.vx; p.y += p.vy; p.rot += p.vr;
-        ctx.save(); ctx.translate(p.x, p.y); ctx.rotate(p.rot);
-        ctx.fillStyle = p.c; ctx.fillRect(-p.r / 2, -p.r / 2, p.r, p.r * 0.6); ctx.restore();
-      });
+      const t = now - start; ctx2.clearRect(0, 0, innerWidth, innerHeight);
+      parts.forEach((p) => { p.x += p.vx; p.y += p.vy; p.rot += p.vr; ctx2.save(); ctx2.translate(p.x, p.y); ctx2.rotate(p.rot); ctx2.fillStyle = p.c; ctx2.fillRect(-p.r / 2, -p.r / 2, p.r, p.r * 0.6); ctx2.restore(); });
       if (t < 2600) requestAnimationFrame(frame); else cv.remove();
     })(start);
   }
 
-  // ---------- Theme & sound toggles ----------
-  function applyTheme(mode) {
-    document.documentElement.classList.toggle("dark", mode === "dark");
-    const b = $("btn-theme"); if (b) b.textContent = mode === "dark" ? "\u2600\uFE0F" : "\uD83C\uDF19";
+  // ---------- Streak ----------
+  function todayStr() { const d = new Date(); return d.getFullYear() + "-" + (d.getMonth() + 1) + "-" + d.getDate(); }
+  function ymd(d) { return d.getFullYear() + "-" + (d.getMonth() + 1) + "-" + d.getDate(); }
+  function updateStreak() {
+    const today = todayStr();
+    const last = localStorage.getItem(APP + "_lastPlay");
+    let streak = getNum("_streak");
+    if (last === today) { /* sudah main hari ini */ }
+    else {
+      const y = new Date(); y.setDate(y.getDate() - 1);
+      streak = (last === ymd(y)) ? streak + 1 : 1;
+      localStorage.setItem(APP + "_streak", String(streak));
+      localStorage.setItem(APP + "_lastPlay", today);
+    }
+    if (streak > getNum("_bestStreak")) localStorage.setItem(APP + "_bestStreak", String(streak));
+    renderStreakHome();
   }
-  function toggleTheme() {
-    const dark = !document.documentElement.classList.contains("dark");
-    applyTheme(dark ? "dark" : "light");
-    localStorage.setItem(APP + "_theme", dark ? "dark" : "light");
-    playClick();
+  function renderStreakHome() {
+    const s = getNum("_streak");
+    const el = $("streak-home"); if (!el) return;
+    const last = localStorage.getItem(APP + "_lastPlay");
+    const active = last === todayStr();
+    el.textContent = s > 0 ? `\uD83D\uDD25 Streak ${s} hari${active ? " \u2713" : ""}` : "\uD83D\uDD25 Mulai streak hari ini!";
   }
+
+  // ---------- Theme & sound ----------
+  function applyTheme(mode) { document.documentElement.classList.toggle("dark", mode === "dark"); const b = $("btn-theme"); if (b) b.textContent = mode === "dark" ? "\u2600\uFE0F" : "\uD83C\uDF19"; }
+  function toggleTheme() { const dark = !document.documentElement.classList.contains("dark"); applyTheme(dark ? "dark" : "light"); localStorage.setItem(APP + "_theme", dark ? "dark" : "light"); playClick(); }
   function updateSoundBtn() { const b = $("btn-sound"); if (b) b.textContent = soundOn ? "\uD83D\uDD0A" : "\uD83D\uDD07"; }
   function toggleSound() { soundOn = !soundOn; localStorage.setItem(APP + "_sound", soundOn ? "1" : "0"); updateSoundBtn(); if (soundOn) playClick(); }
+  function updateAutoReadBtn() { const b = $("btn-autoread"); if (b) { b.textContent = "\uD83D\uDD0A Baca soal otomatis: " + (autoRead ? "ON" : "OFF"); b.classList.toggle("is-on", autoRead); } }
+  function toggleAutoRead() { autoRead = !autoRead; localStorage.setItem(APP + "_autoread", autoRead ? "1" : "0"); updateAutoReadBtn(); if (autoRead) speakText("Auto read on"); }
 
-  // ---------- Storage helpers ----------
+  // ---------- Storage ----------
+  function getNum(suffix) { return Number(localStorage.getItem(APP + suffix) || 0); }
   function isPassed(level) { return localStorage.getItem(APP + "_pass_L" + level) === "1"; }
   function isUnlocked(i) { return i === 0 || isPassed(LEVELS[i - 1].level); }
   function getStars(level) { return Number(localStorage.getItem(APP + "_stars_L" + level) || 0); }
@@ -1543,42 +1774,22 @@ window.QUIZ.levels.push({"level":10,"name":"Idioms & Phrasal Verbs","difficulty"
   function getStats() { try { return JSON.parse(localStorage.getItem(APP + "_stats")) || { answered: 0, correct: 0 }; } catch (e) { return { answered: 0, correct: 0 }; } }
   function bumpStats(a, c) { const s = getStats(); s.answered += a; s.correct += c; localStorage.setItem(APP + "_stats", JSON.stringify(s)); }
   function getBoard() { try { return JSON.parse(localStorage.getItem(APP + "_board")) || []; } catch (e) { return []; } }
-  function addToBoard(name, level, score, acc) {
-    const b = getBoard();
-    b.push({ name: name || "Kamu", level: level.level, score, acc });
-    b.sort((x, y) => y.score - x.score);
-    localStorage.setItem(APP + "_board", JSON.stringify(b.slice(0, 10)));
-  }
+  function addToBoard(name, level, score, acc) { const b = getBoard(); b.push({ name: name || "Kamu", level: level.level, score, acc }); b.sort((x, y) => y.score - x.score); localStorage.setItem(APP + "_board", JSON.stringify(b.slice(0, 10))); }
+  function getMissed() { try { return JSON.parse(localStorage.getItem(APP + "_missed")) || []; } catch (e) { return []; } }
+  function addMissed(id) { const m = getMissed(); if (!m.includes(id)) { m.push(id); localStorage.setItem(APP + "_missed", JSON.stringify(m.slice(-100))); } }
+  function removeMissed(id) { const m = getMissed().filter((x) => x !== id); localStorage.setItem(APP + "_missed", JSON.stringify(m)); }
+  function resolveQuestion(id) { const [lvl, i] = id.split("_").map(Number); const lv = LEVELS.find((l) => l.level === lvl); if (!lv || !lv.questions[i]) return null; return { ...lv.questions[i], options: [...lv.questions[i].options], _id: id }; }
 
   // ---------- UI helpers ----------
   function mkPlayer(name) { return { name, score: 0, correct: 0, streak: 0, maxStreak: 0 }; }
   function playerName(i) { const el = $(i === 0 ? "player-name" : "player-name-2"); return el ? (el.value || "").trim() : ""; }
   function starRow(n, big) { let s = ""; for (let i = 0; i < 3; i++) s += `<span class="star ${i < n ? "on" : ""}">\u2605</span>`; return `<span class="stars${big ? " stars--big" : ""}">${s}</span>`; }
   function statCard(num, label) { return `<div class="stat"><span class="stat__num">${num}</span><span class="stat__label">${label}</span></div>`; }
-  function setStatLabels(a, b, c, d) {
-    const labels = document.querySelectorAll("#result-stats-grid .stat__label");
-    if (labels.length === 4) { labels[0].textContent = a; labels[1].textContent = b; labels[2].textContent = c; labels[3].textContent = d; }
-  }
-  function floatPoints(pts, e) {
-    const el = document.createElement("div");
-    el.className = "float-pts"; el.textContent = "+" + pts;
-    el.style.left = (e ? e.clientX : innerWidth / 2) + "px";
-    el.style.top = (e ? e.clientY : innerHeight / 2) + "px";
-    document.body.appendChild(el);
-    setTimeout(() => el.remove(), 1000);
-  }
-  function toast(msg) {
-    let t = document.querySelector(".toast");
-    if (!t) { t = document.createElement("div"); t.className = "toast"; document.body.appendChild(t); }
-    t.textContent = msg; t.classList.add("show");
-    clearTimeout(t._h); t._h = setTimeout(() => t.classList.remove("show"), 2600);
-  }
+  function setStatLabels(a, b, c, d) { const l = document.querySelectorAll("#result-stats-grid .stat__label"); if (l.length === 4) { l[0].textContent = a; l[1].textContent = b; l[2].textContent = c; l[3].textContent = d; } }
+  function floatPoints(pts, e) { const el = document.createElement("div"); el.className = "float-pts"; el.textContent = "+" + pts; el.style.left = (e ? e.clientX : innerWidth / 2) + "px"; el.style.top = (e ? e.clientY : innerHeight / 2) + "px"; document.body.appendChild(el); setTimeout(() => el.remove(), 1000); }
+  function toast(msg) { let t = document.querySelector(".toast"); if (!t) { t = document.createElement("div"); t.className = "toast"; document.body.appendChild(t); } t.textContent = msg; t.classList.add("show"); clearTimeout(t._h); t._h = setTimeout(() => t.classList.remove("show"), 2600); }
   function shake(el) { el.classList.remove("shake"); void el.offsetWidth; el.classList.add("shake"); }
-  function show(name) {
-    Object.values(screens).forEach((s) => s && s.classList.remove("is-active"));
-    screens[name].classList.add("is-active");
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  }
+  function show(name) { Object.values(screens).forEach((s) => s && s.classList.remove("is-active")); screens[name].classList.add("is-active"); window.scrollTo({ top: 0, behavior: "smooth" }); }
   function shuffle(arr) { for (let i = arr.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [arr[i], arr[j]] = [arr[j], arr[i]]; } return arr; }
   function normalize(s) { return String(s == null ? "" : s).toLowerCase().trim().replace(/[\s\.,!\?\"'\u2019]+/g, " ").replace(/\s+/g, " ").trim(); }
   function slug(s) { return String(s).toLowerCase().replace(/[^a-z0-9]+/g, "_"); }
