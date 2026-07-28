@@ -1484,7 +1484,7 @@ window.QUIZ.levels.push({"level":10,"name":"Idioms & Phrasal Verbs","difficulty"
       const level = LEVELS[currentLevel];
       const stars = acc >= 90 ? 3 : acc >= 75 ? 2 : acc >= PASS ? 1 : 0;
       const passedNow = acc >= PASS;
-      let emoji = "\uD83D\uDCAA", title = "Hampir!", sub = `Perlu ${PASS}% untuk lulus. Ayo coba lagi!`;
+      let emoji = "\uD83D\uDCAA", title = "Hampir!", sub = `Terus berlatih untuk skor & bintang lebih tinggi!`;
       if (acc === 100) { emoji = "\uD83C\uDFC6"; title = "Sempurna!"; sub = "Semua benar. Luar biasa!"; }
       else if (acc >= 75) { emoji = "\uD83C\uDF1F"; title = "Hebat!"; sub = "Skormu sangat bagus."; }
       else if (acc >= PASS) { emoji = "\uD83C\uDF89"; title = "Lulus!"; sub = "Kamu lolos level ini."; }
@@ -1499,7 +1499,7 @@ window.QUIZ.levels.push({"level":10,"name":"Idioms & Phrasal Verbs","difficulty"
       if (acc === 100) localStorage.setItem(APP + "_perfect", "1");
       addToBoard(p.name, level, p.score, acc);
       const hasNext = currentLevel + 1 < LEVELS.length;
-      $("btn-next-level").hidden = !(passedNow && hasNext);
+      $("btn-next-level").hidden = !hasNext;
       if (passedNow) confetti();
       passedNow ? playWin() : playWrong();
     }
@@ -1767,7 +1767,7 @@ window.QUIZ.levels.push({"level":10,"name":"Idioms & Phrasal Verbs","difficulty"
   // ---------- Storage ----------
   function getNum(suffix) { return Number(localStorage.getItem(APP + suffix) || 0); }
   function isPassed(level) { return localStorage.getItem(APP + "_pass_L" + level) === "1"; }
-  function isUnlocked(i) { return i === 0 || isPassed(LEVELS[i - 1].level); }
+  function isUnlocked(i) { return true; } // syarat lulus dihapus — semua level terbuka
   function getStars(level) { return Number(localStorage.getItem(APP + "_stars_L" + level) || 0); }
   function getBest(level) { return Number(localStorage.getItem(APP + "_best_L" + level) || 0); }
   function saveBest(level, s) { if (s > getBest(level)) localStorage.setItem(APP + "_best_L" + level, String(s)); }
