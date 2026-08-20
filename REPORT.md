@@ -54,4 +54,5 @@ Matematika,Mudah,Berapa 10 + 5?,10,15,20,25,1,Penjumlahan dasar.
 5. **Aksesibilitas & UI:** Modal mematuhi *tab-index*, terpusat sempurna, dan tak meluber di ukuran layar lipat maupun *mobile* (375px).
 
 ## Keterbatasan & Risiko
-- Proses komputasi *blob string* CSV beroperasi iteratif secara sinkron. Pada rentang 1.000-5.000 soal hal ini sama sekali tidak terasa (~5ms), namun bisa membekukan laju render UI sepersekian detik jika data menembus \>100.000\ baris.
+- Proses komputasi *blob string* CSV beroperasi iteratif secara sinkron. Pada rentang 1.000-5.000 soal hal ini sama sekali tidak terasa (~5ms), namun bisa membekukan laju render UI sepersekian detik jika data menembus \>10.000\ baris.
+- **Kinerja Ekspor Data Skala Masif:** Mengingat algoritma berjalan secara sinkron (single-thread), performa ekspor dapat menurun secara eksponensial untuk data yang sangat besar (>10.000 soal), sehingga berisiko menunda responsivitas antarmuka selama komputasi berlangsung.
