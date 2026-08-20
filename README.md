@@ -29,3 +29,17 @@ Aplikasi ini dirancang menggunakan pendekatan hibrida (*Hybrid Approach*).
 
 3. **Eksekusi:** 
    Silakan jalankan index.html dari root menggunakan *Live Server* atau peramban modern. Anda kini dapat *login*, menambah riwayat ke *database* asli, serta memanen seluruh manfaat kuis QuizArena secara hibrida!
+
+## Deployment & Production
+Proyek ini telah dikonfigurasi untuk dapat di-*deploy* langsung ke **Railway.app**.
+
+**URL Backend Production:** \https://quizarena-api-production.up.railway.app\
+
+### Environment Variables Production (Railway)
+Bila melakukan *deploy* ke Railway, tambahkan konfigurasi berikut pada tab *Variables* di Service Node.js:
+- \DATABASE_URL\ : Otomatis di-_inject_ jika menghubungkan dengan Service MySQL di Railway.
+- \JWT_SECRET\ : Masukkan *string* rahasia acak yang kuat (contoh: \k0d3_R4ha51A_99!!\).
+- \PORT\ : Diberikan otomatis oleh Railway.
+
+### Menghubungkan Frontend Lokal ke Railway
+Jika Anda ingin menguji UI secara lokal namun ditembakkan ke Backend *Production*, Anda tidak perlu mengubah apapun karena \config.js\ telah menunjuk ke tautan Railway. Jika ingin menjalankan *full-local*, kembalikan \BASE_URL\ di \config.js\ menjadi \http://localhost:5000\.
