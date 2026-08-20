@@ -38,3 +38,7 @@ Di layar hasil (*result screen*) setelah mensubmit seluruh jawaban, pengguna dis
 - Teks *"Pembahasan tidak tersedia."* di- *hardcode* dalam UI bahasa Indonesia. Risiko keterbatasan akan ada jika di masa depan terdapat dukungan *multi-language*.
 - Bergantung pada keberadaan properti \explain\ pada JSON soal.
 
+
+### Catatan tentang Durasi
+- **Distorsi Kalkulasi:** Nilai \durationSeconds\ pada mode latihan aktif mencakup waktu membaca pembahasan di setiap soal. Hal ini menyebabkan durasi yang terekam membengkak secara artifisial, sehingga metrik waktu antara sesi mode latihan aktif **tidak dapat dibandingkan secara langsung** dengan sesi mode ujian (nonaktif).
+- **Rekomendasi Analitik Ke Depan:** Jika di masa depan sistem ini memerlukan pelaporan metrik kecepatan kuis yang murni (*pure speed metrics*), fitur *timer* harus diperbaiki secara arsitektural agar dijeda (*paused*) secara dinamis selama pengguna sedang membaca blok \explain-box\.
