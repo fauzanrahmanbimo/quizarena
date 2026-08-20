@@ -31,11 +31,11 @@
   --primary-light: #E0E7FF;
   
   /* Semantic Colors */
-  --success: #10B981;
+  --success: #059669; /* WCAG AA */
   --success-light: #D1FAE5;
-  --danger: #EF4444;
+  --danger: #DC2626; /* WCAG AA */
   --danger-light: #FEE2E2;
-  --warning: #F59E0B;
+  --warning: #D97706; /* WCAG AA */
   --warning-light: #FEF3C7;
   
   /* Neutral Colors */
@@ -1464,6 +1464,7 @@ window.QUIZ.levels.push({"level": 20, "name": "Reported Speech & Campuran", "dif
     $("question-text").textContent = q.q;
     $("explain-box").hidden = true;
     $("btn-next").hidden = true;
+    $("btn-next").disabled = false;
 
     const player = players[cp()];
     $("streak-pill").textContent = `\uD83D\uDD25 ${player.streak}`;
@@ -1485,7 +1486,7 @@ window.QUIZ.levels.push({"level": 20, "name": "Reported Speech & Campuran", "dif
         btn.style.setProperty("--c", COLORS[i % COLORS.length]);
         btn.setAttribute("data-key", KEYS[i]);
         btn.setAttribute("aria-label", `Pilihan ${KEYS[i]}: ${opt}`);
-        btn.innerHTML = `<span class="answer-text">${esc(opt)}</span><span class="opt-speak" role="button" aria-label="Dengar pilihan" title="Dengar">\uD83D\uDD0A</span>`;
+        btn.innerHTML = `<span class="answer-text">${esc(opt)}</span><span class="opt-speak" aria-hidden="true" title="Dengar">\uD83D\uDD0A</span>`;
         btn.addEventListener("click", (e) => {
           if (e.target.closest(".opt-speak")) { e.stopPropagation(); speakText(opt); return; }
           selectAnswer(i, e);
@@ -1557,7 +1558,7 @@ window.QUIZ.levels.push({"level": 20, "name": "Reported Speech & Campuran", "dif
     $("explain-box").className = "explain-box " + (isCorrect ? "is-ok" : "is-no");
     $("explain-box").innerHTML =
       `<div class="explain-head">${isCorrect ? "\u2705 Benar!" : "\u274C Belum tepat"}</div>` +
-      (isCorrect ? "" : `<div class="explain-line">Jawabanmu: <b>${esc(you)}</b></div><div class="explain-line">Jawaban benar: <b>${esc(correctText)}</b> <span class="opt-speak" id="speak-correct" role="button" title="Dengar">\uD83D\uDD0A</span></div>`) +
+      (isCorrect ? "" : `<div class="explain-line">Jawabanmu: <b>${esc(you)}</b></div><div class="explain-line">Jawaban benar: <b>${esc(correctText)}</b> <button class="opt-speak" id="speak-correct" aria-label="Dengar jawaban benar" title="Dengar" style="border:none;background:transparent;">\uD83D\uDD0A</button></div>`) +
       (q.explain ? `<div class="explain-why">\uD83D\uDCA1 ${esc(q.explain)}</div>` : "");
     $("explain-box").hidden = false;
     const sc = $("speak-correct"); if (sc) sc.addEventListener("click", () => speakText(correctText));
@@ -1578,7 +1579,15 @@ window.QUIZ.levels.push({"level": 20, "name": "Reported Speech & Campuran", "dif
   }
   function lockOut() { grade(false, -1, qmode === "type" ? $("type-input").value : null, null); }
 
-  function next() { playClick(); idx++; if (idx >= questions.length) finish(); else renderQuestion(); }
+  let nextLocked = false;
+  function next() {
+    if (nextLocked) return;
+    nextLocked = true;
+    $("btn-next").disabled = true;
+    playClick(); idx++;
+    if (idx >= questions.length) finish(); else renderQuestion();
+    setTimeout(() => nextLocked = false, 300);
+  }
 
   // ---------- Result ----------
   function finish() {
@@ -1779,7 +1788,7 @@ window.QUIZ.levels.push({"level": 20, "name": "Reported Speech & Campuran", "dif
           div.className = "search-item";
           div.innerHTML =
             `<div class="search-q">${esc(q.q)} <span class="search-lv">Lv ${lv.level}</span></div>` +
-            `<div class="search-ans">\u2705 ${esc(q.options[q.answer])} <span class="opt-speak" role="button" title="Dengar" data-say="${esc(q.options[q.answer])}">\uD83D\uDD0A</span></div>` +
+            `<div class="search-ans">\u2705 ${esc(q.options[q.answer])} <button class="opt-speak" aria-label="Dengar teks" title="Dengar" data-say="${esc(q.options[q.answer])}" style="border:none;background:transparent;">\uD83D\uDD0A</button></div>` +
             (q.explain ? `<div class="search-exp">${esc(q.explain)}</div>` : "");
           box.appendChild(div);
           if (count >= 40) break;
