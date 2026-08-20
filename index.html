@@ -550,7 +550,8 @@ html.dark .page-tab{border-color:#EAF3EF;color:#EAF3EF;}
 html.dark .page-tab.is-on{background:#EAF3EF;color:#12211d;}
 html.dark .video-card{background:#22302b;border-color:#3a5049;}
 html.dark .video-t{color:#EAF3EF;}
-</style>\n  <script src="config.js"></script>
+</style>
+  <script src="config.js"></script>
   <script type="module" src="assets/firebase-init.js"></script>
 </head>
 <body>
@@ -620,7 +621,8 @@ html.dark .video-t{color:#EAF3EF;}
       Aktifkan Pembahasan Instan (Mode Latihan)
     </label>
   </div>
-\n        <h2 class="levels-title">Pilih Level</h2>
+
+        <h2 class="levels-title">Pilih Level</h2>
         <p class="levels-greeting" id="levels-greeting">Pilih levelmu 👇</p>
         <div class="overall">
           <div class="overall-bar"><div class="overall-fill" id="overall-fill"></div></div>
@@ -1227,7 +1229,9 @@ window.QUIZ.levels.push({"level": 20, "name": "Reported Speech & Campuran", "dif
     } catch(er) { err.textContent = er.message; }
     finally { btn.disabled = false; }
   };
-\n  let allQuestions = [];\n  updateAuthUI();
+
+  let allQuestions = [];
+  updateAuthUI();
   let metaInfo = { title: "QuizArena", description: "", timePerQuestion: 20, levels: [], shuffle: true };
   let importedQs = [];
   
@@ -1769,7 +1773,8 @@ window.QUIZ.levels.push({"level": 20, "name": "Reported Speech & Campuran", "dif
     beginSession(kind === "free" ? "\uD83C\uDFAF Latihan Bebas \u00B7 Tanpa Waktu" : "\uD83D\uDD01 Ulang Soal Sulit \u00B7 Tanpa Waktu");
   }
 
-  function beginSession(tag) {\n      sessionStartTime = Date.now();
+  function beginSession(tag) {
+      sessionStartTime = Date.now();
     idx = 0; history = [];
     players = vs
       ? [mkPlayer(playerName(0) || "Pemain 1"), mkPlayer(playerName(1) || "Pemain 2")]
@@ -2360,7 +2365,8 @@ window.QUIZ.levels.push({"level": 20, "name": "Reported Speech & Campuran", "dif
     }
     document.getElementById('modal-export').close();
   };
-\n  function slug(s) { return String(s).toLowerCase().replace(/[^a-z0-9]+/g, "_"); }
+
+  function slug(s) { return String(s).toLowerCase().replace(/[^a-z0-9]+/g, "_"); }
   function esc(s) { const d = document.createElement("div"); d.textContent = s == null ? "" : s; return d.innerHTML; }
 })();
 
@@ -2406,5 +2412,6 @@ window.QUIZ.levels.push({"level": 20, "name": "Reported Speech & Campuran", "dif
         <button type="submit" class="btn btn--primary" style="width:100%">Daftar</button>
       </form>
     </dialog>
-\n</body>
+
+</body>
 </html>
