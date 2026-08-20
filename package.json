@@ -7,6 +7,16 @@
     "dev": "npx serve .",
     "start": "npx serve ."
   },
-  "keywords": ["quiz", "kuis", "wayground", "quizizz", "vercel"],
-  "license": "MIT"
+  "keywords": [
+    "quiz",
+    "kuis",
+    "wayground",
+    "quizizz",
+    "vercel"
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "jsdom": "^30.0.1",
+    "puppeteer": "^25.8.0"
+  }
 }

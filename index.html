@@ -1552,6 +1552,7 @@ html.dark .video-t{color:#EAF3EF;}
 
     const correctText = q.options[q.answer];
       const you = qmode === "type" ? (typedText || "(kosong)") : (chosenIdx === -1 ? "(waktu habis)" : q.options[chosenIdx]);
+      const practiceModeActive = document.getElementById('toggle-practice-mode') ? document.getElementById('toggle-practice-mode').checked : false;
       if (practiceModeActive) {
         $("explain-box").className = "explain-box " + (isCorrect ? "is-ok" : "is-no");
         $("explain-box").innerHTML =
