@@ -33,14 +33,12 @@ window.fbLimitToLast = limitToLast;
 // Firebase Authentication Logic
 onAuthStateChanged(auth, (user) => {
   if (user) {
-    console.log("User logged in:", user.uid);
     const playerNameInput = document.getElementById("player-name");
     if (playerNameInput && user.displayName) {
       playerNameInput.value = user.displayName;
     }
   } else {
-    console.log("No user, signing in anonymously...");
-    signInAnonymously(auth).catch(err => console.error("Auth Error:", err));
+    signInAnonymously(auth).catch(() => {});
   }
 });
 
@@ -52,12 +50,9 @@ window.addEventListener('DOMContentLoaded', () => {
       const newName = e.target.value.trim();
       const currentUser = auth.currentUser;
       if (currentUser && newName && newName !== currentUser.displayName) {
-        updateProfile(currentUser, { displayName: newName })
-          .then(() => console.log("Name updated to", newName))
-          .catch(err => console.error("Error updating name", err));
+        updateProfile(currentUser, { displayName: newName }).catch(() => {});
       }
     });
   }
 });
 
-console.log("Firebase berhasil diinisialisasi!");

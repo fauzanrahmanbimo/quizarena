@@ -1,11 +1,14 @@
 /* QuizArena service worker — offline sederhana untuk situs 1 file.
    Cache index.html + PDF materi supaya bisa dibuka tanpa internet. */
-const CACHE = "quizarena-v4";
+const CACHE = "quizarena-v5";
 const ASSETS = [
   "./",
   "index.html",
   "level-1.pdf", "level-2.pdf", "level-3.pdf", "level-4.pdf", "level-5.pdf",
   "level-6.pdf", "level-7.pdf", "level-8.pdf", "level-9.pdf", "level-10.pdf",
+  "level-11.pdf", "level-12.pdf", "level-13.pdf", "level-14.pdf", "level-15.pdf",
+  "level-16.pdf", "level-17.pdf", "level-18.pdf", "level-19.pdf", "level-20.pdf",
+  "modul-belajar.pdf",
 ];
 
 self.addEventListener("install", (e) => {
