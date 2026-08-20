@@ -1,44 +1,68 @@
-# Laporan Pengembangan: Sistem Bank Soal Dinamis (Revisi QA)
+# Laporan Pengembangan: Sistem Riwayat Nilai & Statistik
 
 ## Tujuan Tugas
-Memperbaiki mekanisme Fallback UI saat gagal fetch dan menyempurnakan parsing serta validasi CSV pada fitur impor Bank Soal.
+Membangun sistem Riwayat Nilai berbasis \localStorage\ yang mencatat dan menampilkan daftar riwayat setiap sesi kuis beserta statistik dan performa analisis per kategori, tanpa mengubah fitur inti aplikasi.
 
 ## Informasi Git
-- **Branch:** feature/dynamic-question-bank
-- **Commit Hash Terbaru:** [akan diisi setelah commit]
-- **URL Pull Request:** https://github.com/fauzanrahmanbimo/quizarena/pull/4
+- **Branch:** feature/score-history-localstorage
+- **Commit Hash Terbaru:** [akan diisi oleh GitHub]
+- **URL Pull Request:** [menunggu PR dibuat]
 
 ## Lingkungan & Deployment
-- **URL Preview Vercel:** [akan muncul di komentar PR]
+- **URL Preview Vercel:** [otomatis via Vercel PR Bot]
 
 ## Daftar File yang Berubah
-- \index.html\ - Revisi Fallback UI, penambahan overlay error, dan penulisan ulang parser CSV yang sesuai standar 9 kolom dan memvalidasi tipe/range secara ketat.
-- \REPORT.md\ - Pembaruan laporan sesuai format QA.
+- \index.html\ - Diperbarui untuk mengintercept fungsi \grade()\ dan \inish()\, menambahkan UI halaman Riwayat Nilai (\#screen-history\) beserta modal detail sesinya, serta kalkulasi analitik performa.
 
-## Ringkasan Perubahan Perilaku Aplikasi
-- Jika questions/default.json atau level_meta.json gagal dimuat, aplikasi akan menampilkan layar peringatan khusus berwarna merah di tengah layar dengan pesan "Gagal memuat bank soal..." dan sebuah tombol "Coba Lagi". Aplikasi berhenti (halt) dengan aman dan tidak akan menampilkan array kosong.
-- Import CSV sekarang mendukung kolom spesifik: option1, option2, option3, option4.
-- Validasi CSV otomatis menolak baris jika jumlah kolom kurang dari 9, jika ada opsi yang kosong, atau jika correctIndex berada di luar range 0-3 (misal: 5 atau -1). Ringkasan impor menampilkan detail yang ditolak.
-
-## Contoh Format CSV yang Didukung
-\\\csv
-category,difficulty,question,option1,option2,option3,option4,correctIndex,explanation
-Matematika,easy,Berapa 2+2?,2,3,4,5,0,Penjumlahan dasar.
-Logika,medium,Jika A=B dan B=C maka?,A=C,A!=C,B!=C,C!=A,0,Silogisme deduktif.
+## Skema Data Riwayat (Tersimpan di \quizarena_history\)
+\\\json
+{
+  "id": "string unik",
+  "timestamp": "2026-08-20T14:30:00.000Z",
+  "mode": "level | custom",
+  "levelId": "number atau null",
+  "categoryFilter": "string atau 'all'",
+  "difficultyFilter": "string atau 'all'",
+  "totalQuestions": 30,
+  "correctCount": 25,
+  "wrongCount": 5,
+  "skippedCount": 0,
+  "accuracy": 83,
+  "durationSeconds": 150,
+  "questionDetails": [
+    {
+      "questionId": "string",
+      "category": "string",
+      "difficulty": "string",
+      "userAnswerIndex": 2,
+      "correctIndex": 2,
+      "q": "Pertanyaan...",
+      "you": "Jawaban User",
+      "answer": "Jawaban Kunci",
+      "explain": "Pembahasan",
+      "correct": true
+    }
+  ]
+}
 \\\
 
-## Pengujian Tambahan
-1. **Validasi CSV:** 
-   - Diuji CSV valid -> Sukses terimpor utuh.
-   - Diuji baris dengan correctIndex = 5 -> Ditolak (correctIndex (5) tidak valid).
-   - Diuji baris dengan correctIndex = -1 -> Ditolak (correctIndex (-1) tidak valid).
-   - Diuji baris dengan 3 opsi (option4 kosong) -> Ditolak (Opsi jawaban ada yang kosong).
-   - Diuji baris dengan kurang dari 9 kolom -> Ditolak (Kolom kurang dari 9).
-2. **Fetch Error Fallback:**
-   - Direktori questions/default.json di-rename (simulasi gagal load). 
-   - UI sukses memunculkan pesan error "Gagal memuat bank soal. Pastikan file questions/default.json ada dan server dapat diakses."
-   - Ketika direname kembali, klik tombol "Coba Lagi" mereload aplikasi, kuis dapat dijalankan secara normal.
+## Ringkasan Perubahan Perilaku Aplikasi
+- Di halaman "Pilih Level" (Beranda), ditambahkan satu tombol baru: "Riwayat Nilai & Statistik".
+- Saat pengguna menyelesaikan sesi kuis apapun (mode Level atau Custom), waktu pengerjaan dan metrik lainnya disatukan lalu dipush ke Array \quizarena_history\ di \localStorage\. Data otomatis dibatasi pada 50 entri terakhir.
+- Pengguna dapat melihat statistik komprehensif: Rata-rata akurasi, performa tiap kategori, serta "kategori terlemah" untuk memandu fokus belajar.
+- Pengguna dapat menghapus 1 riwayat spesifik atau menghapus keseluruhan data sekaligus.
 
-## Keterbatasan & Risiko
-- Proses parse string CSV menggunakan split regex buatan sendiri (tanpa dependensi luar) masih bersifat *basic*. Jika string explanation memuat koma bercampur kutip dengan format sangat kompleks (nested quotes), parsing mungkin terganggu.
+## Pengujian
+**Perintah Pengujian yang Dijalankan:**
+N/A (Sistem berbasis UI, diuji langsung di browser console)
 
+**Hasil Pengujian Skenario (Manual):**
+1. **Rekam Sesi Kuis:** Bermain 3 sesi (2 Level, 1 Custom dari file Impor). Semua sesi berhasil terekam utuh. Waktu hitung (durasi) presisi dengan *wall clock*.
+2. **Lihat Riwayat & Modal Detail:** Tabel riwayat muncul merespons baik di layar desktop maupun layar mobile sempit. Menekan "Lihat Detail" membuka modal dengan list soal dan jawaban lengkap. Elemen dapat ditutup via \<dialog>.close()\.
+3. **Statistik Kategori:** Statistik performa merangkum 	otal vs correct secara akurat pada level granularitas spesifik per-kategori soal. Jika akurasi anjlok di "Logika", UI otomatis menampilkan "Akurasi terendah: Logika".
+4. **Hapus Riwayat:** Mengklik tombol hapus sukses membersihkan entri terkait di DOM dan \localStorage\.
+5. **Handling Error Quota:** Logic penyimpanan telah dibalut \	ry...catch\, mencegah crash seandainya \localStorage\ disabilitas oleh konfigurasi browser pengguna.
+
+## Risiko dan Keterbatasan
+- **Penyimpanan Browser-Bound:** Semua data riwayat saat ini disimpan eksklusif pada \localStorage\ di *device/browser* pengguna masing-masing. Artinya, riwayat tidak akan tersinkronisasi jika pengguna berpindah dari Laptop ke HP, dan riwayat akan musnah secara otomatis jika pengguna membersihkan *cache/site data*. Sesuai spesifikasi tugas, ini merupakan trade-off wajib karena tidak ada *backend* server tersentralisasi.
+- Kapasitas riwayat dibatasi hingga 50 sesi agar \localStorage\ tidak kepenuhan.
