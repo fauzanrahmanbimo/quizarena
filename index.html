@@ -1659,7 +1659,7 @@ window.QUIZ.levels.push({"level": 20, "name": "Reported Speech & Campuran", "dif
     beginSession(kind === "free" ? "\uD83C\uDFAF Latihan Bebas \u00B7 Tanpa Waktu" : "\uD83D\uDD01 Ulang Soal Sulit \u00B7 Tanpa Waktu");
   }
 
-  function beginSession(tag) {
+  function beginSession(tag) {\n      sessionStartTime = Date.now();
     idx = 0; history = [];
     players = vs
       ? [mkPlayer(playerName(0) || "Pemain 1"), mkPlayer(playerName(1) || "Pemain 2")]
@@ -1786,7 +1786,7 @@ window.QUIZ.levels.push({"level": 20, "name": "Reported Speech & Campuran", "dif
     $("explain-box").hidden = false;
     const sc = $("speak-correct"); if (sc) sc.addEventListener("click", () => speakText(correctText));
 
-    history.push({ q: q.q, you, answer: correctText, explain: q.explain, correct: isCorrect, player: player.name });
+    history.push({ questionId: q.id, category: q.category, difficulty: q.difficulty, userAnswerIndex: chosenIdx, correctIndex: q.answer, q: q.q, you, answer: correctText, explain: q.explain, correct: isCorrect, player: player.name });
     $("btn-next").textContent = (idx + 1 >= questions.length) ? "Lihat Hasil \uD83C\uDF89" : "Lanjut \u2192";
     $("btn-next").hidden = false;
     $("btn-next").focus();
@@ -1830,6 +1830,30 @@ window.QUIZ.levels.push({"level": 20, "name": "Reported Speech & Campuran", "dif
     $("stat-acc").textContent = acc + "%";
     $("stat-streak").textContent = p.maxStreak;
     bumpStats(total, p.correct);
+      try {
+        const durationSeconds = Math.round((Date.now() - sessionStartTime) / 1000);
+        const historyEntry = {
+            id: Date.now().toString(36) + Math.random().toString(36).substr(2),
+            timestamp: new Date().toISOString(),
+            mode: practice ? "custom" : "level",
+            levelId: practice ? null : currentLevel,
+            categoryFilter: practice === 'custom' ? ($('bank-cat') ? $('bank-cat').value : 'all') : 'all',
+            difficultyFilter: practice === 'custom' ? ($('bank-diff') ? $('bank-diff').value : 'all') : 'all',
+            totalQuestions: total,
+            correctCount: p.correct,
+            wrongCount: total - p.correct,
+            skippedCount: 0, // In this flow, missed questions don't trigger grade unless timeout? Actually we don't have explicit skips.
+            accuracy: acc,
+            durationSeconds: durationSeconds,
+            questionDetails: history
+        };
+        let globalHistory = JSON.parse(localStorage.getItem('quizarena_history') || '[]');
+        globalHistory.push(historyEntry);
+        if (globalHistory.length > 50) globalHistory = globalHistory.slice(-50);
+        localStorage.setItem('quizarena_history', JSON.stringify(globalHistory));
+      } catch (err) {
+        console.error("Failed to save score history to localStorage", err);
+      }
     if (p.maxStreak > getNum("_bestStreak")) localStorage.setItem(APP + "_bestStreak", String(p.maxStreak));
 
     if (practice) {
