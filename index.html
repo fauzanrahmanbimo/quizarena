@@ -611,7 +611,14 @@ html.dark .video-t{color:#EAF3EF;}
     <section class="screen screen--levels" id="screen-levels">
       <div class="levels-head">
         <button class="btn-text" id="btn-back-home">← Ganti nama</button>
-        <h2 class="levels-title">Pilih Level</h2>
+        
+  <div style="margin-bottom: 20px; text-align: center; background:var(--bg); padding:12px; border-radius:12px;">
+    <label style="display:inline-flex; align-items:center; gap:8px; font-weight:bold; cursor:pointer;">
+      <input type="checkbox" id="toggle-practice-mode" style="width:18px; height:18px;" checked>
+      Aktifkan Pembahasan Instan (Mode Latihan)
+    </label>
+  </div>
+\n        <h2 class="levels-title">Pilih Level</h2>
         <p class="levels-greeting" id="levels-greeting">Pilih levelmu 👇</p>
         <div class="overall">
           <div class="overall-bar"><div class="overall-fill" id="overall-fill"></div></div>
@@ -1777,14 +1784,16 @@ window.QUIZ.levels.push({"level": 20, "name": "Reported Speech & Campuran", "dif
     $("streak-pill").textContent = `\uD83D\uDD25 ${player.streak}`;
 
     const correctText = q.options[q.answer];
-    const you = qmode === "type" ? (typedText || "(kosong)") : (chosenIdx === -1 ? "(waktu habis)" : q.options[chosenIdx]);
-    $("explain-box").className = "explain-box " + (isCorrect ? "is-ok" : "is-no");
-    $("explain-box").innerHTML =
-      `<div class="explain-head">${isCorrect ? "\u2705 Benar!" : "\u274C Belum tepat"}</div>` +
-      (isCorrect ? "" : `<div class="explain-line">Jawabanmu: <b>${esc(you)}</b></div><div class="explain-line">Jawaban benar: <b>${esc(correctText)}</b> <button class="opt-speak" id="speak-correct" aria-label="Dengar jawaban benar" title="Dengar" style="border:none;background:transparent;">\uD83D\uDD0A</button></div>`) +
-      (q.explain ? `<div class="explain-why">\uD83D\uDCA1 ${esc(q.explain)}</div>` : "");
-    $("explain-box").hidden = false;
-    const sc = $("speak-correct"); if (sc) sc.addEventListener("click", () => speakText(correctText));
+      const you = qmode === "type" ? (typedText || "(kosong)") : (chosenIdx === -1 ? "(waktu habis)" : q.options[chosenIdx]);
+      if (practiceModeActive) {
+        $("explain-box").className = "explain-box " + (isCorrect ? "is-ok" : "is-no");
+        $("explain-box").innerHTML =
+          `<div class="explain-head">${isCorrect ? "\u2705 Benar!" : "\u274C Belum tepat"}</div>` +
+          (isCorrect ? "" : `<div class="explain-line">Jawabanmu: <b>${esc(you)}</b></div><div class="explain-line">Jawaban benar: <b>${esc(correctText)}</b> <button class="opt-speak" id="speak-correct" aria-label="Dengar jawaban benar" title="Dengar" style="border:none;background:transparent;">\uD83D\uDD0A</button></div>`) +
+          `<div class="explain-why">\uD83D\uDCA1 ${q.explain ? esc(q.explain) : "Pembahasan tidak tersedia."}</div>`;
+        $("explain-box").hidden = false;
+        const sc = $("speak-correct"); if (sc) sc.addEventListener("click", () => speakText(correctText));
+      }
 
     history.push({ questionId: q.id, category: q.category, difficulty: q.difficulty, userAnswerIndex: chosenIdx, correctIndex: q.answer, q: q.q, you, answer: correctText, explain: q.explain, correct: isCorrect, player: player.name });
     $("btn-next").textContent = (idx + 1 >= questions.length) ? "Lihat Hasil \uD83C\uDF89" : "Lanjut \u2192";
