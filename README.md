@@ -33,7 +33,7 @@ Aplikasi ini dirancang menggunakan pendekatan hibrida (*Hybrid Approach*).
 ## Deployment & Production
 Proyek ini telah dikonfigurasi untuk dapat di-*deploy* langsung ke **Railway.app**.
 
-**URL Backend Production:** \https://quizarena-api-production.up.railway.app\
+**URL Backend Production:** \https://quizarena-production-3105.up.railway.app\
 
 ### Environment Variables Production (Railway)
 Bila melakukan *deploy* ke Railway, tambahkan konfigurasi berikut pada tab *Variables* di Service Node.js:
