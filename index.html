@@ -672,6 +672,20 @@ html.dark .video-t{color:#EAF3EF;}
          <button class="btn-text" id="btn-kelola-back" style="position:static;margin-bottom:6px;" aria-label="Kembali ke halaman level">← Kembali</button>
          <h2 class="board-title">🛠️ Kelola Bank Soal</h2>
          <div class="insights" id="kelola-stats" style="margin-bottom: 16px;"></div>
+           <div style="margin-bottom: 16px; padding: 12px; background: var(--bg-main); border-radius: 8px; display:flex; justify-content:space-between; align-items:center;">
+              <div>
+                 <strong style="display:block; font-size:14px;">Ekspor Bank Soal</strong>
+                 <span style="font-size:12px; color:var(--text-muted);">Unduh seluruh soal (default & impor) untuk backup.</span>
+              </div>
+              <button class="btn btn--primary" onclick="document.getElementById('modal-export').showModal()" aria-label="Ekspor Bank Soal">📤 Ekspor</button>
+           </div>
+           <div style="margin-bottom: 16px; padding: 12px; background: var(--bg-main); border-radius: 8px; display:flex; justify-content:space-between; align-items:center;">
+              <div>
+                 <strong style="display:block; font-size:14px;">Ekspor Bank Soal</strong>
+                 <span style="font-size:12px; color:var(--text-muted);">Unduh seluruh soal (default & impor) untuk backup.</span>
+              </div>
+              <button class="btn btn--primary" onclick="document.getElementById('modal-export').showModal()" aria-label="Ekspor Bank Soal">📤 Ekspor</button>
+           </div>
          
          <div class="field" style="margin-top:16px;">
             <label for="file-import">Impor Soal (JSON / CSV)</label>
@@ -2194,10 +2208,86 @@ window.QUIZ.levels.push({"level": 20, "name": "Reported Speech & Campuran", "dif
   function show(name) { Object.values(screens).forEach((s) => s && s.classList.remove("is-active")); screens[name].classList.add("is-active"); window.scrollTo({ top: 0, behavior: "smooth" }); }
   function shuffle(arr) { for (let i = arr.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [arr[i], arr[j]] = [arr[j], arr[i]]; } return arr; }
   function normalize(s) { return String(s == null ? "" : s).toLowerCase().trim().replace(/[\s\.,!\?\"'\u2019]+/g, " ").replace(/\s+/g, " ").trim(); }
-  function slug(s) { return String(s).toLowerCase().replace(/[^a-z0-9]+/g, "_"); }
+  
+  window.exportBank = function(format) {
+    // Determine the source. We must export allQuestions or BANK.
+    // In this app, rebuilt questions are stored where? Let's use allQuestions which was built from default + imported
+    const dataToExport = typeof BANK !== 'undefined' ? BANK : allQuestions;
+    if (!dataToExport || dataToExport.length === 0) return alert('Tidak ada soal untuk diekspor.');
+
+    if (format === 'json') {
+        const mappedData = dataToExport.map(q => ({
+            id: q.id,
+            category: q.category,
+            difficulty: q.difficulty,
+            question: q.q || q.question,
+            options: q.options,
+            correctIndex: q.answer !== undefined ? q.answer : q.correctIndex,
+            explanation: q.explain || q.explanation || ''
+        }));
+        const jsonStr = JSON.stringify(mappedData, null, 2);
+        const blob = new Blob([jsonStr], { type: 'application/json' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'quizarena_questions.json';
+        a.click();
+        URL.revokeObjectURL(url);
+    } else if (format === 'csv') {
+        const headers = ["category", "difficulty", "question", "option1", "option2", "option3", "option4", "correctIndex", "explanation"];
+        let csvStr = headers.join(',') + '\n';
+        
+        dataToExport.forEach(q => {
+            const row = [
+                q.category || '',
+                q.difficulty || '',
+                q.q || q.question || '',
+                q.options && q.options[0] ? q.options[0] : '',
+                q.options && q.options[1] ? q.options[1] : '',
+                q.options && q.options[2] ? q.options[2] : '',
+                q.options && q.options[3] ? q.options[3] : '',
+                q.correctIndex !== undefined ? q.correctIndex : (q.answer !== undefined ? q.answer : 0),
+                q.explanation || q.explain || ''
+            ];
+            
+            // Escape quotes and wrap in quotes if contains comma, quote, or newline
+            const escapedRow = row.map(field => {
+                let str = String(field);
+                if (str.includes(',') || str.includes('"') || str.includes('\n')) {
+                    str = '"' + str.replace(/"/g, '""') + '"';
+                }
+                return str;
+            });
+            csvStr += escapedRow.join(',') + '\n';
+        });
+        
+        const blob = new Blob([csvStr], { type: 'text/csv;charset=utf-8' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'quizarena_questions.csv';
+        a.click();
+        URL.revokeObjectURL(url);
+    }
+    document.getElementById('modal-export').close();
+  };
+\n  function slug(s) { return String(s).toLowerCase().replace(/[^a-z0-9]+/g, "_"); }
   function esc(s) { const d = document.createElement("div"); d.textContent = s == null ? "" : s; return d.innerHTML; }
 })();
 
   </script>
-</body>
+
+    <!-- EXPORT MODAL -->
+    <dialog id="modal-export" style="border:none; border-radius:16px; padding:24px; max-width:400px; width:90%; background:var(--surface); color:var(--text); box-shadow:0 10px 30px rgba(0,0,0,0.2); position:fixed; top:50%; left:50%; transform:translate(-50%, -50%);">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
+        <h2 style="font-size:18px; color:var(--primary);">Pilih Format Ekspor</h2>
+        <button class="btn-text" onclick="document.getElementById('modal-export').close()" aria-label="Tutup">✕</button>
+      </div>
+      <p style="font-size:13px; color:var(--text-muted); margin-bottom:16px;">File ekspor akan memuat seluruh soal bawaan dan soal impor Anda.</p>
+      <div style="display:flex; flex-direction:column; gap:12px;">
+        <button class="btn btn--secondary" onclick="exportBank('json')">📄 Ekspor sebagai JSON</button>
+        <button class="btn btn--soft" onclick="exportBank('csv')">📊 Ekspor sebagai CSV</button>
+      </div>
+    </dialog>
+\n</body>
 </html>
