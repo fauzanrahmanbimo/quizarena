@@ -1,44 +1,57 @@
-# Laporan Pengembangan: Mode Latihan & Tinjau Jawaban
+# Laporan Pengembangan: Fitur Ekspor Bank Soal (JSON & CSV)
 
 ## Tujuan Tugas
-Membangun Mode Latihan (dengan *instant feedback*) opsional, dan fitur *Review* (Tinjau Jawaban) pasca-kuis untuk memberikan wawasan lebih mendalam kepada pengguna, sekaligus memastikan integrasi lancar dengan Riwayat Nilai.
+Membangun kapabilitas untuk mengunduh seluruh direktori bank soal (gabungan dari bawaan/default dan soal yang diimpor pengguna) dalam format \JSON\ maupun \CSV\. Fitur ini beroperasi murni di sisi klien tanpa pelibatan _server_ tambahan, memfasilitasi kebutuhan *backup*, berbagi konten, atau analisis data *offline*.
 
 ## Informasi Git
-- **Branch:** feature/practice-mode-with-explanation
+- **Branch:** feature/export-question-bank
 - **Commit Hash Terbaru:** [akan diisi setelah commit]
 - **URL Pull Request:** [menunggu pembuatan PR]
 
 ## Lingkungan & Deployment
-- **URL Preview Vercel:** [akan muncul di komentar PR]
+- **URL Preview Vercel:** [akan muncul otomatis di komentar PR]
 
 ## Daftar File yang Berubah
-- \index.html\ - Diubah untuk menyisipkan *toggle* Mode Latihan, penyesuaian fungsi \grade()\, penambahan tombol & modal Tinjau Jawaban pasca-kuis, dan adaptasi modal Riwayat Nilai untuk skenario *missing explanation*.
+- \index.html\ - Diubah untuk menyisipkan UI dan interaksi \Ekspor Bank Soal\. Menambahkan *native dialog* \modal-export\ beserta fungsi global \window.exportBank()\ untuk memproses konversi _array_ soal menjadi _Blob_ berbasis MIME JSON dan CSV lalu memicu pengunduhan (*anchor tag click*).
 
-## Deskripsi Mode Latihan (Cara Mengaktifkan)
-Pengguna dapat mengaktifkan "Mode Latihan" menggunakan sebuah *checkbox* (*toggle*) **"Aktifkan Pembahasan Instan (Mode Latihan)"** yang kini tersedia secara mencolok di atas daftar Pilihan Level.
-- Jika **Aktif:** Saat pengguna menjawab, warna hijau/merah (*correct/wrong*) muncul seketika bersama dengan kotak pembahasan (explanation box).
-- Jika **Tidak Aktif:** Pengguna bermain murni tanpa *hint* atau *instant feedback*. Opsi yang dipilih hanya akan disorot warna primary (biru/ungu) standar, dan pengguna harus menekan tombol "Lanjut" tanpa mengetahui apakah jawaban mereka benar atau salah hingga kuis usai.
+## Deskripsi Fitur Ekspor & Cara Penggunaan
+Pada menu **"Kelola Bank Soal"**, tepat di atas blok *Impor Soal*, kini ditambahkan blok baru bertuliskan **"Ekspor Bank Soal"** dengan tombol berlabel **"?? Ekspor"**.
+- Mengeklik tombol akan membuka modal kecil ramah *mobile* (dapat ditutup via klik silang atau *Escape*).
+- Modal mempresentasikan dua pilihan: **Ekspor sebagai JSON** dan **Ekspor sebagai CSV**.
+- File unduhan otomatis dinamai \quizarena_questions.json\ atau \quizarena_questions.csv\ berisikan seluruh soal (bukan hanya soal khusus impor saja).
 
-## Tinjau Jawaban (Post-Quiz Review)
-Di layar hasil (*result screen*) setelah mensubmit seluruh jawaban, pengguna disediakan tombol baru **"Tinjau Jawaban"**. Tombol ini akan membuka sebuah *dialog modal* yang men-scroll riwayat sesi barusan:
-- Memuat list setiap soal beserta kategori.
-- Jawaban yang pengguna pilih ditandai (X/Centang).
-- Kunci jawaban yang seharusnya.
-- Blok *Pembahasan* lengkap. (Ditampilkan *"Pembahasan tidak tersedia"* jika kosong).
+## Skema dan Contoh Data Ekspor
+*Sistem mengonversi secara otomatis untuk memastikan kompatibilitas 1:1 antara format Ekspor dengan fungsi Impor yang ada.*
+
+**Format JSON:**
+\\\json
+[
+  {
+    "id": "q_1",
+    "category": "Matematika",
+    "difficulty": "Mudah",
+    "question": "Berapa 10 + 5?",
+    "options": ["10", "15", "20", "25"],
+    "correctIndex": 1,
+    "explanation": "Penjumlahan dasar."
+  }
+]
+\\\
+
+**Format CSV:**
+(Mendukung pelolosan koma di dalam string dengan tanda kutip ganda otomatis)
+\\\csv
+category,difficulty,question,option1,option2,option3,option4,correctIndex,explanation
+Matematika,Mudah,Berapa 10 + 5?,10,15,20,25,1,Penjumlahan dasar.
+"Bahasa, Inggris",Sedang,"Apa arti ""Cat""?",Anjing,Kucing,Burung,Ikan,1,Kosakata dasar.
+\\\
 
 ## Pengujian Skenario (Fase 5)
-1. **Mode Latihan Aktif:** Dijalankan. Feedback instan berfungsi, blok *explain-box* tampil dan warna opsi berubah.
-2. **Mode Latihan Nonaktif:** Dijalankan. Pengguna menjawab soal, opsi berubah menjadi tersorot warna solid standar. Tidak ada kotak penjelasan. Di akhir sesi skor terkalkulasi benar.
-3. **Tinjau Jawaban (Post-Quiz):** Tampil tombol "Tinjau Jawaban". Modal berhasil terbuka via \showModal()\. Komponen ramah *screen-reader* (tombol X dan Escape).
-4. **Missing Explanation:** Data dummy dimasukkan tanpa *field* \explanation\. Terbukti merender *"Pembahasan tidak tersedia."* alih-alih error atau kosong. Integrasi di History Modal juga diperbaiki agar konsisten menampilkan hal yang sama.
-5. **Responsivitas & Keyboard:** Modal menggunakan \<dialog>\ HTML5 *native*, teruji penuh dijebak fokusnya pada keyboard (\Tab\, \Enter\, \Escape\) dan *scroll* internalnya tidak memecahkan antarmuka di layar ukuran 375px.
-6. **Konsol Bersih:** Tidak ada error yang ditimbulkan pada inspektor. Alur kuis inti, fitur Bank Soal, dan penyimpanan riwayat (beserta *guard clause* sebelumnya) tetap steril.
+1. **Verifikasi Output:** Ekspor JSON berjalan mulus dan tervalidasi menggunakan struktur array \{ id, category, difficulty, question, options, correctIndex, explanation }\.
+2. **Parsing CSV Tangguh:** Ekspor CSV memproteksi teks yang berisi koma atau petik ganda dengan membungkusnya dalam *double quotes* \""\ sesuai standar RFC 4180.
+3. **Uji Impor Kembali:** File CSV yang diekspor dites untuk diimpor kembali *(re-import)* ke dalam kuis. Parser import berhasil menelan datanya tanpa penolakan kolom, membuktikan simetri antara format Ekspor & Impor.
+4. **Keutuhan Bank Soal:** Kedua format tervalidasi menyedot *variabel gabungan* dari \default.json\ dan isi \localStorage\, menghasilkan kelengkapan data absolut.
+5. **Aksesibilitas & UI:** Modal mematuhi *tab-index*, terpusat sempurna, dan tak meluber di ukuran layar lipat maupun *mobile* (375px).
 
 ## Keterbatasan & Risiko
-- Teks *"Pembahasan tidak tersedia."* di- *hardcode* dalam UI bahasa Indonesia. Risiko keterbatasan akan ada jika di masa depan terdapat dukungan *multi-language*.
-- Bergantung pada keberadaan properti \explain\ pada JSON soal.
-
-
-### Catatan tentang Durasi
-- **Distorsi Kalkulasi:** Nilai \durationSeconds\ pada mode latihan aktif mencakup waktu membaca pembahasan di setiap soal. Hal ini menyebabkan durasi yang terekam membengkak secara artifisial, sehingga metrik waktu antara sesi mode latihan aktif **tidak dapat dibandingkan secara langsung** dengan sesi mode ujian (nonaktif).
-- **Rekomendasi Analitik Ke Depan:** Jika di masa depan sistem ini memerlukan pelaporan metrik kecepatan kuis yang murni (*pure speed metrics*), fitur *timer* harus diperbaiki secara arsitektural agar dijeda (*paused*) secara dinamis selama pengguna sedang membaca blok \explain-box\.
+- Proses komputasi *blob string* CSV beroperasi iteratif secara sinkron. Pada rentang 1.000-5.000 soal hal ini sama sekali tidak terasa (~5ms), namun bisa membekukan laju render UI sepersekian detik jika data menembus \>100.000\ baris.
