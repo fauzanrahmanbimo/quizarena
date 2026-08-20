@@ -1,0 +1,148 @@
+{
+  "title": "QuizArena — English Levels",
+  "description": "Kuis Bahasa Inggris 10 level bertingkat. Pilih level, jawab 30 soal, dan kumpulkan poin!",
+  "timePerQuestion": 20,
+  "shuffle": true,
+  "levels": [
+    {
+      "level": 1,
+      "name": "Kata Dasar & Warna",
+      "difficulty": "Sangat Mudah",
+      "emoji": "🌱",
+      "desc": "Kosakata paling dasar: benda, warna, dan angka."
+    },
+    {
+      "level": 2,
+      "name": "Kata Sehari-hari",
+      "difficulty": "Mudah",
+      "emoji": "🐣",
+      "desc": "Kata umum sehari-hari: keluarga, tempat, dan waktu."
+    },
+    {
+      "level": 3,
+      "name": "Lawan Kata",
+      "difficulty": "Mudah",
+      "emoji": "🌤️",
+      "desc": "Latihan lawan kata (antonim) yang sering dipakai."
+    },
+    {
+      "level": 4,
+      "name": "Artikel & Jamak",
+      "difficulty": "Cukup Mudah",
+      "emoji": "📗",
+      "desc": "Artikel a/an dan bentuk jamak kata benda."
+    },
+    {
+      "level": 5,
+      "name": "To Be & This/That",
+      "difficulty": "Menengah",
+      "emoji": "🧩",
+      "desc": "Kata kerja to be dan this/that/these/those."
+    },
+    {
+      "level": 6,
+      "name": "Simple Present",
+      "difficulty": "Menengah",
+      "emoji": "⏱️",
+      "desc": "Simple present: akhiran -s/-es dan do/does."
+    },
+    {
+      "level": 7,
+      "name": "Continuous & Preposisi",
+      "difficulty": "Menengah+",
+      "emoji": "🌀",
+      "desc": "Present continuous (-ing) dan preposisi in/on/at."
+    },
+    {
+      "level": 8,
+      "name": "Past Tense",
+      "difficulty": "Sulit",
+      "emoji": "🕰️",
+      "desc": "Kata kerja bentuk lampau (past tense)."
+    },
+    {
+      "level": 9,
+      "name": "Comparative & Modals",
+      "difficulty": "Sulit",
+      "emoji": "📈",
+      "desc": "Comparative, superlative, dan modal verbs."
+    },
+    {
+      "level": 10,
+      "name": "Idioms & Phrasal Verbs",
+      "difficulty": "Sangat Sulit",
+      "emoji": "🔥",
+      "desc": "Idiom, phrasal verb, dan kosakata tingkat mahir."
+    },
+    {
+      "level": 11,
+      "name": "Kata Ganti & Kepemilikan",
+      "difficulty": "Menengah",
+      "emoji": "👥",
+      "desc": "Subject, object, possessive adjective & pronoun."
+    },
+    {
+      "level": 12,
+      "name": "Kata Tanya (WH Questions)",
+      "difficulty": "Menengah",
+      "emoji": "❓",
+      "desc": "What, where, when, who, why, how, whose, which."
+    },
+    {
+      "level": 13,
+      "name": "There is/are & Some/Any",
+      "difficulty": "Menengah+",
+      "emoji": "📦",
+      "desc": "There is/are, some/any, much/many, countable."
+    },
+    {
+      "level": 14,
+      "name": "Future Tense",
+      "difficulty": "Menengah+",
+      "emoji": "🔮",
+      "desc": "Will dan be going to untuk masa depan."
+    },
+    {
+      "level": 15,
+      "name": "Present Perfect",
+      "difficulty": "Sulit",
+      "emoji": "✅",
+      "desc": "have/has + V3, already/yet/ever/since/for."
+    },
+    {
+      "level": 16,
+      "name": "Adverbs & Frekuensi",
+      "difficulty": "Menengah+",
+      "emoji": "🔃",
+      "desc": "Adverb of manner (-ly) & adverb of frequency."
+    },
+    {
+      "level": 17,
+      "name": "Kata Hubung (Conjunctions)",
+      "difficulty": "Menengah+",
+      "emoji": "🔗",
+      "desc": "and, but, or, so, because, although, when, if."
+    },
+    {
+      "level": 18,
+      "name": "Conditional Sentences",
+      "difficulty": "Sulit",
+      "emoji": "🔀",
+      "desc": "If clause tipe 0, 1, dan 2."
+    },
+    {
+      "level": 19,
+      "name": "Passive Voice",
+      "difficulty": "Sulit",
+      "emoji": "🔄",
+      "desc": "Kalimat pasif: be + V3 (present & past)."
+    },
+    {
+      "level": 20,
+      "name": "Reported Speech & Campuran",
+      "difficulty": "Sangat Sulit",
+      "emoji": "🎓",
+      "desc": "Reported speech, relative & review mahir."
+    }
+  ]
+}

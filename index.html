@@ -624,6 +624,9 @@ html.dark .video-t{color:#EAF3EF;}
       <div class="practice-row">
         <button class="btn btn--ghost" id="btn-free">🎯 Latihan Bebas</button>
         <button class="btn btn--soft" id="btn-hard">🔁 Ulang Soal Sulit (<span id="hard-count">0</span>)</button>
+        <button class="btn btn--ghost" id="btn-custom-quiz" style="margin-top:8px;">⚙️ Custom Quiz</button>
+        <button class="btn btn--ghost" id="btn-kelola-soal" style="margin-top:8px;">🛠️ Kelola Bank Soal</button>
+
       </div>
 
       <div class="materi-head">
@@ -632,6 +635,44 @@ html.dark .video-t{color:#EAF3EF;}
       </div>
       <div class="materi-pages" id="materi-pages"></div>
       <div class="materi-grid" id="materi-grid"></div>
+    </section>
+
+    
+    <!-- CUSTOM QUIZ -->
+    <section class="screen screen--custom-quiz" id="screen-custom-quiz">
+      <div class="card card--custom">
+         <button class="btn-text" id="btn-custom-back" style="position:static;margin-bottom:6px;" aria-label="Kembali ke halaman level">← Kembali</button>
+         <h2 class="board-title">⚙️ Custom Quiz</h2>
+         <div class="field">
+            <label for="custom-category">Kategori</label>
+            <select id="custom-category" style="width:100%; padding: 12px; border-radius: 8px; border: 1px solid var(--border);">
+              <option value="all">Semua Kategori</option>
+            </select>
+         </div>
+         <div class="field">
+            <label for="custom-difficulty">Tingkat Kesulitan</label>
+            <select id="custom-difficulty" style="width:100%; padding: 12px; border-radius: 8px; border: 1px solid var(--border);">
+              <option value="all">Semua Kesulitan</option>
+            </select>
+         </div>
+         <button class="btn btn--primary" id="btn-start-custom" style="width: 100%; margin-top: 16px;">Mulai Custom Quiz</button>
+      </div>
+    </section>
+
+    <!-- KELOLA BANK SOAL -->
+    <section class="screen screen--kelola" id="screen-kelola">
+      <div class="card card--kelola">
+         <button class="btn-text" id="btn-kelola-back" style="position:static;margin-bottom:6px;" aria-label="Kembali ke halaman level">← Kembali</button>
+         <h2 class="board-title">🛠️ Kelola Bank Soal</h2>
+         <div class="insights" id="kelola-stats" style="margin-bottom: 16px;"></div>
+         
+         <div class="field" style="margin-top:16px;">
+            <label for="file-import">Impor Soal (JSON / CSV)</label>
+            <input type="file" id="file-import" accept=".json,.csv" style="padding: 10px 0;" />
+         </div>
+         <h3 style="margin-top: 16px; font-size: 16px; margin-bottom: 8px;">Daftar Soal Impor</h3>
+         <div id="kelola-list" style="max-height: 300px; overflow-y: auto; background: var(--bg-main); border-radius: 8px; padding: 12px;"></div>
+      </div>
     </section>
 
     <!-- LEARN -->
@@ -754,41 +795,7 @@ html.dark .video-t{color:#EAF3EF;}
    Untuk menambah/mengubah soal, edit array "questions" pada level terkait.
    answer = index jawaban benar (0 = opsi pertama).
    ============================================================= */
-window.QUIZ = {"title":"QuizArena — English Levels","description":"Kuis Bahasa Inggris 10 level bertingkat. Pilih level, jawab 30 soal, dan kumpulkan poin!","timePerQuestion":20,"shuffle":true,"levels":[]};
-
-/* ---------- Level 1 · Kata Dasar & Warna (Sangat Mudah) ---------- */
-window.QUIZ.levels.push({"level":1,"name":"Kata Dasar & Warna","difficulty":"Sangat Mudah","emoji":"🌱","desc":"Kosakata paling dasar: benda, warna, dan angka.", "questions": [
-  {"q":"Apa arti kata \"cat\"?","category":"Vocabulary","options":["pintu","hijau","putih","kucing"],"answer":3,"explain":"\"cat\" artinya kucing."},
-  {"q":"Apa arti kata \"dog\"?","category":"Vocabulary","options":["lima","kucing","anjing","putih"],"answer":2,"explain":"\"dog\" artinya anjing."},
-  {"q":"Apa arti kata \"bird\"?","category":"Vocabulary","options":["lima","kursi","hijau","burung"],"answer":3,"explain":"\"bird\" artinya burung."},
-  {"q":"Apa arti kata \"fish\"?","category":"Vocabulary","options":["ikan","apel","kepala","kursi"],"answer":0,"explain":"\"fish\" artinya ikan."},
-  {"q":"Apa arti kata \"cow\"?","category":"Vocabulary","options":["bintang","kaki","anjing","sapi"],"answer":3,"explain":"\"cow\" artinya sapi."},
-  {"q":"Apa arti kata \"book\"?","category":"Vocabulary","options":["satu","hitam","kursi","buku"],"answer":3,"explain":"\"book\" artinya buku."},
-  {"q":"Apa arti kata \"pen\"?","category":"Vocabulary","options":["putih","lima","pena","kuning"],"answer":2,"explain":"\"pen\" artinya pena."},
-  {"q":"Apa arti kata \"bag\"?","category":"Vocabulary","options":["hijau","nasi","tas","kepala"],"answer":2,"explain":"\"bag\" artinya tas."},
-  {"q":"Apa arti kata \"door\"?","category":"Vocabulary","options":["tas","pintu","dua","pena"],"answer":1,"explain":"\"door\" artinya pintu."},
-  {"q":"Apa arti kata \"chair\"?","category":"Vocabulary","options":["kursi","pena","susu","buku"],"answer":0,"explain":"\"chair\" artinya kursi."},
-  {"q":"Apa arti kata \"table\"?","category":"Vocabulary","options":["meja","bulan","matahari","bintang"],"answer":0,"explain":"\"table\" artinya meja."},
-  {"q":"Apa arti kata \"red\"?","category":"Vocabulary","options":["kucing","satu","merah","kuning"],"answer":2,"explain":"\"red\" artinya merah."},
-  {"q":"Apa arti kata \"blue\"?","category":"Vocabulary","options":["air","nasi","tangan","biru"],"answer":3,"explain":"\"blue\" artinya biru."},
-  {"q":"Apa arti kata \"green\"?","category":"Vocabulary","options":["buku","hijau","putih","biru"],"answer":1,"explain":"\"green\" artinya hijau."},
-  {"q":"Apa arti kata \"yellow\"?","category":"Vocabulary","options":["kuning","bintang","kaki","buku"],"answer":0,"explain":"\"yellow\" artinya kuning."},
-  {"q":"Apa arti kata \"black\"?","category":"Vocabulary","options":["merah","pena","hitam","kaki"],"answer":2,"explain":"\"black\" artinya hitam."},
-  {"q":"Apa arti kata \"white\"?","category":"Vocabulary","options":["susu","putih","mata","tangan"],"answer":1,"explain":"\"white\" artinya putih."},
-  {"q":"Apa arti kata \"one\"?","category":"Vocabulary","options":["lima","kuning","satu","merah"],"answer":2,"explain":"\"one\" artinya satu."},
-  {"q":"Apa arti kata \"two\"?","category":"Vocabulary","options":["hijau","matahari","mata","dua"],"answer":3,"explain":"\"two\" artinya dua."},
-  {"q":"Apa arti kata \"three\"?","category":"Vocabulary","options":["empat","buku","tiga","merah"],"answer":2,"explain":"\"three\" artinya tiga."},
-  {"q":"Apa arti kata \"four\"?","category":"Vocabulary","options":["pintu","ikan","satu","empat"],"answer":3,"explain":"\"four\" artinya empat."},
-  {"q":"Apa arti kata \"five\"?","category":"Vocabulary","options":["tangan","lima","burung","mata"],"answer":1,"explain":"\"five\" artinya lima."},
-  {"q":"Apa arti kata \"sun\"?","category":"Vocabulary","options":["kucing","buku","matahari","merah"],"answer":2,"explain":"\"sun\" artinya matahari."},
-  {"q":"Apa arti kata \"moon\"?","category":"Vocabulary","options":["hitam","bulan","nasi","telur"],"answer":1,"explain":"\"moon\" artinya bulan."},
-  {"q":"Apa arti kata \"star\"?","category":"Vocabulary","options":["bintang","hijau","sapi","empat"],"answer":0,"explain":"\"star\" artinya bintang."},
-  {"q":"Apa arti kata \"water\"?","category":"Vocabulary","options":["air","anjing","sapi","mata"],"answer":0,"explain":"\"water\" artinya air."},
-  {"q":"Apa arti kata \"milk\"?","category":"Vocabulary","options":["susu","empat","kaki","air"],"answer":0,"explain":"\"milk\" artinya susu."},
-  {"q":"Apa arti kata \"rice\"?","category":"Vocabulary","options":["bulan","mata","nasi","merah"],"answer":2,"explain":"\"rice\" artinya nasi."},
-  {"q":"Apa arti kata \"apple\"?","category":"Vocabulary","options":["tiga","sapi","apel","lima"],"answer":2,"explain":"\"apple\" artinya apel."},
-  {"q":"Apa arti kata \"banana\"?","category":"Vocabulary","options":["satu","pisang","bintang","buku"],"answer":1,"explain":"\"banana\" artinya pisang."},
-]});
+// window.QUIZ and levels are now loaded asynchronously
 
 /* ---------- Level 2 · Kata Sehari-hari (Mudah) ---------- */
 window.QUIZ.levels.push({"level":2,"name":"Kata Sehari-hari","difficulty":"Mudah","emoji":"🐣","desc":"Kata umum sehari-hari: keluarga, tempat, dan waktu.", "questions": [
@@ -1135,9 +1142,50 @@ window.QUIZ.levels.push({"level": 20, "name": "Reported Speech & Campuran", "dif
    v4: audio pengucapan (TTS), streak harian, pencapaian/lencana, sertifikat,
        latihan bebas, ulang soal sulit (adaptif), insights, aksesibilitas, offline.
 ============================================================== */
-(function () {
+(async function () {
   "use strict";
-  const CONFIG = window.QUIZ || { title: "Quiz", description: "", timePerQuestion: 20, levels: [] };
+  
+  let allQuestions = [];
+  let metaInfo = { title: "QuizArena", description: "", timePerQuestion: 20, levels: [], shuffle: true };
+  let importedQs = [];
+  try {
+     const res1 = await fetch('level_meta.json');
+     metaInfo = await res1.json();
+     const res2 = await fetch('questions/default.json');
+     allQuestions = await res2.json();
+  } catch(e) { console.error('Failed to load default questions', e); }
+  
+  try {
+     importedQs = JSON.parse(localStorage.getItem('quizarena_imported_questions') || '[]');
+     allQuestions = [...allQuestions, ...importedQs];
+  } catch(e) { console.error('Failed to load imported questions', e); }
+
+  const levelMap = {};
+  metaInfo.levels.forEach(l => {
+     l.questions = [];
+     levelMap[l.level] = l;
+  });
+  
+  allQuestions.forEach(q => {
+     let l = q._originalLevel || 1;
+     if (!levelMap[l]) {
+         levelMap[l] = { level: l, name: "Custom Level", difficulty: q.difficulty||"Mudah", emoji: "🧩", desc: "Soal tambahan", questions: [] };
+         metaInfo.levels.push(levelMap[l]);
+     }
+     levelMap[l].questions.push({
+         id: q.id,
+         _isImported: q._isImported,
+         q: q.question,
+         category: q.category,
+         options: q.options,
+         answer: q.correctIndex,
+         explain: q.explanation,
+         difficulty: q.difficulty
+     });
+  });
+
+  const CONFIG = { title: metaInfo.title, description: metaInfo.description, timePerQuestion: metaInfo.timePerQuestion, levels: metaInfo.levels, shuffle: metaInfo.shuffle };
+
   const LEVELS = CONFIG.levels || [];
   const MATERI = {"1":["Level ini melatih kosakata paling dasar: nama benda, hewan, warna, dan angka 1-5.","<b>Benda &amp; hewan:</b> cat (kucing), dog (anjing), bird (burung), fish (ikan), cow (sapi), book (buku), pen (pena), bag (tas), door (pintu), chair (kursi), table (meja).","<b>Warna:</b> red (merah), blue (biru), green (hijau), yellow (kuning), black (hitam), white (putih).","<b>Angka:</b> one (1), two (2), three (3), four (4), five (5).","<b>Alam &amp; makanan:</b> sun (matahari), moon (bulan), star (bintang), water (air), milk (susu), rice (nasi), apple (apel), banana (pisang).","<b>Tips:</b> hafalkan sedikit demi sedikit sambil membayangkan gambar bendanya."],"2":["Kosakata umum sehari-hari tentang keluarga, tempat, kendaraan, dan waktu.","<b>Keluarga &amp; orang:</b> mother (ibu), father (ayah), brother, sister, family, friend, teacher, student.","<b>Tempat:</b> school, house, room, kitchen, market, city, village, road.","<b>Kendaraan:</b> car (mobil), bus, bike (sepeda), train (kereta).","<b>Waktu:</b> morning (pagi), afternoon (siang), evening (sore), night (malam), today, day, week, month, year, Monday."],"3":["Melatih antonim (lawan kata) yang paling sering dipakai.","<b>Sifat:</b> big-small, hot-cold, fast-slow, tall-short, happy-sad, good-bad, rich-poor, easy-difficult.","<b>Keadaan:</b> open-closed, up-down, day-night, clean-dirty, full-empty, high-low, near-far, wet-dry, light-dark, early-late.","<b>Kata kerja:</b> win-lose, buy-sell, love-hate, push-pull, begin-end.","<b>Tips:</b> pelajari antonim secara berpasangan supaya lebih mudah diingat."],"4":["<b>Artikel a / an:</b> pakai 'an' sebelum kata berawalan BUNYI vokal (a, i, u, e, o) - contoh: an apple, an hour, an umbrella. Pakai 'a' sebelum bunyi konsonan - contoh: a book, a car.","<b>Jamak beraturan:</b> +s (book->books); +es untuk akhiran s/x/ch/sh (box->boxes, class->classes, dish->dishes); y->ies bila didahului konsonan (baby->babies, city->cities); f/fe->ves (leaf->leaves, knife->knives).","<b>Jamak tak beraturan:</b> man->men, woman->women, child->children, foot->feet, tooth->teeth, mouse->mice."],"5":["<b>Kata kerja 'to be':</b> I -> am; He/She/It &amp; subjek tunggal -> is; You/We/They &amp; subjek jamak -> are.","<b>Contoh:</b> I am happy, You are happy, He is happy, The dogs are happy, My friend is happy.","<b>This/These/That/Those:</b> This = ini (tunggal, dekat), These = ini (jamak, dekat), That = itu (tunggal, jauh), Those = itu (jamak, jauh)."],"6":["<b>Simple Present:</b> untuk orang ketiga tunggal (He/She/It), kata kerja diberi akhiran -s/-es/-ies.","<b>Aturan:</b> umumnya +s (play->plays); +es untuk akhiran o/s/x/ch/sh (go->goes, watch->watches, fix->fixes); y->ies bila didahului konsonan (study->studies, fly->flies). Khusus: have->has.","<b>Pertanyaan:</b> pakai Do untuk I/You/We/They, dan Does untuk He/She/It. Contoh: Do you speak English? Does she like coffee?"],"7":["<b>Present Continuous:</b> be (am/is/are) + kata kerja-ING untuk aksi yang sedang berlangsung sekarang.","<b>Aturan -ing:</b> umumnya +ing (play->playing); huruf -e di akhir dihapus (write->writing, make->making); konsonan akhir digandakan pada kata pendek (run->running, sit->sitting, swim->swimming, begin->beginning).","<b>Preposisi waktu:</b> IN (bulan, tahun, bagian hari: in May, in 2005, in the morning), ON (hari/tanggal: on Monday), AT (jam &amp; 'night': at 7, at night).","<b>Preposisi tempat:</b> IN (di dalam), ON (di atas permukaan/menempel), AT (di titik/lokasi: at home)."],"8":["<b>Past Tense:</b> bentuk lampau kata kerja tak beraturan (irregular) yang paling umum.","go->went, eat->ate, see->saw, come->came, take->took, make->made, buy->bought, bring->brought, think->thought, teach->taught.","write->wrote, run->ran, drink->drank, swim->swam, give->gave, find->found, get->got, know->knew, speak->spoke, drive->drove.","fly->flew, begin->began, break->broke, choose->chose, feel->felt, leave->left, meet->met, pay->paid, say->said, sell->sold.","<b>Tips:</b> kata kerja irregular wajib dihafal karena tidak mengikuti pola -ed."],"9":["<b>Comparative (lebih ...):</b> kata pendek +er (big->bigger, tall->taller); kata panjang pakai 'more' (more beautiful, more expensive). Irregular: good->better, bad->worse.","<b>Superlative (paling ...):</b> kata pendek +est (the tallest, the biggest); kata panjang pakai 'most' (the most beautiful). Irregular: good->best, bad->worst.","<b>Modal verbs:</b> can (bisa/kemampuan), could (bisa - lampau/sopan), may (izin sopan), must (wajib/keharusan), should (sebaiknya/saran), must not (larangan tegas)."],"10":["<b>Idiom:</b> ungkapan yang maknanya tidak harfiah. break a leg (semoga sukses), piece of cake (sangat mudah), under the weather (kurang sehat), once in a blue moon (sangat jarang), spill the beans (membocorkan rahasia), cost an arm and a leg (sangat mahal), call it a day (mengakhiri pekerjaan), hit the sack (pergi tidur), bite the bullet (menghadapi hal sulit dengan berani), hit the books (belajar giat).","<b>Phrasal verbs:</b> give up (menyerah), look for (mencari), turn on/off (menyalakan/mematikan), put on (memakai), take off (melepas/lepas landas), find out (mengetahui), run out of (kehabisan), look after (merawat), get up (bangun).","<b>Kosakata mahir:</b> enormous (sangat besar), ancient (kuno), generous (dermawan), honest (jujur), brave (berani), curious (penasaran), fragile (rapuh), grateful (bersyukur), ambitious (ambisius), sincere (tulus)."]};
   /* ===== Video YouTube per level (ditambahkan) ===== */
@@ -1184,6 +1232,181 @@ window.QUIZ.levels.push({"level": 20, "name": "Reported Speech & Campuran", "dif
   applyTheme(localStorage.getItem(APP + "_theme") || "light");
   updateSoundBtn();
   updateAutoReadBtn();
+
+  
+  screens.custom = $("screen-custom-quiz");
+  screens.kelola = $("screen-kelola");
+  
+  $("btn-custom-quiz").addEventListener("click", () => {
+      // Populate category and difficulty
+      const cats = new Set();
+      const diffs = new Set();
+      allQuestions.forEach(q => {
+          if (q.category) cats.add(q.category);
+          if (q.difficulty) diffs.add(q.difficulty);
+      });
+      const catSel = $("custom-category");
+      catSel.innerHTML = '<option value="all">Semua Kategori</option>';
+      cats.forEach(c => catSel.innerHTML += `<option value="${c}">${c}</option>`);
+      
+      const diffSel = $("custom-difficulty");
+      diffSel.innerHTML = '<option value="all">Semua Kesulitan</option>';
+      diffs.forEach(d => diffSel.innerHTML += `<option value="${d}">${d}</option>`);
+      
+      switchScreen(screens.custom);
+  });
+  
+  $("btn-custom-back").addEventListener("click", () => switchScreen(screens.levels));
+  $("btn-kelola-back").addEventListener("click", () => switchScreen(screens.levels));
+  
+  $("btn-kelola-soal").addEventListener("click", () => {
+      renderKelola();
+      switchScreen(screens.kelola);
+  });
+  
+  function renderKelola() {
+      const defCount = allQuestions.filter(q => !q._isImported).length;
+      const impCount = allQuestions.filter(q => q._isImported).length;
+      $("kelola-stats").innerHTML = `Soal Default: <strong>${defCount}</strong> | Soal Impor: <strong>${impCount}</strong>`;
+      
+      const list = $("kelola-list");
+      list.innerHTML = "";
+      const imported = allQuestions.filter(q => q._isImported);
+      if (imported.length === 0) {
+          list.innerHTML = "<p style='font-size:13px; color: var(--text-muted);'>Belum ada soal impor.</p>";
+          return;
+      }
+      imported.forEach(q => {
+          const div = document.createElement("div");
+          div.style.padding = "8px";
+          div.style.borderBottom = "1px solid var(--border)";
+          div.style.display = "flex";
+          div.style.justifyContent = "space-between";
+          div.innerHTML = `<div style="font-size: 13px;">${q.question} <br/><small>${q.category || ''}</small></div>
+                           <button class="btn-text" style="color:var(--danger); padding:4px;" data-id="${q.id}">Hapus</button>`;
+          div.querySelector("button").addEventListener("click", (e) => {
+              const id = parseInt(e.target.getAttribute("data-id"));
+              const newImported = importedQs.filter(iq => iq.id !== id);
+              localStorage.setItem('quizarena_imported_questions', JSON.stringify(newImported));
+              alert("Soal dihapus. Silakan muat ulang halaman untuk memperbarui bank soal utama.");
+              location.reload();
+          });
+          list.appendChild(div);
+      });
+  }
+  
+  function parseCSV(text) {
+      const lines = text.split(/\r?\n/).filter(l => l.trim() !== '');
+      if(lines.length < 2) return [];
+      const headers = lines[0].split(',').map(h => h.trim().toLowerCase());
+      const res = [];
+      for(let i = 1; i < lines.length; i++) {
+          // Simple CSV parse handling quotes roughly
+          let row = [];
+          let inQuotes = false;
+          let current = '';
+          for(let j = 0; j < lines[i].length; j++) {
+             const c = lines[i][j];
+             if(c === '"') {
+                 inQuotes = !inQuotes;
+             } else if(c === ',' && !inQuotes) {
+                 row.push(current);
+                 current = '';
+             } else {
+                 current += c;
+             }
+          }
+          row.push(current);
+          
+          let obj = {};
+          headers.forEach((h, idx) => {
+             obj[h] = row[idx] ? row[idx].trim().replace(/^"|"$/g, '') : '';
+          });
+          
+          if(obj.question && obj.options && obj.correctindex) {
+             res.push({
+                 id: Date.now() + i,
+                 _isImported: true,
+                 category: obj.category || "Import",
+                 difficulty: obj.difficulty || "Mudah",
+                 question: obj.question,
+                 options: obj.options.split(';').map(o=>o.trim()),
+                 correctIndex: parseInt(obj.correctindex),
+                 explanation: obj.explanation || "",
+                 _originalLevel: parseInt(obj.level || 21)
+             });
+          }
+      }
+      return res;
+  }
+  
+  $("file-import").addEventListener("change", (e) => {
+      const file = e.target.files[0];
+      if(!file) return;
+      const reader = new FileReader();
+      reader.onload = (ev) => {
+          try {
+              let newQs = [];
+              const text = ev.target.result;
+              if (file.name.endsWith('.json')) {
+                  newQs = JSON.parse(text);
+                  newQs = newQs.map((q, i) => ({
+                      id: Date.now() + i,
+                      _isImported: true,
+                      category: q.category || "Import",
+                      difficulty: q.difficulty || "Mudah",
+                      question: q.question || q.q,
+                      options: q.options,
+                      correctIndex: q.correctIndex !== undefined ? q.correctIndex : q.answer,
+                      explanation: q.explanation || q.explain || "",
+                      _originalLevel: q._originalLevel || 21
+                  }));
+              } else if (file.name.endsWith('.csv')) {
+                  newQs = parseCSV(text);
+              }
+              if (newQs.length > 0) {
+                  const combined = [...importedQs, ...newQs];
+                  localStorage.setItem('quizarena_imported_questions', JSON.stringify(combined));
+                  alert(`Berhasil mengimpor ${newQs.length} soal! Muat ulang halaman untuk melihat perubahan.`);
+                  location.reload();
+              } else {
+                  alert("Tidak ada soal yang valid untuk diimpor.");
+              }
+          } catch(err) {
+              alert("Gagal membaca file: " + err.message);
+          }
+      };
+      reader.readAsText(file);
+  });
+  
+  $("btn-start-custom").addEventListener("click", () => {
+      const cat = $("custom-category").value;
+      const diff = $("custom-difficulty").value;
+      let pool = allQuestions;
+      if (cat !== "all") pool = pool.filter(q => q.category === cat);
+      if (diff !== "all") pool = pool.filter(q => q.difficulty === diff);
+      
+      if (pool.length === 0) {
+          alert("Tidak ada soal yang cocok dengan filter ini.");
+          return;
+      }
+      
+      // Shuffle and take max 30
+      if (CONFIG.shuffle) pool.sort(() => Math.random() - 0.5);
+      pool = pool.slice(0, 30);
+      
+      // Map to game questions format
+      questions = pool.map(q => ({
+         q: q.question, category: q.category, options: q.options, answer: q.correctIndex, explain: q.explanation
+      }));
+      
+      currentLevel = "Custom";
+      practice = "custom";
+      idx = 0;
+      history = [];
+      switchScreen(screens.quiz);
+      loadQuestion();
+  });
 
   // ---------- Init home ----------
   $("quiz-title").textContent = CONFIG.title;
