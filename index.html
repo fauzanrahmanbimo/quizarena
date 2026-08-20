@@ -550,7 +550,7 @@ html.dark .page-tab{border-color:#EAF3EF;color:#EAF3EF;}
 html.dark .page-tab.is-on{background:#EAF3EF;color:#12211d;}
 html.dark .video-card{background:#22302b;border-color:#3a5049;}
 html.dark .video-t{color:#EAF3EF;}
-</style>
+</style>\n  <script src="config.js"></script>
   <script type="module" src="assets/firebase-init.js"></script>
 </head>
 <body>
@@ -559,11 +559,13 @@ html.dark .video-t{color:#EAF3EF;}
 
   <header class="topbar">
     <div class="logo"><span class="q">Q</span><span class="u">u</span><span class="i">i</span><span class="z">z</span><span class="rest">Arena</span></div>
-    <div class="top-actions">
-      <button class="icon-btn" id="btn-sound" title="Suara" aria-label="Suara">🔊</button>
-      <button class="icon-btn" id="btn-theme" title="Mode gelap" aria-label="Mode gelap">🌙</button>
-      <span class="brand-badge">⚡ 20 Level</span>
-    </div>
+    <div class="top-actions" style="display:flex; align-items:center; gap:8px;">
+        <button class="icon-btn" id="btn-sound" title="Suara" aria-label="Suara">🔊</button>
+        <button class="icon-btn" id="btn-theme" title="Mode gelap" aria-label="Mode gelap">🌓</button>
+        <div id="auth-container" style="display:flex; align-items:center; gap:8px; margin-left:12px; padding-left:12px; border-left:1px solid rgba(0,0,0,0.1);">
+           <!-- Auth UI will be injected here -->
+        </div>
+      </div>
   </header>
 
   <main class="app">
@@ -1166,15 +1168,102 @@ window.QUIZ.levels.push({"level": 20, "name": "Reported Speech & Campuran", "dif
 (async function () {
   "use strict";
   
-  let allQuestions = [];
+  
+  // --- AUTH LOGIC ---
+  function getToken() { return localStorage.getItem('quizarena_token'); }
+  function getUser() { const u = localStorage.getItem('quizarena_user'); return u ? JSON.parse(u) : null; }
+  
+  function updateAuthUI() {
+    const c = document.getElementById('auth-container');
+    const u = getUser();
+    if(u && getToken()) {
+       c.innerHTML = `<span style="font-size:12px; font-weight:bold;">${u.email}</span><button class="btn btn--ghost" style="padding:4px 12px; font-size:12px;" onclick="logout()">Logout</button>`;
+    } else {
+       c.innerHTML = `<button class="btn btn--soft" style="padding:4px 12px; font-size:12px;" onclick="document.getElementById('modal-login').showModal()">Login</button><button class="btn btn--secondary" style="padding:4px 12px; font-size:12px;" onclick="document.getElementById('modal-register').showModal()">Daftar</button>`;
+    }
+  }
+
+  window.logout = function() {
+    localStorage.removeItem('quizarena_token');
+    localStorage.removeItem('quizarena_user');
+    window.location.reload();
+  };
+
+  window.handleLogin = async function(e) {
+    e.preventDefault();
+    const btn = e.target.querySelector('button'); btn.disabled = true;
+    const err = document.getElementById('login-error'); err.textContent = '';
+    try {
+      const res = await fetch(`${API_CONFIG.BASE_URL}/api/auth/login`, {
+        method: 'POST', headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({email: document.getElementById('login-email').value, password: document.getElementById('login-password').value})
+      });
+      const data = await res.json();
+      if(!res.ok) throw new Error(data.error || 'Login gagal');
+      localStorage.setItem('quizarena_token', data.token);
+      localStorage.setItem('quizarena_user', JSON.stringify(data.user));
+      document.getElementById('modal-login').close();
+      updateAuthUI();
+      // Reload history if currently viewing
+    } catch(er) { err.textContent = er.message; }
+    finally { btn.disabled = false; }
+  };
+
+  window.handleRegister = async function(e) {
+    e.preventDefault();
+    const btn = e.target.querySelector('button'); btn.disabled = true;
+    const err = document.getElementById('reg-error'); err.textContent = '';
+    try {
+      const res = await fetch(`${API_CONFIG.BASE_URL}/api/auth/register`, {
+        method: 'POST', headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({email: document.getElementById('reg-email').value, password: document.getElementById('reg-password').value})
+      });
+      const data = await res.json();
+      if(!res.ok) throw new Error(data.error || 'Register gagal');
+      localStorage.setItem('quizarena_token', data.token);
+      localStorage.setItem('quizarena_user', JSON.stringify(data.user));
+      document.getElementById('modal-register').close();
+      updateAuthUI();
+    } catch(er) { err.textContent = er.message; }
+    finally { btn.disabled = false; }
+  };
+\n  let allQuestions = [];\n  updateAuthUI();
   let metaInfo = { title: "QuizArena", description: "", timePerQuestion: 20, levels: [], shuffle: true };
   let importedQs = [];
-  try {
-     const res1 = await fetch('level_meta.json');
-     metaInfo = await res1.json();
-     const res2 = await fetch('questions/default.json');
-     allQuestions = await res2.json();
-  } catch(e) { console.error('Failed to load default questions', e); }
+  
+    try {
+       const res1 = await fetch('level_meta.json');
+       metaInfo = await res1.json();
+       
+       let backendSuccess = false;
+       if (API_CONFIG.USE_BACKEND) {
+         try {
+           const res = await fetch(`${API_CONFIG.BASE_URL}/api/questions`);
+           if(res.ok) {
+             const data = await res.json();
+             // Map backend schema (q.question -> q.q, q.correct_index -> q.answer, q.explanation -> q.explain)
+             allQuestions = data.map(dbq => ({
+                id: dbq.id,
+                category: dbq.category,
+                difficulty: dbq.difficulty,
+                q: dbq.question,
+                options: typeof dbq.options === 'string' ? JSON.parse(dbq.options) : dbq.options,
+                answer: dbq.correct_index,
+                explain: dbq.explanation,
+                _originalLevel: 21
+             }));
+             backendSuccess = true;
+           }
+         } catch(be) {
+           console.warn("Backend tidak tersedia, menggunakan mode offline (default.json).");
+         }
+       }
+       if (!backendSuccess) {
+           const res2 = await fetch('questions/default.json');
+           allQuestions = await res2.json();
+       }
+    } catch(e) { console.error('Failed to load questions', e); }
+
   
   try {
      importedQs = JSON.parse(localStorage.getItem('quizarena_imported_questions') || '[]');
@@ -1836,7 +1925,7 @@ window.QUIZ.levels.push({"level": 20, "name": "Reported Speech & Campuran", "dif
   }
 
   // ---------- Result ----------
-  function finish() {
+  async function finish() {
     clearInterval(timer);
     $("progress-fill").style.width = "100%";
     updateStreak();
@@ -2288,6 +2377,34 @@ window.QUIZ.levels.push({"level": 20, "name": "Reported Speech & Campuran", "dif
         <button class="btn btn--secondary" onclick="exportBank('json')">📄 Ekspor sebagai JSON</button>
         <button class="btn btn--soft" onclick="exportBank('csv')">📊 Ekspor sebagai CSV</button>
       </div>
+    </dialog>
+\n
+    <!-- LOGIN MODAL -->
+    <dialog id="modal-login" style="border:none; border-radius:16px; padding:24px; max-width:400px; width:90%; background:var(--surface); color:var(--text); box-shadow:0 10px 30px rgba(0,0,0,0.2); position:fixed; top:50%; left:50%; transform:translate(-50%, -50%);">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
+        <h2 style="font-size:20px; color:var(--primary);">Login</h2>
+        <button class="btn-text" onclick="document.getElementById('modal-login').close()" aria-label="Tutup">✕</button>
+      </div>
+      <form id="form-login" onsubmit="handleLogin(event)">
+        <div class="field"><label>Email</label><input type="email" id="login-email" required></div>
+        <div class="field"><label>Password</label><input type="password" id="login-password" required></div>
+        <p id="login-error" style="color:var(--danger); font-size:12px; margin-bottom:10px;"></p>
+        <button type="submit" class="btn btn--primary" style="width:100%">Login</button>
+      </form>
+    </dialog>
+
+    <!-- REGISTER MODAL -->
+    <dialog id="modal-register" style="border:none; border-radius:16px; padding:24px; max-width:400px; width:90%; background:var(--surface); color:var(--text); box-shadow:0 10px 30px rgba(0,0,0,0.2); position:fixed; top:50%; left:50%; transform:translate(-50%, -50%);">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
+        <h2 style="font-size:20px; color:var(--primary);">Daftar</h2>
+        <button class="btn-text" onclick="document.getElementById('modal-register').close()" aria-label="Tutup">✕</button>
+      </div>
+      <form id="form-register" onsubmit="handleRegister(event)">
+        <div class="field"><label>Email</label><input type="email" id="reg-email" required></div>
+        <div class="field"><label>Password</label><input type="password" id="reg-password" minlength="8" required></div>
+        <p id="reg-error" style="color:var(--danger); font-size:12px; margin-bottom:10px;"></p>
+        <button type="submit" class="btn btn--primary" style="width:100%">Daftar</button>
+      </form>
     </dialog>
 \n</body>
 </html>
