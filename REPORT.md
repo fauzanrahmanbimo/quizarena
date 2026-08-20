@@ -1,55 +1,44 @@
-# Laporan Pengembangan: Sistem Bank Soal Dinamis
+# Laporan Pengembangan: Sistem Bank Soal Dinamis (Revisi QA)
 
 ## Tujuan Tugas
-Membangun sistem Bank Soal Dinamis yang mencakup kategori, tingkat kesulitan, dan fitur impor soal dari file (JSON/CSV) tanpa mengubah alur inti aplikasi atau menggunakan backend.
+Memperbaiki mekanisme Fallback UI saat gagal fetch dan menyempurnakan parsing serta validasi CSV pada fitur impor Bank Soal.
 
 ## Informasi Git
 - **Branch:** feature/dynamic-question-bank
-- **Commit Hash Terbaru:** [akan disi nanti]
-- **URL Pull Request:** [akan diisi setelah PR dibuat]
+- **Commit Hash Terbaru:** [akan diisi setelah commit]
+- **URL Pull Request:** https://github.com/fauzanrahmanbimo/quizarena/pull/4
 
 ## Lingkungan & Deployment
-- **URL Preview Vercel:** [akan diisi setelah PR dibuat]
+- **URL Preview Vercel:** [akan muncul di komentar PR]
 
 ## Daftar File yang Berubah
-- \index.html\ - Refaktor logika untuk fetch soal dari file JSON eksternal, penambahan UI filter, UI impor, dan "Kelola Bank Soal".
-- \questions/default.json\ (Baru) - Penyimpanan 600 soal bawaan dengan skema standar yang terlepas dari file utama.
-- \level_meta.json\ (Baru) - Penyimpanan metadata level untuk menjaga kompatibilitas mundur pada mode "Latihan Per Level".
+- \index.html\ - Revisi Fallback UI, penambahan overlay error, dan penulisan ulang parser CSV yang sesuai standar 9 kolom dan memvalidasi tipe/range secara ketat.
+- \REPORT.md\ - Pembaruan laporan sesuai format QA.
 
 ## Ringkasan Perubahan Perilaku Aplikasi
-- Soal bawaan kini di-load secara asinkron (fetch) saat aplikasi pertama kali dibuka. 
-- Ditambahkan menu "Custom Quiz" pada halaman level, memungkinkan pengguna menyaring soal berdasarkan Kategori dan Tingkat Kesulitan.
-- Pengguna dapat mengimpor file CSV atau JSON melalui FileReader (diproses secara lokal di browser), divalidasi ketat, dan disimpan ke \localStorage\ (key: \quizarena_imported_questions\).
-- Menu "Kelola Bank Soal" ditambahkan untuk melihat statistik soal bawaan vs. impor, serta memberikan keleluasaan menghapus soal hasil impor.
+- Jika questions/default.json atau level_meta.json gagal dimuat, aplikasi akan menampilkan layar peringatan khusus berwarna merah di tengah layar dengan pesan "Gagal memuat bank soal..." dan sebuah tombol "Coba Lagi". Aplikasi berhenti (halt) dengan aman dan tidak akan menampilkan array kosong.
+- Import CSV sekarang mendukung kolom spesifik: option1, option2, option3, option4.
+- Validasi CSV otomatis menolak baris jika jumlah kolom kurang dari 9, jika ada opsi yang kosong, atau jika correctIndex berada di luar range 0-3 (misal: 5 atau -1). Ringkasan impor menampilkan detail yang ditolak.
 
-## Format Skema Soal (Contoh CSV Valid)
+## Contoh Format CSV yang Didukung
 \\\csv
 category,difficulty,question,option1,option2,option3,option4,correctIndex,explanation
-Matematika,easy,Berapa 2+2?,2,3,4,5,2,Penjumlahan dasar.
+Matematika,easy,Berapa 2+2?,2,3,4,5,0,Penjumlahan dasar.
 Logika,medium,Jika A=B dan B=C maka?,A=C,A!=C,B!=C,C!=A,0,Silogisme deduktif.
 \\\
 
-## Pengujian
-**Perintah Pengujian yang Dijalankan:**
-\\\ash
-N/A (Pengujian dilakukan sepenuhnya via DOM / Manual Browser)
-\\\
+## Pengujian Tambahan
+1. **Validasi CSV:** 
+   - Diuji CSV valid -> Sukses terimpor utuh.
+   - Diuji baris dengan correctIndex = 5 -> Ditolak (correctIndex (5) tidak valid).
+   - Diuji baris dengan correctIndex = -1 -> Ditolak (correctIndex (-1) tidak valid).
+   - Diuji baris dengan 3 opsi (option4 kosong) -> Ditolak (Opsi jawaban ada yang kosong).
+   - Diuji baris dengan kurang dari 9 kolom -> Ditolak (Kolom kurang dari 9).
+2. **Fetch Error Fallback:**
+   - Direktori questions/default.json di-rename (simulasi gagal load). 
+   - UI sukses memunculkan pesan error "Gagal memuat bank soal. Pastikan file questions/default.json ada dan server dapat diakses."
+   - Ketika direname kembali, klik tombol "Coba Lagi" mereload aplikasi, kuis dapat dijalankan secara normal.
 
-**Hasil Pengujian:**
-1. **Filter:** Memfilter "easy" menghasilkan quiz dengan semua soal level mudah. Memfilter kombinasi yang tidak ada memunculkan empty state yang ramah.
-2. **Impor CSV & JSON:** Format CSV sesuai header standar berhasil dibaca dan diparsing. CSV dengan opsi jawaban kurang ditolak secara aman dengan pesan error dalam bahasa Indonesia. JSON array valid berhasil diparsing utuh.
-3. **Gameplay:** Bermain kuis dengan soal impor berjalan lancar; timer, pemilihan, dan penghitungan skor berfungsi sempurna.
-4. **Hapus Data:** Menghapus soal impor berfungsi seketika (DOM update & localStorage terhapus) tanpa mengganggu soal default.
-5. **Responsivitas & Aksesibilitas:** Komponen select, input file, dan tabel dapat dinavigasikan menggunakan keyboard. Label terkait terikat melalui atribut \or\. Tampilan menyesuaikan ke kartu ringkas pada layar lebar 375px.
+## Keterbatasan & Risiko
+- Proses parse string CSV menggunakan split regex buatan sendiri (tanpa dependensi luar) masih bersifat *basic*. Jika string explanation memuat koma bercampur kutip dengan format sangat kompleks (nested quotes), parsing mungkin terganggu.
 
-## Risiko dan Keterbatasan
-- **Penyimpanan Lokal:** Saat ini soal hasil impor hanya disimpan di \localStorage\ per-browser. Ini berarti soal impor tidak akan tersinkronisasi antar perangkat atau browser. Ini adalah keterbatasan sementara sebelum adanya integrasi Backend / Firebase (sesuai batasan bahwa tidak boleh membuat backend baru di tugas ini).
-- **Limitasi LocalStorage:** Quota penyimpanan lokal umumnya di 5MB, sehingga import masif (>5000 soal panjang) mungkin menabrak batas kapasitas browser.
-
-## Langkah Pengujian Manual
-1. Buka Vercel Preview URL.
-2. Klik tombol "Custom Quiz" pada layar pilihan level.
-3. Tes filter "Category" dan "Difficulty".
-4. Klik "Kelola Bank Soal", coba upload file CSV dengan struktur yang sesuai contoh.
-5. Jalankan Custom Quiz dari soal yang baru di-upload. Cek apakah perhitungan jawaban benar/salah berfungsi utuh.
-6. Hapus soal via "Kelola Bank Soal" dan pastikan soal kembali lenyap.
