@@ -12,7 +12,7 @@
   <!-- Open Graph / social -->
   <meta property="og:type" content="website" />
   <meta property="og:title" content="QuizArena — English Levels" />
-  <meta property="og:description" content="Kuis Bahasa Inggris dasar 10 level dengan materi, pembahasan, audio, mode VS, papan skor & sertifikat." />
+  <meta property="og:description" content="Kuis Bahasa Inggris dasar 20 level dengan materi, pembahasan, audio, mode VS, papan skor & sertifikat." />
   <meta name="twitter:card" content="summary" />
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%E2%9A%A1%3C/text%3E%3C/svg%3E" />
   <link rel="manifest" href="data:application/manifest+json,%7B%22name%22%3A%22QuizArena%22%2C%22short_name%22%3A%22QuizArena%22%2C%22start_url%22%3A%22.%22%2C%22display%22%3A%22standalone%22%2C%22background_color%22%3A%22%23FBF5E9%22%2C%22theme_color%22%3A%22%23173F3A%22%2C%22icons%22%3A%5B%5D%7D" />
@@ -54,7 +54,7 @@
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
-html, body { height: 100%; }
+html { scroll-behavior: smooth; } html, body { height: 100%; }
 
 body {
   font-family: var(--font-body);
@@ -328,7 +328,7 @@ body {
 }
 
 /* ---------- Level card v2 (dengan deskripsi) ---------- */
-.level-card { min-height: 176px; }
+.level-card { min-height: 176px; min-width: 0; }
 .level-top { display: flex; align-items: center; justify-content: space-between; }
 .level-emoji { position: static; top: auto; right: auto; font-size: 24px; line-height: 1; }
 .level-name { min-height: auto; margin-top: 8px; }
@@ -493,9 +493,9 @@ html.dark .search-lv{color:#cfe0da;}
 .speak-btn:hover{background:rgba(255,255,255,.26);}
 .speak-btn:active{transform:scale(.92);}
 .card--question{position:relative;}
-.opt-speak{display:inline-flex;align-items:center;justify-content:center;min-width:26px;height:26px;margin-left:6px;border-radius:8px;font-size:15px;opacity:.7;cursor:pointer;transition:opacity .2s,background .2s;}
+.opt-speak{display:inline-flex;align-items:center;justify-content:center;min-width:26px;height:26px;margin-left:6px;border-radius:8px;font-size:15px;opacity:.7;cursor:pointer;transition:opacity .2s,background .2s;pointer-events:auto;}
 .opt-speak:hover{opacity:1;background:rgba(0,0,0,.06);}
-.answer{position:relative;display:flex;align-items:center;justify-content:space-between;gap:8px;}
+.answer{position:relative;display:flex;align-items:center;justify-content:space-between;gap:8px;min-height:54px;}
 .answer .opt-speak{flex:0 0 auto;}
 
 /* Achievements */
@@ -520,6 +520,8 @@ html.dark .search-lv{color:#cfe0da;}
 .cert-canvas{width:100%;height:auto;max-width:100%;border-radius:14px;box-shadow:var(--shadow-soft);display:block;}
 
 /* Accessibility: focus rings */
+.skip-link{position:absolute;left:-9999px;top:auto;width:1px;height:1px;overflow:hidden;z-index:999;font-family:var(--font-body);font-size:14px;font-weight:600;padding:12px 20px;background:var(--teal);color:#fff;border-radius:0 0 12px 0;text-decoration:none;}
+.skip-link:focus{position:fixed;left:0;top:0;width:auto;height:auto;}
 :focus-visible{outline:3px solid var(--mint-d);outline-offset:2px;}
 .level-card:focus-visible,.answer:focus-visible{outline:3px solid var(--lime-d);outline-offset:2px;}
 
@@ -553,6 +555,7 @@ html.dark .video-t{color:#EAF3EF;}
   <script type="module" src="assets/firebase-init.js"></script>
 </head>
 <body>
+  <a href="#screen-home" class="skip-link">Langsung ke konten utama</a>
   <div class="aurora"><span class="blob blob-1"></span><span class="blob blob-2"></span><span class="blob blob-3"></span></div>
 
   <header class="topbar">
@@ -662,19 +665,19 @@ html.dark .video-t{color:#EAF3EF;}
       </header>
       <div class="vs-bar" id="vs-bar" hidden></div>
       <div class="level-tag" id="quiz-level-tag">Level 1</div>
-      <div class="progress-track"><div class="progress-fill" id="progress-fill"></div></div>
-      <div class="timer" id="timer"><div class="timer-bar" id="timer-bar"></div><span class="timer-num" id="timer-num">20</span></div>
+      <div class="progress-track"><div class="progress-fill" id="progress-fill" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div></div>
+      <div class="timer" id="timer"><div class="timer-bar" id="timer-bar"></div><span class="timer-num" id="timer-num" aria-live="off" aria-label="Sisa waktu">20</span></div>
       <div class="card card--question">
         <button class="speak-btn" id="btn-speak" title="Dengar soal" aria-label="Dengar soal">🔊</button>
         <p class="question-tag" id="question-tag">Pilihan Ganda</p>
-        <h2 class="question-text" id="question-text">—</h2>
+        <h2 class="question-text" id="question-text" lang="en">—</h2>
       </div>
       <div class="answers" id="answers"></div>
       <form class="type-box" id="type-box" hidden>
         <input id="type-input" placeholder="Ketik jawabanmu…" autocomplete="off" />
         <button class="btn btn--primary" id="type-submit" type="submit">Jawab</button>
       </form>
-      <div class="explain-box" id="explain-box" hidden></div>
+      <div class="explain-box" id="explain-box" hidden aria-live="polite" role="status"></div>
       <button class="btn btn--primary next-btn" id="btn-next" hidden>Lanjut →</button>
     </section>
 
@@ -1213,7 +1216,7 @@ window.QUIZ.levels.push({"level": 20, "name": "Reported Speech & Campuran", "dif
   $("btn-share").addEventListener("click", shareResult);
   $("btn-quit").addEventListener("click", () => { clearInterval(timer); goToLevels(); });
   $("btn-clear-board").addEventListener("click", () => {
-    if (confirm("Hapus semua skor di papan skor?")) { localStorage.removeItem(APP + "_board"); renderBoard(); }
+    if (confirm("Papan skor global tersimpan di server dan tidak bisa dihapus dari sini.")) { renderBoard(); }
   });
   $("type-box").addEventListener("submit", (e) => { e.preventDefault(); submitTyped(); });
   $("search-input").addEventListener("input", (e) => renderSearch(e.target.value));
@@ -1457,7 +1460,7 @@ window.QUIZ.levels.push({"level": 20, "name": "Reported Speech & Campuran", "dif
     answered = false;
     const q = questions[idx];
     $("progress-label").innerHTML = `Soal <b>${idx + 1}</b> / ${questions.length}`;
-    $("progress-fill").style.width = (idx / questions.length) * 100 + "%";
+    var pct = Math.round((idx / questions.length) * 100); $("progress-fill").style.width = pct + "%"; $("progress-fill").setAttribute("aria-valuenow", pct);
     $("question-tag").textContent = q.category || (qmode === "type" ? "Ketik Jawaban" : "Pilihan Ganda");
     $("question-text").textContent = q.q;
     $("explain-box").hidden = true;
@@ -1814,7 +1817,7 @@ window.QUIZ.levels.push({"level": 20, "name": "Reported Speech & Campuran", "dif
     g.fillText("Kuis Bahasa Inggris Dasar QuizArena", W / 2, 508);
     const stars = LEVELS.reduce((s, l) => s + getStars(l.level), 0);
     g.font = "bold 30px Georgia, serif"; g.fillStyle = "#F0A62A";
-    g.fillText("\u2605 ".repeat(3) + `  Total ${stars}/30 bintang`, W / 2, 590);
+    g.fillText("\u2605 ".repeat(3) + `  Total ${stars}/${LEVELS.length * 3} bintang`, W / 2, 590);
     const d = new Date();
     g.font = "20px Georgia, serif"; g.fillStyle = "#6E7C77";
     g.fillText("Tanggal: " + d.toLocaleDateString("id-ID", { day: "numeric", month: "long", year: "numeric" }), W / 2, 700);
