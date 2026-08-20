@@ -1239,14 +1239,22 @@ window.QUIZ.levels.push({"level": 20, "name": "Reported Speech & Campuran", "dif
        const res1 = await fetch('level_meta.json');
        metaInfo = await res1.json();
        
-       let backendSuccess = false;
+              // Selalu ambil default.json untuk Level 1-20
+       try {
+         const res2 = await fetch('questions/default.json');
+         allQuestions = await res2.json();
+       } catch(e) {
+         console.error("Gagal mengambil soal default!", e);
+         allQuestions = [];
+       }
+
+       // Gabungkan soal dari Backend (Custom)
        if (API_CONFIG.USE_BACKEND) {
          try {
            const res = await fetch(`${API_CONFIG.BASE_URL}/api/questions`);
            if(res.ok) {
              const data = await res.json();
-             // Map backend schema (q.question -> q.q, q.correct_index -> q.answer, q.explanation -> q.explain)
-             allQuestions = data.map(dbq => ({
+             const backendQs = data.map(dbq => ({
                 id: dbq.id,
                 category: dbq.category,
                 difficulty: dbq.difficulty,
@@ -1254,17 +1262,13 @@ window.QUIZ.levels.push({"level": 20, "name": "Reported Speech & Campuran", "dif
                 options: typeof dbq.options === 'string' ? JSON.parse(dbq.options) : dbq.options,
                 answer: dbq.correct_index,
                 explain: dbq.explanation,
-                _originalLevel: 21
+                _originalLevel: 21 // Masuk ke custom bank
              }));
-             backendSuccess = true;
+             allQuestions = allQuestions.concat(backendQs);
            }
          } catch(be) {
-           console.warn("Backend tidak tersedia, menggunakan mode offline (default.json).");
+           console.warn("Backend tidak tersedia, melanjutkan dengan soal default.");
          }
-       }
-       if (!backendSuccess) {
-           const res2 = await fetch('questions/default.json');
-           allQuestions = await res2.json();
        }
     } catch(e) { console.error('Failed to load questions', e); }
 
