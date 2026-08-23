@@ -26,7 +26,7 @@ async function runSeed() {
   try {
     data = JSON.parse(rawData);
   } catch (err) {
-    console.error('FATAL: Invalid JSON format.');
+    console.error('FATAL: Invalid JSON format.', err);
     process.exit(1);
   }
 
@@ -95,35 +95,71 @@ async function runSeed() {
       levelsInserted++;
     }
 
-    // 2. Upsert Questions
+    // 2. Prefetch existing questions for deterministic metrics
+    const [existingRows] = await connection.query(`
+      SELECT question_key, level_id, category, difficulty, question, options, correct_index, explanation 
+      FROM questions
+    `);
+    
+    const existingMap = new Map();
+    for (const row of existingRows) {
+      existingMap.set(row.question_key, row);
+    }
+
     let qInserted = 0;
     let qUpdated = 0;
+    let qSkipped = 0;
 
     for (const q of parsedData) {
       const optionsJson = JSON.stringify(q.options);
-      
-      const [result] = await connection.query(`
-        INSERT INTO questions 
-        (question_key, level_id, category, difficulty, question, options, correct_index, explanation, content_version, is_active)
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?, 1, true)
-        ON DUPLICATE KEY UPDATE 
-          level_id=VALUES(level_id), 
-          category=VALUES(category), 
-          difficulty=VALUES(difficulty), 
-          question=VALUES(question), 
-          options=VALUES(options), 
-          correct_index=VALUES(correct_index), 
-          explanation=VALUES(explanation)
-      `, [
-        q.question_key, q._originalLevel || 0, q.category, q.difficulty || '', q.question, optionsJson, q.correctIndex, q.explanation || ''
-      ]);
+      const diffStr = q.difficulty || '';
+      const expStr = q.explanation || '';
+      const lvlId = q._originalLevel || 0;
 
-      if (result.affectedRows === 1) qInserted++;
-      else if (result.affectedRows === 2) qUpdated++;
+      const existing = existingMap.get(q.question_key);
+
+      if (!existing) {
+        // Does not exist -> INSERT
+        await connection.query(`
+          INSERT INTO questions 
+          (question_key, level_id, category, difficulty, question, options, correct_index, explanation, content_version, is_active)
+          VALUES (?, ?, ?, ?, ?, ?, ?, ?, 1, true)
+        `, [
+          q.question_key, lvlId, q.category, diffStr, q.question, optionsJson, q.correctIndex, expStr
+        ]);
+        qInserted++;
+      } else {
+        // Exists -> Compare
+        // Need to parse existing options if it's a string, or stringify it to compare
+        let existingOptionsStr = typeof existing.options === 'string' ? existing.options : JSON.stringify(existing.options);
+        
+        const isIdentical = 
+          existing.level_id === lvlId &&
+          existing.category === q.category &&
+          existing.difficulty === diffStr &&
+          existing.question === q.question &&
+          existingOptionsStr === optionsJson &&
+          existing.correct_index === q.correctIndex &&
+          existing.explanation === expStr;
+
+        if (isIdentical) {
+          qSkipped++;
+        } else {
+          // Changed -> UPDATE
+          await connection.query(`
+            UPDATE questions 
+            SET level_id=?, category=?, difficulty=?, question=?, options=?, correct_index=?, explanation=?
+            WHERE question_key=?
+          `, [
+            lvlId, q.category, diffStr, q.question, optionsJson, q.correctIndex, expStr, q.question_key
+          ]);
+          qUpdated++;
+        }
+      }
     }
 
     await connection.commit();
-    console.log(`APPLY SUCCESS: Levels processed: ${levelsSet.size}. Questions inserted: ${qInserted}, updated: ${qUpdated}.`);
+    console.log(`APPLY SUCCESS: Levels processed: ${levelsSet.size}. Questions inserted: ${qInserted}, updated: ${qUpdated}, skipped: ${qSkipped}.`);
   } catch (err) {
     if (connection) await connection.rollback();
     console.error('FATAL: Database error during seed. Rolled back.', err);

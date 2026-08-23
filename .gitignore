@@ -6,12 +6,10 @@ index_original.html
 upgrade_patch.js
 patch.js
 
-*.sql
 backups/
 dumps/
-*.gz
-
-*.sql
-backups/
-dumps/
-*.gz
+*.dump
+*.sql.gz
+.env
+.env.*
+!.env.example
