@@ -7,6 +7,23 @@ CREATE TABLE IF NOT EXISTS schema_migrations (
   applied_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
+-- 1b. Base tables (Users and Histories)
+CREATE TABLE IF NOT EXISTS users (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  email VARCHAR(255) UNIQUE NOT NULL,
+  password VARCHAR(255) NOT NULL,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE IF NOT EXISTS histories (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  user_id INT NOT NULL,
+  question VARCHAR(255),
+  answer VARCHAR(255),
+  correct BOOLEAN,
+  FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+);
+
 -- 2. Quiz Attempts
 CREATE TABLE IF NOT EXISTS quiz_attempts (
   id INT AUTO_INCREMENT PRIMARY KEY,

@@ -22,29 +22,45 @@ async function runMigration(direction = 'up') {
       )
     `);
 
-    const file = direction === 'up' ? '01_p1_additive_schema.sql' : '01_p1_down.sql';
+    const migrationsDir = path.join(__dirname, '..', 'migrations');
+    const files = fs.readdirSync(migrationsDir).filter(f => f.endsWith('.sql')).sort();
     
-    // Check if applied
-    if (direction === 'up') {
-      const [rows] = await pool.query('SELECT version FROM schema_migrations WHERE version = ?', [file]);
-      if (rows.length > 0) {
-        console.log(`Migration ${file} already applied. Skipping.`);
-        return;
-      }
-    }
+    // In our setup, up scripts end with _schema.sql. E.g. 01_p1_additive_schema.sql, 02_p1_seed_schema.sql
+    const upFiles = files.filter(f => !f.includes('_down'));
+    const downFiles = files.filter(f => f.includes('_down')).reverse(); // highest to lowest
 
-    const filePath = path.join(__dirname, '..', 'migrations', file);
-    const sql = fs.readFileSync(filePath, 'utf8');
-    
-    console.log(`Running migration: ${file}...`);
-    await pool.query(sql);
-    
-    if (direction === 'up') {
-      await pool.query('INSERT INTO schema_migrations (version) VALUES (?)', [file]);
-      console.log(`Applied: ${file}`);
-    } else {
-      await pool.query('DELETE FROM schema_migrations WHERE version = ?', ['01_p1_additive_schema.sql']);
-      console.log(`Rolled back: 01_p1_additive_schema.sql`);
+    const targetFiles = direction === 'up' ? upFiles : downFiles;
+
+    for (const file of targetFiles) {
+      const versionId = direction === 'up' ? file : file.replace('_down.sql', '_schema.sql');
+
+      if (direction === 'up') {
+        const [rows] = await pool.query('SELECT version FROM schema_migrations WHERE version = ?', [versionId]);
+        if (rows.length > 0) {
+          console.log(`Migration ${versionId} already applied. Skipping.`);
+          continue;
+        }
+      } else {
+        const [rows] = await pool.query('SELECT version FROM schema_migrations WHERE version = ?', [versionId]);
+        if (rows.length === 0) {
+          console.log(`Migration ${versionId} not applied. Skipping down migration.`);
+          continue;
+        }
+      }
+
+      const filePath = path.join(migrationsDir, file);
+      const sql = fs.readFileSync(filePath, 'utf8');
+      
+      console.log(`Running migration: ${file}...`);
+      await pool.query(sql);
+      
+      if (direction === 'up') {
+        await pool.query('INSERT INTO schema_migrations (version) VALUES (?)', [versionId]);
+        console.log(`Applied: ${versionId}`);
+      } else {
+        await pool.query('DELETE FROM schema_migrations WHERE version = ?', [versionId]);
+        console.log(`Rolled back: ${versionId}`);
+      }
     }
 
     console.log('Migration completed successfully.');

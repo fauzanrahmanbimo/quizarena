@@ -10,13 +10,20 @@ CREATE TABLE IF NOT EXISTS levels (
   is_active BOOLEAN DEFAULT TRUE
 );
 
-ALTER TABLE questions
-  ADD COLUMN question_key VARCHAR(255) UNIQUE AFTER id,
-  ADD COLUMN level_id INT AFTER question_key,
-  ADD COLUMN material_link VARCHAR(255) NULL AFTER explanation,
-  ADD COLUMN content_version INT DEFAULT 1 AFTER material_link,
-  ADD COLUMN is_active BOOLEAN DEFAULT TRUE AFTER content_version,
-  ADD COLUMN updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP;
-
-ALTER TABLE questions
-  ADD CONSTRAINT fk_question_level FOREIGN KEY (level_id) REFERENCES levels(id) ON DELETE SET NULL;
+CREATE TABLE IF NOT EXISTS questions (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  question_key VARCHAR(255) UNIQUE,
+  level_id INT,
+  category VARCHAR(255) NOT NULL,
+  difficulty VARCHAR(50),
+  question TEXT NOT NULL,
+  options JSON NOT NULL,
+  correct_index INT NOT NULL,
+  explanation TEXT,
+  material_link VARCHAR(255) NULL,
+  content_version INT DEFAULT 1,
+  is_active BOOLEAN DEFAULT TRUE,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  CONSTRAINT fk_question_level FOREIGN KEY (level_id) REFERENCES levels(id) ON DELETE SET NULL
+);

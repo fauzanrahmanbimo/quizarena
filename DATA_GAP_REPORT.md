@@ -4,6 +4,8 @@ Sesuai dengan instruksi Tahap 4 Aturan 7: _"Jika bank soal server belum selaras 
 
 Saat akan mengimplementasikan endpoint sinkronisasi (`POST /api/progress/sync`), ditemukan blokir struktural berikut:
 
+## STATUS: RESOLVED
+
 ## Kondisi Saat Ini (As-Is)
 - **Frontend:** Memiliki 900 soal statis yang divalidasi dan dimuat dari `questions/default.json`. Setiap opsi jawaban (A, B, C, D) dan jawaban benar terdefinisi penuh pada _client_.
 - **Backend (MySQL):** Tabel `questions` dan `levels` dalam kondisi kosong. Database server belum mengetahui apa pun mengenai _level_ yang valid maupun daftar 900 soal tersebut beserta jawaban benarnya.

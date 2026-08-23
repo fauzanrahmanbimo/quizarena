@@ -9,15 +9,23 @@ ID dari setiap soal di `questions/default.json` (seperti `1`, `2`, atau `default
 ## Cara Migrasi / Seed
 1. **Dry-Run (Simulasi):**
    ```bash
-   node backend/scripts/seed-question-bank.js
+   node backend/scripts/seed-question-bank.js --dry-run
    ```
-   Skrip ini memvalidasi kelengkapan bidang (prompt, opsi, jawaban benar) untuk keseluruhan 900 soal tanpa menyentuh database.
-
-2. **Apply (Tulis ke Database):**
+2. **Apply to Database:**
    ```bash
    node backend/scripts/seed-question-bank.js --apply
    ```
-   Akan melakukan _upsert_ level dan _upsert_ soal secara transaksional.
+
+## Production Execution Output (2026-08-23)
+**Run 1 (Initial Provisioning):**
+`APPLY SUCCESS: Levels processed: 30. Questions inserted: 900, updated: 0.`
+
+**Run 2 (Idempotency Check):**
+`APPLY SUCCESS: Levels processed: 30. Questions inserted: 0, updated: 900.` (Idempotent update verified)
+
+**Status Database Nyata:**
+- `questions` count: 900
+- `levels` count: 30
 
 3. **Verifikasi Kesejajaran (Parity Check):**
    ```bash
