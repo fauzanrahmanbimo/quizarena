@@ -38,6 +38,14 @@ async function runDump() {
   const timestamp = new Date().toISOString().replace(/[:.]/g, '-');
   const backupDir = path.join(os.homedir(), 'Downloads', 'quizarena-db-backups');
   
+  // Guard: Reject if target path is inside the repository
+  const repoDir = path.resolve(__dirname, '../../');
+  if (backupDir.startsWith(repoDir)) {
+    console.error('FATAL: Security Guard - Cannot store backup inside the repository directory.');
+    process.exit(1);
+    return;
+  }
+  
   if (!fs.existsSync(backupDir)) {
     fs.mkdirSync(backupDir, { recursive: true });
   }

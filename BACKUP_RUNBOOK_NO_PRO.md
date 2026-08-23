@@ -1,6 +1,9 @@
 # Logical Database Backup Runbook (No-Pro / No Snapshot)
 
-Runbook ini diperuntukkan bagi Operator (Local PowerShell) untuk membuat salinan data (*logical backup*) aman pada lingkungan produksi Railway secara terotomasi dan privat. Tanpa membocorkan rahasia.
+**PERINGATAN (LAST RESORT):** 
+Runbook ini menggunakan pendekatan *Public TCP Proxy*. Metode ini adalah **PILIHAN TERAKHIR (LAST RESORT)** menurut `BACKUP_STRATEGY.md`. Anda (Operator) harus memberikan **persetujuan eksplisit** sebelum mengeksekusi ini. TCP Proxy wajib segera dimatikan dari Railway UI setelah prosedur selesai. Jangan pernah mengetik atau *paste* URL database ke kolom chat.
+
+Runbook ini diperuntukkan bagi Operator (Local PowerShell) untuk membuat salinan data (*logical backup*) pada lingkungan produksi.
 
 ## 1. Verifikasi MySQL Client
 Pastikan mesin Windows Anda memiliki `mysqldump` terinstal:
