@@ -9,7 +9,7 @@ Transformasi akan mengubah alur QuizArena dari game kuis murni menjadi platform 
 Fokus pada alur belajar inti, pemisahan layar, dan data dasar untuk edukasi.
 
 1. **A. Onboarding & Placement Test (Diagnostic)**
-   - **Tugas:** Menambahkan layar onboarding baru bagi pengguna yang belum memiliki data (`localStorage` kosong). Pengguna disodorkan 10 soal acak mewakili level 1-30. 
+   - **Tugas:** Menambahkan layar onboarding baru bagi pengguna yang belum memiliki data (`localStorage` kosong). Pengguna disodorkan 15 soal acak mewakili level 1-30. 
    - **Output:** Skor memetakan rekomendasi awal (misal: "Kamu direkomendasikan mulai dari Level 10").
    - **File yang berubah:** `index.html` (UI Onboarding, fungsi `startDiagnostic()`, `finishDiagnostic()`).
    
