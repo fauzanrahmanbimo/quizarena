@@ -892,6 +892,40 @@ html.dark .video-t{color:#EAF3EF;}
   };
 
   let sessionStartTime = 0;
+  let currentAttemptId = "";
+  let questionStartTime = 0;
+  let attemptsLog = [];
+  
+  // Page visibility logic
+  document.addEventListener("visibilitychange", () => {
+    if (document.hidden) {
+      if (!noTimer() && timer) {
+        clearInterval(timer);
+        timer = null;
+        const msg = document.createElement("div");
+        msg.id = "pause-overlay";
+        msg.style.position = "fixed";
+        msg.style.top = "0"; msg.style.left = "0"; msg.style.width = "100%"; msg.style.height = "100%";
+        msg.style.background = "rgba(0,0,0,0.8)"; msg.style.color = "white"; msg.style.zIndex = "9999";
+        msg.style.display = "flex"; msg.style.flexDirection = "column"; msg.style.justifyContent = "center"; msg.style.alignItems = "center";
+        msg.innerHTML = "<h2>Timer dijeda karena Anda berpindah tab</h2><button class='btn btn--primary' style='margin-top:20px;' onclick='resumeFromPause()'>Lanjutkan</button>";
+        document.body.appendChild(msg);
+      }
+    }
+  });
+  
+  window.resumeFromPause = function() {
+      const msg = document.getElementById("pause-overlay");
+      if (msg) msg.remove();
+      if (!noTimer() && !answered) {
+          timer = setInterval(() => { 
+              timeLeft--; 
+              updateTimerUI(); 
+              if (timeLeft <= 0) { clearInterval(timer); if (!answered) lockOut(); } 
+          }, 1000);
+      }
+  };
+
   let allQuestions = [];
   updateAuthUI();
   let metaInfo = { title: "QuizArena", description: "", timePerQuestion: 20, levels: [], shuffle: true };
@@ -1669,6 +1703,19 @@ html.dark .video-t{color:#EAF3EF;}
       }
 
     history.push({ questionId: q.id, category: q.category, difficulty: q.difficulty, userAnswerIndex: chosenIdx, correctIndex: q.answer, q: q.q, you, answer: correctText, explain: q.explain, correct: isCorrect, player: player.name });
+    
+    // P0-C Requirement
+    attemptsLog.push({
+        attemptId: currentAttemptId,
+        levelId: currentLevel !== null ? LEVELS[currentLevel].level : (diagnosticMode ? 'diagnostic' : 'practice'),
+        questionId: q.id,
+        selectedOptionId: typeof chosenIdx === 'number' && chosenIdx >= 0 && q.options ? q.options[chosenIdx] : null,
+        isCorrect: isCorrect,
+        timeSpent: Date.now() - questionStartTime,
+        startedAt: questionStartTime,
+        completedAt: Date.now()
+    });
+
     $("btn-next").textContent = (idx + 1 >= questions.length) ? "Lihat Hasil \uD83C\uDF89" : "Lanjut \u2192";
     $("btn-next").hidden = false;
     $("btn-next").focus();
