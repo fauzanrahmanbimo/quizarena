@@ -49,3 +49,7 @@ Server akan berjalan pada `http://localhost:5000`.
   - Body: `{ "mode": "level", "totalQuestions": 10, "correctCount": 8, "wrongCount": 2, "skippedCount": 0, "accuracy": 80, "durationSeconds": 120, "questionDetails": [...] }`
 - `GET /api/history`
 - `GET /api/history/stats`
+\n## Database & Migrations\n\n### Menjalankan Migrasi Skema\n\ash\nnode scripts/migrate.js up\n\\
+\n### Menjalankan Seed Bank Soal (Dry-Run)\n\ash\nnode scripts/seed-question-bank.js\n\\
+\n### Menulis Seed ke Database\n\ash\nnode scripts/seed-question-bank.js --apply\n\\
+\n### Verifikasi Kesejajaran Bank Soal (Parity)\n\ash\nnode scripts/verify-question-bank-parity.js\n\\
