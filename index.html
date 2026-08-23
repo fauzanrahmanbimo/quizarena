@@ -1224,7 +1224,17 @@ html.dark .video-t{color:#EAF3EF;}
     { max: 89, level: 10 },
     { max: 100, level: 15 }
   ];
+  
   let diagnosticMode = false;
+  function getRecommendedLevel(acc) {
+     for (let i = 0; i < DIAGNOSTIC_THRESHOLDS.length; i++) {
+        if (acc <= DIAGNOSTIC_THRESHOLDS[i].max) {
+           return DIAGNOSTIC_THRESHOLDS[i].level;
+        }
+     }
+     return 1;
+  }
+
   
   function handleStart() {
     if (!localStorage.getItem(APP + "_onboarded")) {
@@ -1734,13 +1744,7 @@ html.dark .video-t{color:#EAF3EF;}
        const p = players[0];
        const acc = Math.round((p.correct / questions.length) * 100);
        
-       let rec = 1;
-       for (let i = 0; i < DIAGNOSTIC_THRESHOLDS.length; i++) {
-          if (acc <= DIAGNOSTIC_THRESHOLDS[i].max) {
-             rec = DIAGNOSTIC_THRESHOLDS[i].level;
-             break;
-          }
-       }
+       let rec = getRecommendedLevel(acc);
        
        let weak = {};
        history.forEach(h => {
