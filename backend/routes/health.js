@@ -8,7 +8,7 @@ router.get('/', async (req, res) => {
   try {
     const queryPromise = db.query('SELECT 1 AS ok');
     const timeoutPromise = new Promise((_, reject) => {
-      timeoutId = setTimeout(() => reject(new Error('Database query timeout')), 5000);
+      timeoutId = setTimeout(() => reject(new Error('Database query timeout')), 3000);
     });
     
     await Promise.race([queryPromise, timeoutPromise]);
@@ -20,7 +20,15 @@ router.get('/', async (req, res) => {
     });
   } catch (err) {
     if (timeoutId) clearTimeout(timeoutId);
-    console.error('[health] database check failed:', err.message);
+    
+    let internalErrorClass = 'database unavailable';
+    if (err.message === 'DATABASE_URL missing') internalErrorClass = 'configuration missing';
+    else if (err.message === 'invalid connection format') internalErrorClass = 'invalid connection format';
+    else if (err.code === 'ER_ACCESS_DENIED_ERROR' || err.code === 'ER_DBACCESS_DENIED_ERROR') internalErrorClass = 'authentication failed';
+    else if (err.code === 'ECONNREFUSED' || err.code === 'ENOTFOUND' || err.code === 'ETIMEDOUT') internalErrorClass = 'network unreachable';
+
+    // Secure error logging: ONLY log the safe category
+    console.error(`[health] database check failed: ${internalErrorClass}`);
     
     res.status(503).json({
       status: 'unavailable',

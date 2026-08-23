@@ -25,15 +25,14 @@ describe('GET /health', () => {
   });
 
   test('returns 503 Unavailable and safe JSON when database query fails', async () => {
-    db.query.mockRejectedValueOnce(new Error('ECONNREFUSED 127.0.0.1:3306'));
+    db.query.mockRejectedValueOnce(Object.assign(new Error('connection failed'), { code: 'ECONNREFUSED' }));
 
     const consoleSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
 
     const res = await request(app).get('/health');
     
     expect(consoleSpy).toHaveBeenCalledWith(
-      '[health] database check failed:', 
-      'ECONNREFUSED 127.0.0.1:3306'
+      expect.stringContaining('[health] database check failed: network unreachable')
     );
     
     expect(res.statusCode).toBe(503);
@@ -69,11 +68,9 @@ describe('GET /health', () => {
     });
     
     expect(consoleSpy).toHaveBeenCalledWith(
-      '[health] database check failed:', 
-      'Database query timeout'
+      expect.stringContaining('[health] database check failed: database unavailable')
     );
     
-    // Clear the mock timeout to prevent open handles
     if (mockTimeoutId) clearTimeout(mockTimeoutId);
     consoleSpy.mockRestore();
   }, 10000);
