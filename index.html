@@ -667,6 +667,7 @@ html.dark .video-t{color:#EAF3EF;}
             </select>
          </div>
          <button class="btn btn--primary" id="btn-start-custom" style="width: 100%; margin-top: 16px;">Mulai Custom Quiz</button>
+         <button class="btn btn--ghost" id="btn-re-diagnostic" style="width: 100%; margin-top: 8px;">Ulangi Placement Test</button>
       </div>
     </section>
 
@@ -983,7 +984,7 @@ html.dark .video-t{color:#EAF3EF;}
     const KEYS = ["A", "B", "C", "D"];
   const COLORS = ["var(--a0)", "var(--a1)", "var(--a2)", "var(--a3)"];
   const APP = "quizarena_" + slug(CONFIG.title);
-  const PASS = 60;
+  const PASS = 70;
 
   const ACHIEVEMENTS = [
     { id: "first", icon: "\uD83C\uDF1F", name: "Langkah Pertama", desc: "Selesaikan satu kuis", test: (c) => c.answered > 0 },
@@ -1209,7 +1210,74 @@ html.dark .video-t{color:#EAF3EF;}
   $("btn-theme").addEventListener("click", toggleTheme);
   $("btn-sound").addEventListener("click", toggleSound);
   $("btn-autoread").addEventListener("click", toggleAutoRead);
-  $("btn-start").addEventListener("click", goToLevels);
+  
+  const DIAGNOSTIC_THRESHOLDS = [
+    { max: 39, level: 1 },
+    { max: 59, level: 3 },
+    { max: 74, level: 6 },
+    { max: 89, level: 10 },
+    { max: 100, level: 15 }
+  ];
+  let diagnosticMode = false;
+  
+  function handleStart() {
+    if (!localStorage.getItem(APP + "_onboarded")) {
+       startDiagnostic();
+    } else {
+       goToLevels();
+    }
+  }
+  
+  function startDiagnostic() {
+      practice = null;
+      diagnosticMode = true;
+      currentLevel = null;
+      
+      let pool = [];
+      LEVELS.forEach(lv => {
+          if (lv.questions) pool = pool.concat(withIds(lv.questions, lv.level));
+      });
+      pool = shuffle(pool);
+      
+      let diagQs = [];
+      let seenTopics = new Set();
+      
+      for (let i = 0; i < pool.length; i++) {
+         let q = pool[i];
+         let topic = q.category || 'general';
+         if (!seenTopics.has(topic)) {
+            diagQs.push(q);
+            seenTopics.add(topic);
+         }
+         if (diagQs.length === 15) break;
+      }
+      
+      if (diagQs.length < 15) {
+         for (let i = 0; i < pool.length; i++) {
+            let q = pool[i];
+            if (!diagQs.includes(q)) diagQs.push(q);
+            if (diagQs.length === 15) break;
+         }
+      }
+      
+      if (diagQs.length < 15) {
+         alert("Data soal belum cukup untuk diagnostic test (butuh 15). Silakan tambahkan bank soal.");
+         return;
+      }
+      
+      questions = shuffleSession(diagQs);
+      beginSession("Diagnostic Test");
+  }
+  
+  $("btn-start").addEventListener("click", handleStart);
+  const btnReDiag = $("btn-re-diagnostic");
+  if (btnReDiag) {
+      btnReDiag.addEventListener("click", () => {
+          $("custom-setup").hidden = true;
+          startDiagnostic();
+      });
+  }
+
   $("player-name").addEventListener("keydown", (e) => { if (e.key === "Enter") goToLevels(); });
   $("btn-board").addEventListener("click", openBoard);
   $("btn-back-home").addEventListener("click", () => show("home"));
@@ -1464,13 +1532,19 @@ html.dark .video-t{color:#EAF3EF;}
     else if (currentLevel != null) startLevel(currentLevel);
   }
 
-  function noTimer() { return practice !== null; }
+  function noTimer() { return practice !== null || diagnosticMode === true; }
   function cp() { return vs ? (idx % players.length) : 0; }
 
   function renderQuestion() {
     answered = false;
     const q = questions[idx];
-    $("progress-label").innerHTML = `Soal <b>${idx + 1}</b> / ${questions.length}`;
+    
+      if (diagnosticMode) {
+          $("progress-label").innerHTML = `Mode Diagnostik — Soal <b>${idx + 1}</b> / ${questions.length} (Tanpa Waktu)`;
+      } else {
+          $("progress-label").innerHTML = `Soal <b>${idx + 1}</b> / ${questions.length}`;
+      }
+
     var pct = Math.round((idx / questions.length) * 100); $("progress-fill").style.width = pct + "%"; $("progress-fill").setAttribute("aria-valuenow", pct);
     $("question-tag").textContent = q.category || (qmode === "type" ? "Ketik Jawaban" : "Pilihan Ganda");
     $("question-text").textContent = q.q;
@@ -1648,7 +1722,93 @@ html.dark .video-t{color:#EAF3EF;}
       }
     if (p.maxStreak > getNum("_bestStreak")) localStorage.setItem(APP + "_bestStreak", String(p.maxStreak));
 
+    
+    if (diagnosticMode) {
+       diagnosticMode = false;
+       const p = players[0];
+       const acc = Math.round((p.correct / questions.length) * 100);
+       
+       let rec = 1;
+       for (let i = 0; i < DIAGNOSTIC_THRESHOLDS.length; i++) {
+          if (acc <= DIAGNOSTIC_THRESHOLDS[i].max) {
+             rec = DIAGNOSTIC_THRESHOLDS[i].level;
+             break;
+          }
+       }
+       
+       let weak = {};
+       history.forEach(h => {
+          if (!h.correct && h.q.category) {
+             weak[h.q.category] = (weak[h.q.category] || 0) + 1;
+          }
+       });
+       let weakTopics = Object.keys(weak).sort((a, b) => weak[b] - weak[a]).slice(0, 3);
+       
+       const diagResult = {
+           completedAt: Date.now(),
+           totalQuestions: questions.length,
+           correctCount: p.correct,
+           accuracy: acc,
+           topicBreakdown: weak,
+           recommendedLevel: rec,
+           weakTopics: weakTopics,
+           questionIds: questions.map(q => q.id),
+           diagnosticVersion: 1
+       };
+       localStorage.setItem(APP + "_diagnostic", JSON.stringify(diagResult));
+       localStorage.setItem(APP + "_onboarded", "1");
+       
+       $("result-emoji").textContent = "\uD83C\uDF93";
+       $("result-stars").innerHTML = "";
+       $("result-title").textContent = "Diagnostic Selesai";
+       
+       let subHTML = `<div style="margin-bottom:12px;font-size:16px;">
+           Akurasi Kamu: <b>${acc}%</b> (${p.correct} benar dari ${questions.length}).<br/>
+           Rekomendasi mulai dari: <b style="color:var(--primary); font-size:18px;">Level ${rec}</b>.
+       </div>`;
+       
+       if (weakTopics.length > 0) {
+           subHTML += `<div style="font-size:14px;color:var(--text-muted);margin-bottom:12px;">Topik prioritas yang perlu diperbaiki:<br/>• ${weakTopics.join('<br/>• ')}</div>`;
+       }
+       $("result-sub").innerHTML = subHTML;
+       
+       // Hide normal action buttons safely
+       const rActions = document.querySelectorAll('.result-actions');
+       rActions.forEach(el => el.hidden = true);
+       
+       // Append diagnostic CTA
+       let diagCTA = $("diag-cta");
+       if (!diagCTA) {
+           diagCTA = document.createElement("div");
+           diagCTA.id = "diag-cta";
+           diagCTA.style.marginTop = "16px";
+           diagCTA.className = "result-actions";
+           $("result-sub").parentNode.insertBefore(diagCTA, $("result-sub").nextSibling);
+       }
+       diagCTA.hidden = false;
+       diagCTA.innerHTML = `
+           <button class="btn btn--primary" style="width:100%;margin-bottom:10px;" id="btn-diag-start">Mulai dari Level ${rec} →</button>
+           <button class="btn btn--ghost" style="width:100%;" id="btn-diag-dashboard">Lihat Dashboard</button>
+       `;
+       
+       $("btn-diag-start").addEventListener("click", () => {
+           diagCTA.hidden = true;
+           rActions.forEach(el => el.hidden = false);
+           goToLevels(); // prepare levels
+           startLevel(rec - 1);
+       });
+       
+       $("btn-diag-dashboard").addEventListener("click", () => {
+           diagCTA.hidden = true;
+           rActions.forEach(el => el.hidden = false);
+           goToLevels();
+       });
+       
+       afterFinish();
+       return;
+    }
     if (practice) {
+
       $("result-emoji").textContent = "\uD83C\uDF93";
       $("result-stars").innerHTML = "";
       $("result-title").textContent = practice === "free" ? "Latihan selesai!" : "Sesi ulang selesai!";
