@@ -3,6 +3,7 @@ const cors = require('cors');
 const cookieParser = require('cookie-parser');
 const rateLimit = require('express-rate-limit');
 
+const healthRoute = require('./routes/health');
 const authRoutes = require('./routes/auth');
 const questionRoutes = require('./routes/questions');
 const historyRoutes = require('./routes/history');
@@ -38,6 +39,8 @@ const globalLimiter = rateLimit({
   legacyHeaders: false,
 });
 // Apply global limiter to API routes but we can apply specific ones later
+app.use('/health', healthRoute);
+
 app.use('/api/', globalLimiter);
 
 app.use('/api/auth', authRoutes);
