@@ -63,7 +63,7 @@
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
-html { scroll-behavior: smooth; max-width: 100vw; overflow-x: hidden; } html, body { height: 100%; max-width: 100vw; overflow-x: hidden; }
+html { scroll-behavior: smooth; } html, body { height: 100%; }
 
 body {
   font-family: var(--font-body);
@@ -89,7 +89,7 @@ body {
 .topbar {
   width: 100%; max-width: 940px; margin: 0 auto;
   padding: 22px 20px 6px;
-  display: flex; align-items: center; justify-content: space-between; gap: 16px;
+  display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap;
 }
 .logo { font-family: var(--font-head); font-weight: 800; font-size: 28px; letter-spacing: -.5px; white-space: nowrap; }
 .logo .q { color: var(--pink); } .logo .u { color: var(--sky); }
@@ -116,7 +116,7 @@ body {
 .screen.is-active { display: block; }
 @keyframes fadeUp { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
 
-.card { background: var(--surface); border-radius: var(--radius-lg); box-shadow: var(--shadow-lg); padding: 32px 28px; width: 100%; max-width: 480px; margin: 0 auto; border: 1px solid var(--border); }
+.card { background: var(--surface); border-radius: var(--radius-lg); box-shadow: var(--shadow-lg); padding: 32px 28px; width: 100%; max-width: 480px; min-width: 0; margin: 0 auto; border: 1px solid var(--border); overflow: hidden; }
 
 /* ---------- Home ---------- */
 .card--hero {
@@ -569,7 +569,7 @@ html.dark .video-t{color:#EAF3EF;}
     <div class="top-actions" style="display:flex; align-items:center; gap:8px;">
         <button class="icon-btn" id="btn-sound" title="Suara" aria-label="Suara">🔊</button>
         <button class="icon-btn" id="btn-theme" title="Mode gelap" aria-label="Mode gelap">🌓</button>
-        <div id="auth-container" style="display:flex; align-items:center; gap:8px; margin-left:12px; padding-left:12px; border-left:1px solid rgba(0,0,0,0.1);">
+        <div id="auth-container" style="display:flex; align-items:center; gap:8px; margin-left:12px; padding-left:12px; border-left:1px solid rgba(0,0,0,0.1); flex-wrap: wrap; justify-content: center;">
            <!-- Auth UI will be injected here -->
         </div>
       </div>
@@ -611,7 +611,8 @@ html.dark .video-t{color:#EAF3EF;}
           <li><strong id="meta-time">20s</strong> / soal</li>
         </ul>
         <div class="home-links">
-          <button class="btn-text" id="btn-board">🏆 Papan Skor · Pencapaian · Statistik</button>
+          <button class="btn-text" id="btn-dashboard" style="margin-bottom:8px; font-weight:bold; color:var(--primary);">📊 Dashboard Progres</button>
+          <button class="btn-text" id="btn-board">🏆 Papan Skor Global</button>
         </div>
       </div>
     </section>
@@ -776,7 +777,7 @@ html.dark .video-t{color:#EAF3EF;}
            <ul id="weak-topics-list" style="margin:0; padding-left:18px; font-size:14px; color:#92400e;"></ul>
         </div>
 
-        <div class="result-actions" id="dynamic-ctas" style="margin-top:20px; flex-direction:column; gap:8px;">
+        <div class="result-actions" id="dynamic-ctas" style="margin-top:20px; flex-direction:row; flex-wrap:wrap; gap:8px;">
            <!-- JS will inject dynamic CTAs here -->
         </div>
         
@@ -793,6 +794,57 @@ html.dark .video-t{color:#EAF3EF;}
          </div>
          <div id="review-content"></div>
       </div>
+      </section>
+
+      
+      <section class="screen screen--dashboard" id="screen-dashboard" hidden>
+        <div class="card card--dashboard">
+          <button class="btn-text" id="btn-dashboard-back" style="position:static;margin-bottom:6px;">← Kembali</button>
+          
+          <div class="dash-header" style="text-align:center; margin-bottom:20px;">
+             <h2 class="board-title" style="margin-bottom:8px;">📊 Dashboard Belajar</h2>
+             <div id="dash-header-status" style="font-size:14px; color:var(--text-dim); margin-bottom:12px;"></div>
+             <div id="dash-header-cta"></div>
+          </div>
+          
+          <div id="dash-stats-grid" class="stat-grid" style="margin-bottom: 24px;">
+             <div class="stat"><span class="stat__num" id="dash-stat-attempts">0</span><span class="stat__label">Total Latihan</span></div>
+             <div class="stat"><span class="stat__num" id="dash-stat-time">0m</span><span class="stat__label">Waktu Belajar</span></div>
+             <div class="stat"><span class="stat__num" id="dash-stat-correct">0</span><span class="stat__label">Jawaban Benar</span></div>
+             <div class="stat"><span class="stat__num" id="dash-stat-streak">0</span><span class="stat__label">Streak (Hari)</span></div>
+             <div class="stat"><span class="stat__num" id="dash-stat-acc-quiz">-</span><span class="stat__label">Akurasi Kuis</span></div>
+             <div class="stat"><span class="stat__num" id="dash-stat-acc-prac">-</span><span class="stat__label">Akurasi Latihan</span></div>
+          </div>
+          
+          <div style="background:var(--surface); border:1px solid var(--border); padding:16px; border-radius:12px; margin-bottom:24px;">
+             <h3 style="font-size:16px; margin-bottom:12px;">Peta Pembelajaran</h3>
+             <div style="display:flex; justify-content:space-between; text-align:center; font-size:12px;">
+                 <div><div style="font-size:20px; font-weight:bold; color:var(--primary);" id="dash-path-completed">0</div>Selesai</div>
+                 <div><div style="font-size:20px; font-weight:bold; color:#f59e0b;" id="dash-path-progress">0</div>Proses</div>
+                 <div><div style="font-size:20px; font-weight:bold; color:#6b7280;" id="dash-path-locked">0</div>Terkunci</div>
+             </div>
+             <button class="btn btn--soft" style="width:100%; margin-top:16px;" onclick="goToLevels()">Lihat Semua Level</button>
+          </div>
+          
+          <div style="display:flex; gap:12px; margin-bottom:24px; flex-wrap:wrap;">
+             <div style="flex:1; min-width:140px; background:rgba(16, 185, 129, 0.1); border:1px solid #10B981; padding:12px; border-radius:12px;">
+                <h3 style="font-size:14px; color:#065f46; margin-bottom:8px;">Topik Kuat</h3>
+                <ul id="dash-topic-strong" style="font-size:13px; color:#064e3b; padding-left:16px; margin:0;"></ul>
+             </div>
+             <div style="flex:1; min-width:140px; background:rgba(239, 68, 68, 0.1); border:1px solid #ef4444; padding:12px; border-radius:12px;">
+                <h3 style="font-size:14px; color:#991b1b; margin-bottom:8px;">Perlu Diulang</h3>
+                <ul id="dash-topic-weak" style="font-size:13px; color:#7f1d1d; padding-left:16px; margin:0;"></ul>
+             </div>
+          </div>
+          
+          
+          <h3 style="font-size:16px; margin-bottom:12px;">Grafik Performa (7 Terakhir)</h3>
+          <div id="dash-chart" style="margin-bottom:24px; min-height:120px; background:var(--surface); border:1px solid var(--border); border-radius:12px; padding:16px; display:flex; align-items:flex-end; gap:8px; overflow-x:auto;"></div>
+          <p id="dash-chart-alt" class="sr-only" style="position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0,0,0,0);"></p>
+          
+          <h3 style="font-size:16px; margin-bottom:12px;">Riwayat Terakhir</h3>
+          <div id="dash-history-list" style="display:flex; flex-direction:column; gap:8px;"></div>
+        </div>
       </section>
 
       <!-- BOARD -->
@@ -836,6 +888,7 @@ html.dark .video-t{color:#EAF3EF;}
   <footer class="foot">Dibuat dengan ⚡ QuizArena · Deploy di Vercel</footer>
 
   
+  <script src="scripts/dashboard-logic.js"></script>
   <script>
 /* ================= QuizArena — game logic v4 =================
    v3: level terkunci, bintang, progress, suara, confetti, belajar, ketik, VS,
@@ -1067,6 +1120,7 @@ html.dark .video-t{color:#EAF3EF;}
 
   const $ = (id) => document.getElementById(id);
   const screens = {
+    dashboard: $("screen-dashboard"),
     home: $("screen-home"), levels: $("screen-levels"), learn: $("screen-learn"),
     quiz: $("screen-quiz"), result: $("screen-result"), board: $("screen-board"), cert: $("screen-cert"),
   };
@@ -1363,6 +1417,8 @@ function getRecommendedLevel(acc) {
 
   $("player-name").addEventListener("keydown", (e) => { if (e.key === "Enter") goToLevels(); });
   $("btn-board").addEventListener("click", openBoard);
+  $("btn-dashboard").addEventListener("click", () => { renderDashboard(); switchScreen(screens.dashboard); });
+  $("btn-dashboard-back").addEventListener("click", () => switchScreen(screens.home));
   $("btn-back-home").addEventListener("click", () => show("home"));
   $("btn-board-back").addEventListener("click", goToLevels);
   $("btn-learn-back").addEventListener("click", goToLevels);
@@ -2027,6 +2083,132 @@ function getRecommendedLevel(acc) {
   // ---------- Board / Stats / Achievements / Insights / Search ----------
   function openBoard() { renderBoard(); renderStats(); renderAchievements(); renderInsights(); renderCertBtn(); $("search-input").value = ""; renderSearch(""); show("board"); }
 
+  
+  function renderDashboard() {
+     const rawLogs = localStorage.getItem(APP + "_fullAttemptsLog");
+     const logs = window.sanitizeAttempts ? window.sanitizeAttempts(rawLogs) : [];
+     
+     const stats = window.getDashboardStats(logs);
+     const recAction = window.getRecommendedAction(logs);
+     const topics = window.getTopicPerformance(logs);
+     const path = window.getLearningPathSummary(logs, LEVELS);
+     
+     // 1. Header & CTA
+     let statusText = "Level Aktif: 1";
+     if (path.recommendedLevelId !== null) statusText = "Level Rekomendasi: " + path.recommendedLevelId;
+     if (path.completed > 0) statusText = "Level Tertinggi Lulus: " + path.completed;
+     $("dash-header-status").textContent = statusText;
+     
+     const ctaWrap = $("dash-header-cta");
+     ctaWrap.innerHTML = ""; // innerHTML is safe here as it's static structure
+     if (recAction.action === 'TAKE_DIAGNOSTIC') {
+        const btn = document.createElement("button"); btn.className="btn btn--primary"; btn.textContent = recAction.title;
+        btn.onclick = () => { $("custom-setup").hidden = true; startDiagnostic(); };
+        ctaWrap.appendChild(btn);
+     } else if (recAction.action === 'START_RECOMMENDED' || recAction.action === 'NEXT_LEVEL') {
+        const btn = document.createElement("button"); btn.className="btn btn--primary"; btn.textContent = recAction.title;
+        btn.onclick = () => { startLevel(path.completed > 0 ? path.completed : (path.recommendedLevelIndex >= 0 ? path.recommendedLevelIndex : 0)); };
+        ctaWrap.appendChild(btn);
+     } else {
+        const btn = document.createElement("button"); btn.className="btn btn--primary"; btn.textContent = recAction.title || "Lanjutkan Belajar";
+        btn.onclick = () => goToLevels();
+        ctaWrap.appendChild(btn);
+     }
+     
+     // 2. Stats
+     $("dash-stat-attempts").textContent = stats.totalAttempts;
+     $("dash-stat-time").textContent = Math.round(stats.totalTimeSeconds / 60) + "m";
+     $("dash-stat-correct").textContent = stats.totalCorrect;
+     $("dash-stat-streak").textContent = getNum("_streak");
+     $("dash-stat-acc-quiz").textContent = stats.avgTimedAcc !== null ? stats.avgTimedAcc + "%" : "-";
+     $("dash-stat-acc-prac").textContent = stats.avgPracticeAcc !== null ? stats.avgPracticeAcc + "%" : "-";
+     
+     // 3. Path
+     $("dash-path-completed").textContent = path.completed;
+     $("dash-path-progress").textContent = path.inProgress;
+     $("dash-path-locked").textContent = path.locked;
+     
+     // 4. Topics
+     $("dash-topic-strong").innerHTML = ""; $("dash-topic-weak").innerHTML = "";
+     if (!topics.hasEnoughData) {
+         $("dash-topic-strong").textContent = "Belum cukup data.";
+         $("dash-topic-weak").textContent = "Belum cukup data.";
+     } else {
+         if(topics.strong.length===0) $("dash-topic-strong").textContent = "-";
+         else topics.strong.forEach(t => { const li = document.createElement("li"); li.textContent = t.topic + " (" + t.accuracy + "%)"; $("dash-topic-strong").appendChild(li); });
+         if(topics.weak.length===0) $("dash-topic-weak").textContent = "-";
+         else topics.weak.forEach(t => { const li = document.createElement("li"); li.textContent = t.topic + " (" + t.accuracy + "%)"; $("dash-topic-weak").appendChild(li); });
+     }
+     
+     // 5. Chart
+     const chartData = window.getChartData(logs);
+     const chartBox = $("dash-chart");
+     const chartAlt = $("dash-chart-alt");
+     chartBox.innerHTML = "";
+     if (chartData.length < 2) {
+         chartBox.style.alignItems = "center";
+         chartBox.style.justifyContent = "center";
+         chartBox.textContent = "Belum cukup data. Mainkan minimal 2 sesi untuk melihat grafik.";
+         chartAlt.textContent = "Grafik performa kosong karena belum cukup data.";
+     } else {
+         chartBox.style.alignItems = "flex-end";
+         chartBox.style.justifyContent = "flex-start";
+         let altText = "Grafik 7 sesi terakhir: ";
+         chartData.forEach((d, i) => {
+             const barWrap = document.createElement("div");
+             barWrap.style = "display:flex; flex-direction:column; align-items:center; flex:1; min-width:30px;";
+             
+             const bar = document.createElement("div");
+             bar.style = "width:100%; max-width:40px; background:var(--primary); border-radius:4px 4px 0 0; transition:height 0.3s;";
+             bar.style.height = Math.max(5, d.accuracy) + "%"; // min 5% for visibility
+             
+             const label = document.createElement("div");
+             label.style = "font-size:10px; margin-top:4px; color:var(--text-dim); text-align:center;";
+             label.textContent = d.accuracy + "%";
+             
+             barWrap.appendChild(bar);
+             barWrap.appendChild(label);
+             chartBox.appendChild(barWrap);
+             altText += "Sesi " + (i+1) + " akurasi " + d.accuracy + "%. ";
+         });
+         chartAlt.textContent = altText;
+     }
+
+     // 6. History
+     const recent = window.getRecentAttempts(logs, 5);
+     const histBox = $("dash-history-list");
+     histBox.innerHTML = "";
+     if (recent.length === 0) {
+        histBox.textContent = "Belum ada riwayat sesi.";
+     } else {
+        recent.forEach(r => {
+           const div = document.createElement("div");
+           div.style = "background:var(--surface); border:1px solid var(--border); padding:10px 12px; border-radius:8px; display:flex; justify-content:space-between; align-items:center;";
+           const typeStr = r.attemptType === 'diagnostic' ? "Diagnostic Test" : (r.attemptType === 'timed_quiz' ? "Level " + r.levelId : "Latihan Bebas");
+           
+           const d = new Date(r.completedAt);
+           const dStr = d.toLocaleDateString() + " " + d.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+           
+           const left = document.createElement("div");
+           const p1 = document.createElement("div"); p1.style="font-weight:bold; font-size:14px;"; p1.textContent = typeStr;
+           const p2 = document.createElement("div"); p2.style="font-size:12px; color:var(--text-dim);"; p2.textContent = dStr;
+           left.appendChild(p1); left.appendChild(p2);
+           
+           const right = document.createElement("div");
+           right.style = "text-align:right;";
+           const r1 = document.createElement("div"); r1.style="font-weight:bold; color:var(--primary); font-size:14px;"; r1.textContent = r.accuracy + "%";
+           const r2 = document.createElement("div"); r2.style="font-size:12px;"; 
+           r2.textContent = r.passed === true ? "Lulus" : (r.passed === false ? "Gagal" : "-");
+           if (r.passed === false) r2.style.color = "#ef4444";
+           if (r.passed === true) r2.style.color = "#10B981";
+           right.appendChild(r1); right.appendChild(r2);
+           
+           div.appendChild(left); div.appendChild(right);
+           histBox.appendChild(div);
+        });
+     }
+  }
+
   function renderBoard() {
     var ol = $("board-list");
     ol.innerHTML = '<li class="board-empty">Memuat Papan Peringkat... \u231B</li>';
@@ -2333,7 +2515,7 @@ function getRecommendedLevel(acc) {
   function esc(s) { const d = document.createElement("div"); d.textContent = s == null ? "" : s; return d.innerHTML; }
 
   window._testAPI = {
-      finish: finish,
+      finish: finish, renderDashboard: renderDashboard, APP: typeof APP !== "undefined" ? APP : "quizarena_",
       goToLevels: goToLevels,
       startDiagnostic: startDiagnostic,
       startLevel: startLevel,

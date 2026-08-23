@@ -13,3 +13,10 @@
 ### Changed
 - Threshold kelulusan level (PASS) diperketat dari 60% menjadi 70%.
 - Navigasi terkunci (locked logic) menggunakan evaluasi hasil *Diagnostic Test* agar user dapat langsung meloncat ke level yang direkomendasikan.
+
+### Ditambahkan
+- Dashboard Progres Pelajar (P0-E) membaca data dari localStorage.
+- Insight Topik Lemah dan Kuat dengan pure functions.
+- Penanganan data localStorage terpisah untuk Practice, Timed Quiz, dan Diagnostic.
+- Perbaikan overflow UI Mobile dari akar CSS.
+- Skema Data DATA_SCHEMA.md untuk kontrak integritas data attempt.

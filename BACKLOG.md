@@ -16,3 +16,6 @@
 - [ ] **Analitik Kualitas Soal:** *Item Response Theory* (IRT) untuk melacak soal mana yang terlalu mudah/sulit berdasarkan riwayat jutaan *attempt* pengguna.
 
 - [ ] **Server-Side Validation:** Migrasi client-side progression guard (penguncian level via JS) ke validasi API backend untuk mencegah manipulasi localStorage via DevTools.
+- [ ] Integrasi persistensi API backend untuk sinkronisasi data antar perangkat.
+- [ ] Sistem Autentikasi/Login untuk User Profile.
+- [ ] Dashboard multi-device yang sinkron dengan API backend.
