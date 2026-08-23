@@ -756,31 +756,46 @@ html.dark .video-t{color:#EAF3EF;}
     <!-- RESULT -->
     <section class="screen screen--result" id="screen-result">
       <div class="card card--result">
-        <div class="result-emoji" id="result-emoji">🎉</div>
-        <div id="result-stars"></div>
-        <h2 class="result-title" id="result-title">Kerja bagus!</h2>
-        <p class="result-sub" id="result-sub">—</p>
-        <div class="result-score"><span class="result-score__num" id="result-score">0</span><span class="result-score__label">POIN</span></div>
+        
+        <div class="result-header">
+           <h2 class="result-title" id="result-title">Kerja bagus!</h2>
+           <div id="result-status-badge"></div>
+        </div>
+        
         <div class="stat-grid" id="result-stats-grid">
-          <div class="stat"><span class="stat__num" id="stat-correct">0</span><span class="stat__label">Benar</span></div>
-          <div class="stat"><span class="stat__num" id="stat-wrong">0</span><span class="stat__label">Salah</span></div>
           <div class="stat"><span class="stat__num" id="stat-acc">0%</span><span class="stat__label">Akurasi</span></div>
-          <div class="stat"><span class="stat__num" id="stat-streak">0</span><span class="stat__label">Streak Maks</span></div>
+          <div class="stat"><span class="stat__num" id="stat-correct">0</span><span class="stat__label" style="color:var(--primary)">Benar</span></div>
+          <div class="stat"><span class="stat__num" id="stat-wrong">0</span><span class="stat__label" style="color:#ef4444">Salah</span></div>
+          <div class="stat"><span class="stat__num" id="stat-unanswered">0</span><span class="stat__label" style="color:#6b7280">Tidak Dijawab</span></div>
+          <div class="stat"><span class="stat__num" id="stat-duration">0s</span><span class="stat__label">Durasi Total</span></div>
+          <div class="stat"><span class="stat__num" id="stat-avg">0s</span><span class="stat__label">Rata-rata/Soal</span></div>
         </div>
-        <div class="result-actions">
-          <button class="btn btn--primary" id="btn-next-level">Level Berikutnya →</button>
-          <button class="btn btn--ghost" id="btn-retry">Ulangi</button>
-          <button class="btn btn--soft" id="btn-levels">Pilih Level</button>
+        
+        <div id="remedial-section" hidden style="margin-top:16px; background: rgba(245,158,11,0.1); padding: 12px; border-radius: 8px; border: 1px solid #f59e0b;">
+           <h3 style="font-size:14px; margin:0 0 8px 0; color:#b45309;">Area Kelemahan Anda:</h3>
+           <ul id="weak-topics-list" style="margin:0; padding-left:18px; font-size:14px; color:#92400e;"></ul>
         </div>
+
+        <div class="result-actions" id="dynamic-ctas" style="margin-top:20px; flex-direction:column; gap:8px;">
+           <!-- JS will inject dynamic CTAs here -->
+        </div>
+        
         <div class="result-actions" style="margin-top:12px;">
-          <button class="btn btn--soft" id="btn-share">📤 Bagikan Skor</button>
-          <button class="btn btn--soft" id="btn-review">Lihat Pembahasan</button>
+          <button class="btn btn--soft" id="btn-review" onclick="toggleReview()">Lihat Pembahasan</button>
         </div>
       </div>
-      <div class="review" id="review" hidden></div>
-    </section>
+      
+      <div class="review" id="review" hidden>
+         <div class="review-tabs" style="display:flex; gap:8px; margin-bottom: 16px;">
+             <button class="btn btn--soft" id="tab-rev-all" onclick="filterReview('all')">Semua</button>
+             <button class="btn btn--soft" id="tab-rev-wrong" onclick="filterReview('wrong')">Salah</button>
+             <button class="btn btn--soft" id="tab-rev-correct" onclick="filterReview('correct')">Benar</button>
+         </div>
+         <div id="review-content"></div>
+      </div>
+      </section>
 
-    <!-- BOARD -->
+      <!-- BOARD -->
     <section class="screen screen--board" id="screen-board">
       <div class="card card--board">
         <button class="btn-text" id="btn-board-back" style="position:static;margin-bottom:6px;">← Kembali</button>
@@ -1260,7 +1275,25 @@ html.dark .video-t{color:#EAF3EF;}
   ];
   
   let diagnosticMode = false;
-  function getRecommendedLevel(acc) {
+  
+function extractWeakTopics(attempt) {
+    const topicStats = {};
+    attempt.answers.forEach(ans => {
+        if (!topicStats[ans.topic]) topicStats[ans.topic] = { total: 0, correct: 0 };
+        topicStats[ans.topic].total++;
+        if (ans.isCorrect) topicStats[ans.topic].correct++;
+    });
+    
+    const weak = [];
+    for (const [topic, stats] of Object.entries(topicStats)) {
+        if (stats.correct / stats.total < 0.7) {
+            weak.push(topic);
+        }
+    }
+    return weak.slice(0, 3);
+}
+
+function getRecommendedLevel(acc) {
      for (let i = 0; i < DIAGNOSTIC_THRESHOLDS.length; i++) {
         if (acc <= DIAGNOSTIC_THRESHOLDS[i].max) {
            return DIAGNOSTIC_THRESHOLDS[i].level;
@@ -1745,158 +1778,152 @@ html.dark .video-t{color:#EAF3EF;}
   async function finish() {
     clearInterval(timer);
     $("progress-fill").style.width = "100%";
-    updateStreak();
-
+    
     if (vs) return finishVs();
-
+    
     const p = players[0];
     const total = questions.length;
+    
+    // Calculate unanswered
+    const answeredCount = history.length;
+    const unansweredCount = total - answeredCount;
+    const incorrectCount = total - p.correct - unansweredCount; // wait, p.correct is already set. history has 'correct'.
     const acc = total ? Math.round((p.correct / total) * 100) : 0;
-    setStatLabels("Benar", "Salah", "Akurasi", "Streak Maks");
-    $("result-score").textContent = p.score;
-    $("stat-correct").textContent = p.correct;
-    $("stat-wrong").textContent = total - p.correct;
-    $("stat-acc").textContent = acc + "%";
-    $("stat-streak").textContent = p.maxStreak;
-    bumpStats(total, p.correct);
-      try {
-        const durationSeconds = Math.round((Date.now() - sessionStartTime) / 1000);
-        const historyEntry = {
-            id: Date.now().toString(36) + Math.random().toString(36).substr(2),
-            timestamp: new Date().toISOString(),
-            mode: practice ? "custom" : "level",
-            levelId: practice ? null : currentLevel,
-            categoryFilter: practice === 'custom' ? ($('bank-cat') ? $('bank-cat').value : 'all') : 'all',
-            difficultyFilter: practice === 'custom' ? ($('bank-diff') ? $('bank-diff').value : 'all') : 'all',
-            totalQuestions: total,
-            correctCount: p.correct,
-            wrongCount: total - p.correct,
-            skippedCount: 0, // In this flow, missed questions don't trigger grade unless timeout? Actually we don't have explicit skips.
-            accuracy: acc,
-            durationSeconds: durationSeconds,
-            questionDetails: history
-        };
-        let globalHistory = JSON.parse(localStorage.getItem('quizarena_history') || '[]');
-        globalHistory.push(historyEntry);
-        if (globalHistory.length > 50) globalHistory = globalHistory.slice(-50);
-        localStorage.setItem('quizarena_history', JSON.stringify(globalHistory));
-      } catch (err) {
-        console.error("Failed to save score history to localStorage", err);
-      }
-    if (p.maxStreak > getNum("_bestStreak")) localStorage.setItem(APP + "_bestStreak", String(p.maxStreak));
-
+    const isPassed = acc >= PASS;
+    
+    // Fill in missing unanswered questions into history
+    const answeredIds = new Set(history.map(h => h.questionId));
+    questions.forEach((q, idx) => {
+        if (!answeredIds.has(q.id)) {
+            history.push({
+                questionId: q.id,
+                category: q.category,
+                topic: q.category,
+                difficulty: q.difficulty,
+                userAnswerIndex: null,
+                correctIndex: q.answer,
+                q: q.q || q.question,
+                you: null,
+                answer: q.options[q.answer],
+                explain: q.explain || q.explanation,
+                correct: false,
+                player: p.name,
+                timeSpent: 0
+            });
+            // Update attemptsLog for unanswered
+            attemptsLog.push({
+                attemptId: currentAttemptId,
+                levelId: currentLevel !== null ? LEVELS[currentLevel].level : (diagnosticMode ? 'diagnostic' : 'practice'),
+                questionId: q.id,
+                topic: q.category,
+                selectedOptionId: null,
+                correctOptionId: q.options[q.answer],
+                isCorrect: false,
+                timeSpent: 0,
+                startedAt: Date.now(),
+                completedAt: Date.now(),
+                explanationAvailable: !!(q.explain || q.explanation)
+            });
+        }
+    });
+    
+    const sessionEndTime = Date.now();
+    const durationTotalMs = sessionEndTime - sessionStartTime;
+    const durationSeconds = Math.round(durationTotalMs / 1000);
+    const avgAnswerTime = total ? (durationSeconds / total).toFixed(1) : 0;
+    
+    // P0-D Attempt Schema
+    const finalAttempt = {
+       attemptId: currentAttemptId,
+       attemptType: diagnosticMode ? 'diagnostic' : (currentLevel !== null ? 'level' : 'practice'),
+       levelId: currentLevel !== null ? LEVELS[currentLevel].level : null,
+       startedAt: sessionStartTime,
+       completedAt: sessionEndTime,
+       totalQuestions: total,
+       correctCount: p.correct,
+       incorrectCount: total - p.correct - unansweredCount,
+       unansweredCount: unansweredCount,
+       accuracy: acc,
+       averageAnswerTime: parseFloat(avgAnswerTime),
+       passed: diagnosticMode ? null : isPassed,
+       answers: attemptsLog.map(log => ({
+           questionId: log.questionId,
+           topic: log.topic || 'General',
+           selectedOptionId: log.selectedOptionId,
+           correctOptionId: log.correctOptionId || '',
+           isCorrect: log.isCorrect,
+           timeSpent: log.timeSpent,
+           explanationAvailable: log.explanationAvailable || false
+       }))
+    };
+    
+    // Save to master logs
+    let savedLogs = [];
+    try { savedLogs = JSON.parse(localStorage.getItem(APP + "_fullAttemptsLog")) || []; } catch(e){}
+    savedLogs.push(finalAttempt);
+    localStorage.setItem(APP + "_fullAttemptsLog", JSON.stringify(savedLogs));
     
     if (diagnosticMode) {
-       diagnosticMode = false;
-       const p = players[0];
-       const acc = Math.round((p.correct / questions.length) * 100);
-       
        let rec = getRecommendedLevel(acc);
-       
-       let weak = {};
-       history.forEach(h => {
-          if (!h.correct && h.q.category) {
-             weak[h.q.category] = (weak[h.q.category] || 0) + 1;
-          }
-       });
-       let weakTopics = Object.keys(weak).sort((a, b) => weak[b] - weak[a]).slice(0, 3);
-       
-       const diagResult = {
-           completedAt: Date.now(),
-           totalQuestions: questions.length,
-           correctCount: p.correct,
-           accuracy: acc,
-           topicBreakdown: weak,
-           recommendedLevel: rec,
-           weakTopics: weakTopics,
-           questionIds: questions.map(q => q.id),
-           diagnosticVersion: 1
+       const diagState = {
+          completedAt: new Date().toISOString(),
+          accuracy: acc,
+          recommendedLevel: rec,
+          weakTopics: extractWeakTopics(finalAttempt)
        };
-       localStorage.setItem(APP + "_diagnostic", JSON.stringify(diagResult));
+       localStorage.setItem(APP + "_diagnostic", JSON.stringify(diagState));
        localStorage.setItem(APP + "_onboarded", "1");
-       
-       $("result-emoji").textContent = "\uD83C\uDF93";
-       $("result-stars").innerHTML = "";
        $("result-title").textContent = "Diagnostic Selesai";
-       
-       let subHTML = `<div style="margin-bottom:12px;font-size:16px;">
-           Akurasi Kamu: <b>${acc}%</b> (${p.correct} benar dari ${questions.length}).<br/>
-           Rekomendasi mulai dari: <b style="color:var(--primary); font-size:18px;">Level ${rec}</b>.
-       </div>`;
-       
-       if (weakTopics.length > 0) {
-           subHTML += `<div style="font-size:14px;color:var(--text-muted);margin-bottom:12px;">Topik prioritas yang perlu diperbaiki:<br/>• ${weakTopics.join('<br/>• ')}</div>`;
-       }
-       $("result-sub").innerHTML = subHTML;
-       
-       // Hide normal action buttons safely
-       const rActions = document.querySelectorAll('.result-actions');
-       rActions.forEach(el => el.hidden = true);
-       
-       // Append diagnostic CTA
-       let diagCTA = $("diag-cta");
-       if (!diagCTA) {
-           diagCTA = document.createElement("div");
-           diagCTA.id = "diag-cta";
-           diagCTA.style.marginTop = "16px";
-           diagCTA.className = "result-actions";
-           $("result-sub").parentNode.insertBefore(diagCTA, $("result-sub").nextSibling);
-       }
-       diagCTA.hidden = false;
-       diagCTA.innerHTML = `
-           <button class="btn btn--primary" style="width:100%;margin-bottom:10px;" id="btn-diag-start">Mulai dari Level ${rec} →</button>
-           <button class="btn btn--ghost" style="width:100%;" id="btn-diag-dashboard">Lihat Dashboard</button>
-       `;
-       
-       $("btn-diag-start").addEventListener("click", () => {
-           diagCTA.hidden = true;
-           rActions.forEach(el => el.hidden = false);
-           goToLevels(); // prepare levels
-           startLevel(rec - 1);
-       });
-       
-       $("btn-diag-dashboard").addEventListener("click", () => {
-           diagCTA.hidden = true;
-           rActions.forEach(el => el.hidden = false);
-           goToLevels();
-       });
-       
-       afterFinish();
-       return;
-    }
-    if (practice) {
-
-      $("result-emoji").textContent = "\uD83C\uDF93";
-      $("result-stars").innerHTML = "";
-      $("result-title").textContent = practice === "free" ? "Latihan selesai!" : "Sesi ulang selesai!";
-      $("result-sub").textContent = `Kamu menjawab ${p.correct}/${total} benar (${acc}%). ` + (practice === "hard" ? "Soal yang benar dihapus dari daftar sulit \uD83D\uDC4D" : "Terus asah kemampuanmu!");
-      $("btn-next-level").hidden = true;
+       $("result-status-badge").innerHTML = `<span style="background:var(--primary); color:white; padding:4px 8px; border-radius:12px; font-size:12px;">Diagnostic Completed</span>`;
     } else {
-      const level = LEVELS[currentLevel];
-      const stars = acc >= 90 ? 3 : acc >= 75 ? 2 : acc >= PASS ? 1 : 0;
-      const passedNow = acc >= PASS;
-      let emoji = "\uD83D\uDCAA", title = "Hampir!", sub = `Terus berlatih untuk skor & bintang lebih tinggi!`;
-      if (acc === 100) { emoji = "\uD83C\uDFC6"; title = "Sempurna!"; sub = "Semua benar. Luar biasa!"; }
-      else if (acc >= 75) { emoji = "\uD83C\uDF1F"; title = "Hebat!"; sub = "Skormu sangat bagus."; }
-      else if (acc >= PASS) { emoji = "\uD83C\uDF89"; title = "Lulus!"; sub = "Kamu lolos level ini."; }
-      const wasBest = p.score > getBest(level.level);
-      $("result-emoji").textContent = emoji;
-      $("result-stars").innerHTML = starRow(stars, true);
-      $("result-title").textContent = p.name ? `${title} ${p.name}` : title;
-      if (!hasNext && passedNow) sub = "Selamat! Anda telah menyelesaikan seluruh " + LEVELS.length + " latihan.";
-      $("result-sub").textContent = `Level ${level.level} \u00B7 ${level.name}. ${sub}` + (wasBest ? " \uD83C\uDF8A Rekor baru!" : "");
-      saveBest(level.level, p.score);
-      if (stars > getStars(level.level)) localStorage.setItem(APP + "_stars_L" + level.level, String(stars));
-      if (passedNow) localStorage.setItem(APP + "_pass_L" + level.level, "1");
-      if (acc === 100) localStorage.setItem(APP + "_perfect", "1");
-      addToBoard(p.name, level, p.score, acc);
-      const hasNext = currentLevel + 1 < LEVELS.length;
-      $("btn-next-level").hidden = !hasNext;
-      if (passedNow) confetti();
-      passedNow ? playWin() : playWrong();
+       if (isPassed) {
+          if (currentLevel !== null) setBest(LEVELS[currentLevel].level, acc);
+          $("result-title").textContent = "Kerja bagus!";
+          $("result-status-badge").innerHTML = `<span style="background:#10B981; color:white; padding:4px 8px; border-radius:12px; font-size:12px;">Passed</span>`;
+       } else {
+          $("result-title").textContent = "Jangan menyerah!";
+          $("result-status-badge").innerHTML = `<span style="background:#ef4444; color:white; padding:4px 8px; border-radius:12px; font-size:12px;">Needs Practice</span>`;
+       }
     }
+    
+    $("stat-acc").textContent = acc + "%";
+    $("stat-correct").textContent = p.correct;
+    $("stat-wrong").textContent = finalAttempt.incorrectCount;
+    $("stat-unanswered").textContent = finalAttempt.unansweredCount;
+    $("stat-duration").textContent = durationSeconds + "s";
+    $("stat-avg").textContent = avgAnswerTime + "s";
+    
+    // Remedial Section
+    const weak = extractWeakTopics(finalAttempt);
+    const remSec = $("remedial-section");
+    if (weak.length > 0) {
+       remSec.hidden = false;
+       $("weak-topics-list").innerHTML = weak.map(w => `<li>${w}</li>`).join("");
+    } else {
+       remSec.hidden = true;
+    }
+    
+    // Dynamic CTAs
+    const ctaWrap = $("dynamic-ctas");
+    ctaWrap.innerHTML = "";
+    
+    if (diagnosticMode) {
+       const diagState = JSON.parse(localStorage.getItem(APP + "_diagnostic"));
+       ctaWrap.innerHTML += `<button class="btn btn--primary" onclick="goToLevels(); setTimeout(()=>startLevel(${diagState.recommendedLevel - 1}), 500)">Mulai dari Level ${diagState.recommendedLevel}</button>`;
+       ctaWrap.innerHTML += `<button class="btn btn--soft" onclick="goToLevels()">Kembali ke Learning Path</button>`;
+    } else if (isPassed) {
+       if (currentLevel !== null && currentLevel + 1 < LEVELS.length) {
+          ctaWrap.innerHTML += `<button class="btn btn--primary" onclick="startLevel(${currentLevel + 1})">Buka Level Berikutnya &rarr;</button>`;
+       }
+       ctaWrap.innerHTML += `<button class="btn btn--soft" onclick="goToLevels()">Kembali ke Learning Path</button>`;
+    } else {
+       ctaWrap.innerHTML += `<button class="btn btn--primary" onclick="startLevel(${currentLevel})">Ulangi Level</button>`;
+       ctaWrap.innerHTML += `<button class="btn btn--soft" onclick="goToLevels()">Kembali ke Learning Path</button>`;
+    }
+    
+    diagnosticMode = false;
     afterFinish();
-  }
+}
 
   function finishVs() {
     const [a, b] = players;
@@ -1918,27 +1945,67 @@ html.dark .video-t{color:#EAF3EF;}
   }
 
   function afterFinish() {
-    buildReview();
-    $("review").hidden = true;
-    $("btn-review").textContent = "Lihat Pembahasan";
-    show("result");
-  }
+      buildReview();
+      $("review").hidden = true;
+      $("btn-review").textContent = "Lihat Pembahasan";
+      show("result");
+    }
 
   function buildReview() {
-    const wrap = $("review");
-    wrap.innerHTML = "";
-    history.forEach((h, n) => {
-      const item = document.createElement("div");
-      item.className = "review-item" + (h.correct ? "" : " is-wrong");
-      item.innerHTML =
-        `<div class="review-q">${n + 1}. ${esc(h.q)}${vs ? ` <span class="review-who">(${esc(h.player)})</span>` : ""}</div>` +
-        `<div class="review-a ${h.correct ? "" : "wrong"}">Jawaban kamu: <strong>${esc(h.you)}</strong></div>` +
-        (h.correct ? "" : `<div class="review-a">Jawaban benar: <strong>${esc(h.answer)}</strong></div>`) +
-        (h.explain ? `<div class="review-explain">\uD83D\uDCA1 ${esc(h.explain)}</div>` : "");
-      wrap.appendChild(item);
-    });
-  }
-  function toggleReview() {
+      const wrap = $("review-content");
+      wrap.innerHTML = "";
+      history.forEach((h, n) => {
+        const item = document.createElement("div");
+        item.className = "review-item" + (h.correct ? "" : " is-wrong");
+        item.dataset.status = h.correct ? "correct" : "wrong";
+        
+        const qDiv = document.createElement("div");
+        qDiv.className = "review-q";
+        qDiv.textContent = (n + 1) + ". " + h.q;
+        item.appendChild(qDiv);
+        
+        const aDiv = document.createElement("div");
+        aDiv.className = "review-a " + (h.correct ? "" : "wrong");
+        aDiv.innerHTML = "Jawaban kamu: <strong></strong>";
+        aDiv.querySelector("strong").textContent = h.you ? h.you : "Tidak dijawab";
+        item.appendChild(aDiv);
+        
+        if (!h.correct) {
+           const cDiv = document.createElement("div");
+           cDiv.className = "review-a";
+           cDiv.innerHTML = "Jawaban benar: <strong></strong>";
+           cDiv.querySelector("strong").textContent = h.answer;
+           item.appendChild(cDiv);
+        }
+        
+        const eDiv = document.createElement("div");
+        eDiv.className = "review-explain";
+        if (h.explain && h.explain.trim() !== '') {
+            eDiv.textContent = "💡 " + h.explain;
+        } else {
+            eDiv.textContent = "💡 Pembahasan belum tersedia untuk soal ini.";
+        }
+        item.appendChild(eDiv);
+        wrap.appendChild(item);
+      });
+      window.filterReview('all');
+    }
+    
+    window.filterReview = function(status) {
+       const items = document.querySelectorAll('.review-item');
+       items.forEach(item => {
+           if (status === 'all') item.style.display = 'block';
+           else if (status === 'wrong' && item.dataset.status === 'wrong') item.style.display = 'block';
+           else if (status === 'correct' && item.dataset.status === 'correct') item.style.display = 'block';
+           else item.style.display = 'none';
+       });
+       
+       $('tab-rev-all').className = "btn " + (status === 'all' ? "btn--primary" : "btn--soft");
+       $('tab-rev-wrong').className = "btn " + (status === 'wrong' ? "btn--primary" : "btn--soft");
+       $('tab-rev-correct').className = "btn " + (status === 'correct' ? "btn--primary" : "btn--soft");
+    };
+    
+    function toggleReview() {
     const r = $("review");
     r.hidden = !r.hidden;
     $("btn-review").textContent = r.hidden ? "Lihat Pembahasan" : "Sembunyikan Pembahasan";

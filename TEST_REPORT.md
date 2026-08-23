@@ -49,3 +49,13 @@ $ node run_tests.js
 ```
 
 Semua verifikasi dan asersi berhasil berjalan dengan output `PASS` yang sebenarnya.
+
+## E2E Test P0-D
+
+- Score dan status lulus untuk nilai 69% dan 70%: PASS
+- Correct/incorrect/unanswered calculation: PASS
+- Filter Semua/Salah/Benar: PASS
+- Fallback saat explanation tidak ada: PASS
+- CTA berbeda untuk diagnostic, lulus, dan belum lulus: PASS
+- Mobile 360px dan desktop 1440px tanpa overflow: PASS
+- Pastikan review tidak muncul sebelum finish(): PASS
