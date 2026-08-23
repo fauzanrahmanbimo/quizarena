@@ -1156,7 +1156,7 @@ html.dark .video-t{color:#EAF3EF;}
   screens.custom = $("screen-custom-quiz");
   screens.kelola = $("screen-kelola");
   
-  $("btn-custom-quiz").addEventListener("click", () => {
+  $("btn-custom-quiz")?.addEventListener("click", () => {
       // Populate category and difficulty
       const cats = new Set();
       const diffs = new Set();
@@ -1175,10 +1175,10 @@ html.dark .video-t{color:#EAF3EF;}
       switchScreen(screens.custom);
   });
   
-  $("btn-custom-back").addEventListener("click", () => switchScreen(screens.levels));
-  $("btn-kelola-back").addEventListener("click", () => switchScreen(screens.levels));
+  $("btn-custom-back")?.addEventListener("click", () => switchScreen(screens.levels));
+  $("btn-kelola-back")?.addEventListener("click", () => switchScreen(screens.levels));
   
-  $("btn-kelola-soal").addEventListener("click", () => {
+  $("btn-kelola-soal")?.addEventListener("click", () => {
       renderKelola();
       switchScreen(screens.kelola);
   });
@@ -1259,7 +1259,7 @@ html.dark .video-t{color:#EAF3EF;}
       return res;
   }
   
-  $("file-import").addEventListener("change", (e) => {
+  $("file-import")?.addEventListener("change", (e) => {
       const file = e.target.files[0];
       if(!file) return;
       const reader = new FileReader();
@@ -1298,7 +1298,7 @@ html.dark .video-t{color:#EAF3EF;}
       reader.readAsText(file);
   });
   
-  $("btn-start-custom").addEventListener("click", () => {
+  $("btn-start-custom")?.addEventListener("click", () => {
       const cat = $("custom-category").value;
       const diff = $("custom-difficulty").value;
       let pool = allQuestions;
@@ -1331,15 +1331,15 @@ html.dark .video-t{color:#EAF3EF;}
   $("quiz-title").textContent = CONFIG.title;
   $("quiz-desc").textContent = CONFIG.description;
   document.title = CONFIG.title;
-  $("meta-count").textContent = LEVELS.length;
-  $("meta-qtotal").textContent = LEVELS.reduce((s, l) => s + l.questions.length, 0);
-  $("meta-time").textContent = CONFIG.timePerQuestion + "s";
+  // $( = LEVELS.length;
+  // $( = LEVELS.reduce((s, l) => s + l.questions.length, 0);
+  // $( = CONFIG.timePerQuestion + "s";
   renderStreakHome();
 
   // ---------- Events ----------
-  $("btn-theme").addEventListener("click", toggleTheme);
-  $("btn-sound").addEventListener("click", toggleSound);
-  $("btn-autoread").addEventListener("click", toggleAutoRead);
+  $("btn-theme")?.addEventListener("click", toggleTheme);
+  $("btn-sound")?.addEventListener("click", toggleSound);
+  $("btn-autoread")?.addEventListener("click", toggleAutoRead);
   
   const DIAGNOSTIC_THRESHOLDS = [
     { max: 39, level: 1 },
@@ -1396,19 +1396,19 @@ function getRecommendedLevel(acc) {
       container.innerHTML = `<h3 style="margin-bottom:8px;">Mulai Perjalananmu</h3>
         <p style="font-size:14px; color:var(--text-muted); margin-bottom:16px;">15 soal, tanpa timer, sekitar 5�7 menit untuk mengetahui kemampuan awalmu.</p>
         <button class="btn btn--primary btn--lg" id="btn-start-diag" style="width:100%">Mulai Placement Test <span class="btn-arrow">?</span></button>`;
-      $("btn-start-diag").addEventListener("click", () => { localStorage.setItem(APP + "_onboarded", "1"); startDiagnostic(); });
+      $("btn-start-diag")?.addEventListener("click", () => { localStorage.setItem(APP + "_onboarded", "1"); startDiagnostic(); });
     } else if (hasDiag && (typeof getStats === "function" ? getStats().attempts < 2 : true)) {
       let rec = typeof getRecommendedLevel === "function" ? getRecommendedLevel() : 1;
       container.innerHTML = `<h3 style="margin-bottom:8px;">Rekomendasi Level</h3>
         <p style="font-size:14px; color:var(--text-muted); margin-bottom:16px;">Level ini dipilih dari hasil placement test Anda.</p>
         <button class="btn btn--primary btn--lg" id="btn-start-rec" style="width:100%">Mulai Level ` + rec + ` <span class="btn-arrow">?</span></button>`;
-      $("btn-start-rec").addEventListener("click", () => { startLevel(rec); });
+      $("btn-start-rec")?.addEventListener("click", () => { startLevel(rec); });
     } else {
       container.innerHTML = `<h3 style="margin-bottom:8px;">Lanjutkan Belajar</h3>
         <button class="btn btn--primary btn--lg" id="btn-start-rec" style="width:100%; margin-bottom:8px;">Lanjut Level Berikutnya <span class="btn-arrow">?</span></button>
         <button class="btn btn--soft" id="btn-choose-level" style="width:100%">Pilih Level Lain</button>`;
-      $("btn-start-rec").addEventListener("click", () => { startLevel(typeof getRecommendedLevel === "function" ? getRecommendedLevel() : 1); });
-      $("btn-choose-level").addEventListener("click", typeof goToLevels === "function" ? goToLevels : () => {});
+      $("btn-start-rec")?.addEventListener("click", () => { startLevel(typeof getRecommendedLevel === "function" ? getRecommendedLevel() : 1); });
+      $("btn-choose-level")?.addEventListener("click", typeof goToLevels === "function" ? goToLevels : () => {});
     }
   }
 
@@ -1457,7 +1457,7 @@ function getRecommendedLevel(acc) {
       beginSession("Diagnostic Test");
   }
   
-  $("btn-start").addEventListener("click", handleStart);
+  $("btn-start")?.addEventListener("click", handleStart);
   const btnReDiag = $("btn-re-diagnostic");
   if (btnReDiag) {
       btnReDiag.addEventListener("click", () => {
@@ -1466,31 +1466,31 @@ function getRecommendedLevel(acc) {
       });
   }
 
-  $("player-name").addEventListener("keydown", (e) => { if (e.key === "Enter") goToLevels(); });
-  $("btn-board").addEventListener("click", openBoard);
-  $("btn-dashboard").addEventListener("click", () => { renderDashboard(); switchScreen(screens.dashboard); });
-  $("btn-dashboard-back").addEventListener("click", () => switchScreen(screens.home));
-  $("btn-back-home").addEventListener("click", () => show("home"));
-  $("btn-board-back").addEventListener("click", goToLevels);
-  $("btn-learn-back").addEventListener("click", goToLevels);
-  $("btn-learn-start").addEventListener("click", () => { if (currentLevel != null) startLevel(currentLevel); });
-  $("btn-next").addEventListener("click", next);
+  $("player-name")?.addEventListener("keydown", (e) => { if (e.key === "Enter") goToLevels(); });
+  $("btn-board")?.addEventListener("click", openBoard);
+  $("btn-dashboard")?.addEventListener("click", () => { renderDashboard(); show('dashboard'); });
+  $("btn-dashboard-back")?.addEventListener("click", () => show('home'));
+  $("btn-back-home")?.addEventListener("click", () => show("home"));
+  $("btn-board-back")?.addEventListener("click", goToLevels);
+  $("btn-learn-back")?.addEventListener("click", goToLevels);
+  $("btn-learn-start")?.addEventListener("click", () => { if (currentLevel != null) startLevel(currentLevel); });
+  $("btn-next")?.addEventListener("click", next);
   
   
   
   
   
-  $("btn-quit").addEventListener("click", () => { clearInterval(timer); goToLevels(); });
-  $("btn-clear-board").addEventListener("click", () => {
+  $("btn-quit")?.addEventListener("click", () => { clearInterval(timer); goToLevels(); });
+  $("btn-clear-board")?.addEventListener("click", () => {
     if (confirm("Papan skor global tersimpan di server dan tidak bisa dihapus dari sini.")) { renderBoard(); }
   });
-  $("type-box").addEventListener("submit", (e) => { e.preventDefault(); submitTyped(); });
-  $("search-input").addEventListener("input", (e) => renderSearch(e.target.value));
-  $("btn-speak").addEventListener("click", () => speakText(questions[idx] && questions[idx].q));
-  $("btn-free").addEventListener("click", () => startPractice("free"));
-  $("btn-hard").addEventListener("click", () => startPractice("hard"));
-  $("btn-cert").addEventListener("click", openCertificate);
-  $("btn-cert-back").addEventListener("click", openBoard);
+  $("type-box")?.addEventListener("submit", (e) => { e.preventDefault(); submitTyped(); });
+  $("search-input")?.addEventListener("input", (e) => renderSearch(e.target.value));
+  $("btn-speak")?.addEventListener("click", () => speakText(questions[idx] && questions[idx].q));
+  $("btn-free")?.addEventListener("click", () => startPractice("free"));
+  $("btn-hard")?.addEventListener("click", () => startPractice("hard"));
+  $("btn-cert")?.addEventListener("click", openCertificate);
+  $("btn-cert-back")?.addEventListener("click", openBoard);
 
   document.querySelectorAll("#seg-players .seg-btn").forEach((b) => {
     b.addEventListener("click", () => {
@@ -2567,7 +2567,10 @@ function getRecommendedLevel(acc) {
   function slug(s) { return String(s).toLowerCase().replace(/[^a-z0-9]+/g, "_"); }
   function esc(s) { const d = document.createElement("div"); d.textContent = s == null ? "" : s; return d.innerHTML; }
 
+  updateHomeUI();
+  updateAuthUI();
   window._testAPI = {
+    startLevel,
       finish: finish, renderDashboard: renderDashboard, APP: typeof APP !== "undefined" ? APP : "quizarena_",
       goToLevels: goToLevels,
       startDiagnostic: startDiagnostic,
