@@ -73,6 +73,7 @@ $ node run_e2e_dashboard.js
 
 ## Hasil Detail Puppeteer E2E
 
+
 # Laporan Pengujian (TEST_REPORT.md)
 
 ## E2E Test (Puppeteer)
@@ -88,6 +89,7 @@ $ node run_e2e_dashboard.js
 - Review filter tab (Semua/Benar/Salah): **PASS**
 - Fallback textContent explanation berjalan (XSS safe): **PASS**
 
+
 # Laporan Pengujian (TEST_REPORT.md)
 
 ## E2E Test Dashboard P0-E (Puppeteer)
@@ -99,3 +101,11 @@ $ node run_e2e_dashboard.js
 - Insight topik lemah terdeteksi: **PASS**
 - Passed quiz: CTA = Lanjutkan Level Berikutnya: **PASS**
 - Mobile 360x800 dashboard tanpa clipping (Root causes CSS fixed): **PASS**
+
+
+## E2E P1-B Learning UX (Local)
+```
+$ npm run test:e2e:ux
+DECISION: READY TO MERGE
+Totals: 39/39 passed, 0 failed, 0 skipped
+```

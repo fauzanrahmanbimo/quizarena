@@ -49,3 +49,10 @@ Server akan berjalan pada `http://localhost:5000`.
   - Body: `{ "mode": "level", "totalQuestions": 10, "correctCount": 8, "wrongCount": 2, "skippedCount": 0, "accuracy": 80, "durationSeconds": 120, "questionDetails": [...] }`
 - `GET /api/history`
 - `GET /api/history/stats`
+\n## Database & Migrations\n\n### Menjalankan Migrasi Skema\n\ash\nnode scripts/migrate.js up\n\\
+\n### Menjalankan Seed Bank Soal (Dry-Run)\n\ash\nnode scripts/seed-question-bank.js\n\\
+\n### Menulis Seed ke Database\n\ash\nnode scripts/seed-question-bank.js --apply\n\\
+\n### Verifikasi Kesejajaran Bank Soal (Parity)\n\ash\nnode scripts/verify-question-bank-parity.js\n\\
+\n## Health Check\n\n### Mengetes Endpoint Health\n\ash\ncurl http://localhost:5000/health\n\\
+\nEndpoint ini mengevaluasi apakah server dapat terhubung ke MySQL. Tidak memerlukan autentikasi.\n\n- **HTTP 200 (OK)**: Server berjalan normal dan terkoneksi ke database.\n- **HTTP 503 (Service Unavailable)**: Server berjalan tetapi gagal terhubung ke database (timeout atau error).\n\n### Instruksi Railway\nUntuk mengonfigurasi Healthcheck di Railway:\n1. Buka halaman _Settings_ aplikasi di dashboard Railway.\n2. Pada bagian _Healthcheck Path_, masukkan: /health\
+3. Deploy ulang.\n\n### Uji Diagnostik Test\nJika terjadi isu open handle atau kebocoran memori saat pengujian, jalankan perintah diagnosis:\n\ash\nnpm run test:diagnose\n\\
