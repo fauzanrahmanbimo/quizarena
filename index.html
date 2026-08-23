@@ -63,7 +63,7 @@
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
-html { scroll-behavior: smooth; } html, body { height: 100%; }
+html { scroll-behavior: smooth; max-width: 100vw; overflow-x: hidden; } html, body { height: 100%; max-width: 100vw; overflow-x: hidden; }
 
 body {
   font-family: var(--font-body);
@@ -1368,13 +1368,11 @@ function getRecommendedLevel(acc) {
   $("btn-learn-back").addEventListener("click", goToLevels);
   $("btn-learn-start").addEventListener("click", () => { if (currentLevel != null) startLevel(currentLevel); });
   $("btn-next").addEventListener("click", next);
-  $("btn-retry").addEventListener("click", retry);
-  $("btn-levels").addEventListener("click", goToLevels);
-  $("btn-next-level").addEventListener("click", () => {
-    if (currentLevel != null && currentLevel + 1 < LEVELS.length) { currentLevel += 1; openLearn(currentLevel); }
-  });
-  $("btn-review").addEventListener("click", toggleReview);
-  $("btn-share").addEventListener("click", shareResult);
+  
+  
+  
+  
+  
   $("btn-quit").addEventListener("click", () => { clearInterval(timer); goToLevels(); });
   $("btn-clear-board").addEventListener("click", () => {
     if (confirm("Papan skor global tersimpan di server dan tidak bisa dihapus dari sini.")) { renderBoard(); }
@@ -1835,8 +1833,8 @@ function getRecommendedLevel(acc) {
     // P0-D Attempt Schema
     const finalAttempt = {
        attemptId: currentAttemptId,
-       attemptType: diagnosticMode ? 'diagnostic' : (currentLevel !== null ? 'level' : 'practice'),
-       levelId: currentLevel !== null ? LEVELS[currentLevel].level : null,
+       attemptType: diagnosticMode ? 'diagnostic' : (currentLevel !== null ? 'timed_quiz' : 'practice'),
+       levelId: diagnosticMode ? null : (currentLevel !== null ? LEVELS[currentLevel].level : null),
        startedAt: sessionStartTime,
        completedAt: sessionEndTime,
        totalQuestions: total,
@@ -1877,7 +1875,7 @@ function getRecommendedLevel(acc) {
        $("result-status-badge").innerHTML = `<span style="background:var(--primary); color:white; padding:4px 8px; border-radius:12px; font-size:12px;">Diagnostic Completed</span>`;
     } else {
        if (isPassed) {
-          if (currentLevel !== null) setBest(LEVELS[currentLevel].level, acc);
+          if (currentLevel !== null) saveBest(LEVELS[currentLevel].level, acc);
           $("result-title").textContent = "Kerja bagus!";
           $("result-status-badge").innerHTML = `<span style="background:#10B981; color:white; padding:4px 8px; border-radius:12px; font-size:12px;">Passed</span>`;
        } else {
@@ -1898,7 +1896,12 @@ function getRecommendedLevel(acc) {
     const remSec = $("remedial-section");
     if (weak.length > 0) {
        remSec.hidden = false;
-       $("weak-topics-list").innerHTML = weak.map(w => `<li>${w}</li>`).join("");
+       $("weak-topics-list").innerHTML = '';
+       weak.forEach(w => {
+           const li = document.createElement("li");
+           li.textContent = w;
+           $("weak-topics-list").appendChild(li);
+       });
     } else {
        remSec.hidden = true;
     }
@@ -2328,9 +2331,19 @@ function getRecommendedLevel(acc) {
 
   function slug(s) { return String(s).toLowerCase().replace(/[^a-z0-9]+/g, "_"); }
   function esc(s) { const d = document.createElement("div"); d.textContent = s == null ? "" : s; return d.innerHTML; }
-})();
 
-  </script>
+  window._testAPI = {
+      finish: finish,
+      goToLevels: goToLevels,
+      startDiagnostic: startDiagnostic,
+      startLevel: startLevel,
+      toggleReview: typeof toggleReview === 'function' ? toggleReview : undefined,
+      filterReview: typeof filterReview === 'function' ? filterReview : undefined,
+      getPlayer: () => players[0],
+      getQuestions: () => questions
+  };
+})();
+</script>
 
     <!-- EXPORT MODAL -->
     <dialog id="modal-export" style="border:none; border-radius:16px; padding:24px; max-width:400px; width:90%; background:var(--surface); color:var(--text); box-shadow:0 10px 30px rgba(0,0,0,0.2); position:fixed; top:50%; left:50%; transform:translate(-50%, -50%);">
