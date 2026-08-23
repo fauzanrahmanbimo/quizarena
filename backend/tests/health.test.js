@@ -3,7 +3,8 @@ const app = require('../app');
 const db = require('../config/database');
 
 jest.mock('../config/database', () => ({
-  query: jest.fn()
+  query: jest.fn(),
+  end: jest.fn()
 }));
 
 describe('GET /health', () => {
@@ -26,7 +27,6 @@ describe('GET /health', () => {
   test('returns 503 Unavailable and safe JSON when database query fails', async () => {
     db.query.mockRejectedValueOnce(new Error('ECONNREFUSED 127.0.0.1:3306'));
 
-    // Suppress console.error during expected failure test
     const consoleSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
 
     const res = await request(app).get('/health');
@@ -53,8 +53,10 @@ describe('GET /health', () => {
   });
 
   test('returns 503 when database query times out', async () => {
-    // Mock a query that takes longer than the timeout (5s)
-    db.query.mockImplementationOnce(() => new Promise(resolve => setTimeout(resolve, 6000)));
+    let mockTimeoutId;
+    db.query.mockImplementationOnce(() => new Promise(resolve => {
+      mockTimeoutId = setTimeout(resolve, 6000);
+    }));
     
     const consoleSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
 
@@ -71,6 +73,8 @@ describe('GET /health', () => {
       'Database query timeout'
     );
     
+    // Clear the mock timeout to prevent open handles
+    if (mockTimeoutId) clearTimeout(mockTimeoutId);
     consoleSpy.mockRestore();
-  }, 10000); // 10s timeout for this test
+  }, 10000);
 });

@@ -55,4 +55,4 @@ Server akan berjalan pada `http://localhost:5000`.
 \n### Verifikasi Kesejajaran Bank Soal (Parity)\n\ash\nnode scripts/verify-question-bank-parity.js\n\\
 \n## Health Check\n\n### Mengetes Endpoint Health\n\ash\ncurl http://localhost:5000/health\n\\
 \nEndpoint ini mengevaluasi apakah server dapat terhubung ke MySQL. Tidak memerlukan autentikasi.\n\n- **HTTP 200 (OK)**: Server berjalan normal dan terkoneksi ke database.\n- **HTTP 503 (Service Unavailable)**: Server berjalan tetapi gagal terhubung ke database (timeout atau error).\n\n### Instruksi Railway\nUntuk mengonfigurasi Healthcheck di Railway:\n1. Buka halaman _Settings_ aplikasi di dashboard Railway.\n2. Pada bagian _Healthcheck Path_, masukkan: /health\
-3. Deploy ulang.\n
+3. Deploy ulang.\n\n### Uji Diagnostik Test\nJika terjadi isu open handle atau kebocoran memori saat pengujian, jalankan perintah diagnosis:\n\ash\nnpm run test:diagnose\n\\
