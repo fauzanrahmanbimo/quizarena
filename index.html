@@ -811,7 +811,7 @@ html.dark .video-t{color:#EAF3EF;}
              <div class="stat"><span class="stat__num" id="dash-stat-attempts">0</span><span class="stat__label">Total Latihan</span></div>
              <div class="stat"><span class="stat__num" id="dash-stat-time">0m</span><span class="stat__label">Waktu Belajar</span></div>
              <div class="stat"><span class="stat__num" id="dash-stat-correct">0</span><span class="stat__label">Jawaban Benar</span></div>
-             <div class="stat"><span class="stat__num" id="dash-stat-streak">0</span><span class="stat__label">Streak (Hari)</span></div>
+             
              <div class="stat"><span class="stat__num" id="dash-stat-acc-quiz">-</span><span class="stat__label">Akurasi Kuis</span></div>
              <div class="stat"><span class="stat__num" id="dash-stat-acc-prac">-</span><span class="stat__label">Akurasi Latihan</span></div>
           </div>
@@ -2119,7 +2119,7 @@ function getRecommendedLevel(acc) {
      $("dash-stat-attempts").textContent = stats.totalAttempts;
      $("dash-stat-time").textContent = Math.round(stats.totalTimeSeconds / 60) + "m";
      $("dash-stat-correct").textContent = stats.totalCorrect;
-     $("dash-stat-streak").textContent = getNum("_streak");
+     
      $("dash-stat-acc-quiz").textContent = stats.avgTimedAcc !== null ? stats.avgTimedAcc + "%" : "-";
      $("dash-stat-acc-prac").textContent = stats.avgPracticeAcc !== null ? stats.avgPracticeAcc + "%" : "-";
      

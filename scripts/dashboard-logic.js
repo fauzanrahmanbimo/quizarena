@@ -15,7 +15,7 @@ function sanitizeAttempts(rawLogs) {
     const logs = safeParseJSON(rawLogs);
     return logs.filter(a => a && typeof a === 'object' && a.attemptId).map(a => ({
         attemptId: a.attemptId,
-        attemptType: ['diagnostic', 'practice', 'timed_quiz'].includes(a.attemptType) ? a.attemptType : 'practice', // fallback old schema
+        attemptType: ['diagnostic', 'practice', 'timed_quiz'].includes(a.attemptType) ? a.attemptType : 'unknown',
         levelId: a.levelId || null,
         startedAt: a.startedAt || 0,
         completedAt: a.completedAt || 0,
