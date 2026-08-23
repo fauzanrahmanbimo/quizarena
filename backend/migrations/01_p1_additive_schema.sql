@@ -1,10 +1,10 @@
 -- UP MIGRATION: Additive schema for P1-A
 -- Do not drop existing `histories` table.
 
--- 1. Levels (optional but good for referential integrity if needed, though P0 levels are static)
-CREATE TABLE IF NOT EXISTS levels (
-  id INT PRIMARY KEY,
-  unlock_threshold INT DEFAULT 70
+-- 1. Schema Migrations Tracking
+CREATE TABLE IF NOT EXISTS schema_migrations (
+  version VARCHAR(255) PRIMARY KEY,
+  applied_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
 -- 2. Quiz Attempts
@@ -13,7 +13,7 @@ CREATE TABLE IF NOT EXISTS quiz_attempts (
   client_attempt_id VARCHAR(100) NOT NULL,
   user_id INT NOT NULL,
   attempt_type ENUM('diagnostic', 'practice', 'timed_quiz') NOT NULL,
-  level_id INT NULL,
+  level_id INT NULL, -- No FK constraint yet because frontend levels are static and not in DB
   started_at TIMESTAMP NOT NULL,
   completed_at TIMESTAMP NOT NULL,
   total_questions INT NOT NULL,
@@ -34,7 +34,7 @@ CREATE TABLE IF NOT EXISTS quiz_attempts (
 CREATE TABLE IF NOT EXISTS quiz_answers (
   id INT AUTO_INCREMENT PRIMARY KEY,
   attempt_id INT NOT NULL,
-  question_id VARCHAR(50) NOT NULL, -- P0 uses string or number IDs. Using VARCHAR(50) for compatibility.
+  question_id VARCHAR(50) NOT NULL, -- No FK constraint yet because question DB sync is pending
   topic VARCHAR(50) NOT NULL,
   selected_option_id INT NULL,
   correct_option_id INT NOT NULL,
