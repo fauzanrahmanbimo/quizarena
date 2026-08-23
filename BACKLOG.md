@@ -14,3 +14,5 @@
 - [ ] **PWA & Offline Cache:** Memungkinkan aplikasi digunakan (mode review) tanpa koneksi internet yang stabil (Service Workers).
 - [ ] **Mode Gelap Tingkat Lanjut:** Kontras dan estetika yang lebih responsif untuk membaca bacaan panjang (*Reading Comprehension*).
 - [ ] **Analitik Kualitas Soal:** *Item Response Theory* (IRT) untuk melacak soal mana yang terlalu mudah/sulit berdasarkan riwayat jutaan *attempt* pengguna.
+
+- [ ] **Server-Side Validation:** Migrasi client-side progression guard (penguncian level via JS) ke validasi API backend untuk mencegah manipulasi localStorage via DevTools.

@@ -27,3 +27,6 @@ Data soal hanya memiliki properti: `id, category, difficulty, question, options,
   - Integrasi Diagnostic Test (Pre-test) di depan sebelum membuka Level 1.
   - Hapus atau jadikan Timer opsional (buat sistem fleksibel).
   - Tampilkan ringkasan Pembahasan yang mengarahkan user belajar materi terkait (Remedial).
+
+
+**Catatan MVP (P0):** Fitur penguncian level saat ini merupakan **client-side progression guard**. Karena aplikasi murni Vanilla JS + localStorage, user secara teoritis dapat memanipulasi progress via DevTools. Untuk rilis produksi sebenarnya, seluruh progress, skor, unlock, dan leaderboard wajib divalidasi dan disimpan di sisi server (API).
