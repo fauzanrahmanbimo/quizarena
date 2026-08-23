@@ -70,14 +70,17 @@ async function runSeed() {
   }
 
   // --- DATABASE APPLY ---
-  const pool = mysql.createPool({
-    host: process.env.DB_HOST || 'localhost',
-    user: process.env.DB_USER || 'root',
-    password: process.env.DB_PASSWORD || '',
-    database: process.env.DB_NAME || 'quizarena',
-    waitForConnections: true,
-    connectionLimit: 5,
-  });
+  const config = process.env.DATABASE_URL 
+    ? process.env.DATABASE_URL
+    : {
+        host: process.env.DB_HOST || 'localhost',
+        user: process.env.DB_USER || 'root',
+        password: process.env.DB_PASSWORD || '',
+        database: process.env.DB_NAME || 'quizarena',
+        waitForConnections: true,
+        connectionLimit: 5,
+      };
+  const pool = mysql.createPool(config);
 
   const connection = await pool.getConnection();
   try {

@@ -4,13 +4,16 @@ const fs = require('fs');
 const path = require('path');
 
 async function runMigration(direction = 'up') {
-  const pool = mysql.createPool({
-    host: process.env.DB_HOST || 'localhost',
-    user: process.env.DB_USER || 'root',
-    password: process.env.DB_PASSWORD || '',
-    database: process.env.DB_NAME || 'quizarena',
-    multipleStatements: true
-  });
+  const config = process.env.DATABASE_URL 
+    ? process.env.DATABASE_URL + (process.env.DATABASE_URL.includes('?') ? '&' : '?') + 'multipleStatements=true'
+    : {
+        host: process.env.DB_HOST || 'localhost',
+        user: process.env.DB_USER || 'root',
+        password: process.env.DB_PASSWORD || '',
+        database: process.env.DB_NAME || 'quizarena',
+        multipleStatements: true
+      };
+  const pool = mysql.createPool(config);
 
   try {
     // Ensure migrations table exists first
