@@ -6,6 +6,7 @@ const rateLimit = require('express-rate-limit');
 const authRoutes = require('./routes/auth');
 const questionRoutes = require('./routes/questions');
 const historyRoutes = require('./routes/history');
+const progressRoutes = require('./routes/progress');
 
 const app = express();
 
@@ -42,6 +43,7 @@ app.use('/api/', globalLimiter);
 app.use('/api/auth', authRoutes);
 app.use('/api/questions', questionRoutes);
 app.use('/api/history', historyRoutes);
+app.use('/api/progress', progressRoutes);
 
 // General error handler to avoid leaking stack traces
 app.use((err, req, res, next) => {
