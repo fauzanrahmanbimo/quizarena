@@ -63,7 +63,7 @@
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
-html { scroll-behavior: smooth; } html, body { height: 100%; }
+html { scroll-behavior: smooth; } html, body { max-width: 100vw; height: 100%; }
 
 body {
   font-family: var(--font-body);
@@ -73,7 +73,7 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  overflow-x: hidden;
+  
   position: relative;
   -webkit-font-smoothing: antialiased;
 }
@@ -86,7 +86,7 @@ body {
 .blob-3 { width: 120px; height: 120px; background: radial-gradient(circle at 50% 50%, rgba(132,224,110,.16), transparent 70%); top: 32vh; right: 12vw; }
 
 /* ---------- Topbar / Brand ---------- */
-.topbar {
+.topbar { flex-wrap: wrap; 
   width: 100%; max-width: 940px; margin: 0 auto;
   padding: 22px 20px 6px;
   display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap;
@@ -578,44 +578,47 @@ html.dark .video-t{color:#EAF3EF;}
   <main class="app">
     <!-- HOME -->
     <section class="screen screen--home is-active" id="screen-home">
-      <div class="card card--hero">
-        <span class="badge">🌟 Bahasa Inggris · 20 Level</span>
-        <h1 class="hero-title" id="quiz-title">QuizArena</h1>
-        <p class="hero-subtitle" id="quiz-desc">Uji kemampuan Bahasa Inggrismu!</p>
-        <div class="streak-chip" id="streak-home">🔥 Mulai streak hari ini!</div>
+  <div class="card card--hero">
+    <span class="badge">?? Bahasa Inggris � 20 Level</span>
+    <h1 class="hero-title" id="quiz-title">QuizArena</h1>
+    <p class="hero-subtitle" id="quiz-desc">Tingkatkan Bahasa Inggrismu selangkah demi selangkah.</p>
+    
+    <div class="streak-chip" id="streak-home" hidden>??</div>
+    
+    <div id="home-dynamic-action" style="margin: 24px 0; padding: 16px; background: var(--bg-main); border-radius: 12px; border: 1px solid var(--border);">
+       <!-- Injected via JS -->
+    </div>
+    
+    <p style="font-size: 12px; color: var(--text-muted); margin-bottom: 16px;">Progres tersimpan di perangkat ini.</p>
 
-        <div class="field">
-          <label for="player-name">Nama pemain 1</label>
-          <input id="player-name" type="text" placeholder="Tulis namamu…" maxlength="24" autocomplete="off" />
-        </div>
-        <div class="field" id="field-p2" hidden>
+    <div id="home-extra-settings" style="text-align: left;">
+      <div class="field">
+        <label for="player-name">Nama pemain</label>
+        <input id="player-name" type="text" placeholder="Tulis namamu�" maxlength="24" autocomplete="off" />
+      </div>
+      <details style="margin-top:12px; font-size:14px;">
+        <summary style="cursor:pointer; color:var(--text-muted); font-weight:600;">Pengaturan Mode (2 Pemain / Teks)</summary>
+        <div class="field" id="field-p2" hidden style="margin-top:12px;">
           <label for="player-name-2">Nama pemain 2</label>
-          <input id="player-name-2" type="text" placeholder="Nama lawan…" maxlength="24" autocomplete="off" />
+          <input id="player-name-2" type="text" placeholder="Nama lawan�" maxlength="24" autocomplete="off" />
         </div>
-
-        <div class="seg" id="seg-players">
-          <button class="seg-btn is-on" data-players="1">👤 1 Pemain</button>
-          <button class="seg-btn" data-players="2">👥 2 Pemain (VS)</button>
+        <div class="seg" id="seg-players" style="margin-top:12px;">
+          <button class="seg-btn is-on" data-players="1">?? 1 Pemain</button>
+          <button class="seg-btn" data-players="2">?? 2 Pemain (VS)</button>
         </div>
         <div class="seg" id="seg-mode">
-          <button class="seg-btn is-on" data-mode="mc">🔘 Pilihan Ganda</button>
-          <button class="seg-btn" data-mode="type">⌨️ Ketik Jawaban</button>
+          <button class="seg-btn is-on" data-mode="mc">?? Pilihan Ganda</button>
+          <button class="seg-btn" data-mode="type">?? Ketik Jawaban</button>
         </div>
-        <button class="toggle-btn" id="btn-autoread">🔊 Baca soal otomatis: OFF</button>
+      </details>
+    </div>
 
-        <button class="btn btn--primary btn--lg" id="btn-start">Pilih Level <span class="btn-arrow">→</span></button>
-
-        <ul class="meta-row" id="quiz-meta">
-          <li><strong id="meta-count">20</strong> Level</li>
-          <li><strong id="meta-qtotal">600</strong> Soal</li>
-          <li><strong id="meta-time">20s</strong> / soal</li>
-        </ul>
-        <div class="home-links">
-          <button class="btn-text" id="btn-dashboard" style="margin-bottom:8px; font-weight:bold; color:var(--primary);">📊 Dashboard Progres</button>
-          <button class="btn-text" id="btn-board">🏆 Papan Skor Global</button>
-        </div>
-      </div>
-    </section>
+    <div class="home-links" style="margin-top:24px; border-top:1px solid var(--border); padding-top:16px;">
+      <button class="btn-text" id="btn-dashboard" style="margin-bottom:8px; font-weight:bold; color:var(--primary);">?? Dashboard Progres</button>
+      <button class="btn-text" id="btn-board">?? Papan Skor Global</button>
+    </div>
+  </div>
+</section>
 
     <!-- LEVELS -->
     <section class="screen screen--levels" id="screen-levels">
@@ -935,6 +938,7 @@ html.dark .video-t{color:#EAF3EF;}
       localStorage.setItem('quizarena_user', JSON.stringify(data.user));
       document.getElementById('modal-login').close();
       updateAuthUI();
+  updateHomeUI();
       // Reload history if currently viewing
     } catch(er) { err.textContent = er.message; }
     finally { btn.disabled = false; }
@@ -970,29 +974,46 @@ html.dark .video-t{color:#EAF3EF;}
       if (!noTimer() && timer) {
         clearInterval(timer);
         timer = null;
-        const msg = document.createElement("div");
-        msg.id = "pause-overlay";
-        msg.style.position = "fixed";
-        msg.style.top = "0"; msg.style.left = "0"; msg.style.width = "100%"; msg.style.height = "100%";
-        msg.style.background = "rgba(0,0,0,0.8)"; msg.style.color = "white"; msg.style.zIndex = "9999";
-        msg.style.display = "flex"; msg.style.flexDirection = "column"; msg.style.justifyContent = "center"; msg.style.alignItems = "center";
-        msg.innerHTML = "<h2>Timer dijeda karena Anda berpindah tab</h2><button class='btn btn--primary' style='margin-top:20px;' onclick='resumeFromPause()'>Lanjutkan</button>";
-        document.body.appendChild(msg);
+        let overlay = document.getElementById("pause-overlay");
+        if (!overlay) {
+          overlay = document.createElement("div");
+          overlay.id = "pause-overlay";
+          overlay.style.position = "fixed";
+          overlay.style.top = "0"; overlay.style.left = "0"; overlay.style.width = "100%"; overlay.style.height = "100%";
+          overlay.style.background = "rgba(0,0,0,0.8)"; overlay.style.color = "white"; overlay.style.zIndex = "9999";
+          overlay.style.display = "flex"; overlay.style.flexDirection = "column"; overlay.style.justifyContent = "center"; overlay.style.alignItems = "center";
+          overlay.style.backdropFilter = "blur(4px)";
+          overlay.setAttribute("role", "dialog");
+          overlay.setAttribute("aria-modal", "true");
+          overlay.setAttribute("aria-label", "Kuis Dijeda");
+          document.body.appendChild(overlay);
+        }
+        overlay.innerHTML = "<h2 style=\"margin-bottom:12px;\">Kuis Dijeda</h2><p style=\"margin-bottom:24px;\">Waktu berhenti sementara karena tab tidak aktif.</p><button id=\"btn-resume-quiz\" class=\"btn btn--primary\" style=\"margin-top:20px;\">Lanjutkan Kuis</button>";
+        
+        const btn = overlay.querySelector("#btn-resume-quiz");
+        btn.addEventListener("click", () => {
+          overlay.remove();
+          if (!noTimer()) {
+            startTimer();
+          }
+        });
+        
+        // Trap focus
+        setTimeout(() => btn.focus(), 50);
+        overlay.addEventListener("keydown", (e) => {
+          if (e.key === "Tab") {
+             e.preventDefault();
+             btn.focus();
+          }
+          if (e.key === "Escape") {
+             e.preventDefault(); // Do not allow bypass
+          }
+        });
       }
     }
   });
   
-  window.resumeFromPause = function() {
-      const msg = document.getElementById("pause-overlay");
-      if (msg) msg.remove();
-      if (!noTimer() && !answered) {
-          timer = setInterval(() => { 
-              timeLeft--; 
-              updateTimerUI(); 
-              if (timeLeft <= 0) { clearInterval(timer); if (!answered) lockOut(); } 
-          }, 1000);
-      }
-  };
+  
 
   let allQuestions = [];
   updateAuthUI();
@@ -1357,12 +1378,42 @@ function getRecommendedLevel(acc) {
   }
 
   
-  function handleStart() {
-    if (!localStorage.getItem(APP + "_onboarded")) {
-       startDiagnostic();
+  
+  function updateHomeUI() {
+    const isNew = !localStorage.getItem(APP + "_onboarded");
+    const hasDiag = !!localStorage.getItem(APP + "_best_Diagnostic Test");
+    const container = $("home-dynamic-action");
+    
+    const s = typeof getStreak === "function" ? getStreak() : 0;
+    if(s > 0) {
+       $("streak-home").textContent = "?? Streak " + s + " hari!";
+       $("streak-home").hidden = false;
     } else {
-       goToLevels();
+       if ($("streak-home")) $("streak-home").hidden = true;
     }
+
+    if (isNew && !hasDiag) {
+      container.innerHTML = `<h3 style="margin-bottom:8px;">Mulai Perjalananmu</h3>
+        <p style="font-size:14px; color:var(--text-muted); margin-bottom:16px;">15 soal, tanpa timer, sekitar 5�7 menit untuk mengetahui kemampuan awalmu.</p>
+        <button class="btn btn--primary btn--lg" id="btn-start-diag" style="width:100%">Mulai Placement Test <span class="btn-arrow">?</span></button>`;
+      $("btn-start-diag").addEventListener("click", () => { localStorage.setItem(APP + "_onboarded", "1"); startDiagnostic(); });
+    } else if (hasDiag && (typeof getStats === "function" ? getStats().attempts < 2 : true)) {
+      let rec = typeof getRecommendedLevel === "function" ? getRecommendedLevel() : 1;
+      container.innerHTML = `<h3 style="margin-bottom:8px;">Rekomendasi Level</h3>
+        <p style="font-size:14px; color:var(--text-muted); margin-bottom:16px;">Level ini dipilih dari hasil placement test Anda.</p>
+        <button class="btn btn--primary btn--lg" id="btn-start-rec" style="width:100%">Mulai Level ` + rec + ` <span class="btn-arrow">?</span></button>`;
+      $("btn-start-rec").addEventListener("click", () => { startLevel(rec); });
+    } else {
+      container.innerHTML = `<h3 style="margin-bottom:8px;">Lanjutkan Belajar</h3>
+        <button class="btn btn--primary btn--lg" id="btn-start-rec" style="width:100%; margin-bottom:8px;">Lanjut Level Berikutnya <span class="btn-arrow">?</span></button>
+        <button class="btn btn--soft" id="btn-choose-level" style="width:100%">Pilih Level Lain</button>`;
+      $("btn-start-rec").addEventListener("click", () => { startLevel(typeof getRecommendedLevel === "function" ? getRecommendedLevel() : 1); });
+      $("btn-choose-level").addEventListener("click", typeof goToLevels === "function" ? goToLevels : () => {});
+    }
+  }
+
+  function handleStart() {
+    // Old handleStart replaced, init is now handled via updateHomeUI
   }
   
   function startDiagnostic() {
@@ -1686,7 +1737,9 @@ function getRecommendedLevel(acc) {
     $("question-tag").textContent = q.category || (qmode === "type" ? "Ketik Jawaban" : "Pilihan Ganda");
     $("question-text").textContent = q.q;
     $("explain-box").hidden = true;
-    $("btn-next").hidden = true;
+    $("btn-next").hidden = false;
+    $("btn-next").disabled = true;
+    $("btn-next").textContent = "Lanjut ke Soal Berikutnya ?";
     $("btn-next").disabled = false;
 
     const player = players[cp()];
@@ -2541,29 +2594,29 @@ function getRecommendedLevel(acc) {
     </dialog>
 \n
     <!-- LOGIN MODAL -->
-    <dialog id="modal-login" style="border:none; border-radius:16px; padding:24px; max-width:400px; width:90%; background:var(--surface); color:var(--text); box-shadow:0 10px 30px rgba(0,0,0,0.2); position:fixed; top:50%; left:50%; transform:translate(-50%, -50%);">
+    <dialog id="modal-login" role="dialog" aria-modal="true" aria-labelledby="modal-login-title" style="border:none; border-radius:16px; padding:24px; max-width:400px; width:90%; background:var(--surface); color:var(--text); box-shadow:0 10px 30px rgba(0,0,0,0.2); position:fixed; top:50%; left:50%; transform:translate(-50%, -50%);">
       <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
-        <h2 style="font-size:20px; color:var(--primary);">Login</h2>
+        <h2 id="modal-login-title" style="font-size:20px; color:var(--primary);">Login</h2>
         <button class="btn-text" onclick="document.getElementById('modal-login').close()" aria-label="Tutup">✕</button>
       </div>
       <form id="form-login" onsubmit="handleLogin(event)">
-        <div class="field"><label>Email</label><input type="email" id="login-email" required></div>
-        <div class="field"><label>Password</label><input type="password" id="login-password" required></div>
-        <p id="login-error" style="color:var(--danger); font-size:12px; margin-bottom:10px;"></p>
+        <div class="field"><label>Email</label><input type="email" id="login-email" required aria-describedby="login-error"></div>
+        <div class="field"><label>Password</label><input type="password" id="login-password" required aria-describedby="login-error"></div>
+        <p id="login-error" aria-live="assertive" role="alert" style="color:var(--danger); font-size:12px; margin-bottom:10px;"></p>
         <button type="submit" class="btn btn--primary" style="width:100%">Login</button>
       </form>
     </dialog>
 
     <!-- REGISTER MODAL -->
-    <dialog id="modal-register" style="border:none; border-radius:16px; padding:24px; max-width:400px; width:90%; background:var(--surface); color:var(--text); box-shadow:0 10px 30px rgba(0,0,0,0.2); position:fixed; top:50%; left:50%; transform:translate(-50%, -50%);">
+    <dialog id="modal-register" role="dialog" aria-modal="true" aria-labelledby="modal-register-title" style="border:none; border-radius:16px; padding:24px; max-width:400px; width:90%; background:var(--surface); color:var(--text); box-shadow:0 10px 30px rgba(0,0,0,0.2); position:fixed; top:50%; left:50%; transform:translate(-50%, -50%);">
       <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
-        <h2 style="font-size:20px; color:var(--primary);">Daftar</h2>
+        <h2 id="modal-register-title" style="font-size:20px; color:var(--primary);">Daftar</h2>
         <button class="btn-text" onclick="document.getElementById('modal-register').close()" aria-label="Tutup">✕</button>
       </div>
       <form id="form-register" onsubmit="handleRegister(event)">
-        <div class="field"><label>Email</label><input type="email" id="reg-email" required></div>
-        <div class="field"><label>Password</label><input type="password" id="reg-password" minlength="8" required></div>
-        <p id="reg-error" style="color:var(--danger); font-size:12px; margin-bottom:10px;"></p>
+        <div class="field"><label>Email</label><input type="email" id="reg-email" required aria-describedby="reg-error"></div>
+        <div class="field"><label>Password</label><input type="password" id="reg-password" minlength="8" required aria-describedby="reg-error"></div>
+        <p id="reg-error" aria-live="assertive" role="alert" style="color:var(--danger); font-size:12px; margin-bottom:10px;"></p>
         <button type="submit" class="btn btn--primary" style="width:100%">Daftar</button>
       </form>
     </dialog>

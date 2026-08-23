@@ -4,57 +4,55 @@
 The database credential (embedded in DATABASE_URL / MYSQL_URL) was exposed in a terminal transcript. The database currently hosts the P1 schema and 900 question bank records.
 
 ## Technical Risk: The Initialization Trap
-In standard MySQL Docker images (which Railway uses under the hood for its managed MySQL plugins), environment variables like MYSQL_ROOT_PASSWORD, MYSQL_PASSWORD, MYSQL_USER, and MYSQL_DATABASE are **only consumed during the initial startup** (when the /var/lib/mysql data directory is empty).
-
-> [!WARNING]
-> If you blindly click "Generate" to change MYSQLPASSWORD or MYSQL_ROOT_PASSWORD in the Railway Variables tab on an *existing* database, the environment variables will change, but the actual password stored inside the MySQL database *will remain the old password*.
-> This causes a desync: ${{MySQL.MYSQL_URL}} will inject the *new* (incorrect) password into the backend, causing the backend to fail to connect with "Access denied for user".
+In standard MySQL Docker images (which Railway uses under the hood for its managed MySQL plugins), environment variables like MYSQL_ROOT_PASSWORD, MYSQL_PASSWORD, MYSQL_USER, and MYSQL_DATABASE are **only consumed during the initial startup**. Changing variables in the dashboard blindly does not change internal passwords.
 
 ## Decision Tree
 
-### Path A: Railway Official Reset (Recommended if available)
-If Railway provides a native, official way to reset credentials that handles both the environment variables and the internal database user:
-1. Trigger the official reset via the Railway Dashboard.
-2. Ensure the backend uses the dynamic reference ${{MySQL.MYSQL_URL}}.
-3. Redeploy the backend.
-4. Verify /health returns 200 OK.
+**Mechanism Status**: Railway official reset: unknown; private app-user rotation: pending operator approval.
 
-### Path B: Zero-Downtime Manual Least-Privilege User (Verified Fallback)
-If Path A is unavailable or untrusted, we manually provision a new user, switch the backend, and then revoke the compromised user.
+### Path A: Railway Official Reset
+If Railway provides a native, official way to reset credentials that automatically synchronizes internal database users and environment variables, use it. Verify that the backend connects over the private network.
 
-1. **Create New Application User**
-   Connect to the MySQL instance via the Railway CLI or internal query runner using the *current* (compromised) root credentials.
-   ```sql
-   CREATE USER 'quizarena_app'@'%' IDENTIFIED BY '<NEW_STRONG_PASSWORD>';
-   GRANT SELECT, INSERT, UPDATE, DELETE ON railway.* TO 'quizarena_app'@'%';
-   FLUSH PRIVILEGES;
-   ```
-2. **Update Backend Variables**
-   In the Railway Dashboard for the Backend service, change DATABASE_URL from the auto-reference to a manually constructed URL using the new user:
-   mysql://quizarena_app:<NEW_STRONG_PASSWORD>@<RAILWAY_TCP_PROXY_HOST>:<PORT>/railway
-   *(Alternatively, configure Railway custom variables if available).*
-3. **Redeploy and Verify**
-   Deploy the backend and run the health check:
-   curl -s https://quizarena-production-3105.up.railway.app/health
-   Ensure it returns {"status":"ok","database":"connected"}.
-4. **Revoke Compromised Credentials**
-   Only after Step 3 succeeds, return to the database and change the root/compromised user password to lock out the exposed credential:
-   ```sql
-   ALTER USER 'root'@'%' IDENTIFIED BY '<ANOTHER_NEW_RANDOM_PASSWORD>';
-   FLUSH PRIVILEGES;
-   ```
-   *Update the Railway Variables tab to match this new root password so ${{MySQL.MYSQL_URL}} stays in sync for future admin use.*
+### Path B: Zero-Downtime Private Manual Rotation (Pending Operator Approval)
+If Path A is unavailable, we must provision a least-privilege user via internal MySQL commands and configure the backend to use the private network. **No Public TCP Proxy may be used.**
+
+#### Step 1: SQL Plan for Operator Execution (Do Not Run Automatically)
+The operator must securely run the following SQL via an internal query runner or a temporary secure private-network jumpbox. **Never use a Public TCP Proxy.**
+*The database name might differ from `railway`. Verify before granting.*
+```sql
+CREATE USER 'quizarena_app'@'%' IDENTIFIED BY '<SECRET_PASSWORD_FROM_VAULT>';
+GRANT SELECT, INSERT, UPDATE, DELETE ON `<ACTUAL_DATABASE_NAME>`.* TO 'quizarena_app'@'%';
+FLUSH PRIVILEGES;
+```
+
+#### Step 2: Configure Private Variable Composition
+Railway supports dynamic environment variable composition. The operator must create private secrets on the Backend service:
+- `APP_DB_USER` (set to `quizarena_app`)
+- `APP_DB_PASSWORD` (set to the secure password)
+
+Then, update `DATABASE_URL` on the Backend service to use private composition instead of the default reference, avoiding public endpoints:
+`mysql://${{APP_DB_USER}}:${{APP_DB_PASSWORD}}@${{MySQL.MYSQLHOST}}:${{MySQL.MYSQLPORT}}/${{MySQL.MYSQL_DATABASE}}`
+
+#### Step 3: Deployment and Verification
+- Deploy the Backend service.
+- Wait for it to become ready.
+- Verify private connectivity: `curl -s https://quizarena-production-3105.up.railway.app/health`
+- **Success Criteria**: HTTP 200 with `{"status":"ok","database":"connected"}`
+
+#### Step 4: Revocation (Safe Point)
+- **If Step 3 succeeds**: Securely connect back to MySQL and alter the compromised account password (`ALTER USER 'root'@'%' IDENTIFIED BY ...`), locking it out. Then update the Database service variables to match this new admin password to avoid desyncs.
+- **If Step 3 fails (503)**: DO NOT revoke the old account. Roll back the `DATABASE_URL` to `${{MySQL.MYSQL_URL}}` to restore application uptime, and investigate the error.
 
 ### Path C: Blocked / Unsupported
-If neither Path A nor Path B is feasible (e.g., lack of CLI access, lack of admin rights to CREATE USER), stop immediately. **Do not** delete the database or attempt destructive changes. Contact Railway Support to request a secure password rotation.
+If variable composition is not supported or internal SQL execution is not possible without a public TCP proxy, stop immediately. Contact Railway Support to request a secure password rotation.
 
 ---
 
 ## Operator Checklist
-- [ ] **Analyze**: Check the Railway MySQL Dashboard. Does a specific "Reset Credentials" button exist that guarantees internal sync?
-  - Yes: Use Path A.
-  - No: Use Path B.
-- [ ] **Execute**: Follow the steps in the chosen path carefully.
-- [ ] **Validate**:
-  - GET /health must return HTTP 200 {"status":"ok","database":"connected"}
-- [ ] **Finalize**: Revoke or lock out the old credentials. If /health returns 503, **STOP** and do not drop the old user. Revert the DATABASE_URL to the old credential if needed to restore service while debugging.
+- [ ] **Analyze**: Verify if Path A exists. If not, proceed to Path B.
+- [ ] **Review SQL Plan**: Approve the exact SQL statements and verify the database name.
+- [ ] **Execute SQL**: Run the `CREATE USER` and `GRANT` statements securely.
+- [ ] **Set Variables**: Define `APP_DB_USER`, `APP_DB_PASSWORD`, and compose the private `DATABASE_URL`.
+- [ ] **Deploy & Validate**: Ensure `/health` returns 200.
+- [ ] **Finalize**: Only lock out the compromised root credential AFTER the app connects successfully.
+
