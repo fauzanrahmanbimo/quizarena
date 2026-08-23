@@ -1,54 +1,45 @@
 # Laporan Pengembangan: Penambahan Level 21-30
 
 ## Tujuan Tugas
-Menambahkan Latihan/Level 21 sampai 30 beserta konten pertanyaannya tanpa merusak fitur dan level 1-20 yang sudah ada. Menjamin kelancaran alur navigasi kurikulum, serta mengimplementasikan skrip validasi lokal untuk menjamin integritas data pertanyaan.
+Menambahkan Latihan/Level 21 sampai 30 beserta konten pertanyaannya tanpa merusak fitur dan level 1-20 yang sudah ada. Menjamin kelancaran alur navigasi kurikulum, serta mengimplementasikan skrip validasi lokal dan melakukan audit QA (Konten, UI, Navigasi) secara mendalam.
 
 ## Informasi Git
 - **Branch:** feature/levels-21-30
-- **URL Pull Request:** (Akan diisi setelah PR dibuat)
+- **URL Pull Request:** https://github.com/fauzanrahmanbimo/quizarena/pull/8
 
 ## Lingkungan & Deployment
-- **URL Preview Vercel:** (Akan tersedia setelah PR dibuat dan Vercel memproses)
+- **URL Preview Vercel:** (Tersedia pada halaman PR di GitHub)
 
-## Daftar File yang Berubah
-- `questions/default.json` - Menambahkan 300 pertanyaan baru untuk level 21 hingga 30. Total pertanyaan bertambah dari 600 menjadi 900.
-- `level_meta.json` - Menambahkan metadata untuk level 21 hingga 30 (nama level, kesulitan, deskripsi, emoji).
-- `index.html` - Menambahkan konten "MATERI" pembelajaran untuk level 21-30. Memperbaiki logika `finish()` agar memunculkan pesan tamat pada Level 30 ("Selamat! Anda telah menyelesaikan seluruh 30 latihan.").
-- `scripts/validate-question-bank.js` - Skrip validasi baru untuk memeriksa integritas ID, _originalLevel, metadata, format opsi, jawaban, dan kelengkapan 900 pertanyaan.
+## Daftar File yang Berubah (1 Commit Aktual)
+- `questions/default.json` - Menambahkan 300 pertanyaan baru untuk level 21 hingga 30.
+- `level_meta.json` - Menambahkan 10 metadata level baru.
+- `index.html` - Menambahkan konten "MATERI" pembelajaran untuk level 21-30 dan pesan tamat Level 30.
+- `scripts/validate-question-bank.js` - Menambahkan skrip validasi QA lokal.
+- `CONTENT_AUDIT_LEVELS_21_30.md` - Laporan audit spesifik QA konten untuk Level 21-30.
 
 ## Ringkasan Perubahan Perilaku Aplikasi
-- **Daftar Level:** Pengguna kini akan melihat "Level 21–30" pada tab navigasi halaman beranda yang dirender secara otomatis berdasarkan pagination.
-- **Kurikulum Level 21-30:**
-  - Level 21: Daily Activities Lanjutan (Sedang)
-  - Level 22: Telling Time & Schedules (Sedang)
-  - Level 23: Places, Directions & Transportation (Sedang)
-  - Level 24: Food, Shopping & Quantities (Sedang)
-  - Level 25: Simple Present vs Present Continuous (Sedang)
-  - Level 26: Simple Past Tense (Sulit)
-  - Level 27: Future Plans: Will & Going To (Sulit)
-  - Level 28: Comparative & Superlative Adjectives (Sulit)
-  - Level 29: Reading Comprehension Dasar (Sulit)
-  - Level 30: Final Challenge: Mixed English Skills (Sulit)
-- **Navigasi Akhir:** Menyelesaikan Level 20 akan otomatis menampilkan opsi tombol ke Level 21. Namun, pada saat menyelesaikan Level 30 (maksimal), tombol "Level Berikutnya" tidak akan muncul dan digantikan oleh pesan apresiasi khusus kelulusan seluruh kurikulum.
-- **Level 1-20:** Tidak ada file maupun logika di level 1-20 yang diubah atau dirusak. Konsistensi UI dan UX dipertahankan sepenuhnya.
+- Pengguna melihat tab navigasi "Level 21–30". 
+- Kurikulum Level 21-30 tersedia.
+- Menekan "Level Berikutnya" di Level 20 menuju ke Level 21 secara otomatis.
+- Menyelesaikan Level 30 tidak akan memunculkan "Level Berikutnya", tetapi akan memunculkan "Selamat! Anda telah menyelesaikan seluruh 30 latihan."
 
 ## Pengujian
-**Perintah Pengujian yang Dijalankan:**
-`node scripts/validate-question-bank.js`
-
-**Hasil Pengujian:**
-Lolos. Seluruh 900 pertanyaan dan 30 metadata dinyatakan valid.
-- Tidak ada ID duplikat.
-- Setiap level (1-30) tepat memiliki 30 soal.
-- Semua atribut (_originalLevel, question, options, correctIndex, explanation, dll.) lengkap.
+1. **Validasi Skrip JSON:**
+   `node scripts/validate-question-bank.js` berjalan dengan *0 error*.
+2. **Audit Konten QA:**
+   Dari 300 soal, ditemukan 6 soal pada Level 21 yang tidak memiliki tanda baca titik di akhir kalimat. Telah diperbaiki langsung.
+3. **Audit Logika & Fallback (Puppeteer Local Test):**
+   - **USE_BACKEND = false:** Level 21-30 tetap ter-load melalui `default.json` dan kuis bisa dimainkan normal (teruji membuka pertanyaan pertama Level 21).
+   - **Simulasi Backend Error:** URL backend sengaja disalahkan. Aplikasi menampung kegagalan tanpa *blank screen* dan fallback ke `default.json` tetap memunculkan level dengan lancar.
+4. **Audit UI & Aksesibilitas:**
+   - Tab khusus dinamakan dengan eksplisit `"Level 21–30"` yang mudah dibedakan.
+   - Semua *page-tab* diuji dapat dinavigasi mulus via tombol **Tab** dan dipicu melalui **Enter** pada skrip *Puppeteer*.
 
 ## Risiko dan Keterbatasan
-File `questions/default.json` kini berukuran lebih besar akibat memuat 900 pertanyaan. Namun karena mekanisme pengambilan JSON masih sangat cepat dan efisien di memori browser modern, dampaknya terhadap performa sangat minim. Tidak ada backend terikat dalam tugas ini; fallback statis terjamin aman.
+- JSON membengkak menjadi 900 soal, namun performa parsial pada browser masih stabil.
 
 ## Langkah Pengujian Manual
-1. Buka URL Preview Vercel saat sudah tersedia.
-2. Pada halaman awal (Daftar Level), klik tab "Level 21–30". Pastikan 10 level baru muncul.
-3. Klik Level 21, klik "Mulai Kuis", dan pastikan pertanyaan berjalan.
-4. **Uji Navigasi Level 20 ke 21:** Selesaikan Level 20 (atau ubah stat currentLevel menjadi 19 pada console), lalu pastikan tombol "Level Berikutnya" tampil dan berhasil membuka Level 21.
-5. **Uji Selesai Level 30:** Selesaikan Level 30, lalu pastikan tombol "Level Berikutnya" disembunyikan dan terdapat pesan "Selamat! Anda telah menyelesaikan seluruh 30 latihan."
-6. Uji fitur Mode Latihan (pembahasan instan) dan Tinjau Jawaban pada salah satu level baru.
+1. Buka URL Preview Vercel.
+2. Klik tombol navigasi level menggunakan tombol Tab pada Keyboard.
+3. Buka Level 21, mainkan.
+4. Modifikasi konfigurasi jika ingin menguji fallback, matikan koneksi internet sesaat.
