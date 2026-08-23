@@ -130,7 +130,9 @@ Pop-Location
 ### H. Final Health Check
 Buka browser Anda dan kunjungi endpoint backend Railway nyata:
 `https://<domain-backend-anda>/health`
-**Harapan:** `HTTP 200 {"status":"ok","database":"connected"}`
+
+**Harapan Wajib:** `HTTP 200 {"status":"ok","database":"connected"}`. 
+*(Catatan: Endpoint `/health` murni mengecek koneksi `SELECT 1`. Oleh karena itu, ia HARUS tetap 200 sepanjang MySQL online, baik sebelum maupun sesudah migrasi/seed dilakukan).*
 
 ---
 

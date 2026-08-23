@@ -2,6 +2,7 @@ require('dotenv').config();
 const fs = require('fs');
 const path = require('path');
 const mysql = require('mysql2/promise');
+const { getDatabaseConfig } = require('../config/database-url');
 
 async function verifyParity() {
   console.log('Starting Parity Verification...');
@@ -10,19 +11,15 @@ async function verifyParity() {
   const rawData = fs.readFileSync(jsonPath, 'utf8');
   const sourceData = JSON.parse(rawData);
 
-  const config = process.env.DATABASE_URL 
-    ? process.env.DATABASE_URL
-    : {
-        host: process.env.DB_HOST || 'localhost',
-        user: process.env.DB_USER || 'root',
-        password: process.env.DB_PASSWORD || '',
-        database: process.env.DB_NAME || 'quizarena',
-        waitForConnections: true,
-        connectionLimit: 5,
-      };
-  const pool = mysql.createPool(config);
-
+  let pool;
   try {
+    const config = getDatabaseConfig(false);
+    if (!config) {
+      console.warn('Parity check skipped. No test database available.');
+      process.exit(0);
+    }
+    pool = mysql.createPool(config);
+
     const [dbQuestions] = await pool.query('SELECT question_key FROM questions');
     const dbKeys = new Set(dbQuestions.map(q => q.question_key));
     const sourceKeys = new Set(sourceData.map(q => String(q.id)));
@@ -59,7 +56,7 @@ async function verifyParity() {
     console.error('Database error during parity check:', err);
     process.exit(1);
   } finally {
-    await pool.end();
+    if (pool) await pool.end();
   }
 }
 

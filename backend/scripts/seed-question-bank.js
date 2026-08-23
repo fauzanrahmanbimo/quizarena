@@ -2,14 +2,13 @@ require('dotenv').config();
 const fs = require('fs');
 const path = require('path');
 const mysql = require('mysql2/promise');
+const { getDatabaseConfig } = require('../config/database-url');
 
 const args = process.argv.slice(2);
 const isApply = args.includes('--apply');
 const dryRun = !isApply;
 
 function generateQuestionKey(q) {
-  // Since questions/default.json has a stable explicit `id` field for all 900 questions
-  // (e.g. 1, 2, "default_L29_Q30"), we will use it directly as the stable question_key.
   return String(q.id);
 }
 
@@ -70,20 +69,17 @@ async function runSeed() {
   }
 
   // --- DATABASE APPLY ---
-  const config = process.env.DATABASE_URL 
-    ? process.env.DATABASE_URL
-    : {
-        host: process.env.DB_HOST || 'localhost',
-        user: process.env.DB_USER || 'root',
-        password: process.env.DB_PASSWORD || '',
-        database: process.env.DB_NAME || 'quizarena',
-        waitForConnections: true,
-        connectionLimit: 5,
-      };
-  const pool = mysql.createPool(config);
-
-  const connection = await pool.getConnection();
+  let pool;
+  let connection;
   try {
+    const config = getDatabaseConfig(false);
+    if (!config) {
+      console.error('FATAL: DATABASE_URL missing');
+      process.exit(1);
+    }
+    pool = mysql.createPool(config);
+    connection = await pool.getConnection();
+
     await connection.beginTransaction();
 
     let levelsInserted = 0;
@@ -129,12 +125,12 @@ async function runSeed() {
     await connection.commit();
     console.log(`APPLY SUCCESS: Levels processed: ${levelsSet.size}. Questions inserted: ${qInserted}, updated: ${qUpdated}.`);
   } catch (err) {
-    await connection.rollback();
+    if (connection) await connection.rollback();
     console.error('FATAL: Database error during seed. Rolled back.', err);
     process.exit(1);
   } finally {
-    connection.release();
-    await pool.end();
+    if (connection) connection.release();
+    if (pool) await pool.end();
   }
 }
 

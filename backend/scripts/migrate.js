@@ -2,20 +2,18 @@ require('dotenv').config();
 const mysql = require('mysql2/promise');
 const fs = require('fs');
 const path = require('path');
+const { getDatabaseConfig } = require('../config/database-url');
 
 async function runMigration(direction = 'up') {
-  const config = process.env.DATABASE_URL 
-    ? process.env.DATABASE_URL + (process.env.DATABASE_URL.includes('?') ? '&' : '?') + 'multipleStatements=true'
-    : {
-        host: process.env.DB_HOST || 'localhost',
-        user: process.env.DB_USER || 'root',
-        password: process.env.DB_PASSWORD || '',
-        database: process.env.DB_NAME || 'quizarena',
-        multipleStatements: true
-      };
-  const pool = mysql.createPool(config);
-
+  let pool;
   try {
+    const config = getDatabaseConfig(true); // Allow multipleStatements for migrations
+    if (!config) {
+      console.error('Migration failed: DATABASE_URL missing');
+      process.exit(1);
+    }
+    pool = mysql.createPool(config);
+
     // Ensure migrations table exists first
     await pool.query(`
       CREATE TABLE IF NOT EXISTS schema_migrations (
@@ -39,7 +37,6 @@ async function runMigration(direction = 'up') {
     const sql = fs.readFileSync(filePath, 'utf8');
     
     console.log(`Running migration: ${file}...`);
-    // DDL statements generally auto-commit in MySQL, but we do our best.
     await pool.query(sql);
     
     if (direction === 'up') {
@@ -55,7 +52,7 @@ async function runMigration(direction = 'up') {
     console.error('Migration failed:', err.message);
     process.exit(1);
   } finally {
-    await pool.end();
+    if (pool) await pool.end();
   }
 }
 
