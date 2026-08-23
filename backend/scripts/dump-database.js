@@ -10,12 +10,11 @@ async function runDump() {
   let configStr = getDatabaseConfig(false);
   
   if (!configStr || typeof configStr === 'object') {
-    // If it's an object, it means DATABASE_URL was missing. Check if we have individual DB vars.
     if (!process.env.DB_HOST || !process.env.DB_USER) {
        console.error('FATAL: No database credentials available to perform backup.');
        process.exit(1);
+       return;
     }
-    // We construct a mock URL to reuse logic
     configStr = `mysql://${process.env.DB_USER}:${process.env.DB_PASSWORD}@${process.env.DB_HOST}:${process.env.DB_PORT || 3306}/${process.env.DB_NAME}`;
   }
 
@@ -25,6 +24,16 @@ async function runDump() {
   const user = dbUrl.username;
   const password = dbUrl.password;
   const database = dbUrl.pathname.replace('/', '');
+
+  if (host.endsWith('.railway.internal')) {
+    console.error('FATAL: The DATABASE_URL points to a private Railway internal network (.railway.internal).');
+    console.error('Your local machine cannot connect to this private network directly via `railway run`.');
+    console.error('To proceed, please temporarily enable the "Public TCP Proxy" on your MySQL service in the Railway UI,');
+    console.error('update your local environment or use that public URL for the backup, and disable it afterward.');
+    console.error('Status: BACKUP BLOCKED');
+    process.exit(1);
+    return;
+  }
 
   const timestamp = new Date().toISOString().replace(/[:.]/g, '-');
   const backupDir = path.join(os.homedir(), 'Downloads', 'quizarena-db-backups');
@@ -39,19 +48,27 @@ async function runDump() {
   console.log(`Target database: ${database}`);
   console.log(`Destination: ${backupFile}`);
 
+  // Secure arguments: NO password in args, NO shell injection.
   const args = [
     `--host=${host}`,
     `--port=${port}`,
     `--user=${user}`,
-    `--password=${password}`,
     '--single-transaction',
     '--routines',
     '--events',
     '--triggers',
-    database
+    '--databases',
+    database,
+    '--default-character-set=utf8mb4'
   ];
 
+  // Inject password securely via environment variable
+  const env = Object.assign({}, process.env, {
+    MYSQL_PWD: password
+  });
+
   const dumpProcess = spawn('mysqldump', args, {
+    env,
     windowsHide: true,
   });
 
@@ -60,7 +77,6 @@ async function runDump() {
 
   let errorOutput = '';
   dumpProcess.stderr.on('data', (data) => {
-    // Note: mysqldump outputs a warning about using password on CLI. We ignore it safely.
     errorOutput += data.toString();
   });
 
@@ -68,11 +84,15 @@ async function runDump() {
     if (code === 0) {
       console.log('Backup completed successfully.');
       console.log(`File size: ${fs.statSync(backupFile).size} bytes.`);
-      console.log('You can now verify the backup using PowerShell.');
     } else {
       console.error('Backup failed. mysqldump exited with code:', code);
       if (errorOutput && !errorOutput.includes('Using a password on the command line interface can be insecure')) {
         console.error('Error details:', errorOutput);
+      }
+      // Remove partial file on failure
+      if (fs.existsSync(backupFile)) {
+        fs.unlinkSync(backupFile);
+        console.error('Partial backup file removed.');
       }
       process.exit(1);
     }
@@ -84,8 +104,15 @@ async function runDump() {
     } else {
       console.error('Failed to start mysqldump:', err);
     }
+    if (fs.existsSync(backupFile)) {
+      fs.unlinkSync(backupFile);
+    }
     process.exit(1);
   });
 }
 
-runDump();
+module.exports = { runDump };
+
+if (require.main === module) {
+  runDump();
+}

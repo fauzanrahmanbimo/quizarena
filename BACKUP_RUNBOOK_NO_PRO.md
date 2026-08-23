@@ -13,20 +13,21 @@ winget install Oracle.MySQL
 # Buka terminal PowerShell baru setelah instalasi agar PATH terbaca
 ```
 
-## 2. Posisikan Link Railway dan Folder
-Pastikan `railway status` Anda sudah terkait dengan service **backend** (yang memiliki environment variable lengkap).
+## 3. Eksekusi Backup Aman (LOCAL_TCP_PROXY)
+Karena *database* Railway secara standar berada di jaringan privat (`.railway.internal`), Anda tidak dapat menembusnya dari terminal lokal Anda secara langsung.
+
+1. Buka Railway Dashboard → MySQL → Settings.
+2. Aktifkan **Public TCP Proxy**.
+3. Railway akan memberi Anda kredensial publik (seperti `TCP Proxy Domain`, `TCP Proxy Port`, `Password`).
+4. Di terminal PowerShell lokal Anda, buat variabel sesi sementara (*session-only variable*) agar rahasia tidak masuk ke GitHub atau _chat_ riwayat:
 ```powershell
-# Tarik perubahan skrip backup terbaru
-git pull origin feature/p1-a-backend-sync
-# Pindah ke backend
-Push-Location backend
+$env:DATABASE_URL="mysql://root:<PASSWORD_DARI_UI>@<DOMAIN_PROXY>:<PORT>/quizarena"
 ```
+*(Ganti isinya dengan nilai riil dari UI. Ini akan hilang saat terminal ditutup).*
 
-## 3. Eksekusi Backup Aman
-Jalankan skrip dump yang sudah saya racik. Skrip ini akan secara otomatis membedah URL/Kredensial Railway dari `railway run` dan mem-parsingnya ke dalam *engine* eksekusi `mysqldump` terisolasi:
-
+5. Jalankan skrip *dump* terisolasi kita:
 ```powershell
-railway run node scripts/dump-database.js
+node scripts/dump-database.js
 ```
 
 **Harapan Output:**
