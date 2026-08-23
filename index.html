@@ -31,18 +31,18 @@
   --primary-light: #E0E7FF;
   
   /* Semantic Colors */
-  --success: #059669; /* WCAG AA */
+  --success: #047857; /* WCAG AA */
   --success-light: #D1FAE5;
-  --danger: #DC2626; /* WCAG AA */
+  --danger: #b91c1c; /* WCAG AA */
   --danger-light: #FEE2E2;
-  --warning: #D97706; /* WCAG AA */
+  --warning: #b45309; /* WCAG AA */
   --warning-light: #FEF3C7;
   
   /* Neutral Colors */
   --bg-main: #F3F4F6;
   --surface: #FFFFFF;
   --text-main: #111827;
-  --text-muted: #6B7280;
+  --text-muted: #4b5563;
   --border: #E5E7EB;
   
   /* Typography */
@@ -238,7 +238,7 @@ body {
 .answer.wrong { border-color: var(--danger); background: var(--danger-light); }
 .answer.wrong::before { background: var(--danger); }
 .answer.wrong::after { content: "\2715"; position: absolute; right: 16px; font-weight: 800; color: var(--danger); }
-.answer.dim { opacity: .5; }
+.answer.dim { opacity: .75; }
 
 /* floating points */
 .float-pts { position: fixed; font-family: var(--font-head); font-weight: 800; font-size: 28px; color: var(--success); pointer-events: none; z-index: 50; animation: floatPts 1s ease-out forwards; }
@@ -741,8 +741,8 @@ html.dark .video-t{color:#EAF3EF;}
       </header>
       <div class="vs-bar" id="vs-bar" hidden></div>
       <div class="level-tag" id="quiz-level-tag">Level 1</div>
-      <div class="progress-track"><div class="progress-fill" id="progress-fill" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div></div>
-      <div class="timer" id="timer"><div class="timer-bar" id="timer-bar"></div><span class="timer-num" id="timer-num" aria-live="off" aria-label="Sisa waktu">20</span></div>
+      <div class="progress-track"><div class="progress-fill" id="progress-fill" role="progressbar" aria-label="Kemajuan soal" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div></div>
+      <div class="timer" id="timer"><div class="timer-bar" id="timer-bar" role="progressbar" aria-label="Timer waktu kuis" aria-valuemin="0" aria-valuemax="100" aria-valuenow="100"></div><span class="timer-num" id="timer-num" aria-live="off" aria-label="Sisa waktu">20</span></div>
       <div class="card card--question">
         <button class="speak-btn" id="btn-speak" title="Dengar soal" aria-label="Dengar soal">🔊</button>
         <p class="question-tag" id="question-tag">Pilihan Ganda</p>
@@ -769,8 +769,8 @@ html.dark .video-t{color:#EAF3EF;}
         <div class="stat-grid" id="result-stats-grid">
           <div class="stat"><span class="stat__num" id="stat-acc">0%</span><span class="stat__label">Akurasi</span></div>
           <div class="stat"><span class="stat__num" id="stat-correct">0</span><span class="stat__label" style="color:var(--primary)">Benar</span></div>
-          <div class="stat"><span class="stat__num" id="stat-wrong">0</span><span class="stat__label" style="color:#ef4444">Salah</span></div>
-          <div class="stat"><span class="stat__num" id="stat-unanswered">0</span><span class="stat__label" style="color:#6b7280">Tidak Dijawab</span></div>
+          <div class="stat"><span class="stat__num" id="stat-wrong">0</span><span class="stat__label" style="color:#b91c1c">Salah</span></div>
+          <div class="stat"><span class="stat__num" id="stat-unanswered">0</span><span class="stat__label" style="color:#4b5563">Tidak Dijawab</span></div>
           <div class="stat"><span class="stat__num" id="stat-duration">0s</span><span class="stat__label">Durasi Total</span></div>
           <div class="stat"><span class="stat__num" id="stat-avg">0s</span><span class="stat__label">Rata-rata/Soal</span></div>
         </div>
@@ -824,7 +824,7 @@ html.dark .video-t{color:#EAF3EF;}
              <div style="display:flex; justify-content:space-between; text-align:center; font-size:12px;">
                  <div><div style="font-size:20px; font-weight:bold; color:var(--primary);" id="dash-path-completed">0</div>Selesai</div>
                  <div><div style="font-size:20px; font-weight:bold; color:#f59e0b;" id="dash-path-progress">0</div>Proses</div>
-                 <div><div style="font-size:20px; font-weight:bold; color:#6b7280;" id="dash-path-locked">0</div>Terkunci</div>
+                 <div><div style="font-size:20px; font-weight:bold; color:#4b5563;" id="dash-path-locked">0</div>Terkunci</div>
              </div>
              <button class="btn btn--soft" style="width:100%; margin-top:16px;" onclick="goToLevels()">Lihat Semua Level</button>
           </div>
@@ -834,7 +834,7 @@ html.dark .video-t{color:#EAF3EF;}
                 <h3 style="font-size:14px; color:#065f46; margin-bottom:8px;">Topik Kuat</h3>
                 <ul id="dash-topic-strong" style="font-size:13px; color:#064e3b; padding-left:16px; margin:0;"></ul>
              </div>
-             <div style="flex:1; min-width:140px; background:rgba(239, 68, 68, 0.1); border:1px solid #ef4444; padding:12px; border-radius:12px;">
+             <div style="flex:1; min-width:140px; background:rgba(220, 38, 38, 0.1); border:1px solid #b91c1c; padding:12px; border-radius:12px;">
                 <h3 style="font-size:14px; color:#991b1b; margin-bottom:8px;">Perlu Diulang</h3>
                 <ul id="dash-topic-weak" style="font-size:13px; color:#7f1d1d; padding-left:16px; margin:0;"></ul>
              </div>
@@ -1393,18 +1393,18 @@ function getRecommendedLevel(acc) {
     }
 
     if (isNew && !hasDiag) {
-      container.innerHTML = `<h3 style="margin-bottom:8px;">Mulai Perjalananmu</h3>
+      container.innerHTML = `<h2 style="margin-bottom:8px; font-size:18px;">Mulai Perjalananmu</h2>
         <p style="font-size:14px; color:var(--text-muted); margin-bottom:16px;">15 soal, tanpa timer, sekitar 5�7 menit untuk mengetahui kemampuan awalmu.</p>
         <button class="btn btn--primary btn--lg" id="btn-start-diag" style="width:100%">Mulai Placement Test <span class="btn-arrow">?</span></button>`;
       $("btn-start-diag")?.addEventListener("click", () => { localStorage.setItem(APP + "_onboarded", "1"); startDiagnostic(); });
     } else if (hasDiag && (typeof getStats === "function" ? getStats().attempts < 2 : true)) {
       let rec = typeof getRecommendedLevel === "function" ? getRecommendedLevel() : 1;
-      container.innerHTML = `<h3 style="margin-bottom:8px;">Rekomendasi Level</h3>
+      container.innerHTML = `<h2 style="margin-bottom:8px; font-size:18px;">Rekomendasi Level</h2>
         <p style="font-size:14px; color:var(--text-muted); margin-bottom:16px;">Level ini dipilih dari hasil placement test Anda.</p>
         <button class="btn btn--primary btn--lg" id="btn-start-rec" style="width:100%">Mulai Level ` + rec + ` <span class="btn-arrow">?</span></button>`;
       $("btn-start-rec")?.addEventListener("click", () => { startLevel(rec); });
     } else {
-      container.innerHTML = `<h3 style="margin-bottom:8px;">Lanjutkan Belajar</h3>
+      container.innerHTML = `<h2 style="margin-bottom:8px; font-size:18px;">Lanjutkan Belajar</h2>
         <button class="btn btn--primary btn--lg" id="btn-start-rec" style="width:100%; margin-bottom:8px;">Lanjut Level Berikutnya <span class="btn-arrow">?</span></button>
         <button class="btn btn--soft" id="btn-choose-level" style="width:100%">Pilih Level Lain</button>`;
       $("btn-start-rec")?.addEventListener("click", () => { startLevel(typeof getRecommendedLevel === "function" ? getRecommendedLevel() : 1); });
@@ -1737,10 +1737,8 @@ function getRecommendedLevel(acc) {
     $("question-tag").textContent = q.category || (qmode === "type" ? "Ketik Jawaban" : "Pilihan Ganda");
     $("question-text").textContent = q.q;
     $("explain-box").hidden = true;
-    $("btn-next").hidden = false;
+    $("btn-next").hidden = true;
     $("btn-next").disabled = true;
-    $("btn-next").textContent = "Lanjut ke Soal Berikutnya ?";
-    $("btn-next").disabled = false;
 
     const player = players[cp()];
     $("streak-pill").textContent = `\uD83D\uDD25 ${player.streak}`;
@@ -1858,6 +1856,7 @@ function getRecommendedLevel(acc) {
 
     $("btn-next").textContent = (idx + 1 >= questions.length) ? "Lihat Hasil \uD83C\uDF89" : "Lanjut \u2192";
     $("btn-next").hidden = false;
+    $("btn-next").disabled = false;
     $("btn-next").focus();
     renderVsBar();
   }
@@ -1989,7 +1988,7 @@ function getRecommendedLevel(acc) {
           $("result-status-badge").innerHTML = `<span style="background:#10B981; color:white; padding:4px 8px; border-radius:12px; font-size:12px;">Passed</span>`;
        } else {
           $("result-title").textContent = "Jangan menyerah!";
-          $("result-status-badge").innerHTML = `<span style="background:#ef4444; color:white; padding:4px 8px; border-radius:12px; font-size:12px;">Needs Practice</span>`;
+          $("result-status-badge").innerHTML = `<span style="background:#b91c1c; color:white; padding:4px 8px; border-radius:12px; font-size:12px;">Needs Practice</span>`;
        }
     }
     
@@ -2117,7 +2116,7 @@ function getRecommendedLevel(acc) {
        $('tab-rev-correct').className = "btn " + (status === 'correct' ? "btn--primary" : "btn--soft");
     };
     
-    function toggleReview() {
+    window.toggleReview = function toggleReview() {
     const r = $("review");
     r.hidden = !r.hidden;
     $("btn-review").textContent = r.hidden ? "Lihat Pembahasan" : "Sembunyikan Pembahasan";
@@ -2252,7 +2251,7 @@ function getRecommendedLevel(acc) {
            const r1 = document.createElement("div"); r1.style="font-weight:bold; color:var(--primary); font-size:14px;"; r1.textContent = r.accuracy + "%";
            const r2 = document.createElement("div"); r2.style="font-size:12px;"; 
            r2.textContent = r.passed === true ? "Lulus" : (r.passed === false ? "Gagal" : "-");
-           if (r.passed === false) r2.style.color = "#ef4444";
+           if (r.passed === false) r2.style.color = "#b91c1c";
            if (r.passed === true) r2.style.color = "#10B981";
            right.appendChild(r1); right.appendChild(r2);
            
@@ -2578,7 +2577,9 @@ function getRecommendedLevel(acc) {
       toggleReview: typeof toggleReview === 'function' ? toggleReview : undefined,
       filterReview: typeof filterReview === 'function' ? filterReview : undefined,
       getPlayer: () => players[0],
-      getQuestions: () => questions
+      getQuestions: () => questions,
+      setTimeLeft: (v) => { timeLeft = v; updateTimerUI(); },
+      getTimerBarClasses: () => { const b = document.getElementById('timer-bar'); return b ? [...b.classList] : []; }
   };
 })();
 </script>
@@ -2603,8 +2604,8 @@ function getRecommendedLevel(acc) {
         <button class="btn-text" onclick="document.getElementById('modal-login').close()" aria-label="Tutup">✕</button>
       </div>
       <form id="form-login" onsubmit="handleLogin(event)">
-        <div class="field"><label>Email</label><input type="email" id="login-email" required aria-describedby="login-error"></div>
-        <div class="field"><label>Password</label><input type="password" id="login-password" required aria-describedby="login-error"></div>
+        <div class="field"><label for="login-email">Email</label><input type="email" id="login-email" required aria-describedby="login-error"></div>
+        <div class="field"><label for="login-password">Password</label><input type="password" id="login-password" required aria-describedby="login-error"></div>
         <p id="login-error" aria-live="assertive" role="alert" style="color:var(--danger); font-size:12px; margin-bottom:10px;"></p>
         <button type="submit" class="btn btn--primary" style="width:100%">Login</button>
       </form>
@@ -2617,8 +2618,8 @@ function getRecommendedLevel(acc) {
         <button class="btn-text" onclick="document.getElementById('modal-register').close()" aria-label="Tutup">✕</button>
       </div>
       <form id="form-register" onsubmit="handleRegister(event)">
-        <div class="field"><label>Email</label><input type="email" id="reg-email" required aria-describedby="reg-error"></div>
-        <div class="field"><label>Password</label><input type="password" id="reg-password" minlength="8" required aria-describedby="reg-error"></div>
+        <div class="field"><label for="reg-email">Email</label><input type="email" id="reg-email" required aria-describedby="reg-error"></div>
+        <div class="field"><label for="reg-password">Password</label><input type="password" id="reg-password" minlength="8" required aria-describedby="reg-error"></div>
         <p id="reg-error" aria-live="assertive" role="alert" style="color:var(--danger); font-size:12px; margin-bottom:10px;"></p>
         <button type="submit" class="btn btn--primary" style="width:100%">Daftar</button>
       </form>
