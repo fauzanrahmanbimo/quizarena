@@ -13,3 +13,6 @@ dumps/
 .env
 .env.*
 !.env.example
+
+*.sql
+test-results/

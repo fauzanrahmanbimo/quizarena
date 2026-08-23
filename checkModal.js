@@ -1,1 +1,0 @@
-const fs=require("fs");const html=fs.readFileSync("index.html","utf8");const lines=html.split("\n");lines.forEach((l,i)=>{if(l.includes("id=\"modal-login\""))console.log((i+1)+":",l.trim().substring(0,200))});
