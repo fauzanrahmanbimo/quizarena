@@ -1,58 +1,54 @@
-# Laporan Pengembangan: Fitur Ekspor Bank Soal (JSON & CSV)
+# Laporan Pengembangan: Penambahan Level 21-30
 
 ## Tujuan Tugas
-Membangun kapabilitas untuk mengunduh seluruh direktori bank soal (gabungan dari bawaan/default dan soal yang diimpor pengguna) dalam format \JSON\ maupun \CSV\. Fitur ini beroperasi murni di sisi klien tanpa pelibatan _server_ tambahan, memfasilitasi kebutuhan *backup*, berbagi konten, atau analisis data *offline*.
+Menambahkan Latihan/Level 21 sampai 30 beserta konten pertanyaannya tanpa merusak fitur dan level 1-20 yang sudah ada. Menjamin kelancaran alur navigasi kurikulum, serta mengimplementasikan skrip validasi lokal untuk menjamin integritas data pertanyaan.
 
 ## Informasi Git
-- **Branch:** feature/export-question-bank
-- **Commit Hash Terbaru:** [akan diisi setelah commit]
-- **URL Pull Request:** [menunggu pembuatan PR]
+- **Branch:** feature/levels-21-30
+- **URL Pull Request:** (Akan diisi setelah PR dibuat)
 
 ## Lingkungan & Deployment
-- **URL Preview Vercel:** [akan muncul otomatis di komentar PR]
+- **URL Preview Vercel:** (Akan tersedia setelah PR dibuat dan Vercel memproses)
 
 ## Daftar File yang Berubah
-- \index.html\ - Diubah untuk menyisipkan UI dan interaksi \Ekspor Bank Soal\. Menambahkan *native dialog* \modal-export\ beserta fungsi global \window.exportBank()\ untuk memproses konversi _array_ soal menjadi _Blob_ berbasis MIME JSON dan CSV lalu memicu pengunduhan (*anchor tag click*).
+- `questions/default.json` - Menambahkan 300 pertanyaan baru untuk level 21 hingga 30. Total pertanyaan bertambah dari 600 menjadi 900.
+- `level_meta.json` - Menambahkan metadata untuk level 21 hingga 30 (nama level, kesulitan, deskripsi, emoji).
+- `index.html` - Menambahkan konten "MATERI" pembelajaran untuk level 21-30. Memperbaiki logika `finish()` agar memunculkan pesan tamat pada Level 30 ("Selamat! Anda telah menyelesaikan seluruh 30 latihan.").
+- `scripts/validate-question-bank.js` - Skrip validasi baru untuk memeriksa integritas ID, _originalLevel, metadata, format opsi, jawaban, dan kelengkapan 900 pertanyaan.
 
-## Deskripsi Fitur Ekspor & Cara Penggunaan
-Pada menu **"Kelola Bank Soal"**, tepat di atas blok *Impor Soal*, kini ditambahkan blok baru bertuliskan **"Ekspor Bank Soal"** dengan tombol berlabel **"?? Ekspor"**.
-- Mengeklik tombol akan membuka modal kecil ramah *mobile* (dapat ditutup via klik silang atau *Escape*).
-- Modal mempresentasikan dua pilihan: **Ekspor sebagai JSON** dan **Ekspor sebagai CSV**.
-- File unduhan otomatis dinamai \quizarena_questions.json\ atau \quizarena_questions.csv\ berisikan seluruh soal (bukan hanya soal khusus impor saja).
+## Ringkasan Perubahan Perilaku Aplikasi
+- **Daftar Level:** Pengguna kini akan melihat "Level 21–30" pada tab navigasi halaman beranda yang dirender secara otomatis berdasarkan pagination.
+- **Kurikulum Level 21-30:**
+  - Level 21: Daily Activities Lanjutan (Sedang)
+  - Level 22: Telling Time & Schedules (Sedang)
+  - Level 23: Places, Directions & Transportation (Sedang)
+  - Level 24: Food, Shopping & Quantities (Sedang)
+  - Level 25: Simple Present vs Present Continuous (Sedang)
+  - Level 26: Simple Past Tense (Sulit)
+  - Level 27: Future Plans: Will & Going To (Sulit)
+  - Level 28: Comparative & Superlative Adjectives (Sulit)
+  - Level 29: Reading Comprehension Dasar (Sulit)
+  - Level 30: Final Challenge: Mixed English Skills (Sulit)
+- **Navigasi Akhir:** Menyelesaikan Level 20 akan otomatis menampilkan opsi tombol ke Level 21. Namun, pada saat menyelesaikan Level 30 (maksimal), tombol "Level Berikutnya" tidak akan muncul dan digantikan oleh pesan apresiasi khusus kelulusan seluruh kurikulum.
+- **Level 1-20:** Tidak ada file maupun logika di level 1-20 yang diubah atau dirusak. Konsistensi UI dan UX dipertahankan sepenuhnya.
 
-## Skema dan Contoh Data Ekspor
-*Sistem mengonversi secara otomatis untuk memastikan kompatibilitas 1:1 antara format Ekspor dengan fungsi Impor yang ada.*
+## Pengujian
+**Perintah Pengujian yang Dijalankan:**
+`node scripts/validate-question-bank.js`
 
-**Format JSON:**
-\\\json
-[
-  {
-    "id": "q_1",
-    "category": "Matematika",
-    "difficulty": "Mudah",
-    "question": "Berapa 10 + 5?",
-    "options": ["10", "15", "20", "25"],
-    "correctIndex": 1,
-    "explanation": "Penjumlahan dasar."
-  }
-]
-\\\
+**Hasil Pengujian:**
+Lolos. Seluruh 900 pertanyaan dan 30 metadata dinyatakan valid.
+- Tidak ada ID duplikat.
+- Setiap level (1-30) tepat memiliki 30 soal.
+- Semua atribut (_originalLevel, question, options, correctIndex, explanation, dll.) lengkap.
 
-**Format CSV:**
-(Mendukung pelolosan koma di dalam string dengan tanda kutip ganda otomatis)
-\\\csv
-category,difficulty,question,option1,option2,option3,option4,correctIndex,explanation
-Matematika,Mudah,Berapa 10 + 5?,10,15,20,25,1,Penjumlahan dasar.
-"Bahasa, Inggris",Sedang,"Apa arti ""Cat""?",Anjing,Kucing,Burung,Ikan,1,Kosakata dasar.
-\\\
+## Risiko dan Keterbatasan
+File `questions/default.json` kini berukuran lebih besar akibat memuat 900 pertanyaan. Namun karena mekanisme pengambilan JSON masih sangat cepat dan efisien di memori browser modern, dampaknya terhadap performa sangat minim. Tidak ada backend terikat dalam tugas ini; fallback statis terjamin aman.
 
-## Pengujian Skenario (Fase 5)
-1. **Verifikasi Output:** Ekspor JSON berjalan mulus dan tervalidasi menggunakan struktur array \{ id, category, difficulty, question, options, correctIndex, explanation }\.
-2. **Parsing CSV Tangguh:** Ekspor CSV memproteksi teks yang berisi koma atau petik ganda dengan membungkusnya dalam *double quotes* \""\ sesuai standar RFC 4180.
-3. **Uji Impor Kembali:** File CSV yang diekspor dites untuk diimpor kembali *(re-import)* ke dalam kuis. Parser import berhasil menelan datanya tanpa penolakan kolom, membuktikan simetri antara format Ekspor & Impor.
-4. **Keutuhan Bank Soal:** Kedua format tervalidasi menyedot *variabel gabungan* dari \default.json\ dan isi \localStorage\, menghasilkan kelengkapan data absolut.
-5. **Aksesibilitas & UI:** Modal mematuhi *tab-index*, terpusat sempurna, dan tak meluber di ukuran layar lipat maupun *mobile* (375px).
-
-## Keterbatasan & Risiko
-- Proses komputasi *blob string* CSV beroperasi iteratif secara sinkron. Pada rentang 1.000-5.000 soal hal ini sama sekali tidak terasa (~5ms), namun bisa membekukan laju render UI sepersekian detik jika data menembus \>10.000\ baris.
-- **Kinerja Ekspor Data Skala Masif:** Mengingat algoritma berjalan secara sinkron (single-thread), performa ekspor dapat menurun secara eksponensial untuk data yang sangat besar (>10.000 soal), sehingga berisiko menunda responsivitas antarmuka selama komputasi berlangsung.
+## Langkah Pengujian Manual
+1. Buka URL Preview Vercel saat sudah tersedia.
+2. Pada halaman awal (Daftar Level), klik tab "Level 21–30". Pastikan 10 level baru muncul.
+3. Klik Level 21, klik "Mulai Kuis", dan pastikan pertanyaan berjalan.
+4. **Uji Navigasi Level 20 ke 21:** Selesaikan Level 20 (atau ubah stat currentLevel menjadi 19 pada console), lalu pastikan tombol "Level Berikutnya" tampil dan berhasil membuka Level 21.
+5. **Uji Selesai Level 30:** Selesaikan Level 30, lalu pastikan tombol "Level Berikutnya" disembunyikan dan terdapat pesan "Selamat! Anda telah menyelesaikan seluruh 30 latihan."
+6. Uji fitur Mode Latihan (pembahasan instan) dan Tinjau Jawaban pada salah satu level baru.

@@ -8998,5 +8998,4505 @@
     "correctIndex": 1,
     "explanation": "perintah → to + V1.",
     "_originalLevel": 20
+  },
+  {
+    "id": "default_L21_Q1",
+    "category": "Daily Activities Lanjutan",
+    "difficulty": "Sedang",
+    "question": "Fill in the blank: My mother ... has breakfast.",
+    "options": [
+      "sometimes",
+      "is sometimes",
+      "are sometimes",
+      "sometimess"
+    ],
+    "correctIndex": 0,
+    "explanation": "Adverb of frequency 'sometimes' ditempatkan sebelum kata kerja utama.",
+    "_originalLevel": 21
+  },
+  {
+    "id": "default_L21_Q2",
+    "category": "Daily Activities Lanjutan",
+    "difficulty": "Sedang",
+    "question": "What does She do first? She takes a shower, and then She goes to work.",
+    "options": [
+      "everything",
+      "nothing",
+      "takes a shower",
+      "goes to work"
+    ],
+    "correctIndex": 2,
+    "explanation": "Kata 'first' merujuk pada kegiatan pertama yaitu takes a shower.",
+    "_originalLevel": 21
+  },
+  {
+    "id": "default_L21_Q3",
+    "category": "Daily Activities Lanjutan",
+    "difficulty": "Sedang",
+    "question": "Fill in the blank: Tom and Jerry ... have breakfast every morning.",
+    "options": [
+      "aren't",
+      "doesn't",
+      "don't",
+      "isn't"
+    ],
+    "correctIndex": 2,
+    "explanation": "Subjek jamak 'Tom and Jerry' menggunakan 'don\\'t' untuk kalimat negatif.",
+    "_originalLevel": 21
+  },
+  {
+    "id": "default_L21_Q4",
+    "category": "Daily Activities Lanjutan",
+    "difficulty": "Sedang",
+    "question": "Change into interrogative: He reads books.",
+    "options": [
+      "Is He read?",
+      "Does He reads books?",
+      "Do He read?",
+      "Does He read?"
+    ],
+    "correctIndex": 3,
+    "explanation": "Subjek tunggal menggunakan 'Does' dan kata kerja kembali ke bentuk dasar.",
+    "_originalLevel": 21
+  },
+  {
+    "id": "default_L21_Q5",
+    "category": "Daily Activities Lanjutan",
+    "difficulty": "Sedang",
+    "question": "Rearrange: People / never / early / wake up",
+    "options": [
+      "People wake up early never",
+      "People wake up never early",
+      "People never wake up early",
+      "never People wake up early"
+    ],
+    "correctIndex": 2,
+    "explanation": "Urutan yang benar: Subjek + Adverb of frequency + Verb + Keterangan.",
+    "_originalLevel": 21
+  },
+  {
+    "id": "default_L21_Q6",
+    "category": "Daily Activities Lanjutan",
+    "difficulty": "Sedang",
+    "question": "Fill in the blank: He ... takes a shower.",
+    "options": [
+      "are usually",
+      "is usually",
+      "usuallys",
+      "usually"
+    ],
+    "correctIndex": 3,
+    "explanation": "Adverb of frequency 'usually' ditempatkan sebelum kata kerja utama.",
+    "_originalLevel": 21
+  },
+  {
+    "id": "default_L21_Q7",
+    "category": "Daily Activities Lanjutan",
+    "difficulty": "Sedang",
+    "question": "What does My mother do first? My mother goes to work, and then My mother has breakfast.",
+    "options": [
+      "goes to work",
+      "nothing",
+      "everything",
+      "has breakfast"
+    ],
+    "correctIndex": 0,
+    "explanation": "Kata 'first' merujuk pada kegiatan pertama yaitu goes to work.",
+    "_originalLevel": 21
+  },
+  {
+    "id": "default_L21_Q8",
+    "category": "Daily Activities Lanjutan",
+    "difficulty": "Sedang",
+    "question": "Fill in the blank: My friends ... go to work every morning.",
+    "options": [
+      "doesn't",
+      "isn't",
+      "aren't",
+      "don't"
+    ],
+    "correctIndex": 3,
+    "explanation": "Subjek jamak 'My friends' menggunakan 'don\\'t' untuk kalimat negatif.",
+    "_originalLevel": 21
+  },
+  {
+    "id": "default_L21_Q9",
+    "category": "Daily Activities Lanjutan",
+    "difficulty": "Sedang",
+    "question": "Change into interrogative: He reads books.",
+    "options": [
+      "Does He read?",
+      "Does He reads books?",
+      "Is He read?",
+      "Do He read?"
+    ],
+    "correctIndex": 0,
+    "explanation": "Subjek tunggal menggunakan 'Does' dan kata kerja kembali ke bentuk dasar.",
+    "_originalLevel": 21
+  },
+  {
+    "id": "default_L21_Q10",
+    "category": "Daily Activities Lanjutan",
+    "difficulty": "Sedang",
+    "question": "Rearrange: The students / often / early / wake up",
+    "options": [
+      "The students wake up often early",
+      "The students often wake up early",
+      "The students wake up early often",
+      "often The students wake up early"
+    ],
+    "correctIndex": 1,
+    "explanation": "Urutan yang benar: Subjek + Adverb of frequency + Verb + Keterangan.",
+    "_originalLevel": 21
+  },
+  {
+    "id": "default_L21_Q11",
+    "category": "Daily Activities Lanjutan",
+    "difficulty": "Sedang",
+    "question": "Fill in the blank: My dog ... goes to work.",
+    "options": [
+      "are often",
+      "often",
+      "oftens",
+      "is often"
+    ],
+    "correctIndex": 1,
+    "explanation": "Adverb of frequency 'often' ditempatkan sebelum kata kerja utama.",
+    "_originalLevel": 21
+  },
+  {
+    "id": "default_L21_Q12",
+    "category": "Daily Activities Lanjutan",
+    "difficulty": "Sedang",
+    "question": "What does Sarah do first? Sarah reads books, and then Sarah wakes up early.",
+    "options": [
+      "reads books",
+      "wakes up early",
+      "everything",
+      "nothing"
+    ],
+    "correctIndex": 0,
+    "explanation": "Kata 'first' merujuk pada kegiatan pertama yaitu reads books.",
+    "_originalLevel": 21
+  },
+  {
+    "id": "default_L21_Q13",
+    "category": "Daily Activities Lanjutan",
+    "difficulty": "Sedang",
+    "question": "Fill in the blank: I ... read books every morning.",
+    "options": [
+      "doesn't",
+      "aren't",
+      "isn't",
+      "don't"
+    ],
+    "correctIndex": 3,
+    "explanation": "Subjek jamak 'I' menggunakan 'don\\'t' untuk kalimat negatif.",
+    "_originalLevel": 21
+  },
+  {
+    "id": "default_L21_Q14",
+    "category": "Daily Activities Lanjutan",
+    "difficulty": "Sedang",
+    "question": "Change into interrogative: The teacher wakes up early.",
+    "options": [
+      "Does The teacher wakes up early?",
+      "Is The teacher wake?",
+      "Do The teacher wake?",
+      "Does The teacher wake?"
+    ],
+    "correctIndex": 3,
+    "explanation": "Subjek tunggal menggunakan 'Does' dan kata kerja kembali ke bentuk dasar.",
+    "_originalLevel": 21
+  },
+  {
+    "id": "default_L21_Q15",
+    "category": "Daily Activities Lanjutan",
+    "difficulty": "Sedang",
+    "question": "Rearrange: They / usually / early / wake up",
+    "options": [
+      "They wake up usually early",
+      "They wake up early usually",
+      "usually They wake up early",
+      "They usually wake up early"
+    ],
+    "correctIndex": 3,
+    "explanation": "Urutan yang benar: Subjek + Adverb of frequency + Verb + Keterangan.",
+    "_originalLevel": 21
+  },
+  {
+    "id": "default_L21_Q16",
+    "category": "Daily Activities Lanjutan",
+    "difficulty": "Sedang",
+    "question": "Fill in the blank: David ... takes a shower.",
+    "options": [
+      "rarelys",
+      "is rarely",
+      "rarely",
+      "are rarely"
+    ],
+    "correctIndex": 2,
+    "explanation": "Adverb of frequency 'rarely' ditempatkan sebelum kata kerja utama.",
+    "_originalLevel": 21
+  },
+  {
+    "id": "default_L21_Q17",
+    "category": "Daily Activities Lanjutan",
+    "difficulty": "Sedang",
+    "question": "What does She do first? She wakes up early, and then She reads books.",
+    "options": [
+      "wakes up early",
+      "reads books",
+      "nothing",
+      "everything"
+    ],
+    "correctIndex": 0,
+    "explanation": "Kata 'first' merujuk pada kegiatan pertama yaitu wakes up early.",
+    "_originalLevel": 21
+  },
+  {
+    "id": "default_L21_Q18",
+    "category": "Daily Activities Lanjutan",
+    "difficulty": "Sedang",
+    "question": "Fill in the blank: We ... read books every morning.",
+    "options": [
+      "isn't",
+      "doesn't",
+      "don't",
+      "aren't"
+    ],
+    "correctIndex": 2,
+    "explanation": "Subjek jamak 'We' menggunakan 'don\\'t' untuk kalimat negatif.",
+    "_originalLevel": 21
+  },
+  {
+    "id": "default_L21_Q19",
+    "category": "Daily Activities Lanjutan",
+    "difficulty": "Sedang",
+    "question": "Change into interrogative: My mother wakes up early.",
+    "options": [
+      "Does My mother wakes up early?",
+      "Does My mother wake?",
+      "Do My mother wake?",
+      "Is My mother wake?"
+    ],
+    "correctIndex": 1,
+    "explanation": "Subjek tunggal menggunakan 'Does' dan kata kerja kembali ke bentuk dasar.",
+    "_originalLevel": 21
+  },
+  {
+    "id": "default_L21_Q20",
+    "category": "Daily Activities Lanjutan",
+    "difficulty": "Sedang",
+    "question": "Rearrange: The students / rarely / early / wake up",
+    "options": [
+      "The students wake up early rarely",
+      "The students wake up rarely early",
+      "rarely The students wake up early",
+      "The students rarely wake up early"
+    ],
+    "correctIndex": 3,
+    "explanation": "Urutan yang benar: Subjek + Adverb of frequency + Verb + Keterangan.",
+    "_originalLevel": 21
+  },
+  {
+    "id": "default_L21_Q21",
+    "category": "Daily Activities Lanjutan",
+    "difficulty": "Sedang",
+    "question": "Fill in the blank: She ... takes a shower.",
+    "options": [
+      "never",
+      "are never",
+      "is never",
+      "nevers"
+    ],
+    "correctIndex": 0,
+    "explanation": "Adverb of frequency 'never' ditempatkan sebelum kata kerja utama.",
+    "_originalLevel": 21
+  },
+  {
+    "id": "default_L21_Q22",
+    "category": "Daily Activities Lanjutan",
+    "difficulty": "Sedang",
+    "question": "What does The teacher do first? The teacher reads books, and then The teacher wakes up early.",
+    "options": [
+      "nothing",
+      "reads books",
+      "wakes up early",
+      "everything"
+    ],
+    "correctIndex": 1,
+    "explanation": "Kata 'first' merujuk pada kegiatan pertama yaitu reads books.",
+    "_originalLevel": 21
+  },
+  {
+    "id": "default_L21_Q23",
+    "category": "Daily Activities Lanjutan",
+    "difficulty": "Sedang",
+    "question": "Fill in the blank: I ... take a shower every morning.",
+    "options": [
+      "isn't",
+      "aren't",
+      "don't",
+      "doesn't"
+    ],
+    "correctIndex": 2,
+    "explanation": "Subjek jamak 'I' menggunakan 'don\\'t' untuk kalimat negatif.",
+    "_originalLevel": 21
+  },
+  {
+    "id": "default_L21_Q24",
+    "category": "Daily Activities Lanjutan",
+    "difficulty": "Sedang",
+    "question": "Change into interrogative: He wakes up early.",
+    "options": [
+      "Does He wakes up early?",
+      "Is He wake?",
+      "Does He wake?",
+      "Do He wake?"
+    ],
+    "correctIndex": 2,
+    "explanation": "Subjek tunggal menggunakan 'Does' dan kata kerja kembali ke bentuk dasar.",
+    "_originalLevel": 21
+  },
+  {
+    "id": "default_L21_Q25",
+    "category": "Daily Activities Lanjutan",
+    "difficulty": "Sedang",
+    "question": "Rearrange: The students / usually / early / wake up",
+    "options": [
+      "The students wake up usually early",
+      "The students wake up early usually",
+      "usually The students wake up early",
+      "The students usually wake up early"
+    ],
+    "correctIndex": 3,
+    "explanation": "Urutan yang benar: Subjek + Adverb of frequency + Verb + Keterangan.",
+    "_originalLevel": 21
+  },
+  {
+    "id": "default_L21_Q26",
+    "category": "Daily Activities Lanjutan",
+    "difficulty": "Sedang",
+    "question": "Fill in the blank: My brother ... has breakfast.",
+    "options": [
+      "never",
+      "is never",
+      "are never",
+      "nevers"
+    ],
+    "correctIndex": 0,
+    "explanation": "Adverb of frequency 'never' ditempatkan sebelum kata kerja utama.",
+    "_originalLevel": 21
+  },
+  {
+    "id": "default_L21_Q27",
+    "category": "Daily Activities Lanjutan",
+    "difficulty": "Sedang",
+    "question": "What does The teacher do first? The teacher has breakfast, and then The teacher reads books.",
+    "options": [
+      "nothing",
+      "reads books",
+      "has breakfast",
+      "everything"
+    ],
+    "correctIndex": 2,
+    "explanation": "Kata 'first' merujuk pada kegiatan pertama yaitu has breakfast.",
+    "_originalLevel": 21
+  },
+  {
+    "id": "default_L21_Q28",
+    "category": "Daily Activities Lanjutan",
+    "difficulty": "Sedang",
+    "question": "Fill in the blank: People ... go to work every morning.",
+    "options": [
+      "don't",
+      "doesn't",
+      "aren't",
+      "isn't"
+    ],
+    "correctIndex": 0,
+    "explanation": "Subjek jamak 'People' menggunakan 'don\\'t' untuk kalimat negatif.",
+    "_originalLevel": 21
+  },
+  {
+    "id": "default_L21_Q29",
+    "category": "Daily Activities Lanjutan",
+    "difficulty": "Sedang",
+    "question": "Change into interrogative: The teacher reads books.",
+    "options": [
+      "Does The teacher read?",
+      "Is The teacher read?",
+      "Does The teacher reads books?",
+      "Do The teacher read?"
+    ],
+    "correctIndex": 0,
+    "explanation": "Subjek tunggal menggunakan 'Does' dan kata kerja kembali ke bentuk dasar.",
+    "_originalLevel": 21
+  },
+  {
+    "id": "default_L21_Q30",
+    "category": "Daily Activities Lanjutan",
+    "difficulty": "Sedang",
+    "question": "Rearrange: My friends / sometimes / early / wake up",
+    "options": [
+      "My friends wake up early sometimes",
+      "My friends wake up sometimes early",
+      "sometimes My friends wake up early",
+      "My friends sometimes wake up early"
+    ],
+    "correctIndex": 3,
+    "explanation": "Urutan yang benar: Subjek + Adverb of frequency + Verb + Keterangan.",
+    "_originalLevel": 21
+  },
+  {
+    "id": "default_L22_Q1",
+    "category": "Telling Time & Schedules",
+    "difficulty": "Sedang",
+    "question": "What time is 12:00?",
+    "options": [
+      "seven o'clock",
+      "a quarter to seven",
+      "half past seven",
+      "twelve o'clock"
+    ],
+    "correctIndex": 3,
+    "explanation": "12:00 dibaca twelve o'clock.",
+    "_originalLevel": 22
+  },
+  {
+    "id": "default_L22_Q2",
+    "category": "Telling Time & Schedules",
+    "difficulty": "Sedang",
+    "question": "Fill in the blank: The meeting is ... Monday.",
+    "options": [
+      "on",
+      "in",
+      "at",
+      "by"
+    ],
+    "correctIndex": 0,
+    "explanation": "Preposisi 'on' digunakan untuk nama hari.",
+    "_originalLevel": 22
+  },
+  {
+    "id": "default_L22_Q3",
+    "category": "Telling Time & Schedules",
+    "difficulty": "Sedang",
+    "question": "Fill in the blank: The train leaves ... 12:00.",
+    "options": [
+      "on",
+      "from",
+      "at",
+      "in"
+    ],
+    "correctIndex": 2,
+    "explanation": "Preposisi 'at' digunakan untuk waktu spesifik/jam.",
+    "_originalLevel": 22
+  },
+  {
+    "id": "default_L22_Q4",
+    "category": "Telling Time & Schedules",
+    "difficulty": "Sedang",
+    "question": "Fill in the blank: My birthday is ... May.",
+    "options": [
+      "in",
+      "for",
+      "on",
+      "at"
+    ],
+    "correctIndex": 0,
+    "explanation": "Preposisi 'in' digunakan untuk bulan.",
+    "_originalLevel": 22
+  },
+  {
+    "id": "default_L22_Q5",
+    "category": "Telling Time & Schedules",
+    "difficulty": "Sedang",
+    "question": "Which of the following is correct?",
+    "options": [
+      "I usually wake up in 6 AM.",
+      "I usually wake up on 6 AM.",
+      "I usually wake up by 6 AM.",
+      "I usually wake up at 6 AM."
+    ],
+    "correctIndex": 3,
+    "explanation": "'at' adalah preposisi yang tepat untuk jam.",
+    "_originalLevel": 22
+  },
+  {
+    "id": "default_L22_Q6",
+    "category": "Telling Time & Schedules",
+    "difficulty": "Sedang",
+    "question": "What time is 12:00?",
+    "options": [
+      "a quarter to seven",
+      "twelve o'clock",
+      "half past seven",
+      "seven o'clock"
+    ],
+    "correctIndex": 1,
+    "explanation": "12:00 dibaca twelve o'clock.",
+    "_originalLevel": 22
+  },
+  {
+    "id": "default_L22_Q7",
+    "category": "Telling Time & Schedules",
+    "difficulty": "Sedang",
+    "question": "Fill in the blank: The meeting is ... Tuesday.",
+    "options": [
+      "in",
+      "on",
+      "at",
+      "by"
+    ],
+    "correctIndex": 1,
+    "explanation": "Preposisi 'on' digunakan untuk nama hari.",
+    "_originalLevel": 22
+  },
+  {
+    "id": "default_L22_Q8",
+    "category": "Telling Time & Schedules",
+    "difficulty": "Sedang",
+    "question": "Fill in the blank: The train leaves ... 08:30.",
+    "options": [
+      "in",
+      "at",
+      "from",
+      "on"
+    ],
+    "correctIndex": 1,
+    "explanation": "Preposisi 'at' digunakan untuk waktu spesifik/jam.",
+    "_originalLevel": 22
+  },
+  {
+    "id": "default_L22_Q9",
+    "category": "Telling Time & Schedules",
+    "difficulty": "Sedang",
+    "question": "Fill in the blank: My birthday is ... May.",
+    "options": [
+      "on",
+      "at",
+      "for",
+      "in"
+    ],
+    "correctIndex": 3,
+    "explanation": "Preposisi 'in' digunakan untuk bulan.",
+    "_originalLevel": 22
+  },
+  {
+    "id": "default_L22_Q10",
+    "category": "Telling Time & Schedules",
+    "difficulty": "Sedang",
+    "question": "Which of the following is correct?",
+    "options": [
+      "I usually wake up by 6 AM.",
+      "I usually wake up at 6 AM.",
+      "I usually wake up on 6 AM.",
+      "I usually wake up in 6 AM."
+    ],
+    "correctIndex": 1,
+    "explanation": "'at' adalah preposisi yang tepat untuk jam.",
+    "_originalLevel": 22
+  },
+  {
+    "id": "default_L22_Q11",
+    "category": "Telling Time & Schedules",
+    "difficulty": "Sedang",
+    "question": "What time is 09:45?",
+    "options": [
+      "half past seven",
+      "a quarter to seven",
+      "a quarter to ten",
+      "seven o'clock"
+    ],
+    "correctIndex": 2,
+    "explanation": "09:45 dibaca a quarter to ten.",
+    "_originalLevel": 22
+  },
+  {
+    "id": "default_L22_Q12",
+    "category": "Telling Time & Schedules",
+    "difficulty": "Sedang",
+    "question": "Fill in the blank: The meeting is ... Tuesday.",
+    "options": [
+      "by",
+      "on",
+      "at",
+      "in"
+    ],
+    "correctIndex": 1,
+    "explanation": "Preposisi 'on' digunakan untuk nama hari.",
+    "_originalLevel": 22
+  },
+  {
+    "id": "default_L22_Q13",
+    "category": "Telling Time & Schedules",
+    "difficulty": "Sedang",
+    "question": "Fill in the blank: The train leaves ... 10:10.",
+    "options": [
+      "from",
+      "at",
+      "in",
+      "on"
+    ],
+    "correctIndex": 1,
+    "explanation": "Preposisi 'at' digunakan untuk waktu spesifik/jam.",
+    "_originalLevel": 22
+  },
+  {
+    "id": "default_L22_Q14",
+    "category": "Telling Time & Schedules",
+    "difficulty": "Sedang",
+    "question": "Fill in the blank: My birthday is ... March.",
+    "options": [
+      "for",
+      "at",
+      "in",
+      "on"
+    ],
+    "correctIndex": 2,
+    "explanation": "Preposisi 'in' digunakan untuk bulan.",
+    "_originalLevel": 22
+  },
+  {
+    "id": "default_L22_Q15",
+    "category": "Telling Time & Schedules",
+    "difficulty": "Sedang",
+    "question": "Which of the following is correct?",
+    "options": [
+      "I usually wake up by 6 AM.",
+      "I usually wake up in 6 AM.",
+      "I usually wake up at 6 AM.",
+      "I usually wake up on 6 AM."
+    ],
+    "correctIndex": 2,
+    "explanation": "'at' adalah preposisi yang tepat untuk jam.",
+    "_originalLevel": 22
+  },
+  {
+    "id": "default_L22_Q16",
+    "category": "Telling Time & Schedules",
+    "difficulty": "Sedang",
+    "question": "What time is 08:30?",
+    "options": [
+      "seven o'clock",
+      "half past eight",
+      "a quarter to seven",
+      "half past seven"
+    ],
+    "correctIndex": 1,
+    "explanation": "08:30 dibaca half past eight.",
+    "_originalLevel": 22
+  },
+  {
+    "id": "default_L22_Q17",
+    "category": "Telling Time & Schedules",
+    "difficulty": "Sedang",
+    "question": "Fill in the blank: The meeting is ... Thursday.",
+    "options": [
+      "by",
+      "at",
+      "in",
+      "on"
+    ],
+    "correctIndex": 3,
+    "explanation": "Preposisi 'on' digunakan untuk nama hari.",
+    "_originalLevel": 22
+  },
+  {
+    "id": "default_L22_Q18",
+    "category": "Telling Time & Schedules",
+    "difficulty": "Sedang",
+    "question": "Fill in the blank: The train leaves ... 09:45.",
+    "options": [
+      "at",
+      "in",
+      "on",
+      "from"
+    ],
+    "correctIndex": 0,
+    "explanation": "Preposisi 'at' digunakan untuk waktu spesifik/jam.",
+    "_originalLevel": 22
+  },
+  {
+    "id": "default_L22_Q19",
+    "category": "Telling Time & Schedules",
+    "difficulty": "Sedang",
+    "question": "Fill in the blank: My birthday is ... February.",
+    "options": [
+      "for",
+      "in",
+      "at",
+      "on"
+    ],
+    "correctIndex": 1,
+    "explanation": "Preposisi 'in' digunakan untuk bulan.",
+    "_originalLevel": 22
+  },
+  {
+    "id": "default_L22_Q20",
+    "category": "Telling Time & Schedules",
+    "difficulty": "Sedang",
+    "question": "Which of the following is correct?",
+    "options": [
+      "I usually wake up on 6 AM.",
+      "I usually wake up by 6 AM.",
+      "I usually wake up at 6 AM.",
+      "I usually wake up in 6 AM."
+    ],
+    "correctIndex": 2,
+    "explanation": "'at' adalah preposisi yang tepat untuk jam.",
+    "_originalLevel": 22
+  },
+  {
+    "id": "default_L22_Q21",
+    "category": "Telling Time & Schedules",
+    "difficulty": "Sedang",
+    "question": "What time is 10:10?",
+    "options": [
+      "a quarter to seven",
+      "seven o'clock",
+      "half past seven",
+      "ten past ten"
+    ],
+    "correctIndex": 3,
+    "explanation": "10:10 dibaca ten past ten.",
+    "_originalLevel": 22
+  },
+  {
+    "id": "default_L22_Q22",
+    "category": "Telling Time & Schedules",
+    "difficulty": "Sedang",
+    "question": "Fill in the blank: The meeting is ... Thursday.",
+    "options": [
+      "in",
+      "by",
+      "at",
+      "on"
+    ],
+    "correctIndex": 3,
+    "explanation": "Preposisi 'on' digunakan untuk nama hari.",
+    "_originalLevel": 22
+  },
+  {
+    "id": "default_L22_Q23",
+    "category": "Telling Time & Schedules",
+    "difficulty": "Sedang",
+    "question": "Fill in the blank: The train leaves ... 12:00.",
+    "options": [
+      "at",
+      "from",
+      "on",
+      "in"
+    ],
+    "correctIndex": 0,
+    "explanation": "Preposisi 'at' digunakan untuk waktu spesifik/jam.",
+    "_originalLevel": 22
+  },
+  {
+    "id": "default_L22_Q24",
+    "category": "Telling Time & Schedules",
+    "difficulty": "Sedang",
+    "question": "Fill in the blank: My birthday is ... May.",
+    "options": [
+      "on",
+      "in",
+      "at",
+      "for"
+    ],
+    "correctIndex": 1,
+    "explanation": "Preposisi 'in' digunakan untuk bulan.",
+    "_originalLevel": 22
+  },
+  {
+    "id": "default_L22_Q25",
+    "category": "Telling Time & Schedules",
+    "difficulty": "Sedang",
+    "question": "Which of the following is correct?",
+    "options": [
+      "I usually wake up on 6 AM.",
+      "I usually wake up by 6 AM.",
+      "I usually wake up at 6 AM.",
+      "I usually wake up in 6 AM."
+    ],
+    "correctIndex": 2,
+    "explanation": "'at' adalah preposisi yang tepat untuk jam.",
+    "_originalLevel": 22
+  },
+  {
+    "id": "default_L22_Q26",
+    "category": "Telling Time & Schedules",
+    "difficulty": "Sedang",
+    "question": "What time is 08:30?",
+    "options": [
+      "half past seven",
+      "a quarter to seven",
+      "seven o'clock",
+      "half past eight"
+    ],
+    "correctIndex": 3,
+    "explanation": "08:30 dibaca half past eight.",
+    "_originalLevel": 22
+  },
+  {
+    "id": "default_L22_Q27",
+    "category": "Telling Time & Schedules",
+    "difficulty": "Sedang",
+    "question": "Fill in the blank: The meeting is ... Monday.",
+    "options": [
+      "by",
+      "at",
+      "in",
+      "on"
+    ],
+    "correctIndex": 3,
+    "explanation": "Preposisi 'on' digunakan untuk nama hari.",
+    "_originalLevel": 22
+  },
+  {
+    "id": "default_L22_Q28",
+    "category": "Telling Time & Schedules",
+    "difficulty": "Sedang",
+    "question": "Fill in the blank: The train leaves ... 07:15.",
+    "options": [
+      "in",
+      "from",
+      "at",
+      "on"
+    ],
+    "correctIndex": 2,
+    "explanation": "Preposisi 'at' digunakan untuk waktu spesifik/jam.",
+    "_originalLevel": 22
+  },
+  {
+    "id": "default_L22_Q29",
+    "category": "Telling Time & Schedules",
+    "difficulty": "Sedang",
+    "question": "Fill in the blank: My birthday is ... April.",
+    "options": [
+      "in",
+      "for",
+      "at",
+      "on"
+    ],
+    "correctIndex": 0,
+    "explanation": "Preposisi 'in' digunakan untuk bulan.",
+    "_originalLevel": 22
+  },
+  {
+    "id": "default_L22_Q30",
+    "category": "Telling Time & Schedules",
+    "difficulty": "Sedang",
+    "question": "Which of the following is correct?",
+    "options": [
+      "I usually wake up by 6 AM.",
+      "I usually wake up at 6 AM.",
+      "I usually wake up in 6 AM.",
+      "I usually wake up on 6 AM."
+    ],
+    "correctIndex": 1,
+    "explanation": "'at' adalah preposisi yang tepat untuk jam.",
+    "_originalLevel": 22
+  },
+  {
+    "id": "default_L23_Q1",
+    "category": "Places, Directions & Transportation",
+    "difficulty": "Sedang",
+    "question": "Where is the supermarket? It is ... the post office.",
+    "options": [
+      "on",
+      "in",
+      "between",
+      "at"
+    ],
+    "correctIndex": 2,
+    "explanation": "'between' adalah preposisi tempat yang tepat.",
+    "_originalLevel": 23
+  },
+  {
+    "id": "default_L23_Q2",
+    "category": "Places, Directions & Transportation",
+    "difficulty": "Sedang",
+    "question": "How do you get to the post office?",
+    "options": [
+      "I like it.",
+      "It is big.",
+      "Yes, I do.",
+      "by bus"
+    ],
+    "correctIndex": 3,
+    "explanation": "Pertanyaan 'How' menanyakan cara/transportasi.",
+    "_originalLevel": 23
+  },
+  {
+    "id": "default_L23_Q3",
+    "category": "Places, Directions & Transportation",
+    "difficulty": "Sedang",
+    "question": "Turn left at the traffic light. 'Turn left' means...",
+    "options": [
+      "Belok kiri",
+      "Belok kanan",
+      "Berhenti",
+      "Jalan terus"
+    ],
+    "correctIndex": 0,
+    "explanation": "'Turn left' dalam bahasa Indonesia berarti belok kiri.",
+    "_originalLevel": 23
+  },
+  {
+    "id": "default_L23_Q4",
+    "category": "Places, Directions & Transportation",
+    "difficulty": "Sedang",
+    "question": "Go straight ahead. 'Go straight' means...",
+    "options": [
+      "Jalan lurus",
+      "Putar balik",
+      "Belok kanan",
+      "Belok kiri"
+    ],
+    "correctIndex": 0,
+    "explanation": "'Go straight' berarti jalan lurus terus.",
+    "_originalLevel": 23
+  },
+  {
+    "id": "default_L23_Q5",
+    "category": "Places, Directions & Transportation",
+    "difficulty": "Sedang",
+    "question": "Where is the post office? It is ... the school.",
+    "options": [
+      "next to",
+      "on",
+      "at",
+      "in"
+    ],
+    "correctIndex": 0,
+    "explanation": "'next to' adalah preposisi tempat yang tepat.",
+    "_originalLevel": 23
+  },
+  {
+    "id": "default_L23_Q6",
+    "category": "Places, Directions & Transportation",
+    "difficulty": "Sedang",
+    "question": "How do you get to the hospital?",
+    "options": [
+      "I like it.",
+      "by car",
+      "It is big.",
+      "Yes, I do."
+    ],
+    "correctIndex": 1,
+    "explanation": "Pertanyaan 'How' menanyakan cara/transportasi.",
+    "_originalLevel": 23
+  },
+  {
+    "id": "default_L23_Q7",
+    "category": "Places, Directions & Transportation",
+    "difficulty": "Sedang",
+    "question": "Turn left at the traffic light. 'Turn left' means...",
+    "options": [
+      "Berhenti",
+      "Belok kanan",
+      "Belok kiri",
+      "Jalan terus"
+    ],
+    "correctIndex": 2,
+    "explanation": "'Turn left' dalam bahasa Indonesia berarti belok kiri.",
+    "_originalLevel": 23
+  },
+  {
+    "id": "default_L23_Q8",
+    "category": "Places, Directions & Transportation",
+    "difficulty": "Sedang",
+    "question": "Go straight ahead. 'Go straight' means...",
+    "options": [
+      "Jalan lurus",
+      "Belok kiri",
+      "Belok kanan",
+      "Putar balik"
+    ],
+    "correctIndex": 0,
+    "explanation": "'Go straight' berarti jalan lurus terus.",
+    "_originalLevel": 23
+  },
+  {
+    "id": "default_L23_Q9",
+    "category": "Places, Directions & Transportation",
+    "difficulty": "Sedang",
+    "question": "Where is the bank? It is ... the supermarket.",
+    "options": [
+      "in front of",
+      "in",
+      "on",
+      "at"
+    ],
+    "correctIndex": 0,
+    "explanation": "'in front of' adalah preposisi tempat yang tepat.",
+    "_originalLevel": 23
+  },
+  {
+    "id": "default_L23_Q10",
+    "category": "Places, Directions & Transportation",
+    "difficulty": "Sedang",
+    "question": "How do you get to the hospital?",
+    "options": [
+      "I like it.",
+      "It is big.",
+      "on foot",
+      "Yes, I do."
+    ],
+    "correctIndex": 2,
+    "explanation": "Pertanyaan 'How' menanyakan cara/transportasi.",
+    "_originalLevel": 23
+  },
+  {
+    "id": "default_L23_Q11",
+    "category": "Places, Directions & Transportation",
+    "difficulty": "Sedang",
+    "question": "Turn left at the traffic light. 'Turn left' means...",
+    "options": [
+      "Belok kanan",
+      "Jalan terus",
+      "Belok kiri",
+      "Berhenti"
+    ],
+    "correctIndex": 2,
+    "explanation": "'Turn left' dalam bahasa Indonesia berarti belok kiri.",
+    "_originalLevel": 23
+  },
+  {
+    "id": "default_L23_Q12",
+    "category": "Places, Directions & Transportation",
+    "difficulty": "Sedang",
+    "question": "Go straight ahead. 'Go straight' means...",
+    "options": [
+      "Putar balik",
+      "Belok kanan",
+      "Belok kiri",
+      "Jalan lurus"
+    ],
+    "correctIndex": 3,
+    "explanation": "'Go straight' berarti jalan lurus terus.",
+    "_originalLevel": 23
+  },
+  {
+    "id": "default_L23_Q13",
+    "category": "Places, Directions & Transportation",
+    "difficulty": "Sedang",
+    "question": "Where is the supermarket? It is ... the school.",
+    "options": [
+      "between",
+      "in",
+      "at",
+      "on"
+    ],
+    "correctIndex": 0,
+    "explanation": "'between' adalah preposisi tempat yang tepat.",
+    "_originalLevel": 23
+  },
+  {
+    "id": "default_L23_Q14",
+    "category": "Places, Directions & Transportation",
+    "difficulty": "Sedang",
+    "question": "How do you get to the supermarket?",
+    "options": [
+      "It is big.",
+      "by car",
+      "I like it.",
+      "Yes, I do."
+    ],
+    "correctIndex": 1,
+    "explanation": "Pertanyaan 'How' menanyakan cara/transportasi.",
+    "_originalLevel": 23
+  },
+  {
+    "id": "default_L23_Q15",
+    "category": "Places, Directions & Transportation",
+    "difficulty": "Sedang",
+    "question": "Turn left at the traffic light. 'Turn left' means...",
+    "options": [
+      "Jalan terus",
+      "Belok kanan",
+      "Berhenti",
+      "Belok kiri"
+    ],
+    "correctIndex": 3,
+    "explanation": "'Turn left' dalam bahasa Indonesia berarti belok kiri.",
+    "_originalLevel": 23
+  },
+  {
+    "id": "default_L23_Q16",
+    "category": "Places, Directions & Transportation",
+    "difficulty": "Sedang",
+    "question": "Go straight ahead. 'Go straight' means...",
+    "options": [
+      "Belok kiri",
+      "Jalan lurus",
+      "Belok kanan",
+      "Putar balik"
+    ],
+    "correctIndex": 1,
+    "explanation": "'Go straight' berarti jalan lurus terus.",
+    "_originalLevel": 23
+  },
+  {
+    "id": "default_L23_Q17",
+    "category": "Places, Directions & Transportation",
+    "difficulty": "Sedang",
+    "question": "Where is the supermarket? It is ... the bank.",
+    "options": [
+      "on",
+      "next to",
+      "in",
+      "at"
+    ],
+    "correctIndex": 1,
+    "explanation": "'next to' adalah preposisi tempat yang tepat.",
+    "_originalLevel": 23
+  },
+  {
+    "id": "default_L23_Q18",
+    "category": "Places, Directions & Transportation",
+    "difficulty": "Sedang",
+    "question": "How do you get to the bank?",
+    "options": [
+      "on foot",
+      "It is big.",
+      "Yes, I do.",
+      "I like it."
+    ],
+    "correctIndex": 0,
+    "explanation": "Pertanyaan 'How' menanyakan cara/transportasi.",
+    "_originalLevel": 23
+  },
+  {
+    "id": "default_L23_Q19",
+    "category": "Places, Directions & Transportation",
+    "difficulty": "Sedang",
+    "question": "Turn left at the traffic light. 'Turn left' means...",
+    "options": [
+      "Belok kiri",
+      "Berhenti",
+      "Belok kanan",
+      "Jalan terus"
+    ],
+    "correctIndex": 0,
+    "explanation": "'Turn left' dalam bahasa Indonesia berarti belok kiri.",
+    "_originalLevel": 23
+  },
+  {
+    "id": "default_L23_Q20",
+    "category": "Places, Directions & Transportation",
+    "difficulty": "Sedang",
+    "question": "Go straight ahead. 'Go straight' means...",
+    "options": [
+      "Jalan lurus",
+      "Belok kiri",
+      "Putar balik",
+      "Belok kanan"
+    ],
+    "correctIndex": 0,
+    "explanation": "'Go straight' berarti jalan lurus terus.",
+    "_originalLevel": 23
+  },
+  {
+    "id": "default_L23_Q21",
+    "category": "Places, Directions & Transportation",
+    "difficulty": "Sedang",
+    "question": "Where is the supermarket? It is ... the school.",
+    "options": [
+      "at",
+      "on",
+      "in",
+      "next to"
+    ],
+    "correctIndex": 3,
+    "explanation": "'next to' adalah preposisi tempat yang tepat.",
+    "_originalLevel": 23
+  },
+  {
+    "id": "default_L23_Q22",
+    "category": "Places, Directions & Transportation",
+    "difficulty": "Sedang",
+    "question": "How do you get to the bank?",
+    "options": [
+      "Yes, I do.",
+      "I like it.",
+      "It is big.",
+      "by car"
+    ],
+    "correctIndex": 3,
+    "explanation": "Pertanyaan 'How' menanyakan cara/transportasi.",
+    "_originalLevel": 23
+  },
+  {
+    "id": "default_L23_Q23",
+    "category": "Places, Directions & Transportation",
+    "difficulty": "Sedang",
+    "question": "Turn left at the traffic light. 'Turn left' means...",
+    "options": [
+      "Belok kanan",
+      "Berhenti",
+      "Belok kiri",
+      "Jalan terus"
+    ],
+    "correctIndex": 2,
+    "explanation": "'Turn left' dalam bahasa Indonesia berarti belok kiri.",
+    "_originalLevel": 23
+  },
+  {
+    "id": "default_L23_Q24",
+    "category": "Places, Directions & Transportation",
+    "difficulty": "Sedang",
+    "question": "Go straight ahead. 'Go straight' means...",
+    "options": [
+      "Belok kanan",
+      "Belok kiri",
+      "Putar balik",
+      "Jalan lurus"
+    ],
+    "correctIndex": 3,
+    "explanation": "'Go straight' berarti jalan lurus terus.",
+    "_originalLevel": 23
+  },
+  {
+    "id": "default_L23_Q25",
+    "category": "Places, Directions & Transportation",
+    "difficulty": "Sedang",
+    "question": "Where is the post office? It is ... the supermarket.",
+    "options": [
+      "next to",
+      "in",
+      "at",
+      "on"
+    ],
+    "correctIndex": 0,
+    "explanation": "'next to' adalah preposisi tempat yang tepat.",
+    "_originalLevel": 23
+  },
+  {
+    "id": "default_L23_Q26",
+    "category": "Places, Directions & Transportation",
+    "difficulty": "Sedang",
+    "question": "How do you get to the post office?",
+    "options": [
+      "by car",
+      "Yes, I do.",
+      "I like it.",
+      "It is big."
+    ],
+    "correctIndex": 0,
+    "explanation": "Pertanyaan 'How' menanyakan cara/transportasi.",
+    "_originalLevel": 23
+  },
+  {
+    "id": "default_L23_Q27",
+    "category": "Places, Directions & Transportation",
+    "difficulty": "Sedang",
+    "question": "Turn left at the traffic light. 'Turn left' means...",
+    "options": [
+      "Belok kanan",
+      "Belok kiri",
+      "Jalan terus",
+      "Berhenti"
+    ],
+    "correctIndex": 1,
+    "explanation": "'Turn left' dalam bahasa Indonesia berarti belok kiri.",
+    "_originalLevel": 23
+  },
+  {
+    "id": "default_L23_Q28",
+    "category": "Places, Directions & Transportation",
+    "difficulty": "Sedang",
+    "question": "Go straight ahead. 'Go straight' means...",
+    "options": [
+      "Jalan lurus",
+      "Belok kiri",
+      "Belok kanan",
+      "Putar balik"
+    ],
+    "correctIndex": 0,
+    "explanation": "'Go straight' berarti jalan lurus terus.",
+    "_originalLevel": 23
+  },
+  {
+    "id": "default_L23_Q29",
+    "category": "Places, Directions & Transportation",
+    "difficulty": "Sedang",
+    "question": "Where is the supermarket? It is ... the hospital.",
+    "options": [
+      "in front of",
+      "in",
+      "on",
+      "at"
+    ],
+    "correctIndex": 0,
+    "explanation": "'in front of' adalah preposisi tempat yang tepat.",
+    "_originalLevel": 23
+  },
+  {
+    "id": "default_L23_Q30",
+    "category": "Places, Directions & Transportation",
+    "difficulty": "Sedang",
+    "question": "How do you get to the post office?",
+    "options": [
+      "by train",
+      "Yes, I do.",
+      "I like it.",
+      "It is big."
+    ],
+    "correctIndex": 0,
+    "explanation": "Pertanyaan 'How' menanyakan cara/transportasi.",
+    "_originalLevel": 23
+  },
+  {
+    "id": "default_L24_Q1",
+    "category": "Food, Shopping & Quantities",
+    "difficulty": "Sedang",
+    "question": "How ... milk do you need?",
+    "options": [
+      "many",
+      "much",
+      "a few",
+      "a lot"
+    ],
+    "correctIndex": 1,
+    "explanation": "'milk' adalah uncountable noun, jadi menggunakan 'much'.",
+    "_originalLevel": 24
+  },
+  {
+    "id": "default_L24_Q2",
+    "category": "Food, Shopping & Quantities",
+    "difficulty": "Sedang",
+    "question": "How ... pens do you want?",
+    "options": [
+      "many",
+      "some",
+      "much",
+      "a little"
+    ],
+    "correctIndex": 0,
+    "explanation": "'pens' adalah countable noun jamak, jadi menggunakan 'many'.",
+    "_originalLevel": 24
+  },
+  {
+    "id": "default_L24_Q3",
+    "category": "Food, Shopping & Quantities",
+    "difficulty": "Sedang",
+    "question": "I need a ... of water.",
+    "options": [
+      "piece",
+      "slice",
+      "loaf",
+      "bottle"
+    ],
+    "correctIndex": 3,
+    "explanation": "Air (water) biasanya dihitung dengan wadah 'bottle'.",
+    "_originalLevel": 24
+  },
+  {
+    "id": "default_L24_Q4",
+    "category": "Food, Shopping & Quantities",
+    "difficulty": "Sedang",
+    "question": "She bought a ... of bread.",
+    "options": [
+      "glass",
+      "bottle",
+      "loaf",
+      "cup"
+    ],
+    "correctIndex": 2,
+    "explanation": "Roti utuh menggunakan takaran 'loaf' (sepotong roti/satu loyang).",
+    "_originalLevel": 24
+  },
+  {
+    "id": "default_L24_Q5",
+    "category": "Food, Shopping & Quantities",
+    "difficulty": "Sedang",
+    "question": "How ... milk do you need?",
+    "options": [
+      "much",
+      "many",
+      "a lot",
+      "a few"
+    ],
+    "correctIndex": 0,
+    "explanation": "'milk' adalah uncountable noun, jadi menggunakan 'much'.",
+    "_originalLevel": 24
+  },
+  {
+    "id": "default_L24_Q6",
+    "category": "Food, Shopping & Quantities",
+    "difficulty": "Sedang",
+    "question": "How ... apples do you want?",
+    "options": [
+      "some",
+      "much",
+      "a little",
+      "many"
+    ],
+    "correctIndex": 3,
+    "explanation": "'apples' adalah countable noun jamak, jadi menggunakan 'many'.",
+    "_originalLevel": 24
+  },
+  {
+    "id": "default_L24_Q7",
+    "category": "Food, Shopping & Quantities",
+    "difficulty": "Sedang",
+    "question": "I need a ... of water.",
+    "options": [
+      "piece",
+      "loaf",
+      "bottle",
+      "slice"
+    ],
+    "correctIndex": 2,
+    "explanation": "Air (water) biasanya dihitung dengan wadah 'bottle'.",
+    "_originalLevel": 24
+  },
+  {
+    "id": "default_L24_Q8",
+    "category": "Food, Shopping & Quantities",
+    "difficulty": "Sedang",
+    "question": "She bought a ... of bread.",
+    "options": [
+      "loaf",
+      "bottle",
+      "cup",
+      "glass"
+    ],
+    "correctIndex": 0,
+    "explanation": "Roti utuh menggunakan takaran 'loaf' (sepotong roti/satu loyang).",
+    "_originalLevel": 24
+  },
+  {
+    "id": "default_L24_Q9",
+    "category": "Food, Shopping & Quantities",
+    "difficulty": "Sedang",
+    "question": "How ... water do you need?",
+    "options": [
+      "much",
+      "a few",
+      "a lot",
+      "many"
+    ],
+    "correctIndex": 0,
+    "explanation": "'water' adalah uncountable noun, jadi menggunakan 'much'.",
+    "_originalLevel": 24
+  },
+  {
+    "id": "default_L24_Q10",
+    "category": "Food, Shopping & Quantities",
+    "difficulty": "Sedang",
+    "question": "How ... eggs do you want?",
+    "options": [
+      "many",
+      "a little",
+      "much",
+      "some"
+    ],
+    "correctIndex": 0,
+    "explanation": "'eggs' adalah countable noun jamak, jadi menggunakan 'many'.",
+    "_originalLevel": 24
+  },
+  {
+    "id": "default_L24_Q11",
+    "category": "Food, Shopping & Quantities",
+    "difficulty": "Sedang",
+    "question": "I need a ... of water.",
+    "options": [
+      "bottle",
+      "piece",
+      "slice",
+      "loaf"
+    ],
+    "correctIndex": 0,
+    "explanation": "Air (water) biasanya dihitung dengan wadah 'bottle'.",
+    "_originalLevel": 24
+  },
+  {
+    "id": "default_L24_Q12",
+    "category": "Food, Shopping & Quantities",
+    "difficulty": "Sedang",
+    "question": "She bought a ... of bread.",
+    "options": [
+      "cup",
+      "glass",
+      "loaf",
+      "bottle"
+    ],
+    "correctIndex": 2,
+    "explanation": "Roti utuh menggunakan takaran 'loaf' (sepotong roti/satu loyang).",
+    "_originalLevel": 24
+  },
+  {
+    "id": "default_L24_Q13",
+    "category": "Food, Shopping & Quantities",
+    "difficulty": "Sedang",
+    "question": "How ... rice do you need?",
+    "options": [
+      "a few",
+      "a lot",
+      "many",
+      "much"
+    ],
+    "correctIndex": 3,
+    "explanation": "'rice' adalah uncountable noun, jadi menggunakan 'much'.",
+    "_originalLevel": 24
+  },
+  {
+    "id": "default_L24_Q14",
+    "category": "Food, Shopping & Quantities",
+    "difficulty": "Sedang",
+    "question": "How ... carrots do you want?",
+    "options": [
+      "some",
+      "many",
+      "a little",
+      "much"
+    ],
+    "correctIndex": 1,
+    "explanation": "'carrots' adalah countable noun jamak, jadi menggunakan 'many'.",
+    "_originalLevel": 24
+  },
+  {
+    "id": "default_L24_Q15",
+    "category": "Food, Shopping & Quantities",
+    "difficulty": "Sedang",
+    "question": "I need a ... of water.",
+    "options": [
+      "bottle",
+      "piece",
+      "loaf",
+      "slice"
+    ],
+    "correctIndex": 0,
+    "explanation": "Air (water) biasanya dihitung dengan wadah 'bottle'.",
+    "_originalLevel": 24
+  },
+  {
+    "id": "default_L24_Q16",
+    "category": "Food, Shopping & Quantities",
+    "difficulty": "Sedang",
+    "question": "She bought a ... of bread.",
+    "options": [
+      "glass",
+      "loaf",
+      "bottle",
+      "cup"
+    ],
+    "correctIndex": 1,
+    "explanation": "Roti utuh menggunakan takaran 'loaf' (sepotong roti/satu loyang).",
+    "_originalLevel": 24
+  },
+  {
+    "id": "default_L24_Q17",
+    "category": "Food, Shopping & Quantities",
+    "difficulty": "Sedang",
+    "question": "How ... sugar do you need?",
+    "options": [
+      "many",
+      "a few",
+      "much",
+      "a lot"
+    ],
+    "correctIndex": 2,
+    "explanation": "'sugar' adalah uncountable noun, jadi menggunakan 'much'.",
+    "_originalLevel": 24
+  },
+  {
+    "id": "default_L24_Q18",
+    "category": "Food, Shopping & Quantities",
+    "difficulty": "Sedang",
+    "question": "How ... books do you want?",
+    "options": [
+      "some",
+      "a little",
+      "many",
+      "much"
+    ],
+    "correctIndex": 2,
+    "explanation": "'books' adalah countable noun jamak, jadi menggunakan 'many'.",
+    "_originalLevel": 24
+  },
+  {
+    "id": "default_L24_Q19",
+    "category": "Food, Shopping & Quantities",
+    "difficulty": "Sedang",
+    "question": "I need a ... of water.",
+    "options": [
+      "slice",
+      "loaf",
+      "bottle",
+      "piece"
+    ],
+    "correctIndex": 2,
+    "explanation": "Air (water) biasanya dihitung dengan wadah 'bottle'.",
+    "_originalLevel": 24
+  },
+  {
+    "id": "default_L24_Q20",
+    "category": "Food, Shopping & Quantities",
+    "difficulty": "Sedang",
+    "question": "She bought a ... of bread.",
+    "options": [
+      "glass",
+      "cup",
+      "loaf",
+      "bottle"
+    ],
+    "correctIndex": 2,
+    "explanation": "Roti utuh menggunakan takaran 'loaf' (sepotong roti/satu loyang).",
+    "_originalLevel": 24
+  },
+  {
+    "id": "default_L24_Q21",
+    "category": "Food, Shopping & Quantities",
+    "difficulty": "Sedang",
+    "question": "How ... rice do you need?",
+    "options": [
+      "much",
+      "a few",
+      "many",
+      "a lot"
+    ],
+    "correctIndex": 0,
+    "explanation": "'rice' adalah uncountable noun, jadi menggunakan 'much'.",
+    "_originalLevel": 24
+  },
+  {
+    "id": "default_L24_Q22",
+    "category": "Food, Shopping & Quantities",
+    "difficulty": "Sedang",
+    "question": "How ... books do you want?",
+    "options": [
+      "some",
+      "many",
+      "a little",
+      "much"
+    ],
+    "correctIndex": 1,
+    "explanation": "'books' adalah countable noun jamak, jadi menggunakan 'many'.",
+    "_originalLevel": 24
+  },
+  {
+    "id": "default_L24_Q23",
+    "category": "Food, Shopping & Quantities",
+    "difficulty": "Sedang",
+    "question": "I need a ... of water.",
+    "options": [
+      "piece",
+      "bottle",
+      "loaf",
+      "slice"
+    ],
+    "correctIndex": 1,
+    "explanation": "Air (water) biasanya dihitung dengan wadah 'bottle'.",
+    "_originalLevel": 24
+  },
+  {
+    "id": "default_L24_Q24",
+    "category": "Food, Shopping & Quantities",
+    "difficulty": "Sedang",
+    "question": "She bought a ... of bread.",
+    "options": [
+      "loaf",
+      "cup",
+      "bottle",
+      "glass"
+    ],
+    "correctIndex": 0,
+    "explanation": "Roti utuh menggunakan takaran 'loaf' (sepotong roti/satu loyang).",
+    "_originalLevel": 24
+  },
+  {
+    "id": "default_L24_Q25",
+    "category": "Food, Shopping & Quantities",
+    "difficulty": "Sedang",
+    "question": "How ... rice do you need?",
+    "options": [
+      "much",
+      "a lot",
+      "many",
+      "a few"
+    ],
+    "correctIndex": 0,
+    "explanation": "'rice' adalah uncountable noun, jadi menggunakan 'much'.",
+    "_originalLevel": 24
+  },
+  {
+    "id": "default_L24_Q26",
+    "category": "Food, Shopping & Quantities",
+    "difficulty": "Sedang",
+    "question": "How ... pens do you want?",
+    "options": [
+      "much",
+      "some",
+      "a little",
+      "many"
+    ],
+    "correctIndex": 3,
+    "explanation": "'pens' adalah countable noun jamak, jadi menggunakan 'many'.",
+    "_originalLevel": 24
+  },
+  {
+    "id": "default_L24_Q27",
+    "category": "Food, Shopping & Quantities",
+    "difficulty": "Sedang",
+    "question": "I need a ... of water.",
+    "options": [
+      "slice",
+      "bottle",
+      "loaf",
+      "piece"
+    ],
+    "correctIndex": 1,
+    "explanation": "Air (water) biasanya dihitung dengan wadah 'bottle'.",
+    "_originalLevel": 24
+  },
+  {
+    "id": "default_L24_Q28",
+    "category": "Food, Shopping & Quantities",
+    "difficulty": "Sedang",
+    "question": "She bought a ... of bread.",
+    "options": [
+      "bottle",
+      "loaf",
+      "glass",
+      "cup"
+    ],
+    "correctIndex": 1,
+    "explanation": "Roti utuh menggunakan takaran 'loaf' (sepotong roti/satu loyang).",
+    "_originalLevel": 24
+  },
+  {
+    "id": "default_L24_Q29",
+    "category": "Food, Shopping & Quantities",
+    "difficulty": "Sedang",
+    "question": "How ... water do you need?",
+    "options": [
+      "many",
+      "a lot",
+      "much",
+      "a few"
+    ],
+    "correctIndex": 2,
+    "explanation": "'water' adalah uncountable noun, jadi menggunakan 'much'.",
+    "_originalLevel": 24
+  },
+  {
+    "id": "default_L24_Q30",
+    "category": "Food, Shopping & Quantities",
+    "difficulty": "Sedang",
+    "question": "How ... carrots do you want?",
+    "options": [
+      "much",
+      "a little",
+      "some",
+      "many"
+    ],
+    "correctIndex": 3,
+    "explanation": "'carrots' adalah countable noun jamak, jadi menggunakan 'many'.",
+    "_originalLevel": 24
+  },
+  {
+    "id": "default_L25_Q1",
+    "category": "Simple Present vs Present Continuous",
+    "difficulty": "Sedang",
+    "question": "She usually ... coffee, but today she ... tea.",
+    "options": [
+      "drinks / drinking",
+      "drink / is drinking",
+      "is drinking / drinks",
+      "drinks / is drinking"
+    ],
+    "correctIndex": 3,
+    "explanation": "'Usually' -> Simple Present (drinks). 'Today' -> Present Continuous (is drinking).",
+    "_originalLevel": 25
+  },
+  {
+    "id": "default_L25_Q2",
+    "category": "Simple Present vs Present Continuous",
+    "difficulty": "Sedang",
+    "question": "Look! The baby ... .",
+    "options": [
+      "sleeps",
+      "are sleeping",
+      "is sleeping",
+      "sleep"
+    ],
+    "correctIndex": 2,
+    "explanation": "'Look!' menandakan kejadian sedang berlangsung (Present Continuous).",
+    "_originalLevel": 25
+  },
+  {
+    "id": "default_L25_Q3",
+    "category": "Simple Present vs Present Continuous",
+    "difficulty": "Sedang",
+    "question": "I ... to school every day.",
+    "options": [
+      "am going",
+      "go",
+      "goes",
+      "going"
+    ],
+    "correctIndex": 1,
+    "explanation": "'Every day' menandakan rutinitas (Simple Present). Subjek 'I' menggunakan V1.",
+    "_originalLevel": 25
+  },
+  {
+    "id": "default_L25_Q4",
+    "category": "Simple Present vs Present Continuous",
+    "difficulty": "Sedang",
+    "question": "Be quiet! I ... my homework.",
+    "options": [
+      "is doing",
+      "does",
+      "do",
+      "am doing"
+    ],
+    "correctIndex": 3,
+    "explanation": "'Be quiet!' menandakan aksi sedang berlangsung saat ini (Present Continuous).",
+    "_originalLevel": 25
+  },
+  {
+    "id": "default_L25_Q5",
+    "category": "Simple Present vs Present Continuous",
+    "difficulty": "Sedang",
+    "question": "She usually ... coffee, but today she ... tea.",
+    "options": [
+      "drinks / is drinking",
+      "is drinking / drinks",
+      "drink / is drinking",
+      "drinks / drinking"
+    ],
+    "correctIndex": 0,
+    "explanation": "'Usually' -> Simple Present (drinks). 'Today' -> Present Continuous (is drinking).",
+    "_originalLevel": 25
+  },
+  {
+    "id": "default_L25_Q6",
+    "category": "Simple Present vs Present Continuous",
+    "difficulty": "Sedang",
+    "question": "Look! The baby ... .",
+    "options": [
+      "sleep",
+      "sleeps",
+      "are sleeping",
+      "is sleeping"
+    ],
+    "correctIndex": 3,
+    "explanation": "'Look!' menandakan kejadian sedang berlangsung (Present Continuous).",
+    "_originalLevel": 25
+  },
+  {
+    "id": "default_L25_Q7",
+    "category": "Simple Present vs Present Continuous",
+    "difficulty": "Sedang",
+    "question": "I ... to school every day.",
+    "options": [
+      "am going",
+      "going",
+      "goes",
+      "go"
+    ],
+    "correctIndex": 3,
+    "explanation": "'Every day' menandakan rutinitas (Simple Present). Subjek 'I' menggunakan V1.",
+    "_originalLevel": 25
+  },
+  {
+    "id": "default_L25_Q8",
+    "category": "Simple Present vs Present Continuous",
+    "difficulty": "Sedang",
+    "question": "Be quiet! I ... my homework.",
+    "options": [
+      "is doing",
+      "do",
+      "am doing",
+      "does"
+    ],
+    "correctIndex": 2,
+    "explanation": "'Be quiet!' menandakan aksi sedang berlangsung saat ini (Present Continuous).",
+    "_originalLevel": 25
+  },
+  {
+    "id": "default_L25_Q9",
+    "category": "Simple Present vs Present Continuous",
+    "difficulty": "Sedang",
+    "question": "She usually ... coffee, but today she ... tea.",
+    "options": [
+      "drink / is drinking",
+      "is drinking / drinks",
+      "drinks / drinking",
+      "drinks / is drinking"
+    ],
+    "correctIndex": 3,
+    "explanation": "'Usually' -> Simple Present (drinks). 'Today' -> Present Continuous (is drinking).",
+    "_originalLevel": 25
+  },
+  {
+    "id": "default_L25_Q10",
+    "category": "Simple Present vs Present Continuous",
+    "difficulty": "Sedang",
+    "question": "Look! The baby ... .",
+    "options": [
+      "are sleeping",
+      "sleep",
+      "sleeps",
+      "is sleeping"
+    ],
+    "correctIndex": 3,
+    "explanation": "'Look!' menandakan kejadian sedang berlangsung (Present Continuous).",
+    "_originalLevel": 25
+  },
+  {
+    "id": "default_L25_Q11",
+    "category": "Simple Present vs Present Continuous",
+    "difficulty": "Sedang",
+    "question": "I ... to school every day.",
+    "options": [
+      "going",
+      "am going",
+      "goes",
+      "go"
+    ],
+    "correctIndex": 3,
+    "explanation": "'Every day' menandakan rutinitas (Simple Present). Subjek 'I' menggunakan V1.",
+    "_originalLevel": 25
+  },
+  {
+    "id": "default_L25_Q12",
+    "category": "Simple Present vs Present Continuous",
+    "difficulty": "Sedang",
+    "question": "Be quiet! I ... my homework.",
+    "options": [
+      "does",
+      "is doing",
+      "am doing",
+      "do"
+    ],
+    "correctIndex": 2,
+    "explanation": "'Be quiet!' menandakan aksi sedang berlangsung saat ini (Present Continuous).",
+    "_originalLevel": 25
+  },
+  {
+    "id": "default_L25_Q13",
+    "category": "Simple Present vs Present Continuous",
+    "difficulty": "Sedang",
+    "question": "She usually ... coffee, but today she ... tea.",
+    "options": [
+      "drinks / drinking",
+      "drink / is drinking",
+      "drinks / is drinking",
+      "is drinking / drinks"
+    ],
+    "correctIndex": 2,
+    "explanation": "'Usually' -> Simple Present (drinks). 'Today' -> Present Continuous (is drinking).",
+    "_originalLevel": 25
+  },
+  {
+    "id": "default_L25_Q14",
+    "category": "Simple Present vs Present Continuous",
+    "difficulty": "Sedang",
+    "question": "Look! The baby ... .",
+    "options": [
+      "sleeps",
+      "are sleeping",
+      "sleep",
+      "is sleeping"
+    ],
+    "correctIndex": 3,
+    "explanation": "'Look!' menandakan kejadian sedang berlangsung (Present Continuous).",
+    "_originalLevel": 25
+  },
+  {
+    "id": "default_L25_Q15",
+    "category": "Simple Present vs Present Continuous",
+    "difficulty": "Sedang",
+    "question": "I ... to school every day.",
+    "options": [
+      "am going",
+      "going",
+      "go",
+      "goes"
+    ],
+    "correctIndex": 2,
+    "explanation": "'Every day' menandakan rutinitas (Simple Present). Subjek 'I' menggunakan V1.",
+    "_originalLevel": 25
+  },
+  {
+    "id": "default_L25_Q16",
+    "category": "Simple Present vs Present Continuous",
+    "difficulty": "Sedang",
+    "question": "Be quiet! I ... my homework.",
+    "options": [
+      "do",
+      "does",
+      "am doing",
+      "is doing"
+    ],
+    "correctIndex": 2,
+    "explanation": "'Be quiet!' menandakan aksi sedang berlangsung saat ini (Present Continuous).",
+    "_originalLevel": 25
+  },
+  {
+    "id": "default_L25_Q17",
+    "category": "Simple Present vs Present Continuous",
+    "difficulty": "Sedang",
+    "question": "She usually ... coffee, but today she ... tea.",
+    "options": [
+      "drink / is drinking",
+      "is drinking / drinks",
+      "drinks / drinking",
+      "drinks / is drinking"
+    ],
+    "correctIndex": 3,
+    "explanation": "'Usually' -> Simple Present (drinks). 'Today' -> Present Continuous (is drinking).",
+    "_originalLevel": 25
+  },
+  {
+    "id": "default_L25_Q18",
+    "category": "Simple Present vs Present Continuous",
+    "difficulty": "Sedang",
+    "question": "Look! The baby ... .",
+    "options": [
+      "is sleeping",
+      "sleep",
+      "sleeps",
+      "are sleeping"
+    ],
+    "correctIndex": 0,
+    "explanation": "'Look!' menandakan kejadian sedang berlangsung (Present Continuous).",
+    "_originalLevel": 25
+  },
+  {
+    "id": "default_L25_Q19",
+    "category": "Simple Present vs Present Continuous",
+    "difficulty": "Sedang",
+    "question": "I ... to school every day.",
+    "options": [
+      "am going",
+      "goes",
+      "going",
+      "go"
+    ],
+    "correctIndex": 3,
+    "explanation": "'Every day' menandakan rutinitas (Simple Present). Subjek 'I' menggunakan V1.",
+    "_originalLevel": 25
+  },
+  {
+    "id": "default_L25_Q20",
+    "category": "Simple Present vs Present Continuous",
+    "difficulty": "Sedang",
+    "question": "Be quiet! I ... my homework.",
+    "options": [
+      "do",
+      "is doing",
+      "does",
+      "am doing"
+    ],
+    "correctIndex": 3,
+    "explanation": "'Be quiet!' menandakan aksi sedang berlangsung saat ini (Present Continuous).",
+    "_originalLevel": 25
+  },
+  {
+    "id": "default_L25_Q21",
+    "category": "Simple Present vs Present Continuous",
+    "difficulty": "Sedang",
+    "question": "She usually ... coffee, but today she ... tea.",
+    "options": [
+      "drink / is drinking",
+      "drinks / is drinking",
+      "is drinking / drinks",
+      "drinks / drinking"
+    ],
+    "correctIndex": 1,
+    "explanation": "'Usually' -> Simple Present (drinks). 'Today' -> Present Continuous (is drinking).",
+    "_originalLevel": 25
+  },
+  {
+    "id": "default_L25_Q22",
+    "category": "Simple Present vs Present Continuous",
+    "difficulty": "Sedang",
+    "question": "Look! The baby ... .",
+    "options": [
+      "sleeps",
+      "is sleeping",
+      "sleep",
+      "are sleeping"
+    ],
+    "correctIndex": 1,
+    "explanation": "'Look!' menandakan kejadian sedang berlangsung (Present Continuous).",
+    "_originalLevel": 25
+  },
+  {
+    "id": "default_L25_Q23",
+    "category": "Simple Present vs Present Continuous",
+    "difficulty": "Sedang",
+    "question": "I ... to school every day.",
+    "options": [
+      "going",
+      "go",
+      "goes",
+      "am going"
+    ],
+    "correctIndex": 1,
+    "explanation": "'Every day' menandakan rutinitas (Simple Present). Subjek 'I' menggunakan V1.",
+    "_originalLevel": 25
+  },
+  {
+    "id": "default_L25_Q24",
+    "category": "Simple Present vs Present Continuous",
+    "difficulty": "Sedang",
+    "question": "Be quiet! I ... my homework.",
+    "options": [
+      "is doing",
+      "does",
+      "do",
+      "am doing"
+    ],
+    "correctIndex": 3,
+    "explanation": "'Be quiet!' menandakan aksi sedang berlangsung saat ini (Present Continuous).",
+    "_originalLevel": 25
+  },
+  {
+    "id": "default_L25_Q25",
+    "category": "Simple Present vs Present Continuous",
+    "difficulty": "Sedang",
+    "question": "She usually ... coffee, but today she ... tea.",
+    "options": [
+      "drink / is drinking",
+      "drinks / drinking",
+      "drinks / is drinking",
+      "is drinking / drinks"
+    ],
+    "correctIndex": 2,
+    "explanation": "'Usually' -> Simple Present (drinks). 'Today' -> Present Continuous (is drinking).",
+    "_originalLevel": 25
+  },
+  {
+    "id": "default_L25_Q26",
+    "category": "Simple Present vs Present Continuous",
+    "difficulty": "Sedang",
+    "question": "Look! The baby ... .",
+    "options": [
+      "sleeps",
+      "are sleeping",
+      "sleep",
+      "is sleeping"
+    ],
+    "correctIndex": 3,
+    "explanation": "'Look!' menandakan kejadian sedang berlangsung (Present Continuous).",
+    "_originalLevel": 25
+  },
+  {
+    "id": "default_L25_Q27",
+    "category": "Simple Present vs Present Continuous",
+    "difficulty": "Sedang",
+    "question": "I ... to school every day.",
+    "options": [
+      "go",
+      "goes",
+      "going",
+      "am going"
+    ],
+    "correctIndex": 0,
+    "explanation": "'Every day' menandakan rutinitas (Simple Present). Subjek 'I' menggunakan V1.",
+    "_originalLevel": 25
+  },
+  {
+    "id": "default_L25_Q28",
+    "category": "Simple Present vs Present Continuous",
+    "difficulty": "Sedang",
+    "question": "Be quiet! I ... my homework.",
+    "options": [
+      "does",
+      "do",
+      "is doing",
+      "am doing"
+    ],
+    "correctIndex": 3,
+    "explanation": "'Be quiet!' menandakan aksi sedang berlangsung saat ini (Present Continuous).",
+    "_originalLevel": 25
+  },
+  {
+    "id": "default_L25_Q29",
+    "category": "Simple Present vs Present Continuous",
+    "difficulty": "Sedang",
+    "question": "She usually ... coffee, but today she ... tea.",
+    "options": [
+      "drink / is drinking",
+      "is drinking / drinks",
+      "drinks / drinking",
+      "drinks / is drinking"
+    ],
+    "correctIndex": 3,
+    "explanation": "'Usually' -> Simple Present (drinks). 'Today' -> Present Continuous (is drinking).",
+    "_originalLevel": 25
+  },
+  {
+    "id": "default_L25_Q30",
+    "category": "Simple Present vs Present Continuous",
+    "difficulty": "Sedang",
+    "question": "Look! The baby ... .",
+    "options": [
+      "sleeps",
+      "is sleeping",
+      "sleep",
+      "are sleeping"
+    ],
+    "correctIndex": 1,
+    "explanation": "'Look!' menandakan kejadian sedang berlangsung (Present Continuous).",
+    "_originalLevel": 25
+  },
+  {
+    "id": "default_L26_Q1",
+    "category": "Simple Past Tense (Hard)",
+    "difficulty": "Sulit",
+    "question": "Although the storm was fierce, the brave sailors ___ the ship safely to the harbor.",
+    "options": [
+      "brought",
+      "bringed",
+      "brings",
+      "bring"
+    ],
+    "correctIndex": 0,
+    "explanation": "Bentuk lampau dari 'bring' adalah 'brought'.",
+    "_originalLevel": 26
+  },
+  {
+    "id": "default_L26_Q2",
+    "category": "Simple Past Tense (Hard)",
+    "difficulty": "Sulit",
+    "question": "The broadcasting company ___ the news as soon as they received the confirmation.",
+    "options": [
+      "broadcasting",
+      "broadcasts",
+      "broadcast",
+      "broadcasted"
+    ],
+    "correctIndex": 2,
+    "explanation": "'Broadcast' adalah irregular verb yang bentuk past-nya tetap 'broadcast'.",
+    "_originalLevel": 26
+  },
+  {
+    "id": "default_L26_Q3",
+    "category": "Simple Past Tense (Hard)",
+    "difficulty": "Sulit",
+    "question": "She ___ to read the complicated instructions carefully before assembling the machine.",
+    "options": [
+      "chose",
+      "choose",
+      "chooses",
+      "choosed"
+    ],
+    "correctIndex": 0,
+    "explanation": "Bentuk past dari 'choose' adalah 'chose'.",
+    "_originalLevel": 26
+  },
+  {
+    "id": "default_L26_Q4",
+    "category": "Simple Past Tense (Hard)",
+    "difficulty": "Sulit",
+    "question": "The mysterious stranger ___ into the shadows when the police arrived.",
+    "options": [
+      "slided",
+      "slide",
+      "slides",
+      "slid"
+    ],
+    "correctIndex": 3,
+    "explanation": "Bentuk past tense dari 'slide' adalah 'slid'.",
+    "_originalLevel": 26
+  },
+  {
+    "id": "default_L26_Q5",
+    "category": "Simple Past Tense (Hard)",
+    "difficulty": "Sulit",
+    "question": "Despite the heavy rain, the event ___ much longer than we expected.",
+    "options": [
+      "lasts",
+      "last",
+      "lasted",
+      "lasting"
+    ],
+    "correctIndex": 2,
+    "explanation": "Kata kerja 'last' (berlangsung) menjadi 'lasted' dalam past tense.",
+    "_originalLevel": 26
+  },
+  {
+    "id": "default_L26_Q6",
+    "category": "Simple Past Tense (Hard)",
+    "difficulty": "Sulit",
+    "question": "The old man ___ his grand-children tales of his youth.",
+    "options": [
+      "tell",
+      "telled",
+      "told",
+      "tells"
+    ],
+    "correctIndex": 2,
+    "explanation": "Bentuk lampau dari 'tell' adalah 'told'.",
+    "_originalLevel": 26
+  },
+  {
+    "id": "default_L26_Q7",
+    "category": "Simple Past Tense (Hard)",
+    "difficulty": "Sulit",
+    "question": "My grandfather ___ a beautiful wooden chair using only traditional tools.",
+    "options": [
+      "build",
+      "built",
+      "builded",
+      "builds"
+    ],
+    "correctIndex": 1,
+    "explanation": "Bentuk past dari 'build' adalah 'built'.",
+    "_originalLevel": 26
+  },
+  {
+    "id": "default_L26_Q8",
+    "category": "Simple Past Tense (Hard)",
+    "difficulty": "Sulit",
+    "question": "The aggressive dog ___ the postman yesterday morning.",
+    "options": [
+      "bites",
+      "bited",
+      "bite",
+      "bit"
+    ],
+    "correctIndex": 3,
+    "explanation": "Bentuk lampau dari 'bite' adalah 'bit'.",
+    "_originalLevel": 26
+  },
+  {
+    "id": "default_L26_Q9",
+    "category": "Simple Past Tense (Hard)",
+    "difficulty": "Sulit",
+    "question": "We ___ completely exhausted after the ten-hour hike.",
+    "options": [
+      "feeled",
+      "felt",
+      "feels",
+      "feel"
+    ],
+    "correctIndex": 1,
+    "explanation": "Bentuk lampau 'feel' adalah 'felt'.",
+    "_originalLevel": 26
+  },
+  {
+    "id": "default_L26_Q10",
+    "category": "Simple Past Tense (Hard)",
+    "difficulty": "Sulit",
+    "question": "She ___ her keys in the car and had to call a locksmith.",
+    "options": [
+      "leave",
+      "left",
+      "leaved",
+      "leaves"
+    ],
+    "correctIndex": 1,
+    "explanation": "Bentuk past dari 'leave' adalah 'left'.",
+    "_originalLevel": 26
+  },
+  {
+    "id": "default_L26_Q11",
+    "category": "Simple Past Tense (Hard)",
+    "difficulty": "Sulit",
+    "question": "The thief ___ the precious painting from the museum last night.",
+    "options": [
+      "steals",
+      "steal",
+      "stealed",
+      "stole"
+    ],
+    "correctIndex": 3,
+    "explanation": "Bentuk past dari 'steal' adalah 'stole'.",
+    "_originalLevel": 26
+  },
+  {
+    "id": "default_L26_Q12",
+    "category": "Simple Past Tense (Hard)",
+    "difficulty": "Sulit",
+    "question": "He ___ heavily on his friend's advice before making the investment.",
+    "options": [
+      "relies",
+      "rely",
+      "relied",
+      "relying"
+    ],
+    "correctIndex": 2,
+    "explanation": "Bentuk lampau dari 'rely' adalah 'relied'.",
+    "_originalLevel": 26
+  },
+  {
+    "id": "default_L26_Q13",
+    "category": "Simple Past Tense (Hard)",
+    "difficulty": "Sulit",
+    "question": "The wind ___ furiously during the hurricane.",
+    "options": [
+      "blows",
+      "blowed",
+      "blow",
+      "blew"
+    ],
+    "correctIndex": 3,
+    "explanation": "Bentuk lampau 'blow' adalah 'blew'.",
+    "_originalLevel": 26
+  },
+  {
+    "id": "default_L26_Q14",
+    "category": "Simple Past Tense (Hard)",
+    "difficulty": "Sulit",
+    "question": "The artist ___ a stunning portrait of the queen.",
+    "options": [
+      "draw",
+      "drew",
+      "drawed",
+      "draws"
+    ],
+    "correctIndex": 1,
+    "explanation": "Bentuk past dari 'draw' adalah 'drew'.",
+    "_originalLevel": 26
+  },
+  {
+    "id": "default_L26_Q15",
+    "category": "Simple Past Tense (Hard)",
+    "difficulty": "Sulit",
+    "question": "They ___ the hidden treasure beneath the ancient ruins.",
+    "options": [
+      "hides",
+      "hid",
+      "hided",
+      "hide"
+    ],
+    "correctIndex": 1,
+    "explanation": "Bentuk past dari 'hide' adalah 'hid'.",
+    "_originalLevel": 26
+  },
+  {
+    "id": "default_L26_Q16",
+    "category": "Simple Past Tense (Hard)",
+    "difficulty": "Sulit",
+    "question": "Although the storm was fierce, the brave sailors ___ the ship safely to the harbor.",
+    "options": [
+      "brings",
+      "bringed",
+      "brought",
+      "bring"
+    ],
+    "correctIndex": 2,
+    "explanation": "Bentuk lampau dari 'bring' adalah 'brought'.",
+    "_originalLevel": 26
+  },
+  {
+    "id": "default_L26_Q17",
+    "category": "Simple Past Tense (Hard)",
+    "difficulty": "Sulit",
+    "question": "The broadcasting company ___ the news as soon as they received the confirmation.",
+    "options": [
+      "broadcasting",
+      "broadcasted",
+      "broadcasts",
+      "broadcast"
+    ],
+    "correctIndex": 3,
+    "explanation": "'Broadcast' adalah irregular verb yang bentuk past-nya tetap 'broadcast'.",
+    "_originalLevel": 26
+  },
+  {
+    "id": "default_L26_Q18",
+    "category": "Simple Past Tense (Hard)",
+    "difficulty": "Sulit",
+    "question": "She ___ to read the complicated instructions carefully before assembling the machine.",
+    "options": [
+      "chooses",
+      "chose",
+      "choosed",
+      "choose"
+    ],
+    "correctIndex": 1,
+    "explanation": "Bentuk past dari 'choose' adalah 'chose'.",
+    "_originalLevel": 26
+  },
+  {
+    "id": "default_L26_Q19",
+    "category": "Simple Past Tense (Hard)",
+    "difficulty": "Sulit",
+    "question": "The mysterious stranger ___ into the shadows when the police arrived.",
+    "options": [
+      "slid",
+      "slide",
+      "slides",
+      "slided"
+    ],
+    "correctIndex": 0,
+    "explanation": "Bentuk past tense dari 'slide' adalah 'slid'.",
+    "_originalLevel": 26
+  },
+  {
+    "id": "default_L26_Q20",
+    "category": "Simple Past Tense (Hard)",
+    "difficulty": "Sulit",
+    "question": "Despite the heavy rain, the event ___ much longer than we expected.",
+    "options": [
+      "lasted",
+      "lasting",
+      "last",
+      "lasts"
+    ],
+    "correctIndex": 0,
+    "explanation": "Kata kerja 'last' (berlangsung) menjadi 'lasted' dalam past tense.",
+    "_originalLevel": 26
+  },
+  {
+    "id": "default_L26_Q21",
+    "category": "Simple Past Tense (Hard)",
+    "difficulty": "Sulit",
+    "question": "The old man ___ his grand-children tales of his youth.",
+    "options": [
+      "tell",
+      "telled",
+      "tells",
+      "told"
+    ],
+    "correctIndex": 3,
+    "explanation": "Bentuk lampau dari 'tell' adalah 'told'.",
+    "_originalLevel": 26
+  },
+  {
+    "id": "default_L26_Q22",
+    "category": "Simple Past Tense (Hard)",
+    "difficulty": "Sulit",
+    "question": "My grandfather ___ a beautiful wooden chair using only traditional tools.",
+    "options": [
+      "built",
+      "builded",
+      "builds",
+      "build"
+    ],
+    "correctIndex": 0,
+    "explanation": "Bentuk past dari 'build' adalah 'built'.",
+    "_originalLevel": 26
+  },
+  {
+    "id": "default_L26_Q23",
+    "category": "Simple Past Tense (Hard)",
+    "difficulty": "Sulit",
+    "question": "The aggressive dog ___ the postman yesterday morning.",
+    "options": [
+      "bites",
+      "bite",
+      "bited",
+      "bit"
+    ],
+    "correctIndex": 3,
+    "explanation": "Bentuk lampau dari 'bite' adalah 'bit'.",
+    "_originalLevel": 26
+  },
+  {
+    "id": "default_L26_Q24",
+    "category": "Simple Past Tense (Hard)",
+    "difficulty": "Sulit",
+    "question": "We ___ completely exhausted after the ten-hour hike.",
+    "options": [
+      "feels",
+      "feel",
+      "felt",
+      "feeled"
+    ],
+    "correctIndex": 2,
+    "explanation": "Bentuk lampau 'feel' adalah 'felt'.",
+    "_originalLevel": 26
+  },
+  {
+    "id": "default_L26_Q25",
+    "category": "Simple Past Tense (Hard)",
+    "difficulty": "Sulit",
+    "question": "She ___ her keys in the car and had to call a locksmith.",
+    "options": [
+      "leaved",
+      "leaves",
+      "leave",
+      "left"
+    ],
+    "correctIndex": 3,
+    "explanation": "Bentuk past dari 'leave' adalah 'left'.",
+    "_originalLevel": 26
+  },
+  {
+    "id": "default_L26_Q26",
+    "category": "Simple Past Tense (Hard)",
+    "difficulty": "Sulit",
+    "question": "The thief ___ the precious painting from the museum last night.",
+    "options": [
+      "stole",
+      "steals",
+      "steal",
+      "stealed"
+    ],
+    "correctIndex": 0,
+    "explanation": "Bentuk past dari 'steal' adalah 'stole'.",
+    "_originalLevel": 26
+  },
+  {
+    "id": "default_L26_Q27",
+    "category": "Simple Past Tense (Hard)",
+    "difficulty": "Sulit",
+    "question": "He ___ heavily on his friend's advice before making the investment.",
+    "options": [
+      "rely",
+      "relying",
+      "relies",
+      "relied"
+    ],
+    "correctIndex": 3,
+    "explanation": "Bentuk lampau dari 'rely' adalah 'relied'.",
+    "_originalLevel": 26
+  },
+  {
+    "id": "default_L26_Q28",
+    "category": "Simple Past Tense (Hard)",
+    "difficulty": "Sulit",
+    "question": "The wind ___ furiously during the hurricane.",
+    "options": [
+      "blew",
+      "blow",
+      "blowed",
+      "blows"
+    ],
+    "correctIndex": 0,
+    "explanation": "Bentuk lampau 'blow' adalah 'blew'.",
+    "_originalLevel": 26
+  },
+  {
+    "id": "default_L26_Q29",
+    "category": "Simple Past Tense (Hard)",
+    "difficulty": "Sulit",
+    "question": "The artist ___ a stunning portrait of the queen.",
+    "options": [
+      "draw",
+      "drawed",
+      "draws",
+      "drew"
+    ],
+    "correctIndex": 3,
+    "explanation": "Bentuk past dari 'draw' adalah 'drew'.",
+    "_originalLevel": 26
+  },
+  {
+    "id": "default_L26_Q30",
+    "category": "Simple Past Tense (Hard)",
+    "difficulty": "Sulit",
+    "question": "They ___ the hidden treasure beneath the ancient ruins.",
+    "options": [
+      "hided",
+      "hide",
+      "hides",
+      "hid"
+    ],
+    "correctIndex": 3,
+    "explanation": "Bentuk past dari 'hide' adalah 'hid'.",
+    "_originalLevel": 26
+  },
+  {
+    "id": "default_L27_Q1",
+    "category": "Future Plans: Will & Going To (Hard)",
+    "difficulty": "Sulit",
+    "question": "Look at those dark clouds! It ___ rain heavily.",
+    "options": [
+      "will",
+      "is going to",
+      "is going",
+      "shall"
+    ],
+    "correctIndex": 1,
+    "explanation": "'Going to' digunakan karena ada bukti nyata (dark clouds) saat ini.",
+    "_originalLevel": 27
+  },
+  {
+    "id": "default_L27_Q2",
+    "category": "Future Plans: Will & Going To (Hard)",
+    "difficulty": "Sulit",
+    "question": "'We run out of sugar.' - 'I ___ buy some at the store right now.'",
+    "options": [
+      "am going to",
+      "will",
+      "going to",
+      "shall"
+    ],
+    "correctIndex": 1,
+    "explanation": "'Will' digunakan untuk keputusan mendadak pada saat berbicara.",
+    "_originalLevel": 27
+  },
+  {
+    "id": "default_L27_Q3",
+    "category": "Future Plans: Will & Going To (Hard)",
+    "difficulty": "Sulit",
+    "question": "They have bought the tickets. They ___ travel to Japan next month.",
+    "options": [
+      "are going to",
+      "shall",
+      "going to",
+      "will"
+    ],
+    "correctIndex": 0,
+    "explanation": "'Going to' digunakan untuk rencana yang sudah dipastikan/disiapkan.",
+    "_originalLevel": 27
+  },
+  {
+    "id": "default_L27_Q4",
+    "category": "Future Plans: Will & Going To (Hard)",
+    "difficulty": "Sulit",
+    "question": "I promise I ___ tell anyone your secret.",
+    "options": [
+      "do not",
+      "am not going to",
+      "not will",
+      "will not"
+    ],
+    "correctIndex": 3,
+    "explanation": "'Will' sering digunakan untuk membuat janji (promise).",
+    "_originalLevel": 27
+  },
+  {
+    "id": "default_L27_Q5",
+    "category": "Future Plans: Will & Going To (Hard)",
+    "difficulty": "Sulit",
+    "question": "Watch out! You ___ drop those glasses!",
+    "options": [
+      "are going to",
+      "will",
+      "go to",
+      "shall"
+    ],
+    "correctIndex": 0,
+    "explanation": "Untuk peringatan tentang kejadian yang akan segera terjadi berdasarkan observasi, gunakan 'going to'.",
+    "_originalLevel": 27
+  },
+  {
+    "id": "default_L27_Q6",
+    "category": "Future Plans: Will & Going To (Hard)",
+    "difficulty": "Sulit",
+    "question": "I think artificial intelligence ___ change the world significantly in the next decade.",
+    "options": [
+      "shall",
+      "going to",
+      "is going to",
+      "will"
+    ],
+    "correctIndex": 3,
+    "explanation": "Untuk prediksi opini (I think), 'will' sering digunakan.",
+    "_originalLevel": 27
+  },
+  {
+    "id": "default_L27_Q7",
+    "category": "Future Plans: Will & Going To (Hard)",
+    "difficulty": "Sulit",
+    "question": "She has been studying hard because she ___ take the medical exam.",
+    "options": [
+      "is going to",
+      "will",
+      "goes to",
+      "is going"
+    ],
+    "correctIndex": 0,
+    "explanation": "Rencana atau niat di masa depan menggunakan 'be going to'.",
+    "_originalLevel": 27
+  },
+  {
+    "id": "default_L27_Q8",
+    "category": "Future Plans: Will & Going To (Hard)",
+    "difficulty": "Sulit",
+    "question": "'The phone is ringing!' - 'I ___ get it.'",
+    "options": [
+      "will",
+      "shall",
+      "go to",
+      "am going to"
+    ],
+    "correctIndex": 0,
+    "explanation": "Keputusan instan (menjawab telepon) menggunakan 'will'.",
+    "_originalLevel": 27
+  },
+  {
+    "id": "default_L27_Q9",
+    "category": "Future Plans: Will & Going To (Hard)",
+    "difficulty": "Sulit",
+    "question": "Next year, I ___ start my own business. I've already saved up the money.",
+    "options": [
+      "going to",
+      "am going to",
+      "will",
+      "would"
+    ],
+    "correctIndex": 1,
+    "explanation": "Rencana yang sudah matang menggunakan 'am going to'.",
+    "_originalLevel": 27
+  },
+  {
+    "id": "default_L27_Q10",
+    "category": "Future Plans: Will & Going To (Hard)",
+    "difficulty": "Sulit",
+    "question": "Maybe we ___ visit Paris if we have enough money.",
+    "options": [
+      "shall",
+      "will",
+      "going to",
+      "are going to"
+    ],
+    "correctIndex": 1,
+    "explanation": "Untuk kemungkinan (maybe), gunakan 'will'.",
+    "_originalLevel": 27
+  },
+  {
+    "id": "default_L27_Q11",
+    "category": "Future Plans: Will & Going To (Hard)",
+    "difficulty": "Sulit",
+    "question": "Look at those dark clouds! It ___ rain heavily.",
+    "options": [
+      "will",
+      "is going",
+      "is going to",
+      "shall"
+    ],
+    "correctIndex": 2,
+    "explanation": "'Going to' digunakan karena ada bukti nyata (dark clouds) saat ini.",
+    "_originalLevel": 27
+  },
+  {
+    "id": "default_L27_Q12",
+    "category": "Future Plans: Will & Going To (Hard)",
+    "difficulty": "Sulit",
+    "question": "'We run out of sugar.' - 'I ___ buy some at the store right now.'",
+    "options": [
+      "going to",
+      "am going to",
+      "shall",
+      "will"
+    ],
+    "correctIndex": 3,
+    "explanation": "'Will' digunakan untuk keputusan mendadak pada saat berbicara.",
+    "_originalLevel": 27
+  },
+  {
+    "id": "default_L27_Q13",
+    "category": "Future Plans: Will & Going To (Hard)",
+    "difficulty": "Sulit",
+    "question": "They have bought the tickets. They ___ travel to Japan next month.",
+    "options": [
+      "are going to",
+      "will",
+      "shall",
+      "going to"
+    ],
+    "correctIndex": 0,
+    "explanation": "'Going to' digunakan untuk rencana yang sudah dipastikan/disiapkan.",
+    "_originalLevel": 27
+  },
+  {
+    "id": "default_L27_Q14",
+    "category": "Future Plans: Will & Going To (Hard)",
+    "difficulty": "Sulit",
+    "question": "I promise I ___ tell anyone your secret.",
+    "options": [
+      "not will",
+      "do not",
+      "am not going to",
+      "will not"
+    ],
+    "correctIndex": 3,
+    "explanation": "'Will' sering digunakan untuk membuat janji (promise).",
+    "_originalLevel": 27
+  },
+  {
+    "id": "default_L27_Q15",
+    "category": "Future Plans: Will & Going To (Hard)",
+    "difficulty": "Sulit",
+    "question": "Watch out! You ___ drop those glasses!",
+    "options": [
+      "go to",
+      "will",
+      "shall",
+      "are going to"
+    ],
+    "correctIndex": 3,
+    "explanation": "Untuk peringatan tentang kejadian yang akan segera terjadi berdasarkan observasi, gunakan 'going to'.",
+    "_originalLevel": 27
+  },
+  {
+    "id": "default_L27_Q16",
+    "category": "Future Plans: Will & Going To (Hard)",
+    "difficulty": "Sulit",
+    "question": "I think artificial intelligence ___ change the world significantly in the next decade.",
+    "options": [
+      "is going to",
+      "shall",
+      "going to",
+      "will"
+    ],
+    "correctIndex": 3,
+    "explanation": "Untuk prediksi opini (I think), 'will' sering digunakan.",
+    "_originalLevel": 27
+  },
+  {
+    "id": "default_L27_Q17",
+    "category": "Future Plans: Will & Going To (Hard)",
+    "difficulty": "Sulit",
+    "question": "She has been studying hard because she ___ take the medical exam.",
+    "options": [
+      "goes to",
+      "will",
+      "is going",
+      "is going to"
+    ],
+    "correctIndex": 3,
+    "explanation": "Rencana atau niat di masa depan menggunakan 'be going to'.",
+    "_originalLevel": 27
+  },
+  {
+    "id": "default_L27_Q18",
+    "category": "Future Plans: Will & Going To (Hard)",
+    "difficulty": "Sulit",
+    "question": "'The phone is ringing!' - 'I ___ get it.'",
+    "options": [
+      "am going to",
+      "will",
+      "go to",
+      "shall"
+    ],
+    "correctIndex": 1,
+    "explanation": "Keputusan instan (menjawab telepon) menggunakan 'will'.",
+    "_originalLevel": 27
+  },
+  {
+    "id": "default_L27_Q19",
+    "category": "Future Plans: Will & Going To (Hard)",
+    "difficulty": "Sulit",
+    "question": "Next year, I ___ start my own business. I've already saved up the money.",
+    "options": [
+      "am going to",
+      "would",
+      "will",
+      "going to"
+    ],
+    "correctIndex": 0,
+    "explanation": "Rencana yang sudah matang menggunakan 'am going to'.",
+    "_originalLevel": 27
+  },
+  {
+    "id": "default_L27_Q20",
+    "category": "Future Plans: Will & Going To (Hard)",
+    "difficulty": "Sulit",
+    "question": "Maybe we ___ visit Paris if we have enough money.",
+    "options": [
+      "shall",
+      "are going to",
+      "going to",
+      "will"
+    ],
+    "correctIndex": 3,
+    "explanation": "Untuk kemungkinan (maybe), gunakan 'will'.",
+    "_originalLevel": 27
+  },
+  {
+    "id": "default_L27_Q21",
+    "category": "Future Plans: Will & Going To (Hard)",
+    "difficulty": "Sulit",
+    "question": "Look at those dark clouds! It ___ rain heavily.",
+    "options": [
+      "shall",
+      "is going",
+      "is going to",
+      "will"
+    ],
+    "correctIndex": 2,
+    "explanation": "'Going to' digunakan karena ada bukti nyata (dark clouds) saat ini.",
+    "_originalLevel": 27
+  },
+  {
+    "id": "default_L27_Q22",
+    "category": "Future Plans: Will & Going To (Hard)",
+    "difficulty": "Sulit",
+    "question": "'We run out of sugar.' - 'I ___ buy some at the store right now.'",
+    "options": [
+      "shall",
+      "will",
+      "going to",
+      "am going to"
+    ],
+    "correctIndex": 1,
+    "explanation": "'Will' digunakan untuk keputusan mendadak pada saat berbicara.",
+    "_originalLevel": 27
+  },
+  {
+    "id": "default_L27_Q23",
+    "category": "Future Plans: Will & Going To (Hard)",
+    "difficulty": "Sulit",
+    "question": "They have bought the tickets. They ___ travel to Japan next month.",
+    "options": [
+      "are going to",
+      "shall",
+      "will",
+      "going to"
+    ],
+    "correctIndex": 0,
+    "explanation": "'Going to' digunakan untuk rencana yang sudah dipastikan/disiapkan.",
+    "_originalLevel": 27
+  },
+  {
+    "id": "default_L27_Q24",
+    "category": "Future Plans: Will & Going To (Hard)",
+    "difficulty": "Sulit",
+    "question": "I promise I ___ tell anyone your secret.",
+    "options": [
+      "am not going to",
+      "will not",
+      "do not",
+      "not will"
+    ],
+    "correctIndex": 1,
+    "explanation": "'Will' sering digunakan untuk membuat janji (promise).",
+    "_originalLevel": 27
+  },
+  {
+    "id": "default_L27_Q25",
+    "category": "Future Plans: Will & Going To (Hard)",
+    "difficulty": "Sulit",
+    "question": "Watch out! You ___ drop those glasses!",
+    "options": [
+      "shall",
+      "go to",
+      "will",
+      "are going to"
+    ],
+    "correctIndex": 3,
+    "explanation": "Untuk peringatan tentang kejadian yang akan segera terjadi berdasarkan observasi, gunakan 'going to'.",
+    "_originalLevel": 27
+  },
+  {
+    "id": "default_L27_Q26",
+    "category": "Future Plans: Will & Going To (Hard)",
+    "difficulty": "Sulit",
+    "question": "I think artificial intelligence ___ change the world significantly in the next decade.",
+    "options": [
+      "going to",
+      "shall",
+      "is going to",
+      "will"
+    ],
+    "correctIndex": 3,
+    "explanation": "Untuk prediksi opini (I think), 'will' sering digunakan.",
+    "_originalLevel": 27
+  },
+  {
+    "id": "default_L27_Q27",
+    "category": "Future Plans: Will & Going To (Hard)",
+    "difficulty": "Sulit",
+    "question": "She has been studying hard because she ___ take the medical exam.",
+    "options": [
+      "will",
+      "goes to",
+      "is going",
+      "is going to"
+    ],
+    "correctIndex": 3,
+    "explanation": "Rencana atau niat di masa depan menggunakan 'be going to'.",
+    "_originalLevel": 27
+  },
+  {
+    "id": "default_L27_Q28",
+    "category": "Future Plans: Will & Going To (Hard)",
+    "difficulty": "Sulit",
+    "question": "'The phone is ringing!' - 'I ___ get it.'",
+    "options": [
+      "go to",
+      "am going to",
+      "shall",
+      "will"
+    ],
+    "correctIndex": 3,
+    "explanation": "Keputusan instan (menjawab telepon) menggunakan 'will'.",
+    "_originalLevel": 27
+  },
+  {
+    "id": "default_L27_Q29",
+    "category": "Future Plans: Will & Going To (Hard)",
+    "difficulty": "Sulit",
+    "question": "Next year, I ___ start my own business. I've already saved up the money.",
+    "options": [
+      "going to",
+      "am going to",
+      "would",
+      "will"
+    ],
+    "correctIndex": 1,
+    "explanation": "Rencana yang sudah matang menggunakan 'am going to'.",
+    "_originalLevel": 27
+  },
+  {
+    "id": "default_L27_Q30",
+    "category": "Future Plans: Will & Going To (Hard)",
+    "difficulty": "Sulit",
+    "question": "Maybe we ___ visit Paris if we have enough money.",
+    "options": [
+      "going to",
+      "will",
+      "are going to",
+      "shall"
+    ],
+    "correctIndex": 1,
+    "explanation": "Untuk kemungkinan (maybe), gunakan 'will'.",
+    "_originalLevel": 27
+  },
+  {
+    "id": "default_L28_Q1",
+    "category": "Comparative & Superlative Adjectives (Hard)",
+    "difficulty": "Sulit",
+    "question": "The ___ you study, the better your grades will be.",
+    "options": [
+      "more hard",
+      "hardest",
+      "hard",
+      "harder"
+    ],
+    "correctIndex": 3,
+    "explanation": "Struktur 'the + comparative, the + comparative'.",
+    "_originalLevel": 28
+  },
+  {
+    "id": "default_L28_Q2",
+    "category": "Comparative & Superlative Adjectives (Hard)",
+    "difficulty": "Sulit",
+    "question": "This is arguably the ___ complicated problem we have ever faced.",
+    "options": [
+      "much",
+      "more",
+      "many",
+      "most"
+    ],
+    "correctIndex": 3,
+    "explanation": "Superlative untuk kata sifat panjang menggunakan 'most'.",
+    "_originalLevel": 28
+  },
+  {
+    "id": "default_L28_Q3",
+    "category": "Comparative & Superlative Adjectives (Hard)",
+    "difficulty": "Sulit",
+    "question": "His condition is getting ___ every day, the doctors are worried.",
+    "options": [
+      "baddest",
+      "worst",
+      "bad",
+      "worse"
+    ],
+    "correctIndex": 3,
+    "explanation": "Bentuk comparative dari 'bad' adalah 'worse'.",
+    "_originalLevel": 28
+  },
+  {
+    "id": "default_L28_Q4",
+    "category": "Comparative & Superlative Adjectives (Hard)",
+    "difficulty": "Sulit",
+    "question": "Jupiter is the ___ planet in our solar system.",
+    "options": [
+      "large",
+      "most large",
+      "largest",
+      "larger"
+    ],
+    "correctIndex": 2,
+    "explanation": "Superlative untuk 'large' adalah 'largest'.",
+    "_originalLevel": 28
+  },
+  {
+    "id": "default_L28_Q5",
+    "category": "Comparative & Superlative Adjectives (Hard)",
+    "difficulty": "Sulit",
+    "question": "She ran ___ than anyone else in the competition.",
+    "options": [
+      "faster",
+      "fast",
+      "more fast",
+      "fastest"
+    ],
+    "correctIndex": 0,
+    "explanation": "Comparative dari 'fast' adalah 'faster'.",
+    "_originalLevel": 28
+  },
+  {
+    "id": "default_L28_Q6",
+    "category": "Comparative & Superlative Adjectives (Hard)",
+    "difficulty": "Sulit",
+    "question": "That was the ___ ridiculous excuse I have ever heard.",
+    "options": [
+      "very",
+      "more",
+      "most",
+      "much"
+    ],
+    "correctIndex": 2,
+    "explanation": "Superlative untuk 'ridiculous' menggunakan 'the most'.",
+    "_originalLevel": 28
+  },
+  {
+    "id": "default_L28_Q7",
+    "category": "Comparative & Superlative Adjectives (Hard)",
+    "difficulty": "Sulit",
+    "question": "He is much ___ today than he was yesterday after taking the medicine.",
+    "options": [
+      "more good",
+      "better",
+      "good",
+      "best"
+    ],
+    "correctIndex": 1,
+    "explanation": "Comparative dari 'good' adalah 'better'.",
+    "_originalLevel": 28
+  },
+  {
+    "id": "default_L28_Q8",
+    "category": "Comparative & Superlative Adjectives (Hard)",
+    "difficulty": "Sulit",
+    "question": "The weather in the south is slightly ___ than in the north.",
+    "options": [
+      "warm",
+      "warmest",
+      "warmer",
+      "more warm"
+    ],
+    "correctIndex": 2,
+    "explanation": "Comparative dari 'warm' adalah 'warmer'.",
+    "_originalLevel": 28
+  },
+  {
+    "id": "default_L28_Q9",
+    "category": "Comparative & Superlative Adjectives (Hard)",
+    "difficulty": "Sulit",
+    "question": "She is by far the ___ experienced candidate for the job.",
+    "options": [
+      "most",
+      "more",
+      "much",
+      "very"
+    ],
+    "correctIndex": 0,
+    "explanation": "Superlative dengan 'by far' menekankan yang 'paling'.",
+    "_originalLevel": 28
+  },
+  {
+    "id": "default_L28_Q10",
+    "category": "Comparative & Superlative Adjectives (Hard)",
+    "difficulty": "Sulit",
+    "question": "This task is ___ less demanding than the previous one.",
+    "options": [
+      "much",
+      "many",
+      "most",
+      "very"
+    ],
+    "correctIndex": 0,
+    "explanation": "Modifier comparative menggunakan 'much' (much less demanding).",
+    "_originalLevel": 28
+  },
+  {
+    "id": "default_L28_Q11",
+    "category": "Comparative & Superlative Adjectives (Hard)",
+    "difficulty": "Sulit",
+    "question": "The ___ you study, the better your grades will be.",
+    "options": [
+      "harder",
+      "hard",
+      "more hard",
+      "hardest"
+    ],
+    "correctIndex": 0,
+    "explanation": "Struktur 'the + comparative, the + comparative'.",
+    "_originalLevel": 28
+  },
+  {
+    "id": "default_L28_Q12",
+    "category": "Comparative & Superlative Adjectives (Hard)",
+    "difficulty": "Sulit",
+    "question": "This is arguably the ___ complicated problem we have ever faced.",
+    "options": [
+      "more",
+      "most",
+      "many",
+      "much"
+    ],
+    "correctIndex": 1,
+    "explanation": "Superlative untuk kata sifat panjang menggunakan 'most'.",
+    "_originalLevel": 28
+  },
+  {
+    "id": "default_L28_Q13",
+    "category": "Comparative & Superlative Adjectives (Hard)",
+    "difficulty": "Sulit",
+    "question": "His condition is getting ___ every day, the doctors are worried.",
+    "options": [
+      "bad",
+      "worst",
+      "worse",
+      "baddest"
+    ],
+    "correctIndex": 2,
+    "explanation": "Bentuk comparative dari 'bad' adalah 'worse'.",
+    "_originalLevel": 28
+  },
+  {
+    "id": "default_L28_Q14",
+    "category": "Comparative & Superlative Adjectives (Hard)",
+    "difficulty": "Sulit",
+    "question": "Jupiter is the ___ planet in our solar system.",
+    "options": [
+      "largest",
+      "larger",
+      "large",
+      "most large"
+    ],
+    "correctIndex": 0,
+    "explanation": "Superlative untuk 'large' adalah 'largest'.",
+    "_originalLevel": 28
+  },
+  {
+    "id": "default_L28_Q15",
+    "category": "Comparative & Superlative Adjectives (Hard)",
+    "difficulty": "Sulit",
+    "question": "She ran ___ than anyone else in the competition.",
+    "options": [
+      "fast",
+      "fastest",
+      "faster",
+      "more fast"
+    ],
+    "correctIndex": 2,
+    "explanation": "Comparative dari 'fast' adalah 'faster'.",
+    "_originalLevel": 28
+  },
+  {
+    "id": "default_L28_Q16",
+    "category": "Comparative & Superlative Adjectives (Hard)",
+    "difficulty": "Sulit",
+    "question": "That was the ___ ridiculous excuse I have ever heard.",
+    "options": [
+      "very",
+      "much",
+      "most",
+      "more"
+    ],
+    "correctIndex": 2,
+    "explanation": "Superlative untuk 'ridiculous' menggunakan 'the most'.",
+    "_originalLevel": 28
+  },
+  {
+    "id": "default_L28_Q17",
+    "category": "Comparative & Superlative Adjectives (Hard)",
+    "difficulty": "Sulit",
+    "question": "He is much ___ today than he was yesterday after taking the medicine.",
+    "options": [
+      "best",
+      "good",
+      "more good",
+      "better"
+    ],
+    "correctIndex": 3,
+    "explanation": "Comparative dari 'good' adalah 'better'.",
+    "_originalLevel": 28
+  },
+  {
+    "id": "default_L28_Q18",
+    "category": "Comparative & Superlative Adjectives (Hard)",
+    "difficulty": "Sulit",
+    "question": "The weather in the south is slightly ___ than in the north.",
+    "options": [
+      "more warm",
+      "warm",
+      "warmer",
+      "warmest"
+    ],
+    "correctIndex": 2,
+    "explanation": "Comparative dari 'warm' adalah 'warmer'.",
+    "_originalLevel": 28
+  },
+  {
+    "id": "default_L28_Q19",
+    "category": "Comparative & Superlative Adjectives (Hard)",
+    "difficulty": "Sulit",
+    "question": "She is by far the ___ experienced candidate for the job.",
+    "options": [
+      "most",
+      "very",
+      "much",
+      "more"
+    ],
+    "correctIndex": 0,
+    "explanation": "Superlative dengan 'by far' menekankan yang 'paling'.",
+    "_originalLevel": 28
+  },
+  {
+    "id": "default_L28_Q20",
+    "category": "Comparative & Superlative Adjectives (Hard)",
+    "difficulty": "Sulit",
+    "question": "This task is ___ less demanding than the previous one.",
+    "options": [
+      "many",
+      "much",
+      "very",
+      "most"
+    ],
+    "correctIndex": 1,
+    "explanation": "Modifier comparative menggunakan 'much' (much less demanding).",
+    "_originalLevel": 28
+  },
+  {
+    "id": "default_L28_Q21",
+    "category": "Comparative & Superlative Adjectives (Hard)",
+    "difficulty": "Sulit",
+    "question": "The ___ you study, the better your grades will be.",
+    "options": [
+      "more hard",
+      "hardest",
+      "harder",
+      "hard"
+    ],
+    "correctIndex": 2,
+    "explanation": "Struktur 'the + comparative, the + comparative'.",
+    "_originalLevel": 28
+  },
+  {
+    "id": "default_L28_Q22",
+    "category": "Comparative & Superlative Adjectives (Hard)",
+    "difficulty": "Sulit",
+    "question": "This is arguably the ___ complicated problem we have ever faced.",
+    "options": [
+      "more",
+      "most",
+      "much",
+      "many"
+    ],
+    "correctIndex": 1,
+    "explanation": "Superlative untuk kata sifat panjang menggunakan 'most'.",
+    "_originalLevel": 28
+  },
+  {
+    "id": "default_L28_Q23",
+    "category": "Comparative & Superlative Adjectives (Hard)",
+    "difficulty": "Sulit",
+    "question": "His condition is getting ___ every day, the doctors are worried.",
+    "options": [
+      "bad",
+      "worst",
+      "baddest",
+      "worse"
+    ],
+    "correctIndex": 3,
+    "explanation": "Bentuk comparative dari 'bad' adalah 'worse'.",
+    "_originalLevel": 28
+  },
+  {
+    "id": "default_L28_Q24",
+    "category": "Comparative & Superlative Adjectives (Hard)",
+    "difficulty": "Sulit",
+    "question": "Jupiter is the ___ planet in our solar system.",
+    "options": [
+      "large",
+      "most large",
+      "largest",
+      "larger"
+    ],
+    "correctIndex": 2,
+    "explanation": "Superlative untuk 'large' adalah 'largest'.",
+    "_originalLevel": 28
+  },
+  {
+    "id": "default_L28_Q25",
+    "category": "Comparative & Superlative Adjectives (Hard)",
+    "difficulty": "Sulit",
+    "question": "She ran ___ than anyone else in the competition.",
+    "options": [
+      "fast",
+      "faster",
+      "more fast",
+      "fastest"
+    ],
+    "correctIndex": 1,
+    "explanation": "Comparative dari 'fast' adalah 'faster'.",
+    "_originalLevel": 28
+  },
+  {
+    "id": "default_L28_Q26",
+    "category": "Comparative & Superlative Adjectives (Hard)",
+    "difficulty": "Sulit",
+    "question": "That was the ___ ridiculous excuse I have ever heard.",
+    "options": [
+      "much",
+      "most",
+      "very",
+      "more"
+    ],
+    "correctIndex": 1,
+    "explanation": "Superlative untuk 'ridiculous' menggunakan 'the most'.",
+    "_originalLevel": 28
+  },
+  {
+    "id": "default_L28_Q27",
+    "category": "Comparative & Superlative Adjectives (Hard)",
+    "difficulty": "Sulit",
+    "question": "He is much ___ today than he was yesterday after taking the medicine.",
+    "options": [
+      "better",
+      "more good",
+      "good",
+      "best"
+    ],
+    "correctIndex": 0,
+    "explanation": "Comparative dari 'good' adalah 'better'.",
+    "_originalLevel": 28
+  },
+  {
+    "id": "default_L28_Q28",
+    "category": "Comparative & Superlative Adjectives (Hard)",
+    "difficulty": "Sulit",
+    "question": "The weather in the south is slightly ___ than in the north.",
+    "options": [
+      "warmest",
+      "warmer",
+      "more warm",
+      "warm"
+    ],
+    "correctIndex": 1,
+    "explanation": "Comparative dari 'warm' adalah 'warmer'.",
+    "_originalLevel": 28
+  },
+  {
+    "id": "default_L28_Q29",
+    "category": "Comparative & Superlative Adjectives (Hard)",
+    "difficulty": "Sulit",
+    "question": "She is by far the ___ experienced candidate for the job.",
+    "options": [
+      "more",
+      "much",
+      "very",
+      "most"
+    ],
+    "correctIndex": 3,
+    "explanation": "Superlative dengan 'by far' menekankan yang 'paling'.",
+    "_originalLevel": 28
+  },
+  {
+    "id": "default_L28_Q30",
+    "category": "Comparative & Superlative Adjectives (Hard)",
+    "difficulty": "Sulit",
+    "question": "This task is ___ less demanding than the previous one.",
+    "options": [
+      "very",
+      "many",
+      "most",
+      "much"
+    ],
+    "correctIndex": 3,
+    "explanation": "Modifier comparative menggunakan 'much' (much less demanding).",
+    "_originalLevel": 28
+  },
+  {
+    "id": "default_L29_Q1",
+    "category": "Reading Comprehension Dasar (Hard)",
+    "difficulty": "Sulit",
+    "question": "Read this text: Climate change is a significant and lasting change in the statistical distribution of weather patterns over periods ranging from decades to millions of years. It may be a change in average weather conditions, or in the distribution of weather around the average conditions (i.e., more or fewer extreme weather events). Question: What is climate change based on the text?",
+    "options": [
+      "An unpredictable weather condition",
+      "A temporary weather event",
+      "A lasting change in weather patterns",
+      "A short-term climate issue"
+    ],
+    "correctIndex": 2,
+    "explanation": "Teks menyatakan 'a significant and lasting change... in weather patterns'.",
+    "_originalLevel": 29
+  },
+  {
+    "id": "default_L29_Q2",
+    "category": "Reading Comprehension Dasar (Hard)",
+    "difficulty": "Sulit",
+    "question": "Read this text: The Amazon rainforest, covering much of northwestern Brazil and extending into Colombia, Peru and other South American countries, is the world's largest tropical rainforest, famed for its biodiversity. Question: Where is the Amazon rainforest mostly located?",
+    "options": [
+      "Peru",
+      "Argentina",
+      "Colombia",
+      "Brazil"
+    ],
+    "correctIndex": 3,
+    "explanation": "Teks menyebutkan 'covering much of northwestern Brazil'.",
+    "_originalLevel": 29
+  },
+  {
+    "id": "default_L29_Q3",
+    "category": "Reading Comprehension Dasar (Hard)",
+    "difficulty": "Sulit",
+    "question": "Read this text: Thomas Edison was an American inventor and businessman, who has been described as America's greatest inventor. He developed many devices in fields such as electric power generation, mass communication, sound recording, and motion pictures. Question: What is NOT mentioned as Edison's field of invention?",
+    "options": [
+      "Sound recording",
+      "Motion pictures",
+      "Aviation",
+      "Electric power generation"
+    ],
+    "correctIndex": 2,
+    "explanation": "Aviation (penerbangan) tidak disebutkan dalam teks.",
+    "_originalLevel": 29
+  },
+  {
+    "id": "default_L29_Q4",
+    "category": "Reading Comprehension Dasar (Hard)",
+    "difficulty": "Sulit",
+    "question": "Read this text: Marie Curie was a Polish and naturalized-French physicist and chemist who conducted pioneering research on radioactivity. She was the first woman to win a Nobel Prize. Question: What was Marie Curie's primary field of research?",
+    "options": [
+      "Geology",
+      "Astronomy",
+      "Radioactivity",
+      "Biology"
+    ],
+    "correctIndex": 2,
+    "explanation": "Teks jelas menyebutkan 'pioneering research on radioactivity'.",
+    "_originalLevel": 29
+  },
+  {
+    "id": "default_L29_Q5",
+    "category": "Reading Comprehension Dasar (Hard)",
+    "difficulty": "Sulit",
+    "question": "Read this text: The Great Wall of China is the collective name of a series of fortification systems generally built across the historical northern borders of China to protect and consolidate territories of Chinese states and empires. Question: Why was the Great Wall of China built?",
+    "options": [
+      "As a trading route",
+      "For tourism purposes",
+      "To protect Chinese territories",
+      "To enclose a single city"
+    ],
+    "correctIndex": 2,
+    "explanation": "Teks menyebutkan 'to protect and consolidate territories'.",
+    "_originalLevel": 29
+  },
+  {
+    "id": "default_L29_Q6",
+    "category": "Reading Comprehension Dasar (Hard)",
+    "difficulty": "Sulit",
+    "question": "Read this text: Climate change is a significant and lasting change in the statistical distribution of weather patterns over periods ranging from decades to millions of years. It may be a change in average weather conditions, or in the distribution of weather around the average conditions (i.e., more or fewer extreme weather events). Question: What is climate change based on the text?",
+    "options": [
+      "A temporary weather event",
+      "An unpredictable weather condition",
+      "A lasting change in weather patterns",
+      "A short-term climate issue"
+    ],
+    "correctIndex": 2,
+    "explanation": "Teks menyatakan 'a significant and lasting change... in weather patterns'.",
+    "_originalLevel": 29
+  },
+  {
+    "id": "default_L29_Q7",
+    "category": "Reading Comprehension Dasar (Hard)",
+    "difficulty": "Sulit",
+    "question": "Read this text: The Amazon rainforest, covering much of northwestern Brazil and extending into Colombia, Peru and other South American countries, is the world's largest tropical rainforest, famed for its biodiversity. Question: Where is the Amazon rainforest mostly located?",
+    "options": [
+      "Colombia",
+      "Brazil",
+      "Argentina",
+      "Peru"
+    ],
+    "correctIndex": 1,
+    "explanation": "Teks menyebutkan 'covering much of northwestern Brazil'.",
+    "_originalLevel": 29
+  },
+  {
+    "id": "default_L29_Q8",
+    "category": "Reading Comprehension Dasar (Hard)",
+    "difficulty": "Sulit",
+    "question": "Read this text: Thomas Edison was an American inventor and businessman, who has been described as America's greatest inventor. He developed many devices in fields such as electric power generation, mass communication, sound recording, and motion pictures. Question: What is NOT mentioned as Edison's field of invention?",
+    "options": [
+      "Aviation",
+      "Motion pictures",
+      "Electric power generation",
+      "Sound recording"
+    ],
+    "correctIndex": 0,
+    "explanation": "Aviation (penerbangan) tidak disebutkan dalam teks.",
+    "_originalLevel": 29
+  },
+  {
+    "id": "default_L29_Q9",
+    "category": "Reading Comprehension Dasar (Hard)",
+    "difficulty": "Sulit",
+    "question": "Read this text: Marie Curie was a Polish and naturalized-French physicist and chemist who conducted pioneering research on radioactivity. She was the first woman to win a Nobel Prize. Question: What was Marie Curie's primary field of research?",
+    "options": [
+      "Radioactivity",
+      "Biology",
+      "Astronomy",
+      "Geology"
+    ],
+    "correctIndex": 0,
+    "explanation": "Teks jelas menyebutkan 'pioneering research on radioactivity'.",
+    "_originalLevel": 29
+  },
+  {
+    "id": "default_L29_Q10",
+    "category": "Reading Comprehension Dasar (Hard)",
+    "difficulty": "Sulit",
+    "question": "Read this text: The Great Wall of China is the collective name of a series of fortification systems generally built across the historical northern borders of China to protect and consolidate territories of Chinese states and empires. Question: Why was the Great Wall of China built?",
+    "options": [
+      "To enclose a single city",
+      "For tourism purposes",
+      "To protect Chinese territories",
+      "As a trading route"
+    ],
+    "correctIndex": 2,
+    "explanation": "Teks menyebutkan 'to protect and consolidate territories'.",
+    "_originalLevel": 29
+  },
+  {
+    "id": "default_L29_Q11",
+    "category": "Reading Comprehension Dasar (Hard)",
+    "difficulty": "Sulit",
+    "question": "Read this text: Climate change is a significant and lasting change in the statistical distribution of weather patterns over periods ranging from decades to millions of years. It may be a change in average weather conditions, or in the distribution of weather around the average conditions (i.e., more or fewer extreme weather events). Question: What is climate change based on the text?",
+    "options": [
+      "An unpredictable weather condition",
+      "A lasting change in weather patterns",
+      "A short-term climate issue",
+      "A temporary weather event"
+    ],
+    "correctIndex": 1,
+    "explanation": "Teks menyatakan 'a significant and lasting change... in weather patterns'.",
+    "_originalLevel": 29
+  },
+  {
+    "id": "default_L29_Q12",
+    "category": "Reading Comprehension Dasar (Hard)",
+    "difficulty": "Sulit",
+    "question": "Read this text: The Amazon rainforest, covering much of northwestern Brazil and extending into Colombia, Peru and other South American countries, is the world's largest tropical rainforest, famed for its biodiversity. Question: Where is the Amazon rainforest mostly located?",
+    "options": [
+      "Peru",
+      "Colombia",
+      "Argentina",
+      "Brazil"
+    ],
+    "correctIndex": 3,
+    "explanation": "Teks menyebutkan 'covering much of northwestern Brazil'.",
+    "_originalLevel": 29
+  },
+  {
+    "id": "default_L29_Q13",
+    "category": "Reading Comprehension Dasar (Hard)",
+    "difficulty": "Sulit",
+    "question": "Read this text: Thomas Edison was an American inventor and businessman, who has been described as America's greatest inventor. He developed many devices in fields such as electric power generation, mass communication, sound recording, and motion pictures. Question: What is NOT mentioned as Edison's field of invention?",
+    "options": [
+      "Aviation",
+      "Electric power generation",
+      "Motion pictures",
+      "Sound recording"
+    ],
+    "correctIndex": 0,
+    "explanation": "Aviation (penerbangan) tidak disebutkan dalam teks.",
+    "_originalLevel": 29
+  },
+  {
+    "id": "default_L29_Q14",
+    "category": "Reading Comprehension Dasar (Hard)",
+    "difficulty": "Sulit",
+    "question": "Read this text: Marie Curie was a Polish and naturalized-French physicist and chemist who conducted pioneering research on radioactivity. She was the first woman to win a Nobel Prize. Question: What was Marie Curie's primary field of research?",
+    "options": [
+      "Geology",
+      "Astronomy",
+      "Radioactivity",
+      "Biology"
+    ],
+    "correctIndex": 2,
+    "explanation": "Teks jelas menyebutkan 'pioneering research on radioactivity'.",
+    "_originalLevel": 29
+  },
+  {
+    "id": "default_L29_Q15",
+    "category": "Reading Comprehension Dasar (Hard)",
+    "difficulty": "Sulit",
+    "question": "Read this text: The Great Wall of China is the collective name of a series of fortification systems generally built across the historical northern borders of China to protect and consolidate territories of Chinese states and empires. Question: Why was the Great Wall of China built?",
+    "options": [
+      "As a trading route",
+      "For tourism purposes",
+      "To enclose a single city",
+      "To protect Chinese territories"
+    ],
+    "correctIndex": 3,
+    "explanation": "Teks menyebutkan 'to protect and consolidate territories'.",
+    "_originalLevel": 29
+  },
+  {
+    "id": "default_L29_Q16",
+    "category": "Reading Comprehension Dasar (Hard)",
+    "difficulty": "Sulit",
+    "question": "Read this text: Climate change is a significant and lasting change in the statistical distribution of weather patterns over periods ranging from decades to millions of years. It may be a change in average weather conditions, or in the distribution of weather around the average conditions (i.e., more or fewer extreme weather events). Question: What is climate change based on the text?",
+    "options": [
+      "A temporary weather event",
+      "A lasting change in weather patterns",
+      "A short-term climate issue",
+      "An unpredictable weather condition"
+    ],
+    "correctIndex": 1,
+    "explanation": "Teks menyatakan 'a significant and lasting change... in weather patterns'.",
+    "_originalLevel": 29
+  },
+  {
+    "id": "default_L29_Q17",
+    "category": "Reading Comprehension Dasar (Hard)",
+    "difficulty": "Sulit",
+    "question": "Read this text: The Amazon rainforest, covering much of northwestern Brazil and extending into Colombia, Peru and other South American countries, is the world's largest tropical rainforest, famed for its biodiversity. Question: Where is the Amazon rainforest mostly located?",
+    "options": [
+      "Peru",
+      "Colombia",
+      "Argentina",
+      "Brazil"
+    ],
+    "correctIndex": 3,
+    "explanation": "Teks menyebutkan 'covering much of northwestern Brazil'.",
+    "_originalLevel": 29
+  },
+  {
+    "id": "default_L29_Q18",
+    "category": "Reading Comprehension Dasar (Hard)",
+    "difficulty": "Sulit",
+    "question": "Read this text: Thomas Edison was an American inventor and businessman, who has been described as America's greatest inventor. He developed many devices in fields such as electric power generation, mass communication, sound recording, and motion pictures. Question: What is NOT mentioned as Edison's field of invention?",
+    "options": [
+      "Motion pictures",
+      "Sound recording",
+      "Electric power generation",
+      "Aviation"
+    ],
+    "correctIndex": 3,
+    "explanation": "Aviation (penerbangan) tidak disebutkan dalam teks.",
+    "_originalLevel": 29
+  },
+  {
+    "id": "default_L29_Q19",
+    "category": "Reading Comprehension Dasar (Hard)",
+    "difficulty": "Sulit",
+    "question": "Read this text: Marie Curie was a Polish and naturalized-French physicist and chemist who conducted pioneering research on radioactivity. She was the first woman to win a Nobel Prize. Question: What was Marie Curie's primary field of research?",
+    "options": [
+      "Radioactivity",
+      "Astronomy",
+      "Biology",
+      "Geology"
+    ],
+    "correctIndex": 0,
+    "explanation": "Teks jelas menyebutkan 'pioneering research on radioactivity'.",
+    "_originalLevel": 29
+  },
+  {
+    "id": "default_L29_Q20",
+    "category": "Reading Comprehension Dasar (Hard)",
+    "difficulty": "Sulit",
+    "question": "Read this text: The Great Wall of China is the collective name of a series of fortification systems generally built across the historical northern borders of China to protect and consolidate territories of Chinese states and empires. Question: Why was the Great Wall of China built?",
+    "options": [
+      "As a trading route",
+      "For tourism purposes",
+      "To enclose a single city",
+      "To protect Chinese territories"
+    ],
+    "correctIndex": 3,
+    "explanation": "Teks menyebutkan 'to protect and consolidate territories'.",
+    "_originalLevel": 29
+  },
+  {
+    "id": "default_L29_Q21",
+    "category": "Reading Comprehension Dasar (Hard)",
+    "difficulty": "Sulit",
+    "question": "Read this text: Climate change is a significant and lasting change in the statistical distribution of weather patterns over periods ranging from decades to millions of years. It may be a change in average weather conditions, or in the distribution of weather around the average conditions (i.e., more or fewer extreme weather events). Question: What is climate change based on the text?",
+    "options": [
+      "A short-term climate issue",
+      "A lasting change in weather patterns",
+      "A temporary weather event",
+      "An unpredictable weather condition"
+    ],
+    "correctIndex": 1,
+    "explanation": "Teks menyatakan 'a significant and lasting change... in weather patterns'.",
+    "_originalLevel": 29
+  },
+  {
+    "id": "default_L29_Q22",
+    "category": "Reading Comprehension Dasar (Hard)",
+    "difficulty": "Sulit",
+    "question": "Read this text: The Amazon rainforest, covering much of northwestern Brazil and extending into Colombia, Peru and other South American countries, is the world's largest tropical rainforest, famed for its biodiversity. Question: Where is the Amazon rainforest mostly located?",
+    "options": [
+      "Colombia",
+      "Peru",
+      "Brazil",
+      "Argentina"
+    ],
+    "correctIndex": 2,
+    "explanation": "Teks menyebutkan 'covering much of northwestern Brazil'.",
+    "_originalLevel": 29
+  },
+  {
+    "id": "default_L29_Q23",
+    "category": "Reading Comprehension Dasar (Hard)",
+    "difficulty": "Sulit",
+    "question": "Read this text: Thomas Edison was an American inventor and businessman, who has been described as America's greatest inventor. He developed many devices in fields such as electric power generation, mass communication, sound recording, and motion pictures. Question: What is NOT mentioned as Edison's field of invention?",
+    "options": [
+      "Motion pictures",
+      "Electric power generation",
+      "Sound recording",
+      "Aviation"
+    ],
+    "correctIndex": 3,
+    "explanation": "Aviation (penerbangan) tidak disebutkan dalam teks.",
+    "_originalLevel": 29
+  },
+  {
+    "id": "default_L29_Q24",
+    "category": "Reading Comprehension Dasar (Hard)",
+    "difficulty": "Sulit",
+    "question": "Read this text: Marie Curie was a Polish and naturalized-French physicist and chemist who conducted pioneering research on radioactivity. She was the first woman to win a Nobel Prize. Question: What was Marie Curie's primary field of research?",
+    "options": [
+      "Geology",
+      "Radioactivity",
+      "Astronomy",
+      "Biology"
+    ],
+    "correctIndex": 1,
+    "explanation": "Teks jelas menyebutkan 'pioneering research on radioactivity'.",
+    "_originalLevel": 29
+  },
+  {
+    "id": "default_L29_Q25",
+    "category": "Reading Comprehension Dasar (Hard)",
+    "difficulty": "Sulit",
+    "question": "Read this text: The Great Wall of China is the collective name of a series of fortification systems generally built across the historical northern borders of China to protect and consolidate territories of Chinese states and empires. Question: Why was the Great Wall of China built?",
+    "options": [
+      "To enclose a single city",
+      "For tourism purposes",
+      "To protect Chinese territories",
+      "As a trading route"
+    ],
+    "correctIndex": 2,
+    "explanation": "Teks menyebutkan 'to protect and consolidate territories'.",
+    "_originalLevel": 29
+  },
+  {
+    "id": "default_L29_Q26",
+    "category": "Reading Comprehension Dasar (Hard)",
+    "difficulty": "Sulit",
+    "question": "Read this text: Climate change is a significant and lasting change in the statistical distribution of weather patterns over periods ranging from decades to millions of years. It may be a change in average weather conditions, or in the distribution of weather around the average conditions (i.e., more or fewer extreme weather events). Question: What is climate change based on the text?",
+    "options": [
+      "A short-term climate issue",
+      "A temporary weather event",
+      "A lasting change in weather patterns",
+      "An unpredictable weather condition"
+    ],
+    "correctIndex": 2,
+    "explanation": "Teks menyatakan 'a significant and lasting change... in weather patterns'.",
+    "_originalLevel": 29
+  },
+  {
+    "id": "default_L29_Q27",
+    "category": "Reading Comprehension Dasar (Hard)",
+    "difficulty": "Sulit",
+    "question": "Read this text: The Amazon rainforest, covering much of northwestern Brazil and extending into Colombia, Peru and other South American countries, is the world's largest tropical rainforest, famed for its biodiversity. Question: Where is the Amazon rainforest mostly located?",
+    "options": [
+      "Brazil",
+      "Colombia",
+      "Peru",
+      "Argentina"
+    ],
+    "correctIndex": 0,
+    "explanation": "Teks menyebutkan 'covering much of northwestern Brazil'.",
+    "_originalLevel": 29
+  },
+  {
+    "id": "default_L29_Q28",
+    "category": "Reading Comprehension Dasar (Hard)",
+    "difficulty": "Sulit",
+    "question": "Read this text: Thomas Edison was an American inventor and businessman, who has been described as America's greatest inventor. He developed many devices in fields such as electric power generation, mass communication, sound recording, and motion pictures. Question: What is NOT mentioned as Edison's field of invention?",
+    "options": [
+      "Electric power generation",
+      "Aviation",
+      "Motion pictures",
+      "Sound recording"
+    ],
+    "correctIndex": 1,
+    "explanation": "Aviation (penerbangan) tidak disebutkan dalam teks.",
+    "_originalLevel": 29
+  },
+  {
+    "id": "default_L29_Q29",
+    "category": "Reading Comprehension Dasar (Hard)",
+    "difficulty": "Sulit",
+    "question": "Read this text: Marie Curie was a Polish and naturalized-French physicist and chemist who conducted pioneering research on radioactivity. She was the first woman to win a Nobel Prize. Question: What was Marie Curie's primary field of research?",
+    "options": [
+      "Astronomy",
+      "Radioactivity",
+      "Geology",
+      "Biology"
+    ],
+    "correctIndex": 1,
+    "explanation": "Teks jelas menyebutkan 'pioneering research on radioactivity'.",
+    "_originalLevel": 29
+  },
+  {
+    "id": "default_L29_Q30",
+    "category": "Reading Comprehension Dasar (Hard)",
+    "difficulty": "Sulit",
+    "question": "Read this text: The Great Wall of China is the collective name of a series of fortification systems generally built across the historical northern borders of China to protect and consolidate territories of Chinese states and empires. Question: Why was the Great Wall of China built?",
+    "options": [
+      "To enclose a single city",
+      "For tourism purposes",
+      "To protect Chinese territories",
+      "As a trading route"
+    ],
+    "correctIndex": 2,
+    "explanation": "Teks menyebutkan 'to protect and consolidate territories'.",
+    "_originalLevel": 29
+  },
+  {
+    "id": "default_L30_Q1",
+    "category": "Final Challenge: Mixed English Skills (Hard)",
+    "difficulty": "Sulit",
+    "question": "If I ___ known about the traffic, I would have taken a different route.",
+    "options": [
+      "have",
+      "would have",
+      "has",
+      "had"
+    ],
+    "correctIndex": 3,
+    "explanation": "Third conditional menggunakan Past Perfect (had + V3).",
+    "_originalLevel": 30
+  },
+  {
+    "id": "default_L30_Q2",
+    "category": "Final Challenge: Mixed English Skills (Hard)",
+    "difficulty": "Sulit",
+    "question": "By the time we arrive, the movie ___ already started.",
+    "options": [
+      "would have",
+      "will",
+      "has",
+      "will have"
+    ],
+    "correctIndex": 3,
+    "explanation": "Future perfect tense digunakan untuk aksi yang selesai sebelum waktu tertentu di masa depan.",
+    "_originalLevel": 30
+  },
+  {
+    "id": "default_L30_Q3",
+    "category": "Final Challenge: Mixed English Skills (Hard)",
+    "difficulty": "Sulit",
+    "question": "He speaks Spanish fluently, ___ he?",
+    "options": [
+      "does",
+      "hasn't",
+      "doesn't",
+      "isn't"
+    ],
+    "correctIndex": 2,
+    "explanation": "Question tag untuk present simple (speaks) positif adalah 'doesn't'.",
+    "_originalLevel": 30
+  },
+  {
+    "id": "default_L30_Q4",
+    "category": "Final Challenge: Mixed English Skills (Hard)",
+    "difficulty": "Sulit",
+    "question": "I am really looking forward to ___ you next week.",
+    "options": [
+      "saw",
+      "seen",
+      "see",
+      "seeing"
+    ],
+    "correctIndex": 3,
+    "explanation": "'Look forward to' selalu diikuti oleh gerund (V-ing).",
+    "_originalLevel": 30
+  },
+  {
+    "id": "default_L30_Q5",
+    "category": "Final Challenge: Mixed English Skills (Hard)",
+    "difficulty": "Sulit",
+    "question": "Hardly ___ entered the room when the phone rang.",
+    "options": [
+      "have I",
+      "I had",
+      "I have",
+      "had I"
+    ],
+    "correctIndex": 3,
+    "explanation": "Inversi digunakan setelah kata negatif seperti 'Hardly' di awal kalimat.",
+    "_originalLevel": 30
+  },
+  {
+    "id": "default_L30_Q6",
+    "category": "Final Challenge: Mixed English Skills (Hard)",
+    "difficulty": "Sulit",
+    "question": "She is the woman ___ car was stolen yesterday.",
+    "options": [
+      "which",
+      "who",
+      "whom",
+      "whose"
+    ],
+    "correctIndex": 3,
+    "explanation": "'Whose' adalah relative pronoun untuk kepemilikan.",
+    "_originalLevel": 30
+  },
+  {
+    "id": "default_L30_Q7",
+    "category": "Final Challenge: Mixed English Skills (Hard)",
+    "difficulty": "Sulit",
+    "question": "You ___ better finish your homework before going out.",
+    "options": [
+      "would",
+      "should",
+      "could",
+      "had"
+    ],
+    "correctIndex": 3,
+    "explanation": "Ekspresi 'had better' berarti sebaiknya (memberi saran kuat).",
+    "_originalLevel": 30
+  },
+  {
+    "id": "default_L30_Q8",
+    "category": "Final Challenge: Mixed English Skills (Hard)",
+    "difficulty": "Sulit",
+    "question": "Not only ___ late, but he also forgot his textbook.",
+    "options": [
+      "he is",
+      "he was",
+      "was he",
+      "is he"
+    ],
+    "correctIndex": 2,
+    "explanation": "Inversi terjadi saat kalimat diawali 'Not only'.",
+    "_originalLevel": 30
+  },
+  {
+    "id": "default_L30_Q9",
+    "category": "Final Challenge: Mixed English Skills (Hard)",
+    "difficulty": "Sulit",
+    "question": "I suggest that he ___ a doctor immediately.",
+    "options": [
+      "sees",
+      "seeing",
+      "saw",
+      "see"
+    ],
+    "correctIndex": 3,
+    "explanation": "Setelah 'suggest that', kita menggunakan subjunctive (bare infinitive).",
+    "_originalLevel": 30
+  },
+  {
+    "id": "default_L30_Q10",
+    "category": "Final Challenge: Mixed English Skills (Hard)",
+    "difficulty": "Sulit",
+    "question": "Despite ___ tired, she continued to work on the project.",
+    "options": [
+      "was",
+      "been",
+      "she was",
+      "being"
+    ],
+    "correctIndex": 3,
+    "explanation": "'Despite' diikuti oleh noun phrase atau gerund (being).",
+    "_originalLevel": 30
+  },
+  {
+    "id": "default_L30_Q11",
+    "category": "Final Challenge: Mixed English Skills (Hard)",
+    "difficulty": "Sulit",
+    "question": "If I ___ known about the traffic, I would have taken a different route.",
+    "options": [
+      "have",
+      "had",
+      "has",
+      "would have"
+    ],
+    "correctIndex": 1,
+    "explanation": "Third conditional menggunakan Past Perfect (had + V3).",
+    "_originalLevel": 30
+  },
+  {
+    "id": "default_L30_Q12",
+    "category": "Final Challenge: Mixed English Skills (Hard)",
+    "difficulty": "Sulit",
+    "question": "By the time we arrive, the movie ___ already started.",
+    "options": [
+      "will",
+      "would have",
+      "will have",
+      "has"
+    ],
+    "correctIndex": 2,
+    "explanation": "Future perfect tense digunakan untuk aksi yang selesai sebelum waktu tertentu di masa depan.",
+    "_originalLevel": 30
+  },
+  {
+    "id": "default_L30_Q13",
+    "category": "Final Challenge: Mixed English Skills (Hard)",
+    "difficulty": "Sulit",
+    "question": "He speaks Spanish fluently, ___ he?",
+    "options": [
+      "does",
+      "isn't",
+      "doesn't",
+      "hasn't"
+    ],
+    "correctIndex": 2,
+    "explanation": "Question tag untuk present simple (speaks) positif adalah 'doesn't'.",
+    "_originalLevel": 30
+  },
+  {
+    "id": "default_L30_Q14",
+    "category": "Final Challenge: Mixed English Skills (Hard)",
+    "difficulty": "Sulit",
+    "question": "I am really looking forward to ___ you next week.",
+    "options": [
+      "see",
+      "seeing",
+      "seen",
+      "saw"
+    ],
+    "correctIndex": 1,
+    "explanation": "'Look forward to' selalu diikuti oleh gerund (V-ing).",
+    "_originalLevel": 30
+  },
+  {
+    "id": "default_L30_Q15",
+    "category": "Final Challenge: Mixed English Skills (Hard)",
+    "difficulty": "Sulit",
+    "question": "Hardly ___ entered the room when the phone rang.",
+    "options": [
+      "had I",
+      "have I",
+      "I had",
+      "I have"
+    ],
+    "correctIndex": 0,
+    "explanation": "Inversi digunakan setelah kata negatif seperti 'Hardly' di awal kalimat.",
+    "_originalLevel": 30
+  },
+  {
+    "id": "default_L30_Q16",
+    "category": "Final Challenge: Mixed English Skills (Hard)",
+    "difficulty": "Sulit",
+    "question": "She is the woman ___ car was stolen yesterday.",
+    "options": [
+      "whose",
+      "whom",
+      "who",
+      "which"
+    ],
+    "correctIndex": 0,
+    "explanation": "'Whose' adalah relative pronoun untuk kepemilikan.",
+    "_originalLevel": 30
+  },
+  {
+    "id": "default_L30_Q17",
+    "category": "Final Challenge: Mixed English Skills (Hard)",
+    "difficulty": "Sulit",
+    "question": "You ___ better finish your homework before going out.",
+    "options": [
+      "could",
+      "would",
+      "had",
+      "should"
+    ],
+    "correctIndex": 2,
+    "explanation": "Ekspresi 'had better' berarti sebaiknya (memberi saran kuat).",
+    "_originalLevel": 30
+  },
+  {
+    "id": "default_L30_Q18",
+    "category": "Final Challenge: Mixed English Skills (Hard)",
+    "difficulty": "Sulit",
+    "question": "Not only ___ late, but he also forgot his textbook.",
+    "options": [
+      "was he",
+      "he was",
+      "is he",
+      "he is"
+    ],
+    "correctIndex": 0,
+    "explanation": "Inversi terjadi saat kalimat diawali 'Not only'.",
+    "_originalLevel": 30
+  },
+  {
+    "id": "default_L30_Q19",
+    "category": "Final Challenge: Mixed English Skills (Hard)",
+    "difficulty": "Sulit",
+    "question": "I suggest that he ___ a doctor immediately.",
+    "options": [
+      "see",
+      "saw",
+      "sees",
+      "seeing"
+    ],
+    "correctIndex": 0,
+    "explanation": "Setelah 'suggest that', kita menggunakan subjunctive (bare infinitive).",
+    "_originalLevel": 30
+  },
+  {
+    "id": "default_L30_Q20",
+    "category": "Final Challenge: Mixed English Skills (Hard)",
+    "difficulty": "Sulit",
+    "question": "Despite ___ tired, she continued to work on the project.",
+    "options": [
+      "she was",
+      "being",
+      "was",
+      "been"
+    ],
+    "correctIndex": 1,
+    "explanation": "'Despite' diikuti oleh noun phrase atau gerund (being).",
+    "_originalLevel": 30
+  },
+  {
+    "id": "default_L30_Q21",
+    "category": "Final Challenge: Mixed English Skills (Hard)",
+    "difficulty": "Sulit",
+    "question": "If I ___ known about the traffic, I would have taken a different route.",
+    "options": [
+      "would have",
+      "have",
+      "has",
+      "had"
+    ],
+    "correctIndex": 3,
+    "explanation": "Third conditional menggunakan Past Perfect (had + V3).",
+    "_originalLevel": 30
+  },
+  {
+    "id": "default_L30_Q22",
+    "category": "Final Challenge: Mixed English Skills (Hard)",
+    "difficulty": "Sulit",
+    "question": "By the time we arrive, the movie ___ already started.",
+    "options": [
+      "will have",
+      "will",
+      "has",
+      "would have"
+    ],
+    "correctIndex": 0,
+    "explanation": "Future perfect tense digunakan untuk aksi yang selesai sebelum waktu tertentu di masa depan.",
+    "_originalLevel": 30
+  },
+  {
+    "id": "default_L30_Q23",
+    "category": "Final Challenge: Mixed English Skills (Hard)",
+    "difficulty": "Sulit",
+    "question": "He speaks Spanish fluently, ___ he?",
+    "options": [
+      "hasn't",
+      "doesn't",
+      "isn't",
+      "does"
+    ],
+    "correctIndex": 1,
+    "explanation": "Question tag untuk present simple (speaks) positif adalah 'doesn't'.",
+    "_originalLevel": 30
+  },
+  {
+    "id": "default_L30_Q24",
+    "category": "Final Challenge: Mixed English Skills (Hard)",
+    "difficulty": "Sulit",
+    "question": "I am really looking forward to ___ you next week.",
+    "options": [
+      "see",
+      "seen",
+      "saw",
+      "seeing"
+    ],
+    "correctIndex": 3,
+    "explanation": "'Look forward to' selalu diikuti oleh gerund (V-ing).",
+    "_originalLevel": 30
+  },
+  {
+    "id": "default_L30_Q25",
+    "category": "Final Challenge: Mixed English Skills (Hard)",
+    "difficulty": "Sulit",
+    "question": "Hardly ___ entered the room when the phone rang.",
+    "options": [
+      "I have",
+      "had I",
+      "have I",
+      "I had"
+    ],
+    "correctIndex": 1,
+    "explanation": "Inversi digunakan setelah kata negatif seperti 'Hardly' di awal kalimat.",
+    "_originalLevel": 30
+  },
+  {
+    "id": "default_L30_Q26",
+    "category": "Final Challenge: Mixed English Skills (Hard)",
+    "difficulty": "Sulit",
+    "question": "She is the woman ___ car was stolen yesterday.",
+    "options": [
+      "who",
+      "which",
+      "whom",
+      "whose"
+    ],
+    "correctIndex": 3,
+    "explanation": "'Whose' adalah relative pronoun untuk kepemilikan.",
+    "_originalLevel": 30
+  },
+  {
+    "id": "default_L30_Q27",
+    "category": "Final Challenge: Mixed English Skills (Hard)",
+    "difficulty": "Sulit",
+    "question": "You ___ better finish your homework before going out.",
+    "options": [
+      "should",
+      "would",
+      "could",
+      "had"
+    ],
+    "correctIndex": 3,
+    "explanation": "Ekspresi 'had better' berarti sebaiknya (memberi saran kuat).",
+    "_originalLevel": 30
+  },
+  {
+    "id": "default_L30_Q28",
+    "category": "Final Challenge: Mixed English Skills (Hard)",
+    "difficulty": "Sulit",
+    "question": "Not only ___ late, but he also forgot his textbook.",
+    "options": [
+      "he was",
+      "was he",
+      "he is",
+      "is he"
+    ],
+    "correctIndex": 1,
+    "explanation": "Inversi terjadi saat kalimat diawali 'Not only'.",
+    "_originalLevel": 30
+  },
+  {
+    "id": "default_L30_Q29",
+    "category": "Final Challenge: Mixed English Skills (Hard)",
+    "difficulty": "Sulit",
+    "question": "I suggest that he ___ a doctor immediately.",
+    "options": [
+      "seeing",
+      "sees",
+      "saw",
+      "see"
+    ],
+    "correctIndex": 3,
+    "explanation": "Setelah 'suggest that', kita menggunakan subjunctive (bare infinitive).",
+    "_originalLevel": 30
+  },
+  {
+    "id": "default_L30_Q30",
+    "category": "Final Challenge: Mixed English Skills (Hard)",
+    "difficulty": "Sulit",
+    "question": "Despite ___ tired, she continued to work on the project.",
+    "options": [
+      "been",
+      "she was",
+      "being",
+      "was"
+    ],
+    "correctIndex": 2,
+    "explanation": "'Despite' diikuti oleh noun phrase atau gerund (being).",
+    "_originalLevel": 30
   }
 ]

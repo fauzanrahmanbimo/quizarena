@@ -1,0 +1,1 @@
+const fs = require("fs"); let html = fs.readFileSync("index.html", "utf8"); html = html.split("const practiceModeActive =  ? .checked : false;").join("const practiceModeActive = $(\"toggle-practice-mode\") ? $(\"toggle-practice-mode\").checked : false;"); fs.writeFileSync("index.html", html); console.log("Fixed");
