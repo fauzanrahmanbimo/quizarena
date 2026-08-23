@@ -143,6 +143,76 @@
       "difficulty": "Sangat Sulit",
       "emoji": "🎓",
       "desc": "Reported speech, relative & review mahir."
+    },
+    {
+      "level": 21,
+      "name": "Daily Activities Lanjutan",
+      "difficulty": "Sedang",
+      "emoji": "📅",
+      "desc": "Kosakata dan ekspresi aktivitas harian menengah."
+    },
+    {
+      "level": 22,
+      "name": "Telling Time & Schedules",
+      "difficulty": "Sedang",
+      "emoji": "⏰",
+      "desc": "Membaca jam dan mengatur jadwal."
+    },
+    {
+      "level": 23,
+      "name": "Places, Directions & Transportation",
+      "difficulty": "Sedang",
+      "emoji": "🗺️",
+      "desc": "Menanyakan arah dan transportasi."
+    },
+    {
+      "level": 24,
+      "name": "Food, Shopping & Quantities",
+      "difficulty": "Sedang",
+      "emoji": "🛒",
+      "desc": "Belanja, makanan, dan jumlah barang."
+    },
+    {
+      "level": 25,
+      "name": "Present vs Present Continuous",
+      "difficulty": "Sedang",
+      "emoji": "⚖️",
+      "desc": "Perbedaan kebiasaan dan kejadian saat ini."
+    },
+    {
+      "level": 26,
+      "name": "Simple Past Tense",
+      "difficulty": "Sulit",
+      "emoji": "⏳",
+      "desc": "Menceritakan kejadian di masa lampau."
+    },
+    {
+      "level": 27,
+      "name": "Future Plans: Will & Going To",
+      "difficulty": "Sulit",
+      "emoji": "🔮",
+      "desc": "Merencanakan masa depan."
+    },
+    {
+      "level": 28,
+      "name": "Comparative & Superlative",
+      "difficulty": "Sulit",
+      "emoji": "📈",
+      "desc": "Membandingkan kata sifat."
+    },
+    {
+      "level": 29,
+      "name": "Reading Comprehension Dasar",
+      "difficulty": "Sulit",
+      "emoji": "📖",
+      "desc": "Memahami teks bacaan bahasa Inggris."
+    },
+    {
+      "level": 30,
+      "name": "Final Challenge: Mixed",
+      "difficulty": "Sulit",
+      "emoji": "🏆",
+      "desc": "Ujian akhir campuran kemampuan bahasa Inggris."
     }
   ]
 }

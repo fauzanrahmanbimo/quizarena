@@ -89,7 +89,7 @@ body {
 .topbar {
   width: 100%; max-width: 940px; margin: 0 auto;
   padding: 22px 20px 6px;
-  display: flex; align-items: center; justify-content: space-between; gap: 16px;
+  display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap;
 }
 .logo { font-family: var(--font-head); font-weight: 800; font-size: 28px; letter-spacing: -.5px; white-space: nowrap; }
 .logo .q { color: var(--pink); } .logo .u { color: var(--sky); }
@@ -116,7 +116,7 @@ body {
 .screen.is-active { display: block; }
 @keyframes fadeUp { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
 
-.card { background: var(--surface); border-radius: var(--radius-lg); box-shadow: var(--shadow-lg); padding: 32px 28px; width: 100%; max-width: 480px; margin: 0 auto; border: 1px solid var(--border); }
+.card { background: var(--surface); border-radius: var(--radius-lg); box-shadow: var(--shadow-lg); padding: 32px 28px; width: 100%; max-width: 480px; min-width: 0; margin: 0 auto; border: 1px solid var(--border); overflow: hidden; }
 
 /* ---------- Home ---------- */
 .card--hero {
@@ -550,6 +550,12 @@ html.dark .page-tab{border-color:#EAF3EF;color:#EAF3EF;}
 html.dark .page-tab.is-on{background:#EAF3EF;color:#12211d;}
 html.dark .video-card{background:#22302b;border-color:#3a5049;}
 html.dark .video-t{color:#EAF3EF;}
+
+.level-card.is-recommended { border-color: var(--primary); background: rgba(23,63,58,.08); box-shadow: 0 0 0 2px var(--primary); }
+.level-card.is-review { border-color: #9E9E9E; background: #F5F5F5; }
+.level-card.is-review .level-name { color: #616161; }
+.level-card .level-best svg { vertical-align: middle; }
+
 </style>
   <script src="config.js"></script>
   <script type="module" src="assets/firebase-init.js"></script>
@@ -563,7 +569,7 @@ html.dark .video-t{color:#EAF3EF;}
     <div class="top-actions" style="display:flex; align-items:center; gap:8px;">
         <button class="icon-btn" id="btn-sound" title="Suara" aria-label="Suara">🔊</button>
         <button class="icon-btn" id="btn-theme" title="Mode gelap" aria-label="Mode gelap">🌓</button>
-        <div id="auth-container" style="display:flex; align-items:center; gap:8px; margin-left:12px; padding-left:12px; border-left:1px solid rgba(0,0,0,0.1);">
+        <div id="auth-container" style="display:flex; align-items:center; gap:8px; margin-left:12px; padding-left:12px; border-left:1px solid rgba(0,0,0,0.1); flex-wrap: wrap; justify-content: center;">
            <!-- Auth UI will be injected here -->
         </div>
       </div>
@@ -605,7 +611,8 @@ html.dark .video-t{color:#EAF3EF;}
           <li><strong id="meta-time">20s</strong> / soal</li>
         </ul>
         <div class="home-links">
-          <button class="btn-text" id="btn-board">🏆 Papan Skor · Pencapaian · Statistik</button>
+          <button class="btn-text" id="btn-dashboard" style="margin-bottom:8px; font-weight:bold; color:var(--primary);">📊 Dashboard Progres</button>
+          <button class="btn-text" id="btn-board">🏆 Papan Skor Global</button>
         </div>
       </div>
     </section>
@@ -667,6 +674,7 @@ html.dark .video-t{color:#EAF3EF;}
             </select>
          </div>
          <button class="btn btn--primary" id="btn-start-custom" style="width: 100%; margin-top: 16px;">Mulai Custom Quiz</button>
+         <button class="btn btn--ghost" id="btn-re-diagnostic" style="width: 100%; margin-top: 8px;">Ulangi Placement Test</button>
       </div>
     </section>
 
@@ -749,31 +757,97 @@ html.dark .video-t{color:#EAF3EF;}
     <!-- RESULT -->
     <section class="screen screen--result" id="screen-result">
       <div class="card card--result">
-        <div class="result-emoji" id="result-emoji">🎉</div>
-        <div id="result-stars"></div>
-        <h2 class="result-title" id="result-title">Kerja bagus!</h2>
-        <p class="result-sub" id="result-sub">—</p>
-        <div class="result-score"><span class="result-score__num" id="result-score">0</span><span class="result-score__label">POIN</span></div>
+        
+        <div class="result-header">
+           <h2 class="result-title" id="result-title">Kerja bagus!</h2>
+           <div id="result-status-badge"></div>
+        </div>
+        
         <div class="stat-grid" id="result-stats-grid">
-          <div class="stat"><span class="stat__num" id="stat-correct">0</span><span class="stat__label">Benar</span></div>
-          <div class="stat"><span class="stat__num" id="stat-wrong">0</span><span class="stat__label">Salah</span></div>
           <div class="stat"><span class="stat__num" id="stat-acc">0%</span><span class="stat__label">Akurasi</span></div>
-          <div class="stat"><span class="stat__num" id="stat-streak">0</span><span class="stat__label">Streak Maks</span></div>
+          <div class="stat"><span class="stat__num" id="stat-correct">0</span><span class="stat__label" style="color:var(--primary)">Benar</span></div>
+          <div class="stat"><span class="stat__num" id="stat-wrong">0</span><span class="stat__label" style="color:#ef4444">Salah</span></div>
+          <div class="stat"><span class="stat__num" id="stat-unanswered">0</span><span class="stat__label" style="color:#6b7280">Tidak Dijawab</span></div>
+          <div class="stat"><span class="stat__num" id="stat-duration">0s</span><span class="stat__label">Durasi Total</span></div>
+          <div class="stat"><span class="stat__num" id="stat-avg">0s</span><span class="stat__label">Rata-rata/Soal</span></div>
         </div>
-        <div class="result-actions">
-          <button class="btn btn--primary" id="btn-next-level">Level Berikutnya →</button>
-          <button class="btn btn--ghost" id="btn-retry">Ulangi</button>
-          <button class="btn btn--soft" id="btn-levels">Pilih Level</button>
+        
+        <div id="remedial-section" hidden style="margin-top:16px; background: rgba(245,158,11,0.1); padding: 12px; border-radius: 8px; border: 1px solid #f59e0b;">
+           <h3 style="font-size:14px; margin:0 0 8px 0; color:#b45309;">Area Kelemahan Anda:</h3>
+           <ul id="weak-topics-list" style="margin:0; padding-left:18px; font-size:14px; color:#92400e;"></ul>
         </div>
+
+        <div class="result-actions" id="dynamic-ctas" style="margin-top:20px; flex-direction:row; flex-wrap:wrap; gap:8px;">
+           <!-- JS will inject dynamic CTAs here -->
+        </div>
+        
         <div class="result-actions" style="margin-top:12px;">
-          <button class="btn btn--soft" id="btn-share">📤 Bagikan Skor</button>
-          <button class="btn btn--soft" id="btn-review">Lihat Pembahasan</button>
+          <button class="btn btn--soft" id="btn-review" onclick="toggleReview()">Lihat Pembahasan</button>
         </div>
       </div>
-      <div class="review" id="review" hidden></div>
-    </section>
+      
+      <div class="review" id="review" hidden>
+         <div class="review-tabs" style="display:flex; gap:8px; margin-bottom: 16px;">
+             <button class="btn btn--soft" id="tab-rev-all" onclick="filterReview('all')">Semua</button>
+             <button class="btn btn--soft" id="tab-rev-wrong" onclick="filterReview('wrong')">Salah</button>
+             <button class="btn btn--soft" id="tab-rev-correct" onclick="filterReview('correct')">Benar</button>
+         </div>
+         <div id="review-content"></div>
+      </div>
+      </section>
 
-    <!-- BOARD -->
+      
+      <section class="screen screen--dashboard" id="screen-dashboard" hidden>
+        <div class="card card--dashboard">
+          <button class="btn-text" id="btn-dashboard-back" style="position:static;margin-bottom:6px;">← Kembali</button>
+          
+          <div class="dash-header" style="text-align:center; margin-bottom:20px;">
+             <h2 class="board-title" style="margin-bottom:8px;">📊 Dashboard Belajar</h2>
+             <div id="dash-header-status" style="font-size:14px; color:var(--text-dim); margin-bottom:12px;"></div>
+             <div id="dash-header-cta"></div>
+          </div>
+          
+          <div id="dash-stats-grid" class="stat-grid" style="margin-bottom: 24px;">
+             <div class="stat"><span class="stat__num" id="dash-stat-attempts">0</span><span class="stat__label">Total Latihan</span></div>
+             <div class="stat"><span class="stat__num" id="dash-stat-time">0m</span><span class="stat__label">Waktu Belajar</span></div>
+             <div class="stat"><span class="stat__num" id="dash-stat-correct">0</span><span class="stat__label">Jawaban Benar</span></div>
+             
+             <div class="stat"><span class="stat__num" id="dash-stat-acc-quiz">-</span><span class="stat__label">Akurasi Kuis</span></div>
+             <div class="stat"><span class="stat__num" id="dash-stat-acc-prac">-</span><span class="stat__label">Akurasi Latihan</span></div>
+          </div>
+          
+          <div style="background:var(--surface); border:1px solid var(--border); padding:16px; border-radius:12px; margin-bottom:24px;">
+             <h3 style="font-size:16px; margin-bottom:12px;">Peta Pembelajaran</h3>
+             <div style="display:flex; justify-content:space-between; text-align:center; font-size:12px;">
+                 <div><div style="font-size:20px; font-weight:bold; color:var(--primary);" id="dash-path-completed">0</div>Selesai</div>
+                 <div><div style="font-size:20px; font-weight:bold; color:#f59e0b;" id="dash-path-progress">0</div>Proses</div>
+                 <div><div style="font-size:20px; font-weight:bold; color:#6b7280;" id="dash-path-locked">0</div>Terkunci</div>
+             </div>
+             <button class="btn btn--soft" style="width:100%; margin-top:16px;" onclick="goToLevels()">Lihat Semua Level</button>
+          </div>
+          
+          <div style="display:flex; gap:12px; margin-bottom:24px; flex-wrap:wrap;">
+             <div style="flex:1; min-width:140px; background:rgba(16, 185, 129, 0.1); border:1px solid #10B981; padding:12px; border-radius:12px;">
+                <h3 style="font-size:14px; color:#065f46; margin-bottom:8px;">Topik Kuat</h3>
+                <ul id="dash-topic-strong" style="font-size:13px; color:#064e3b; padding-left:16px; margin:0;"></ul>
+             </div>
+             <div style="flex:1; min-width:140px; background:rgba(239, 68, 68, 0.1); border:1px solid #ef4444; padding:12px; border-radius:12px;">
+                <h3 style="font-size:14px; color:#991b1b; margin-bottom:8px;">Perlu Diulang</h3>
+                <ul id="dash-topic-weak" style="font-size:13px; color:#7f1d1d; padding-left:16px; margin:0;"></ul>
+             </div>
+          </div>
+          
+          
+          <h3 style="font-size:16px; margin-bottom:12px;">Grafik Performa (7 Terakhir)</h3>
+          <div id="dash-chart" style="margin-bottom:24px; min-height:120px; background:var(--surface); border:1px solid var(--border); border-radius:12px; padding:16px; display:flex; align-items:flex-end; gap:8px; overflow-x:auto;"></div>
+          <p id="dash-chart-alt" class="sr-only" style="position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0,0,0,0);"></p>
+          
+          <h3 style="font-size:16px; margin-bottom:12px;">Riwayat Terakhir</h3>
+          <div id="dash-history-list" style="display:flex; flex-direction:column; gap:8px;"></div>
+        </div>
+      </section>
+
+      <!-- BOARD -->
     <section class="screen screen--board" id="screen-board">
       <div class="card card--board">
         <button class="btn-text" id="btn-board-back" style="position:static;margin-bottom:6px;">← Kembali</button>
@@ -814,6 +888,7 @@ html.dark .video-t{color:#EAF3EF;}
   <footer class="foot">Dibuat dengan ⚡ QuizArena · Deploy di Vercel</footer>
 
   
+  <script src="scripts/dashboard-logic.js"></script>
   <script>
 /* ================= QuizArena — game logic v4 =================
    v3: level terkunci, bintang, progress, suara, confetti, belajar, ketik, VS,
@@ -885,6 +960,40 @@ html.dark .video-t{color:#EAF3EF;}
   };
 
   let sessionStartTime = 0;
+  let currentAttemptId = "";
+  let questionStartTime = 0;
+  let attemptsLog = [];
+  
+  // Page visibility logic
+  document.addEventListener("visibilitychange", () => {
+    if (document.hidden) {
+      if (!noTimer() && timer) {
+        clearInterval(timer);
+        timer = null;
+        const msg = document.createElement("div");
+        msg.id = "pause-overlay";
+        msg.style.position = "fixed";
+        msg.style.top = "0"; msg.style.left = "0"; msg.style.width = "100%"; msg.style.height = "100%";
+        msg.style.background = "rgba(0,0,0,0.8)"; msg.style.color = "white"; msg.style.zIndex = "9999";
+        msg.style.display = "flex"; msg.style.flexDirection = "column"; msg.style.justifyContent = "center"; msg.style.alignItems = "center";
+        msg.innerHTML = "<h2>Timer dijeda karena Anda berpindah tab</h2><button class='btn btn--primary' style='margin-top:20px;' onclick='resumeFromPause()'>Lanjutkan</button>";
+        document.body.appendChild(msg);
+      }
+    }
+  });
+  
+  window.resumeFromPause = function() {
+      const msg = document.getElementById("pause-overlay");
+      if (msg) msg.remove();
+      if (!noTimer() && !answered) {
+          timer = setInterval(() => { 
+              timeLeft--; 
+              updateTimerUI(); 
+              if (timeLeft <= 0) { clearInterval(timer); if (!answered) lockOut(); } 
+          }, 1000);
+      }
+  };
+
   let allQuestions = [];
   updateAuthUI();
   let metaInfo = { title: "QuizArena", description: "", timePerQuestion: 20, levels: [], shuffle: true };
@@ -965,10 +1074,25 @@ html.dark .video-t{color:#EAF3EF;}
   const VIDEOS = {"1": [{"t": "Penjelasan materi", "u": "https://www.youtube.com/results?search_query=belajar+bahasa+inggris+untuk+pemula+kosakata+dasar+warna+angka+benda"}, {"t": "Latihan & contoh soal", "u": "https://www.youtube.com/results?search_query=belajar+bahasa+inggris+untuk+pemula+kosakata+dasar+warna+angka+benda+latihan+contoh+soal"}], "2": [{"t": "Penjelasan materi", "u": "https://www.youtube.com/results?search_query=belajar+bahasa+inggris+kosakata+sehari+hari+keluarga+tempat+waktu"}, {"t": "Latihan & contoh soal", "u": "https://www.youtube.com/results?search_query=belajar+bahasa+inggris+kosakata+sehari+hari+keluarga+tempat+waktu+latihan+contoh+soal"}], "3": [{"t": "Penjelasan materi", "u": "https://www.youtube.com/results?search_query=belajar+bahasa+inggris+lawan+kata+antonim+opposite+words"}, {"t": "Latihan & contoh soal", "u": "https://www.youtube.com/results?search_query=belajar+bahasa+inggris+lawan+kata+antonim+opposite+words+latihan+contoh+soal"}], "4": [{"t": "Penjelasan materi", "u": "https://www.youtube.com/results?search_query=belajar+bahasa+inggris+article+a+an+dan+kata+benda+jamak+plural"}, {"t": "Latihan & contoh soal", "u": "https://www.youtube.com/results?search_query=belajar+bahasa+inggris+article+a+an+dan+kata+benda+jamak+plural+latihan+contoh+soal"}], "5": [{"t": "Penjelasan materi", "u": "https://www.youtube.com/results?search_query=belajar+bahasa+inggris+to+be+am+is+are+dan+this+that+these+those"}, {"t": "Latihan & contoh soal", "u": "https://www.youtube.com/results?search_query=belajar+bahasa+inggris+to+be+am+is+are+dan+this+that+these+those+latihan+contoh+soal"}], "6": [{"t": "Penjelasan materi", "u": "https://www.youtube.com/results?search_query=belajar+bahasa+inggris+simple+present+tense+untuk+pemula"}, {"t": "Latihan & contoh soal", "u": "https://www.youtube.com/results?search_query=belajar+bahasa+inggris+simple+present+tense+untuk+pemula+latihan+contoh+soal"}], "7": [{"t": "Penjelasan materi", "u": "https://www.youtube.com/results?search_query=belajar+bahasa+inggris+present+continuous+tense+dan+preposisi+in+on+at"}, {"t": "Latihan & contoh soal", "u": "https://www.youtube.com/results?search_query=belajar+bahasa+inggris+present+continuous+tense+dan+preposisi+in+on+at+latihan+contoh+soal"}], "8": [{"t": "Penjelasan materi", "u": "https://www.youtube.com/results?search_query=belajar+bahasa+inggris+past+tense+dan+irregular+verb"}, {"t": "Latihan & contoh soal", "u": "https://www.youtube.com/results?search_query=belajar+bahasa+inggris+past+tense+dan+irregular+verb+latihan+contoh+soal"}], "9": [{"t": "Penjelasan materi", "u": "https://www.youtube.com/results?search_query=belajar+bahasa+inggris+comparative+superlative+dan+modal+verbs"}, {"t": "Latihan & contoh soal", "u": "https://www.youtube.com/results?search_query=belajar+bahasa+inggris+comparative+superlative+dan+modal+verbs+latihan+contoh+soal"}], "10": [{"t": "Penjelasan materi", "u": "https://www.youtube.com/results?search_query=belajar+bahasa+inggris+idiom+dan+phrasal+verb"}, {"t": "Latihan & contoh soal", "u": "https://www.youtube.com/results?search_query=belajar+bahasa+inggris+idiom+dan+phrasal+verb+latihan+contoh+soal"}], "11": [{"t": "Penjelasan materi", "u": "https://www.youtube.com/results?search_query=belajar+bahasa+inggris+pronoun+kata+ganti+dan+possessive"}, {"t": "Latihan & contoh soal", "u": "https://www.youtube.com/results?search_query=belajar+bahasa+inggris+pronoun+kata+ganti+dan+possessive+latihan+contoh+soal"}], "12": [{"t": "Penjelasan materi", "u": "https://www.youtube.com/results?search_query=belajar+bahasa+inggris+WH+question+kata+tanya+what+where+when"}, {"t": "Latihan & contoh soal", "u": "https://www.youtube.com/results?search_query=belajar+bahasa+inggris+WH+question+kata+tanya+what+where+when+latihan+contoh+soal"}], "13": [{"t": "Penjelasan materi", "u": "https://www.youtube.com/results?search_query=belajar+bahasa+inggris+there+is+there+are+some+any+much+many"}, {"t": "Latihan & contoh soal", "u": "https://www.youtube.com/results?search_query=belajar+bahasa+inggris+there+is+there+are+some+any+much+many+latihan+contoh+soal"}], "14": [{"t": "Penjelasan materi", "u": "https://www.youtube.com/results?search_query=belajar+bahasa+inggris+future+tense+will+dan+be+going+to"}, {"t": "Latihan & contoh soal", "u": "https://www.youtube.com/results?search_query=belajar+bahasa+inggris+future+tense+will+dan+be+going+to+latihan+contoh+soal"}], "15": [{"t": "Penjelasan materi", "u": "https://www.youtube.com/results?search_query=belajar+bahasa+inggris+present+perfect+tense"}, {"t": "Latihan & contoh soal", "u": "https://www.youtube.com/results?search_query=belajar+bahasa+inggris+present+perfect+tense+latihan+contoh+soal"}], "16": [{"t": "Penjelasan materi", "u": "https://www.youtube.com/results?search_query=belajar+bahasa+inggris+adverb+dan+adverb+of+frequency"}, {"t": "Latihan & contoh soal", "u": "https://www.youtube.com/results?search_query=belajar+bahasa+inggris+adverb+dan+adverb+of+frequency+latihan+contoh+soal"}], "17": [{"t": "Penjelasan materi", "u": "https://www.youtube.com/results?search_query=belajar+bahasa+inggris+conjunction+kata+hubung"}, {"t": "Latihan & contoh soal", "u": "https://www.youtube.com/results?search_query=belajar+bahasa+inggris+conjunction+kata+hubung+latihan+contoh+soal"}], "18": [{"t": "Penjelasan materi", "u": "https://www.youtube.com/results?search_query=belajar+bahasa+inggris+conditional+sentence+if+clause"}, {"t": "Latihan & contoh soal", "u": "https://www.youtube.com/results?search_query=belajar+bahasa+inggris+conditional+sentence+if+clause+latihan+contoh+soal"}], "19": [{"t": "Penjelasan materi", "u": "https://www.youtube.com/results?search_query=belajar+bahasa+inggris+passive+voice+kalimat+pasif"}, {"t": "Latihan & contoh soal", "u": "https://www.youtube.com/results?search_query=belajar+bahasa+inggris+passive+voice+kalimat+pasif+latihan+contoh+soal"}], "20": [{"t": "Penjelasan materi", "u": "https://www.youtube.com/results?search_query=belajar+bahasa+inggris+reported+speech"}, {"t": "Latihan & contoh soal", "u": "https://www.youtube.com/results?search_query=belajar+bahasa+inggris+reported+speech+latihan+contoh+soal"}]};
   /* ===== Materi Level 11-20 (ditambahkan) ===== */
   Object.assign(MATERI, {"11": ["<b>Subject Pronoun</b> (pelaku): I, you, he, she, it, we, they.", "<b>Object Pronoun</b> (objek): me, you, him, her, it, us, them. Contoh: She loves <b>me</b>.", "<b>Possessive Adjective</b> (+ kata benda): my, your, his, her, its, our, their. Contoh: <b>My</b> book.", "<b>Possessive Pronoun</b> (berdiri sendiri): mine, yours, his, hers, ours, theirs. Contoh: This book is <b>mine</b>.", "<b>Ingat:</b> its = kepunyaan (bukan it's = it is)."], "12": ["<b>Kata tanya (WH):</b> What (apa), Where (di mana), When (kapan), Who (siapa), Why (mengapa), How (bagaimana).", "<b>Whose</b> = milik siapa. <b>Which</b> = yang mana (pilihan terbatas).", "<b>How many</b> + kata benda dapat dihitung (books). <b>How much</b> + kata benda tak terhitung/uang (water, money).", "<b>Frasa umum:</b> How old (berapa umur), What time (jam berapa), How much (berapa harga)."], "13": ["<b>There is</b> untuk tunggal &amp; uncountable. <b>There are</b> untuk jamak.", "<b>some</b> dipakai di kalimat positif. <b>any</b> dipakai di kalimat negatif &amp; pertanyaan.", "<b>much</b> untuk uncountable (much water). <b>many</b> untuk countable (many books).", "<b>a/an</b> untuk benda tunggal yang bisa dihitung; <b>some</b> untuk uncountable/jamak."], "14": ["<b>Will + V1</b>: keputusan spontan, janji, prediksi/pendapat. Contoh: I <b>will</b> help you.", "<b>Be going to + V1</b>: rencana &amp; prediksi dengan bukti. Contoh: It <b>is going to</b> rain.", "<b>Bentuk negatif:</b> will not = <b>won't</b>. Pertanyaan: <b>Will</b> you...?", "<b>Keterangan waktu:</b> tomorrow, tonight, next week/month/year."], "15": ["<b>Present Perfect</b>: have/has + V3. He/She/It → <b>has</b>; I/You/We/They → <b>have</b>.", "Dipakai untuk pengalaman &amp; kejadian yang masih berhubungan dengan sekarang.", "<b>Kata bantu:</b> already (sudah), yet (belum – negatif/tanya), just (baru saja), ever (pernah), never (belum pernah).", "<b>since</b> + titik waktu (since 2010); <b>for</b> + durasi (for 5 years).", "<b>Contoh V3:</b> do→done, see→seen, go→gone, write→written, eat→eaten."], "16": ["<b>Adverb of Manner</b> (cara): umumnya adjective + <b>-ly</b> (quick→quickly, careful→carefully); y→ily (easy→easily).", "<b>Tidak beraturan:</b> good→well, fast→fast, hard→hard, late→late.", "<b>Adverb of Frequency:</b> always (100%), usually, often, sometimes, rarely/seldom, never (0%).", "<b>Posisi:</b> sebelum kata kerja utama (I <b>always</b> drink), tetapi setelah 'to be' (She is <b>often</b> late)."], "17": ["<b>Kata hubung dasar:</b> and (dan), but (tetapi), or (atau), so (maka/jadi).", "<b>Sebab &amp; akibat:</b> because (karena – sebab), so (maka – akibat).", "<b>Kontras:</b> although/though (meskipun).", "<b>Waktu &amp; syarat:</b> when (ketika), before (sebelum), after (setelah), until (sampai), if (jika)."], "18": ["<b>Tipe 0 (fakta/kebiasaan):</b> If + present, present. Contoh: If you heat ice, it <b>melts</b>.", "<b>Tipe 1 (nyata/mungkin):</b> If + present, <b>will</b> + V1. Contoh: If it rains, I <b>will stay</b> home.", "<b>Tipe 2 (khayalan sekarang):</b> If + past, <b>would</b> + V1. Contoh: If I <b>were</b> rich, I <b>would</b> travel.", "<b>Ingat:</b> pada tipe 2 pakai <b>were</b> untuk semua subjek (If I were you...)."], "19": ["<b>Passive Voice</b>: fokus pada objek/hasil, bukan pelaku. Rumus: <b>be + V3 (past participle)</b>.", "<b>Present:</b> am/is/are + V3 (English <b>is spoken</b>...). <b>Past:</b> was/were + V3 (The letter <b>was written</b>...).", "<b>Pelaku</b> diperkenalkan dengan <b>by</b>: ... by Tom.", "<b>Aktif→Pasif:</b> She writes a book → A book <b>is written</b> by her."], "20": ["<b>Reported Speech</b>: mengubah ucapan langsung menjadi tidak langsung, biasanya tense mundur satu langkah.", "<b>Backshift:</b> am/is→was, are→were, V1→V2, will→would, can→could, may→might, must→had to, have→had.", "<b>say vs tell:</b> tell + objek (tell me), say tanpa objek (say that...).", "<b>Perubahan waktu:</b> now→then, today→that day, tomorrow→the next day.", "<b>Perintah:</b> 'Close the door' → He told me <b>to close</b> the door."]});
-  const KEYS = ["A", "B", "C", "D"];
+  
+  /* ===== Materi Level 21-30 ===== */
+  Object.assign(MATERI, {
+    "21": ["<b>Daily Activities:</b> Kosakata rutinitas seperti wake up, brush teeth, take a bath, go to work.", "<b>Adverbs of Frequency:</b> Penggunaan always, usually, often, sometimes, rarely, never dalam rutinitas.", "<b>Prepositions of Time:</b> in the morning, at noon, on Monday."],
+    "22": ["<b>Telling Time:</b> O'clock, past, to, half past, a quarter to/past.", "<b>Contoh:</b> 07:15 (a quarter past seven), 08:30 (half past eight).", "<b>Schedules:</b> Menanyakan waktu dengan 'What time is it?' atau 'When does the train leave?'."],
+    "23": ["<b>Places:</b> Kosakata tempat umum seperti hospital, bank, post office, library.", "<b>Directions:</b> Turn left, turn right, go straight, cross the street.", "<b>Prepositions of Place:</b> next to, between, across from, behind."],
+    "24": ["<b>Food & Drink:</b> Kosakata makanan dan minuman (rice, meat, juice, bread).", "<b>Quantities:</b> a cup of, a slice of, a loaf of, a piece of.", "<b>Shopping:</b> How much is this? Can I have...? I would like..."],
+    "25": ["<b>Present Simple:</b> Fakta, kebiasaan rutin (I eat apple everyday).", "<b>Present Continuous:</b> Sedang terjadi sekarang (I am eating an apple right now).", "<b>Stative verbs:</b> Kata kerja yang jarang dipakai bentuk -ing (know, like, want, understand)."],
+    "26": ["<b>Simple Past Tense:</b> Kejadian yang sudah selesai di masa lampau.", "<b>Regular Verbs:</b> Tambahkan -ed (played, worked).", "<b>Irregular Verbs:</b> Berubah bentuk (go -> went, eat -> ate).", "<b>Time expressions:</b> yesterday, last week, two days ago."],
+    "27": ["<b>Will:</b> Keputusan spontan, prediksi, janji (I will help you).", "<b>Be Going To:</b> Rencana yang sudah dibuat (I am going to visit Bali).", "<b>Time expressions:</b> tomorrow, next year, later."],
+    "28": ["<b>Comparative:</b> Membandingkan dua hal (+er / more). Contoh: taller, more expensive.", "<b>Superlative:</b> Paling / membandingkan >= 3 hal (+est / the most). Contoh: the tallest, the most expensive.", "<b>Irregular:</b> good -> better -> best, bad -> worse -> worst."],
+    "29": ["<b>Reading Comprehension:</b> Menemukan ide pokok teks.", "<b>Detail information:</b> Mencari informasi spesifik 5W1H.", "<b>Inference:</b> Menarik kesimpulan dari teks.", "<b>Synonym/Antonym:</b> Menebak arti kata dari konteks."],
+    "30": ["<b>Final Challenge:</b> Penguasaan seluruh Grammar dasar.", "<b>Vocabulary Review:</b> Sinonim, antonim, phrasal verbs.", "<b>Reading & Logic:</b> Menyimpulkan kalimat kompleks.", "<b>Congratulations!</b> Terapkan semua yang telah kamu pelajari."]
+  });
+
+    const KEYS = ["A", "B", "C", "D"];
   const COLORS = ["var(--a0)", "var(--a1)", "var(--a2)", "var(--a3)"];
   const APP = "quizarena_" + slug(CONFIG.title);
-  const PASS = 60;
+  const PASS = 70;
 
   const ACHIEVEMENTS = [
     { id: "first", icon: "\uD83C\uDF1F", name: "Langkah Pertama", desc: "Selesaikan satu kuis", test: (c) => c.answered > 0 },
@@ -996,6 +1120,7 @@ html.dark .video-t{color:#EAF3EF;}
 
   const $ = (id) => document.getElementById(id);
   const screens = {
+    dashboard: $("screen-dashboard"),
     home: $("screen-home"), levels: $("screen-levels"), learn: $("screen-learn"),
     quiz: $("screen-quiz"), result: $("screen-result"), board: $("screen-board"), cert: $("screen-cert"),
   };
@@ -1194,21 +1319,116 @@ html.dark .video-t{color:#EAF3EF;}
   $("btn-theme").addEventListener("click", toggleTheme);
   $("btn-sound").addEventListener("click", toggleSound);
   $("btn-autoread").addEventListener("click", toggleAutoRead);
-  $("btn-start").addEventListener("click", goToLevels);
+  
+  const DIAGNOSTIC_THRESHOLDS = [
+    { max: 39, level: 1 },
+    { max: 59, level: 3 },
+    { max: 74, level: 6 },
+    { max: 89, level: 10 },
+    { max: 100, level: 15 }
+  ];
+  
+  let diagnosticMode = false;
+  
+function extractWeakTopics(attempt) {
+    const topicStats = {};
+    attempt.answers.forEach(ans => {
+        if (!topicStats[ans.topic]) topicStats[ans.topic] = { total: 0, correct: 0 };
+        topicStats[ans.topic].total++;
+        if (ans.isCorrect) topicStats[ans.topic].correct++;
+    });
+    
+    const weak = [];
+    for (const [topic, stats] of Object.entries(topicStats)) {
+        if (stats.correct / stats.total < 0.7) {
+            weak.push(topic);
+        }
+    }
+    return weak.slice(0, 3);
+}
+
+function getRecommendedLevel(acc) {
+     for (let i = 0; i < DIAGNOSTIC_THRESHOLDS.length; i++) {
+        if (acc <= DIAGNOSTIC_THRESHOLDS[i].max) {
+           return DIAGNOSTIC_THRESHOLDS[i].level;
+        }
+     }
+     return 1;
+  }
+
+  
+  function handleStart() {
+    if (!localStorage.getItem(APP + "_onboarded")) {
+       startDiagnostic();
+    } else {
+       goToLevels();
+    }
+  }
+  
+  function startDiagnostic() {
+      practice = null;
+      diagnosticMode = true;
+      currentLevel = null;
+      
+      let pool = [];
+      LEVELS.forEach(lv => {
+          if (lv.questions) pool = pool.concat(withIds(lv.questions, lv.level));
+      });
+      pool = shuffle(pool);
+      
+      let diagQs = [];
+      let seenTopics = new Set();
+      
+      for (let i = 0; i < pool.length; i++) {
+         let q = pool[i];
+         let topic = q.category || 'general';
+         if (!seenTopics.has(topic)) {
+            diagQs.push(q);
+            seenTopics.add(topic);
+         }
+         if (diagQs.length === 15) break;
+      }
+      
+      if (diagQs.length < 15) {
+         for (let i = 0; i < pool.length; i++) {
+            let q = pool[i];
+            if (!diagQs.includes(q)) diagQs.push(q);
+            if (diagQs.length === 15) break;
+         }
+      }
+      
+      if (diagQs.length < 15) {
+         alert("Data soal belum cukup untuk diagnostic test (butuh 15). Silakan tambahkan bank soal.");
+         return;
+      }
+      
+      questions = shuffleSession(diagQs);
+      beginSession("Diagnostic Test");
+  }
+  
+  $("btn-start").addEventListener("click", handleStart);
+  const btnReDiag = $("btn-re-diagnostic");
+  if (btnReDiag) {
+      btnReDiag.addEventListener("click", () => {
+          $("custom-setup").hidden = true;
+          startDiagnostic();
+      });
+  }
+
   $("player-name").addEventListener("keydown", (e) => { if (e.key === "Enter") goToLevels(); });
   $("btn-board").addEventListener("click", openBoard);
+  $("btn-dashboard").addEventListener("click", () => { renderDashboard(); switchScreen(screens.dashboard); });
+  $("btn-dashboard-back").addEventListener("click", () => switchScreen(screens.home));
   $("btn-back-home").addEventListener("click", () => show("home"));
   $("btn-board-back").addEventListener("click", goToLevels);
   $("btn-learn-back").addEventListener("click", goToLevels);
   $("btn-learn-start").addEventListener("click", () => { if (currentLevel != null) startLevel(currentLevel); });
   $("btn-next").addEventListener("click", next);
-  $("btn-retry").addEventListener("click", retry);
-  $("btn-levels").addEventListener("click", goToLevels);
-  $("btn-next-level").addEventListener("click", () => {
-    if (currentLevel != null && currentLevel + 1 < LEVELS.length) { currentLevel += 1; openLearn(currentLevel); }
-  });
-  $("btn-review").addEventListener("click", toggleReview);
-  $("btn-share").addEventListener("click", shareResult);
+  
+  
+  
+  
+  
   $("btn-quit").addEventListener("click", () => { clearInterval(timer); goToLevels(); });
   $("btn-clear-board").addEventListener("click", () => {
     if (confirm("Papan skor global tersimpan di server dan tidak bisa dihapus dari sini.")) { renderBoard(); }
@@ -1449,13 +1669,19 @@ html.dark .video-t{color:#EAF3EF;}
     else if (currentLevel != null) startLevel(currentLevel);
   }
 
-  function noTimer() { return practice !== null; }
+  function noTimer() { return practice !== null || diagnosticMode === true; }
   function cp() { return vs ? (idx % players.length) : 0; }
 
   function renderQuestion() {
     answered = false;
     const q = questions[idx];
-    $("progress-label").innerHTML = `Soal <b>${idx + 1}</b> / ${questions.length}`;
+    
+      if (diagnosticMode) {
+          $("progress-label").innerHTML = `Mode Diagnostik — Soal <b>${idx + 1}</b> / ${questions.length} (Tanpa Waktu)`;
+      } else {
+          $("progress-label").innerHTML = `Soal <b>${idx + 1}</b> / ${questions.length}`;
+      }
+
     var pct = Math.round((idx / questions.length) * 100); $("progress-fill").style.width = pct + "%"; $("progress-fill").setAttribute("aria-valuenow", pct);
     $("question-tag").textContent = q.category || (qmode === "type" ? "Ketik Jawaban" : "Pilihan Ganda");
     $("question-text").textContent = q.q;
@@ -1564,6 +1790,19 @@ html.dark .video-t{color:#EAF3EF;}
       }
 
     history.push({ questionId: q.id, category: q.category, difficulty: q.difficulty, userAnswerIndex: chosenIdx, correctIndex: q.answer, q: q.q, you, answer: correctText, explain: q.explain, correct: isCorrect, player: player.name });
+    
+    // P0-C Requirement
+    attemptsLog.push({
+        attemptId: currentAttemptId,
+        levelId: currentLevel !== null ? LEVELS[currentLevel].level : (diagnosticMode ? 'diagnostic' : 'practice'),
+        questionId: q.id,
+        selectedOptionId: typeof chosenIdx === 'number' && chosenIdx >= 0 && q.options ? q.options[chosenIdx] : null,
+        isCorrect: isCorrect,
+        timeSpent: Date.now() - questionStartTime,
+        startedAt: questionStartTime,
+        completedAt: Date.now()
+    });
+
     $("btn-next").textContent = (idx + 1 >= questions.length) ? "Lihat Hasil \uD83C\uDF89" : "Lanjut \u2192";
     $("btn-next").hidden = false;
     $("btn-next").focus();
@@ -1593,77 +1832,157 @@ html.dark .video-t{color:#EAF3EF;}
   async function finish() {
     clearInterval(timer);
     $("progress-fill").style.width = "100%";
-    updateStreak();
-
+    
     if (vs) return finishVs();
-
+    
     const p = players[0];
     const total = questions.length;
+    
+    // Calculate unanswered
+    const answeredCount = history.length;
+    const unansweredCount = total - answeredCount;
+    const incorrectCount = total - p.correct - unansweredCount; // wait, p.correct is already set. history has 'correct'.
     const acc = total ? Math.round((p.correct / total) * 100) : 0;
-    setStatLabels("Benar", "Salah", "Akurasi", "Streak Maks");
-    $("result-score").textContent = p.score;
-    $("stat-correct").textContent = p.correct;
-    $("stat-wrong").textContent = total - p.correct;
-    $("stat-acc").textContent = acc + "%";
-    $("stat-streak").textContent = p.maxStreak;
-    bumpStats(total, p.correct);
-      try {
-        const durationSeconds = Math.round((Date.now() - sessionStartTime) / 1000);
-        const historyEntry = {
-            id: Date.now().toString(36) + Math.random().toString(36).substr(2),
-            timestamp: new Date().toISOString(),
-            mode: practice ? "custom" : "level",
-            levelId: practice ? null : currentLevel,
-            categoryFilter: practice === 'custom' ? ($('bank-cat') ? $('bank-cat').value : 'all') : 'all',
-            difficultyFilter: practice === 'custom' ? ($('bank-diff') ? $('bank-diff').value : 'all') : 'all',
-            totalQuestions: total,
-            correctCount: p.correct,
-            wrongCount: total - p.correct,
-            skippedCount: 0, // In this flow, missed questions don't trigger grade unless timeout? Actually we don't have explicit skips.
-            accuracy: acc,
-            durationSeconds: durationSeconds,
-            questionDetails: history
-        };
-        let globalHistory = JSON.parse(localStorage.getItem('quizarena_history') || '[]');
-        globalHistory.push(historyEntry);
-        if (globalHistory.length > 50) globalHistory = globalHistory.slice(-50);
-        localStorage.setItem('quizarena_history', JSON.stringify(globalHistory));
-      } catch (err) {
-        console.error("Failed to save score history to localStorage", err);
-      }
-    if (p.maxStreak > getNum("_bestStreak")) localStorage.setItem(APP + "_bestStreak", String(p.maxStreak));
-
-    if (practice) {
-      $("result-emoji").textContent = "\uD83C\uDF93";
-      $("result-stars").innerHTML = "";
-      $("result-title").textContent = practice === "free" ? "Latihan selesai!" : "Sesi ulang selesai!";
-      $("result-sub").textContent = `Kamu menjawab ${p.correct}/${total} benar (${acc}%). ` + (practice === "hard" ? "Soal yang benar dihapus dari daftar sulit \uD83D\uDC4D" : "Terus asah kemampuanmu!");
-      $("btn-next-level").hidden = true;
+    const isPassed = acc >= PASS;
+    
+    // Fill in missing unanswered questions into history
+    const answeredIds = new Set(history.map(h => h.questionId));
+    questions.forEach((q, idx) => {
+        if (!answeredIds.has(q.id)) {
+            history.push({
+                questionId: q.id,
+                category: q.category,
+                topic: q.category,
+                difficulty: q.difficulty,
+                userAnswerIndex: null,
+                correctIndex: q.answer,
+                q: q.q || q.question,
+                you: null,
+                answer: q.options[q.answer],
+                explain: q.explain || q.explanation,
+                correct: false,
+                player: p.name,
+                timeSpent: 0
+            });
+            // Update attemptsLog for unanswered
+            attemptsLog.push({
+                attemptId: currentAttemptId,
+                levelId: currentLevel !== null ? LEVELS[currentLevel].level : (diagnosticMode ? 'diagnostic' : 'practice'),
+                questionId: q.id,
+                topic: q.category,
+                selectedOptionId: null,
+                correctOptionId: q.options[q.answer],
+                isCorrect: false,
+                timeSpent: 0,
+                startedAt: Date.now(),
+                completedAt: Date.now(),
+                explanationAvailable: !!(q.explain || q.explanation)
+            });
+        }
+    });
+    
+    const sessionEndTime = Date.now();
+    const durationTotalMs = sessionEndTime - sessionStartTime;
+    const durationSeconds = Math.round(durationTotalMs / 1000);
+    const avgAnswerTime = total ? (durationSeconds / total).toFixed(1) : 0;
+    
+    // P0-D Attempt Schema
+    const finalAttempt = {
+       attemptId: currentAttemptId,
+       attemptType: diagnosticMode ? 'diagnostic' : (currentLevel !== null ? 'timed_quiz' : 'practice'),
+       levelId: diagnosticMode ? null : (currentLevel !== null ? LEVELS[currentLevel].level : null),
+       startedAt: sessionStartTime,
+       completedAt: sessionEndTime,
+       totalQuestions: total,
+       correctCount: p.correct,
+       incorrectCount: total - p.correct - unansweredCount,
+       unansweredCount: unansweredCount,
+       accuracy: acc,
+       averageAnswerTime: parseFloat(avgAnswerTime),
+       passed: diagnosticMode ? null : isPassed,
+       answers: attemptsLog.map(log => ({
+           questionId: log.questionId,
+           topic: log.topic || 'General',
+           selectedOptionId: log.selectedOptionId,
+           correctOptionId: log.correctOptionId || '',
+           isCorrect: log.isCorrect,
+           timeSpent: log.timeSpent,
+           explanationAvailable: log.explanationAvailable || false
+       }))
+    };
+    
+    // Save to master logs
+    let savedLogs = [];
+    try { savedLogs = JSON.parse(localStorage.getItem(APP + "_fullAttemptsLog")) || []; } catch(e){}
+    savedLogs.push(finalAttempt);
+    localStorage.setItem(APP + "_fullAttemptsLog", JSON.stringify(savedLogs));
+    
+    if (diagnosticMode) {
+       let rec = getRecommendedLevel(acc);
+       const diagState = {
+          completedAt: new Date().toISOString(),
+          accuracy: acc,
+          recommendedLevel: rec,
+          weakTopics: extractWeakTopics(finalAttempt)
+       };
+       localStorage.setItem(APP + "_diagnostic", JSON.stringify(diagState));
+       localStorage.setItem(APP + "_onboarded", "1");
+       $("result-title").textContent = "Diagnostic Selesai";
+       $("result-status-badge").innerHTML = `<span style="background:var(--primary); color:white; padding:4px 8px; border-radius:12px; font-size:12px;">Diagnostic Completed</span>`;
     } else {
-      const level = LEVELS[currentLevel];
-      const stars = acc >= 90 ? 3 : acc >= 75 ? 2 : acc >= PASS ? 1 : 0;
-      const passedNow = acc >= PASS;
-      let emoji = "\uD83D\uDCAA", title = "Hampir!", sub = `Terus berlatih untuk skor & bintang lebih tinggi!`;
-      if (acc === 100) { emoji = "\uD83C\uDFC6"; title = "Sempurna!"; sub = "Semua benar. Luar biasa!"; }
-      else if (acc >= 75) { emoji = "\uD83C\uDF1F"; title = "Hebat!"; sub = "Skormu sangat bagus."; }
-      else if (acc >= PASS) { emoji = "\uD83C\uDF89"; title = "Lulus!"; sub = "Kamu lolos level ini."; }
-      const wasBest = p.score > getBest(level.level);
-      $("result-emoji").textContent = emoji;
-      $("result-stars").innerHTML = starRow(stars, true);
-      $("result-title").textContent = p.name ? `${title} ${p.name}` : title;
-      $("result-sub").textContent = `Level ${level.level} \u00B7 ${level.name}. ${sub}` + (wasBest ? " \uD83C\uDF8A Rekor baru!" : "");
-      saveBest(level.level, p.score);
-      if (stars > getStars(level.level)) localStorage.setItem(APP + "_stars_L" + level.level, String(stars));
-      if (passedNow) localStorage.setItem(APP + "_pass_L" + level.level, "1");
-      if (acc === 100) localStorage.setItem(APP + "_perfect", "1");
-      addToBoard(p.name, level, p.score, acc);
-      const hasNext = currentLevel + 1 < LEVELS.length;
-      $("btn-next-level").hidden = !hasNext;
-      if (passedNow) confetti();
-      passedNow ? playWin() : playWrong();
+       if (isPassed) {
+          if (currentLevel !== null) saveBest(LEVELS[currentLevel].level, acc);
+          $("result-title").textContent = "Kerja bagus!";
+          $("result-status-badge").innerHTML = `<span style="background:#10B981; color:white; padding:4px 8px; border-radius:12px; font-size:12px;">Passed</span>`;
+       } else {
+          $("result-title").textContent = "Jangan menyerah!";
+          $("result-status-badge").innerHTML = `<span style="background:#ef4444; color:white; padding:4px 8px; border-radius:12px; font-size:12px;">Needs Practice</span>`;
+       }
     }
+    
+    $("stat-acc").textContent = acc + "%";
+    $("stat-correct").textContent = p.correct;
+    $("stat-wrong").textContent = finalAttempt.incorrectCount;
+    $("stat-unanswered").textContent = finalAttempt.unansweredCount;
+    $("stat-duration").textContent = durationSeconds + "s";
+    $("stat-avg").textContent = avgAnswerTime + "s";
+    
+    // Remedial Section
+    const weak = extractWeakTopics(finalAttempt);
+    const remSec = $("remedial-section");
+    if (weak.length > 0) {
+       remSec.hidden = false;
+       $("weak-topics-list").innerHTML = '';
+       weak.forEach(w => {
+           const li = document.createElement("li");
+           li.textContent = w;
+           $("weak-topics-list").appendChild(li);
+       });
+    } else {
+       remSec.hidden = true;
+    }
+    
+    // Dynamic CTAs
+    const ctaWrap = $("dynamic-ctas");
+    ctaWrap.innerHTML = "";
+    
+    if (diagnosticMode) {
+       const diagState = JSON.parse(localStorage.getItem(APP + "_diagnostic"));
+       ctaWrap.innerHTML += `<button class="btn btn--primary" onclick="goToLevels(); setTimeout(()=>startLevel(${diagState.recommendedLevel - 1}), 500)">Mulai dari Level ${diagState.recommendedLevel}</button>`;
+       ctaWrap.innerHTML += `<button class="btn btn--soft" onclick="goToLevels()">Kembali ke Learning Path</button>`;
+    } else if (isPassed) {
+       if (currentLevel !== null && currentLevel + 1 < LEVELS.length) {
+          ctaWrap.innerHTML += `<button class="btn btn--primary" onclick="startLevel(${currentLevel + 1})">Buka Level Berikutnya &rarr;</button>`;
+       }
+       ctaWrap.innerHTML += `<button class="btn btn--soft" onclick="goToLevels()">Kembali ke Learning Path</button>`;
+    } else {
+       ctaWrap.innerHTML += `<button class="btn btn--primary" onclick="startLevel(${currentLevel})">Ulangi Level</button>`;
+       ctaWrap.innerHTML += `<button class="btn btn--soft" onclick="goToLevels()">Kembali ke Learning Path</button>`;
+    }
+    
+    diagnosticMode = false;
     afterFinish();
-  }
+}
 
   function finishVs() {
     const [a, b] = players;
@@ -1685,27 +2004,67 @@ html.dark .video-t{color:#EAF3EF;}
   }
 
   function afterFinish() {
-    buildReview();
-    $("review").hidden = true;
-    $("btn-review").textContent = "Lihat Pembahasan";
-    show("result");
-  }
+      buildReview();
+      $("review").hidden = true;
+      $("btn-review").textContent = "Lihat Pembahasan";
+      show("result");
+    }
 
   function buildReview() {
-    const wrap = $("review");
-    wrap.innerHTML = "";
-    history.forEach((h, n) => {
-      const item = document.createElement("div");
-      item.className = "review-item" + (h.correct ? "" : " is-wrong");
-      item.innerHTML =
-        `<div class="review-q">${n + 1}. ${esc(h.q)}${vs ? ` <span class="review-who">(${esc(h.player)})</span>` : ""}</div>` +
-        `<div class="review-a ${h.correct ? "" : "wrong"}">Jawaban kamu: <strong>${esc(h.you)}</strong></div>` +
-        (h.correct ? "" : `<div class="review-a">Jawaban benar: <strong>${esc(h.answer)}</strong></div>`) +
-        (h.explain ? `<div class="review-explain">\uD83D\uDCA1 ${esc(h.explain)}</div>` : "");
-      wrap.appendChild(item);
-    });
-  }
-  function toggleReview() {
+      const wrap = $("review-content");
+      wrap.innerHTML = "";
+      history.forEach((h, n) => {
+        const item = document.createElement("div");
+        item.className = "review-item" + (h.correct ? "" : " is-wrong");
+        item.dataset.status = h.correct ? "correct" : "wrong";
+        
+        const qDiv = document.createElement("div");
+        qDiv.className = "review-q";
+        qDiv.textContent = (n + 1) + ". " + h.q;
+        item.appendChild(qDiv);
+        
+        const aDiv = document.createElement("div");
+        aDiv.className = "review-a " + (h.correct ? "" : "wrong");
+        aDiv.innerHTML = "Jawaban kamu: <strong></strong>";
+        aDiv.querySelector("strong").textContent = h.you ? h.you : "Tidak dijawab";
+        item.appendChild(aDiv);
+        
+        if (!h.correct) {
+           const cDiv = document.createElement("div");
+           cDiv.className = "review-a";
+           cDiv.innerHTML = "Jawaban benar: <strong></strong>";
+           cDiv.querySelector("strong").textContent = h.answer;
+           item.appendChild(cDiv);
+        }
+        
+        const eDiv = document.createElement("div");
+        eDiv.className = "review-explain";
+        if (h.explain && h.explain.trim() !== '') {
+            eDiv.textContent = "💡 " + h.explain;
+        } else {
+            eDiv.textContent = "💡 Pembahasan belum tersedia untuk soal ini.";
+        }
+        item.appendChild(eDiv);
+        wrap.appendChild(item);
+      });
+      window.filterReview('all');
+    }
+    
+    window.filterReview = function(status) {
+       const items = document.querySelectorAll('.review-item');
+       items.forEach(item => {
+           if (status === 'all') item.style.display = 'block';
+           else if (status === 'wrong' && item.dataset.status === 'wrong') item.style.display = 'block';
+           else if (status === 'correct' && item.dataset.status === 'correct') item.style.display = 'block';
+           else item.style.display = 'none';
+       });
+       
+       $('tab-rev-all').className = "btn " + (status === 'all' ? "btn--primary" : "btn--soft");
+       $('tab-rev-wrong').className = "btn " + (status === 'wrong' ? "btn--primary" : "btn--soft");
+       $('tab-rev-correct').className = "btn " + (status === 'correct' ? "btn--primary" : "btn--soft");
+    };
+    
+    function toggleReview() {
     const r = $("review");
     r.hidden = !r.hidden;
     $("btn-review").textContent = r.hidden ? "Lihat Pembahasan" : "Sembunyikan Pembahasan";
@@ -1723,6 +2082,132 @@ html.dark .video-t{color:#EAF3EF;}
 
   // ---------- Board / Stats / Achievements / Insights / Search ----------
   function openBoard() { renderBoard(); renderStats(); renderAchievements(); renderInsights(); renderCertBtn(); $("search-input").value = ""; renderSearch(""); show("board"); }
+
+  
+  function renderDashboard() {
+     const rawLogs = localStorage.getItem(APP + "_fullAttemptsLog");
+     const logs = window.sanitizeAttempts ? window.sanitizeAttempts(rawLogs) : [];
+     
+     const stats = window.getDashboardStats(logs);
+     const recAction = window.getRecommendedAction(logs);
+     const topics = window.getTopicPerformance(logs);
+     const path = window.getLearningPathSummary(logs, LEVELS);
+     
+     // 1. Header & CTA
+     let statusText = "Level Aktif: 1";
+     if (path.recommendedLevelId !== null) statusText = "Level Rekomendasi: " + path.recommendedLevelId;
+     if (path.completed > 0) statusText = "Level Tertinggi Lulus: " + path.completed;
+     $("dash-header-status").textContent = statusText;
+     
+     const ctaWrap = $("dash-header-cta");
+     ctaWrap.innerHTML = ""; // innerHTML is safe here as it's static structure
+     if (recAction.action === 'TAKE_DIAGNOSTIC') {
+        const btn = document.createElement("button"); btn.className="btn btn--primary"; btn.textContent = recAction.title;
+        btn.onclick = () => { $("custom-setup").hidden = true; startDiagnostic(); };
+        ctaWrap.appendChild(btn);
+     } else if (recAction.action === 'START_RECOMMENDED' || recAction.action === 'NEXT_LEVEL') {
+        const btn = document.createElement("button"); btn.className="btn btn--primary"; btn.textContent = recAction.title;
+        btn.onclick = () => { startLevel(path.completed > 0 ? path.completed : (path.recommendedLevelIndex >= 0 ? path.recommendedLevelIndex : 0)); };
+        ctaWrap.appendChild(btn);
+     } else {
+        const btn = document.createElement("button"); btn.className="btn btn--primary"; btn.textContent = recAction.title || "Lanjutkan Belajar";
+        btn.onclick = () => goToLevels();
+        ctaWrap.appendChild(btn);
+     }
+     
+     // 2. Stats
+     $("dash-stat-attempts").textContent = stats.totalAttempts;
+     $("dash-stat-time").textContent = Math.round(stats.totalTimeSeconds / 60) + "m";
+     $("dash-stat-correct").textContent = stats.totalCorrect;
+     
+     $("dash-stat-acc-quiz").textContent = stats.avgTimedAcc !== null ? stats.avgTimedAcc + "%" : "-";
+     $("dash-stat-acc-prac").textContent = stats.avgPracticeAcc !== null ? stats.avgPracticeAcc + "%" : "-";
+     
+     // 3. Path
+     $("dash-path-completed").textContent = path.completed;
+     $("dash-path-progress").textContent = path.inProgress;
+     $("dash-path-locked").textContent = path.locked;
+     
+     // 4. Topics
+     $("dash-topic-strong").innerHTML = ""; $("dash-topic-weak").innerHTML = "";
+     if (!topics.hasEnoughData) {
+         $("dash-topic-strong").textContent = "Belum cukup data.";
+         $("dash-topic-weak").textContent = "Belum cukup data.";
+     } else {
+         if(topics.strong.length===0) $("dash-topic-strong").textContent = "-";
+         else topics.strong.forEach(t => { const li = document.createElement("li"); li.textContent = t.topic + " (" + t.accuracy + "%)"; $("dash-topic-strong").appendChild(li); });
+         if(topics.weak.length===0) $("dash-topic-weak").textContent = "-";
+         else topics.weak.forEach(t => { const li = document.createElement("li"); li.textContent = t.topic + " (" + t.accuracy + "%)"; $("dash-topic-weak").appendChild(li); });
+     }
+     
+     // 5. Chart
+     const chartData = window.getChartData(logs);
+     const chartBox = $("dash-chart");
+     const chartAlt = $("dash-chart-alt");
+     chartBox.innerHTML = "";
+     if (chartData.length < 2) {
+         chartBox.style.alignItems = "center";
+         chartBox.style.justifyContent = "center";
+         chartBox.textContent = "Belum cukup data. Mainkan minimal 2 sesi untuk melihat grafik.";
+         chartAlt.textContent = "Grafik performa kosong karena belum cukup data.";
+     } else {
+         chartBox.style.alignItems = "flex-end";
+         chartBox.style.justifyContent = "flex-start";
+         let altText = "Grafik 7 sesi terakhir: ";
+         chartData.forEach((d, i) => {
+             const barWrap = document.createElement("div");
+             barWrap.style = "display:flex; flex-direction:column; align-items:center; flex:1; min-width:30px;";
+             
+             const bar = document.createElement("div");
+             bar.style = "width:100%; max-width:40px; background:var(--primary); border-radius:4px 4px 0 0; transition:height 0.3s;";
+             bar.style.height = Math.max(5, d.accuracy) + "%"; // min 5% for visibility
+             
+             const label = document.createElement("div");
+             label.style = "font-size:10px; margin-top:4px; color:var(--text-dim); text-align:center;";
+             label.textContent = d.accuracy + "%";
+             
+             barWrap.appendChild(bar);
+             barWrap.appendChild(label);
+             chartBox.appendChild(barWrap);
+             altText += "Sesi " + (i+1) + " akurasi " + d.accuracy + "%. ";
+         });
+         chartAlt.textContent = altText;
+     }
+
+     // 6. History
+     const recent = window.getRecentAttempts(logs, 5);
+     const histBox = $("dash-history-list");
+     histBox.innerHTML = "";
+     if (recent.length === 0) {
+        histBox.textContent = "Belum ada riwayat sesi.";
+     } else {
+        recent.forEach(r => {
+           const div = document.createElement("div");
+           div.style = "background:var(--surface); border:1px solid var(--border); padding:10px 12px; border-radius:8px; display:flex; justify-content:space-between; align-items:center;";
+           const typeStr = r.attemptType === 'diagnostic' ? "Diagnostic Test" : (r.attemptType === 'timed_quiz' ? "Level " + r.levelId : "Latihan Bebas");
+           
+           const d = new Date(r.completedAt);
+           const dStr = d.toLocaleDateString() + " " + d.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+           
+           const left = document.createElement("div");
+           const p1 = document.createElement("div"); p1.style="font-weight:bold; font-size:14px;"; p1.textContent = typeStr;
+           const p2 = document.createElement("div"); p2.style="font-size:12px; color:var(--text-dim);"; p2.textContent = dStr;
+           left.appendChild(p1); left.appendChild(p2);
+           
+           const right = document.createElement("div");
+           right.style = "text-align:right;";
+           const r1 = document.createElement("div"); r1.style="font-weight:bold; color:var(--primary); font-size:14px;"; r1.textContent = r.accuracy + "%";
+           const r2 = document.createElement("div"); r2.style="font-size:12px;"; 
+           r2.textContent = r.passed === true ? "Lulus" : (r.passed === false ? "Gagal" : "-");
+           if (r.passed === false) r2.style.color = "#ef4444";
+           if (r.passed === true) r2.style.color = "#10B981";
+           right.appendChild(r1); right.appendChild(r2);
+           
+           div.appendChild(left); div.appendChild(right);
+           histBox.appendChild(div);
+        });
+     }
+  }
 
   function renderBoard() {
     var ol = $("board-list");
@@ -2028,9 +2513,19 @@ html.dark .video-t{color:#EAF3EF;}
 
   function slug(s) { return String(s).toLowerCase().replace(/[^a-z0-9]+/g, "_"); }
   function esc(s) { const d = document.createElement("div"); d.textContent = s == null ? "" : s; return d.innerHTML; }
-})();
 
-  </script>
+  window._testAPI = {
+      finish: finish, renderDashboard: renderDashboard, APP: typeof APP !== "undefined" ? APP : "quizarena_",
+      goToLevels: goToLevels,
+      startDiagnostic: startDiagnostic,
+      startLevel: startLevel,
+      toggleReview: typeof toggleReview === 'function' ? toggleReview : undefined,
+      filterReview: typeof filterReview === 'function' ? filterReview : undefined,
+      getPlayer: () => players[0],
+      getQuestions: () => questions
+  };
+})();
+</script>
 
     <!-- EXPORT MODAL -->
     <dialog id="modal-export" style="border:none; border-radius:16px; padding:24px; max-width:400px; width:90%; background:var(--surface); color:var(--text); box-shadow:0 10px 30px rgba(0,0,0,0.2); position:fixed; top:50%; left:50%; transform:translate(-50%, -50%);">

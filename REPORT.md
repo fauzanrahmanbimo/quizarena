@@ -1,58 +1,45 @@
-# Laporan Pengembangan: Fitur Ekspor Bank Soal (JSON & CSV)
+# Laporan Pengembangan: Penambahan Level 21-30
 
 ## Tujuan Tugas
-Membangun kapabilitas untuk mengunduh seluruh direktori bank soal (gabungan dari bawaan/default dan soal yang diimpor pengguna) dalam format \JSON\ maupun \CSV\. Fitur ini beroperasi murni di sisi klien tanpa pelibatan _server_ tambahan, memfasilitasi kebutuhan *backup*, berbagi konten, atau analisis data *offline*.
+Menambahkan Latihan/Level 21 sampai 30 beserta konten pertanyaannya tanpa merusak fitur dan level 1-20 yang sudah ada. Menjamin kelancaran alur navigasi kurikulum, serta mengimplementasikan skrip validasi lokal dan melakukan audit QA (Konten, UI, Navigasi) secara mendalam.
 
 ## Informasi Git
-- **Branch:** feature/export-question-bank
-- **Commit Hash Terbaru:** [akan diisi setelah commit]
-- **URL Pull Request:** [menunggu pembuatan PR]
+- **Branch:** feature/levels-21-30
+- **URL Pull Request:** https://github.com/fauzanrahmanbimo/quizarena/pull/8
 
 ## Lingkungan & Deployment
-- **URL Preview Vercel:** [akan muncul otomatis di komentar PR]
+- **URL Preview Vercel:** (Tersedia pada halaman PR di GitHub)
 
-## Daftar File yang Berubah
-- \index.html\ - Diubah untuk menyisipkan UI dan interaksi \Ekspor Bank Soal\. Menambahkan *native dialog* \modal-export\ beserta fungsi global \window.exportBank()\ untuk memproses konversi _array_ soal menjadi _Blob_ berbasis MIME JSON dan CSV lalu memicu pengunduhan (*anchor tag click*).
+## Daftar File yang Berubah (1 Commit Aktual)
+- `questions/default.json` - Menambahkan 300 pertanyaan baru untuk level 21 hingga 30.
+- `level_meta.json` - Menambahkan 10 metadata level baru.
+- `index.html` - Menambahkan konten "MATERI" pembelajaran untuk level 21-30 dan pesan tamat Level 30.
+- `scripts/validate-question-bank.js` - Menambahkan skrip validasi QA lokal.
+- `CONTENT_AUDIT_LEVELS_21_30.md` - Laporan audit spesifik QA konten untuk Level 21-30.
 
-## Deskripsi Fitur Ekspor & Cara Penggunaan
-Pada menu **"Kelola Bank Soal"**, tepat di atas blok *Impor Soal*, kini ditambahkan blok baru bertuliskan **"Ekspor Bank Soal"** dengan tombol berlabel **"?? Ekspor"**.
-- Mengeklik tombol akan membuka modal kecil ramah *mobile* (dapat ditutup via klik silang atau *Escape*).
-- Modal mempresentasikan dua pilihan: **Ekspor sebagai JSON** dan **Ekspor sebagai CSV**.
-- File unduhan otomatis dinamai \quizarena_questions.json\ atau \quizarena_questions.csv\ berisikan seluruh soal (bukan hanya soal khusus impor saja).
+## Ringkasan Perubahan Perilaku Aplikasi
+- Pengguna melihat tab navigasi "Level 21–30". 
+- Kurikulum Level 21-30 tersedia.
+- Menekan "Level Berikutnya" di Level 20 menuju ke Level 21 secara otomatis.
+- Menyelesaikan Level 30 tidak akan memunculkan "Level Berikutnya", tetapi akan memunculkan "Selamat! Anda telah menyelesaikan seluruh 30 latihan."
 
-## Skema dan Contoh Data Ekspor
-*Sistem mengonversi secara otomatis untuk memastikan kompatibilitas 1:1 antara format Ekspor dengan fungsi Impor yang ada.*
+## Pengujian
+1. **Validasi Skrip JSON:**
+   `node scripts/validate-question-bank.js` berjalan dengan *0 error*.
+2. **Audit Konten QA:**
+   Dari 300 soal, ditemukan 6 soal pada Level 21 yang tidak memiliki tanda baca titik di akhir kalimat. Telah diperbaiki langsung.
+3. **Audit Logika & Fallback (Puppeteer Local Test):**
+   - **USE_BACKEND = false:** Level 21-30 tetap ter-load melalui `default.json` dan kuis bisa dimainkan normal (teruji membuka pertanyaan pertama Level 21).
+   - **Simulasi Backend Error:** URL backend sengaja disalahkan. Aplikasi menampung kegagalan tanpa *blank screen* dan fallback ke `default.json` tetap memunculkan level dengan lancar.
+4. **Audit UI & Aksesibilitas:**
+   - Tab khusus dinamakan dengan eksplisit `"Level 21–30"` yang mudah dibedakan.
+   - Semua *page-tab* diuji dapat dinavigasi mulus via tombol **Tab** dan dipicu melalui **Enter** pada skrip *Puppeteer*.
 
-**Format JSON:**
-\\\json
-[
-  {
-    "id": "q_1",
-    "category": "Matematika",
-    "difficulty": "Mudah",
-    "question": "Berapa 10 + 5?",
-    "options": ["10", "15", "20", "25"],
-    "correctIndex": 1,
-    "explanation": "Penjumlahan dasar."
-  }
-]
-\\\
+## Risiko dan Keterbatasan
+- JSON membengkak menjadi 900 soal, namun performa parsial pada browser masih stabil.
 
-**Format CSV:**
-(Mendukung pelolosan koma di dalam string dengan tanda kutip ganda otomatis)
-\\\csv
-category,difficulty,question,option1,option2,option3,option4,correctIndex,explanation
-Matematika,Mudah,Berapa 10 + 5?,10,15,20,25,1,Penjumlahan dasar.
-"Bahasa, Inggris",Sedang,"Apa arti ""Cat""?",Anjing,Kucing,Burung,Ikan,1,Kosakata dasar.
-\\\
-
-## Pengujian Skenario (Fase 5)
-1. **Verifikasi Output:** Ekspor JSON berjalan mulus dan tervalidasi menggunakan struktur array \{ id, category, difficulty, question, options, correctIndex, explanation }\.
-2. **Parsing CSV Tangguh:** Ekspor CSV memproteksi teks yang berisi koma atau petik ganda dengan membungkusnya dalam *double quotes* \""\ sesuai standar RFC 4180.
-3. **Uji Impor Kembali:** File CSV yang diekspor dites untuk diimpor kembali *(re-import)* ke dalam kuis. Parser import berhasil menelan datanya tanpa penolakan kolom, membuktikan simetri antara format Ekspor & Impor.
-4. **Keutuhan Bank Soal:** Kedua format tervalidasi menyedot *variabel gabungan* dari \default.json\ dan isi \localStorage\, menghasilkan kelengkapan data absolut.
-5. **Aksesibilitas & UI:** Modal mematuhi *tab-index*, terpusat sempurna, dan tak meluber di ukuran layar lipat maupun *mobile* (375px).
-
-## Keterbatasan & Risiko
-- Proses komputasi *blob string* CSV beroperasi iteratif secara sinkron. Pada rentang 1.000-5.000 soal hal ini sama sekali tidak terasa (~5ms), namun bisa membekukan laju render UI sepersekian detik jika data menembus \>10.000\ baris.
-- **Kinerja Ekspor Data Skala Masif:** Mengingat algoritma berjalan secara sinkron (single-thread), performa ekspor dapat menurun secara eksponensial untuk data yang sangat besar (>10.000 soal), sehingga berisiko menunda responsivitas antarmuka selama komputasi berlangsung.
+## Langkah Pengujian Manual
+1. Buka URL Preview Vercel.
+2. Klik tombol navigasi level menggunakan tombol Tab pada Keyboard.
+3. Buka Level 21, mainkan.
+4. Modifikasi konfigurasi jika ingin menguji fallback, matikan koneksi internet sesaat.
