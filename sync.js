@@ -164,39 +164,57 @@
       }
 
       if (response.ok) {
-        const data = await response.json();
+        let data;
+        try {
+          data = await response.json();
+        } catch (err) {
+          throw new Error('Malformed JSON response');
+        }
+        
+        if (!data || !Array.isArray(data.accepted)) {
+           throw new Error('Invalid response contract: missing or malformed accepted array');
+        }
+
         const currentQueue = getQueue();
-        
-        // Items explicitly acknowledged by server are safe to remove
-        const acceptedIds = new Set(data.accepted || []);
-        
-        // Categorize rejections
+        const acceptedIds = new Set(data.accepted);
         const rejectedTransient = new Set();
         const rejectedPermanent = new Set();
         const failedItemsForLog = [];
         
-        (data.rejected || []).forEach(r => {
-          if (r.transient || r.reason === 'Internal server error during transaction') {
-            rejectedTransient.add(r.client_attempt_id);
-          } else {
-            rejectedPermanent.add(r.client_attempt_id);
-            failedItemsForLog.push(r);
-          }
-        });
+        if (Array.isArray(data.rejected)) {
+          data.rejected.forEach(r => {
+            if (!r || !r.client_attempt_id) return;
+            
+            // If an ID is in BOTH accepted and rejected, it's a malformed backend response.
+            // Treat as transient and REMOVE from acceptedIds so it stays in queue!
+            if (acceptedIds.has(r.client_attempt_id)) {
+               acceptedIds.delete(r.client_attempt_id);
+               rejectedTransient.add(r.client_attempt_id);
+               console.error('Ambiguous sync contract: ID in both accepted and rejected', r.client_attempt_id);
+               return;
+            }
+            
+            if (r.transient || r.reason === 'Internal server error during transaction') {
+              rejectedTransient.add(r.client_attempt_id);
+            } else {
+              rejectedPermanent.add(r.client_attempt_id);
+              failedItemsForLog.push(r);
+            }
+          });
+        }
 
-        // Retain items that were NOT accepted AND NOT permanently rejected
-        // That means we retain un-processed items and transient-failed items
+        // We ONLY delete an item if it is explicitly in acceptedIds, OR it is in rejectedPermanent
+        // In ALL other cases (not mentioned, malformed, transient error), it stays in queue.
         const finalQueue = currentQueue.filter(q => 
           !acceptedIds.has(q.client_attempt_id) && !rejectedPermanent.has(q.client_attempt_id)
         );
 
         saveQueue(finalQueue);
         
-        // Log permanent validation failures securely to local storage for diagnosis
         if (failedItemsForLog.length > 0) {
-           const log = JSON.parse(localStorage.getItem('quizarena_failed_syncs') || '[]');
+           let log = [];
+           try { log = JSON.parse(localStorage.getItem('quizarena_failed_syncs') || '[]'); } catch(e){}
            failedItemsForLog.forEach(f => log.push({...f, timestamp: new Date().toISOString()}));
-           // Keep only last 50
            localStorage.setItem('quizarena_failed_syncs', JSON.stringify(log.slice(-50)));
         }
 
@@ -209,7 +227,7 @@
           updateSyncStatusUI('Sinkronisasi ditolak (Validasi gagal)', 'error');
         } else {
           updateSyncStatusUI('Tersinkron', 'success');
-          retryDelay = 2000; // reset
+          retryDelay = 2000; // reset backoff
           if (finalQueue.length > 0) {
             setTimeout(processSyncQueue, 1000);
           }

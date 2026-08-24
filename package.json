@@ -10,8 +10,8 @@
     "test:cache-exclusion": "node test-cache-exclusion.js",
     "test:queue-recovery": "node test-queue-recovery.js",
     "test:backend": "cd backend && npm test",
-    "test:security": "cd backend && npm test",
-    "test:integration:mysql": "cd backend && cross-env NODE_ENV=test JWT_SECRET=test ENABLE_SYNC=true jest tests/progress.mysql.integration.test.js",
+    "test:security": "cd backend && npm run test:security",
+    "test:integration:mysql": "cd backend && npx cross-env NODE_ENV=test JWT_SECRET=test ENABLE_SYNC=true npx jest tests/progress.mysql.integration.test.js",
     "test": "npm run test:backend && npm run test:e2e:ux && npm run test:cache-exclusion && npm run test:queue-recovery"
   },
   "keywords": [
