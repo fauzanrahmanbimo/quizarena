@@ -32,7 +32,8 @@ function fail(label, detail) {
 async function runContractValidationTests() {
   console.log('Starting Contract Validation Tests (12 cases)...\n');
 
-  const browser = await puppeteer.launch({ headless: 'new' });
+  const { launchBrowser } = require('./puppeteer-helper');
+  const browser = await launchBrowser();
   const page = await browser.newPage();
 
   let currentSyncResponse = null;

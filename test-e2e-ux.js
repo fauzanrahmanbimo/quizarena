@@ -187,10 +187,8 @@ async function main() {
     report.meta.commitSHA = execSync('git rev-parse --short HEAD').toString().trim();
   } catch (_) {}
 
-  const browser = await puppeteer.launch({
-    headless: true,
-    args: ['--no-sandbox', '--disable-setuid-sandbox'],
-  });
+  const { launchBrowser } = require('./puppeteer-helper');
+  const browser = await launchBrowser();
 
   // ── SCENARIO GROUP 1: Mobile 360x800 layout ─────────────────────────────
   currentScenario = 'mobile-layout';

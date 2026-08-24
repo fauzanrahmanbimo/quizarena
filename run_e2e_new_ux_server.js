@@ -10,7 +10,8 @@ async function run() {
     const server = spawn("node", ["-e", "require(\"http\").createServer((req, res) => { const fs=require(\"fs\"); try { res.end(fs.readFileSync(\".\" + req.url.split(\"?\")[0])); } catch(e) { res.statusCode = 404; res.end(); } }).listen(3003);"]);
     await new Promise(r => setTimeout(r, 1000));
     
-    const browser = await puppeteer.launch({ headless: true });
+    const { launchBrowser } = require('./puppeteer-helper');
+    const browser = await launchBrowser();
     
     try {
         let page = await browser.newPage();

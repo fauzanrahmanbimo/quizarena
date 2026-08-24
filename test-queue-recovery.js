@@ -45,7 +45,8 @@ function fail(label, detail) {
 async function runQueueRecoveryTest() {
   console.log('Starting Client Queue Recovery & Sync Integrity Tests (A–N)...\n');
 
-  const browser = await puppeteer.launch({ headless: 'new' });
+  const { launchBrowser } = require('./puppeteer-helper');
+  const browser = await launchBrowser();
   const page = await browser.newPage();
 
   // ── Intercept state ────────────────────────────────────────────────────────

@@ -6,7 +6,8 @@ async function run() {
     function log(msg) { console.log(msg); output += msg + "\n"; }
 
     log("Starting UX E2E Tests...\n");
-    const browser = await puppeteer.launch({ headless: true });
+    const { launchBrowser } = require('./puppeteer-helper');
+    const browser = await launchBrowser();
     
     try {
         // Test 1: New User CTA (360x800 mobile viewport)

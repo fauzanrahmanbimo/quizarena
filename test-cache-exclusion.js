@@ -1,8 +1,8 @@
-const puppeteer = require('puppeteer');
+const { launchBrowser } = require('./puppeteer-helper');
 
 async function runCacheExclusionTest() {
   console.log('Starting Service Worker Cache Exclusion Test...');
-  const browser = await puppeteer.launch({ headless: 'new' });
+  const browser = await launchBrowser();
   const page = await browser.newPage();
   
   // Expose function for logging

@@ -1,6 +1,7 @@
-﻿const puppeteer = require('puppeteer');
+const puppeteer = require('puppeteer');
 (async () => {
-  const browser = await puppeteer.launch();
+  const { launchBrowser } = require('./puppeteer-helper');
+  const browser = await launchBrowser();
   const page = await browser.newPage();
   page.on('pageerror', err => {
     console.error('Page Error:', err.message);
