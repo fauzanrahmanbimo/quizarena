@@ -35,3 +35,15 @@ ID dari setiap soal di `questions/default.json` (seperti `1`, `2`, atau `default
 
 ## Risiko & Rollback
 Jika terjadi kesalahan pada format JSON, transaksi `seed` otomatis digagalkan (_rollback_). `verify-question-bank-parity.js` menindaklanjuti dengan status _Exit 1_ jika kesejajaran tidak genap 100%, yang memblokir segala integrasi lebih lanjut.
+
+## Production Execution Output (2026-08-24)
+**Run 1 (Idempotent Sync):**
+APPLY SUCCESS: Levels processed: 30. Questions inserted: 0, updated: 458, skipped: 442.
+
+**Run 2 (Idempotent Validation):**
+APPLY SUCCESS: Levels processed: 30. Questions inserted: 0, updated: 0, skipped: 900.
+
+**Parity Verification:**
+Source Total: 900 | Database Total: 900 | Missing: 0 | Unexpected: 0
+PARITY CHECK PASSED.
+

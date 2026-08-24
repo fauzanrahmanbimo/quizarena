@@ -20,3 +20,9 @@
 - Penanganan data localStorage terpisah untuk Practice, Timed Quiz, dan Diagnostic.
 - Perbaikan overflow UI Mobile dari akar CSS.
 - Skema Data DATA_SCHEMA.md untuk kontrak integritas data attempt.
+
+## [v4.2.0-backend-sync] - 2026-08-24
+### Added
+- Safely seeded 900 questions to MySQL production.
+- Validated Question Bank parity against default.json.
+
