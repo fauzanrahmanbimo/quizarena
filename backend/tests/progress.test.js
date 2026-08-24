@@ -1,3 +1,4 @@
+process.env.ENABLE_SYNC='true';
 const request = require('supertest');
 const jwt = require('jsonwebtoken');
 const app = require('../app');

@@ -42,6 +42,7 @@ function validateAttempt(a) {
 }
 
 exports.sync = async (req, res) => {
+  if (process.env.ENABLE_SYNC !== 'true') return res.status(501).json({ error: 'Sync feature is disabled pending question bank parity.' });
   const userId = req.user.id;
   const { clientSyncId, attempts } = req.body;
   
