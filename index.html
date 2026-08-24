@@ -174,9 +174,8 @@ dialog .field input { border: 1px solid var(--border); background: var(--bg-main
 .btn:active { transform: translateY(3px); }
 .btn--primary { background: var(--primary); color: #ffffff; box-shadow: 0 4px 0 var(--primary-hover); } .btn--primary:active { transform: translateY(4px); box-shadow: none; }
 .btn--primary:hover { filter: brightness(1.03); }
-.btn--primary:active { box-shadow: 0 2px 0 var(--primary); }
-.btn--ghost { background: var(--mint); color: #0c4048; box-shadow: 0 5px 0 var(--primary); }
-.btn--ghost:active { box-shadow: 0 2px 0 var(--primary); }
+.btn--ghost { background: var(--surface); color: var(--text-main); border: 2px solid var(--border); box-shadow: 0 4px 0 var(--border); }
+.btn--ghost:active { box-shadow: 0 1px 0 var(--border); transform: translateY(3px); }
 .btn--lg { position: relative; z-index: 1; width: 100%; max-width: 400px; padding: 16px 26px; font-size: 18px; }
 .btn-arrow { transition: transform .2s; }
 .btn--primary:hover .btn-arrow { transform: translateX(4px); }
@@ -320,8 +319,8 @@ dialog .field input { border: 1px solid var(--border); background: var(--bg-main
 .level-tag { font-family: var(--font-head); font-weight: 700; font-size: 13px; color: var(--primary); background: var(--surface); display: inline-block; padding: 6px 14px; border-radius: 12px; box-shadow: var(--shadow-soft); margin-bottom: 14px; }
 
 /* soft button (review) */
-.btn--soft { background: var(--border); color: var(--primary); box-shadow: 0 5px 0 #e2d8c2; }
-.btn--soft:active { box-shadow: 0 2px 0 #e2d8c2; }
+.btn--soft { background: var(--primary-light); color: var(--primary-hover); box-shadow: 0 4px 0 #C7D2FE; }
+.btn--soft:active { box-shadow: 0 1px 0 #C7D2FE; }
 
 @media (max-width: 520px) {
   .levels-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
@@ -755,22 +754,21 @@ html.dark .video-t{color:#EAF3EF;}
     
     <div class="streak-chip" id="streak-home" hidden>??</div>
     
-    <div id="home-dynamic-action" style="margin: 24px 0; padding: 16px; background: var(--bg-main); border-radius: 12px; border: 1px solid var(--border);">
+    <div id="home-dynamic-action" style="margin: 24px 0; padding: 16px; background: var(--bg-main); color: var(--text-main); border-radius: 12px; border: 1px solid var(--border);">
        <!-- Injected via JS -->
     </div>
-    
-    <p style="font-size: 12px; color: var(--text-muted); margin-bottom: 16px;">Progres tersimpan di perangkat ini.</p>
-
-    <div id="home-extra-settings" style="text-align: left;">
-      <div class="field">
-        <label for="player-name">Nama pemain</label>
-        <input id="player-name" type="text" placeholder="Tulis namamu�" maxlength="24" autocomplete="off" />
-      </div>
-      <details style="margin-top:12px; font-size:14px;">
-        <summary style="cursor:pointer; color:var(--text-muted); font-weight:600;">Pengaturan Mode (2 Pemain / Teks)</summary>
+    <p style="font-size: 12px; color: rgba(255,255,255,0.7); margin-bottom: 16px;">Progres tersimpan di perangkat ini.</p>
+  
+      <div id="home-extra-settings" style="text-align: left;">
+        <div class="field">
+          <label for="player-name">Nama pemain</label>
+          <input id="player-name" type="text" placeholder="Tulis namamu…" maxlength="24" autocomplete="off" />
+        </div>
+        <details style="margin-top:12px; font-size:14px;">
+          <summary style="cursor:pointer; color: rgba(255,255,255,0.9); font-weight:600;">Pengaturan Mode (2 Pemain / Teks)</summary>
         <div class="field" id="field-p2" hidden style="margin-top:12px;">
           <label for="player-name-2">Nama pemain 2</label>
-          <input id="player-name-2" type="text" placeholder="Nama lawan�" maxlength="24" autocomplete="off" />
+          <input id="player-name-2" type="text" placeholder="Nama lawan" maxlength="24" autocomplete="off" />
         </div>
         <div class="seg" id="seg-players" style="margin-top:12px;">
           <button class="seg-btn is-on" data-players="1">?? 1 Pemain</button>

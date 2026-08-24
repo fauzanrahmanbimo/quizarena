@@ -1,6 +1,6 @@
 {
   "title": "QuizArena — English Levels",
-  "description": "Kuis Bahasa Inggris 10 level bertingkat. Pilih level, jawab 30 soal, dan kumpulkan poin!",
+  "description": "Kuis Bahasa Inggris 30 level bertingkat. Pilih level, jawab 30 soal, dan kumpulkan poin!",
   "timePerQuestion": 20,
   "shuffle": true,
   "levels": [
