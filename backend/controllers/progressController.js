@@ -42,6 +42,7 @@ function validateAttempt(a) {
 }
 
 exports.sync = async (req, res) => {
+  try {
   if (process.env.ENABLE_SYNC !== 'true') return res.status(501).json({ error: 'Sync feature is disabled pending question bank parity.' });
   const userId = req.user.id;
   const { clientSyncId, attempts } = req.body;
@@ -182,12 +183,17 @@ exports.sync = async (req, res) => {
      }
   }
 
-  return res.status(200).json({
-    status: 'ok',
+        console.log(`[SYNC] UserHash: ${String(userId).slice(-4)} | Accepted: ${accepted.length} | Rejected: ${rejected.length}`);
+        return res.status(200).json({
+      status: 'ok',
     accepted,
     rejected,
     serverTime: new Date().toISOString()
   });
+  } catch (err) {
+    console.error('Unhandled error in sync:', err.message);
+    return res.status(500).json({ error: 'Internal server error' });
+  }
 };
 
 exports.getProgress = async (req, res) => {
