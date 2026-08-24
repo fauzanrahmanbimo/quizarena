@@ -41,3 +41,8 @@
 ### Fixed
 - Tab navigation on modal dialogs
 - Accessibility ARIA attributes on inputs and validation labels
+
+## [v4.3.0-parity] - 2026-08-24
+### Added
+- Verifikasi Question Bank Parity ke Production MySQL.
+- 900 Soal Tersinkronisasi secara idempoten.
