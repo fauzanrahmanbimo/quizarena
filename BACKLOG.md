@@ -1,5 +1,15 @@
 # Backlog Ide Masa Depan (P1 & P2)
 
+## P1-B: Frontend UX Upgrade
+- [x] Bagian A: UX Audit (UX_AUDIT_P1B.md)
+- [x] Bagian B: Onboarding & Home
+- [x] Bagian C: Quiz Experience
+- [x] Bagian D: Result & Review
+- [x] Bagian E: Dashboard
+- [x] Bagian F: Accessibility & Form UX
+- [x] Bagian G: Responsive 360x800
+- [x] Bagian H: E2E UX Testing
+
 ## P1: Sinkronisasi Backend & Data Lanjutan
 - [ ] **Autentikasi Penuh & Sinkronisasi Multi-Device:** Transisi progres \`localStorage\` ke backend MySQL (Tabel \`Users\`, \`Progress\`, \`QuizAttempt\`).
 - [ ] **CMS Question Bank:** Panel admin untuk *Content Creator* membuat, mengedit, dan memvalidasi tipe soal tanpa menyentuh file JSON mentah.
