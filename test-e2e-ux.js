@@ -19,7 +19,7 @@ const puppeteer = require('puppeteer');
 const AxePuppeteer = require('@axe-core/puppeteer').default;
 const fs = require('fs');
 
-const PORT = 4173;
+const PORT = 3000;
 const BASE_URL = `http://localhost:${PORT}`;
 const INDEX_URL = `${BASE_URL}/index.html`;
 
@@ -187,10 +187,8 @@ async function main() {
     report.meta.commitSHA = execSync('git rev-parse --short HEAD').toString().trim();
   } catch (_) {}
 
-  const browser = await puppeteer.launch({
-    headless: true,
-    args: ['--no-sandbox', '--disable-setuid-sandbox'],
-  });
+  const { launchBrowser } = require('./puppeteer-helper');
+  const browser = await launchBrowser();
 
   // ── SCENARIO GROUP 1: Mobile 360x800 layout ─────────────────────────────
   currentScenario = 'mobile-layout';

@@ -32,6 +32,13 @@ self.addEventListener("activate", (e) => {
 self.addEventListener("fetch", (e) => {
   const req = e.request;
   if (req.method !== "GET") return;
+  
+  const url = new URL(req.url);
+  // P1 SECURITY: Do not cache API endpoints to prevent token/private data leakage
+  if (url.pathname.startsWith('/api/')) {
+    return; // Let the browser handle API requests normally (no cache)
+  }
+
   // network-first untuk dokumen, cache-first untuk sisanya
   if (req.mode === "navigate") {
     e.respondWith(fetch(req).then((r) => {

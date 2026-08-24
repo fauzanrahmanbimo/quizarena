@@ -4,7 +4,8 @@ const fs = require('fs');
 (async () => {
     let report = "# Laporan Pengujian (TEST_REPORT.md)\n\n## E2E Test Dashboard P0-E (Puppeteer)\n\n";
     let exitCode = 0;
-    const browser = await puppeteer.launch();
+    const { launchBrowser } = require('./puppeteer-helper');
+    const browser = await launchBrowser();
     
     function logResult(name, pass, msg="") {
         if (pass) {

@@ -10,6 +10,7 @@ const historyRoutes = require('./routes/history');
 const progressRoutes = require('./routes/progress');
 
 const app = express();
+app.set('trust proxy', 1);
 
 // 1. CORS Setup
 const allowedOrigins = process.env.FRONTEND_ORIGINS 

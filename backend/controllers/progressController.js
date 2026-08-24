@@ -7,7 +7,7 @@ const VALID_TYPES = ['diagnostic', 'practice', 'timed_quiz'];
 
 function validateAttempt(a) {
   if (!a || typeof a !== 'object') return 'Attempt must be an object';
-  if (typeof a.client_attempt_id !== 'string' || !a.client_attempt_id.trim()) return 'Invalid client_attempt_id';
+  if (typeof a.client_attempt_id !== 'string' || !a.client_attempt_id.trim() || a.client_attempt_id.length > 100) return 'Invalid client_attempt_id';
   if (!VALID_TYPES.includes(a.attempt_type)) return 'Invalid attempt_type';
   if (a.level_id !== null && typeof a.level_id !== 'number') return 'Invalid level_id';
   if (isNaN(Date.parse(a.started_at))) return 'Invalid started_at';
@@ -25,8 +25,8 @@ function validateAttempt(a) {
   
   for (const ans of a.answers) {
     if (!ans || typeof ans !== 'object') return 'Answer must be an object';
-    if (typeof ans.question_id !== 'string') return 'Invalid question_id';
-    if (typeof ans.topic !== 'string') return 'Invalid topic';
+    if (typeof ans.question_id !== 'string' || ans.question_id.length > 50) return 'Invalid question_id';
+    if (typeof ans.topic !== 'string' || ans.topic.length > 50) return 'Invalid topic';
     if (ans.selected_option_id !== null && typeof ans.selected_option_id !== 'number') return 'Invalid selected_option_id';
     if (typeof ans.correct_option_id !== 'number') return 'Invalid correct_option_id';
     if (typeof ans.is_correct !== 'boolean') return 'Invalid is_correct';
@@ -75,12 +75,122 @@ exports.sync = async (req, res) => {
   let finalRecommendedLevel = null;
   let latestDiagnosticDate = 0;
 
+  
+  // --- SERVER-SIDE VALIDATION PREP ---
+  const PASS = 70;
+  const allQuestionKeys = new Set();
+  for (const attempt of attempts) {
+    if (Array.isArray(attempt.answers)) {
+      for (const ans of attempt.answers) {
+        if (ans.question_id) allQuestionKeys.add(ans.question_id);
+      }
+    }
+  }
+
+  const correctMap = {};
+  if (allQuestionKeys.size > 0) {
+    const keysArray = Array.from(allQuestionKeys);
+    try {
+      const [rows] = await db.query('SELECT question_key, correct_index, level_id, JSON_LENGTH(options) as options_count FROM questions WHERE question_key IN (?)', [keysArray]);
+      for (const row of rows) {
+        correctMap[row.question_key] = row;
+      }
+    } catch(err) {
+      console.error('Error fetching questions for validation', err.message);
+    }
+  }
+
+  const levelTotals = {};
+  try {
+    const [levelRows] = await db.query('SELECT level_id, COUNT(*) as cnt FROM questions WHERE level_id IS NOT NULL AND is_active = TRUE GROUP BY level_id');
+    for (const r of levelRows) {
+      levelTotals[r.level_id] = r.cnt;
+    }
+  } catch(err) {
+    console.error('Error fetching level totals', err.message);
+  }
+  // --- END PREP ---
+
   for (const attempt of attempts) {
     const errorMsg = validateAttempt(attempt);
     if (errorMsg) {
       rejected.push({ client_attempt_id: attempt.client_attempt_id, reason: errorMsg });
       continue;
     }
+    
+    // --- EXECUTE VALIDATION ---
+    const PASS = 70;
+    let actualCorrect = 0;
+    let actualIncorrect = 0;
+    let hasInvalidQuestion = false;
+    const seenQuestions = new Set();
+
+    let actualTotal = attempt.total_questions;
+    if (attempt.attempt_type === 'timed_quiz' && attempt.level_id && levelTotals[attempt.level_id]) {
+       actualTotal = levelTotals[attempt.level_id];
+    } else if (attempt.attempt_type === 'diagnostic') {
+       actualTotal = 15;
+    }
+    
+    if (attempt.answers.length > actualTotal) {
+      rejected.push({ client_attempt_id: attempt.client_attempt_id, reason: 'Too many answers for this level/attempt type' });
+      continue;
+    }
+    
+    for (const ans of attempt.answers) {
+       if (seenQuestions.has(ans.question_id)) {
+           hasInvalidQuestion = true;
+           rejected.push({ client_attempt_id: attempt.client_attempt_id, reason: 'Duplicate question_id in attempt' });
+           break;
+       }
+       seenQuestions.add(ans.question_id);
+
+       const qData = correctMap[ans.question_id];
+       if (!qData) {
+           hasInvalidQuestion = true;
+           rejected.push({ client_attempt_id: attempt.client_attempt_id, reason: 'Unknown question_id' });
+           break;
+       }
+
+       if (attempt.attempt_type === 'timed_quiz' && qData.level_id !== attempt.level_id) {
+           hasInvalidQuestion = true;
+           rejected.push({ client_attempt_id: attempt.client_attempt_id, reason: 'Question ownership mismatch (cross-level exploit)' });
+           break;
+       }
+
+       if (ans.selected_option_id !== null) {
+           if (!Number.isInteger(ans.selected_option_id) || ans.selected_option_id < 0 || ans.selected_option_id >= qData.options_count) {
+               hasInvalidQuestion = true;
+               rejected.push({ client_attempt_id: attempt.client_attempt_id, reason: 'Invalid selected_option_id' });
+               break;
+           }
+       }
+
+       if (ans.selected_option_id === qData.correct_index) {
+         ans.is_correct = true;
+         actualCorrect++;
+       } else {
+         ans.is_correct = false;
+         actualIncorrect++;
+       }
+       ans.correct_option_id = qData.correct_index;
+    }
+
+    if (hasInvalidQuestion) continue;
+
+    if (actualTotal < attempt.answers.length) actualTotal = attempt.answers.length;
+    if (actualTotal === 0) actualTotal = 1;
+
+    const actualUnanswered = Math.max(0, actualTotal - actualCorrect - actualIncorrect);
+    const actualAccuracy = Math.round((actualCorrect / actualTotal) * 100);
+    const actualPassed = actualAccuracy >= PASS;
+
+    attempt.correct_count = actualCorrect;
+    attempt.incorrect_count = actualIncorrect;
+    attempt.unanswered_count = actualUnanswered;
+    attempt.accuracy = actualAccuracy;
+    attempt.passed = actualPassed;
+    // --- END EXECUTE ---
 
     const connection = await db.getConnection();
     try {
@@ -98,12 +208,11 @@ exports.sync = async (req, res) => {
         `, [
           attempt.client_attempt_id, userId, attempt.attempt_type, attempt.level_id, 
           new Date(attempt.started_at), new Date(attempt.completed_at),
-          attempt.total_questions, attempt.correct_count, attempt.incorrect_count, 
+          actualTotal, attempt.correct_count, attempt.incorrect_count, 
           attempt.unanswered_count, attempt.accuracy, attempt.average_answer_time, attempt.passed
         ]);
       } catch (err) {
         if (err.code === 'ER_DUP_ENTRY') {
-          // Idempotency: Already synced
           await connection.rollback();
           accepted.push(attempt.client_attempt_id);
           continue;
@@ -127,64 +236,63 @@ exports.sync = async (req, res) => {
       }
 
       // Insert Diagnostic Result
+      let newDiagRecLevel = null;
       if (attempt.attempt_type === 'diagnostic') {
+        newDiagRecLevel = attempt.diagnostic_result.recommended_level;
         await connection.query(`
           INSERT INTO diagnostic_results (user_id, attempt_id, recommended_level, weak_topics_json, completed_at)
           VALUES (?, ?, ?, ?, ?)
         `, [
-          userId, attemptId, attempt.diagnostic_result.recommended_level, 
+          userId, attemptId, newDiagRecLevel, 
           JSON.stringify(attempt.diagnostic_result.weak_topics), new Date(attempt.completed_at)
         ]);
         
         const completedTime = new Date(attempt.completed_at).getTime();
         if (completedTime > latestDiagnosticDate) {
            latestDiagnosticDate = completedTime;
-           finalRecommendedLevel = attempt.diagnostic_result.recommended_level;
+           finalRecommendedLevel = newDiagRecLevel;
         }
       }
 
+      // Lock user_progress for update to ensure atomicity
+      const [upRows] = await connection.query('SELECT highest_unlocked_level, recommended_level FROM user_progress WHERE user_id = ? FOR UPDATE', [userId]);
+      
+      let targetUnlock = 1;
+      let targetRec = null;
+      if (upRows.length > 0) {
+         targetUnlock = upRows[0].highest_unlocked_level;
+         targetRec = upRows[0].recommended_level;
+      }
+      
+      if (attempt.attempt_type === 'diagnostic' && newDiagRecLevel !== null) {
+         targetRec = newDiagRecLevel;
+      }
+
       if (attempt.passed && attempt.attempt_type === 'timed_quiz' && attempt.level_id) {
-         if (attempt.level_id + 1 > highestLevelUnlocked) {
-            highestLevelUnlocked = attempt.level_id + 1;
+         if (attempt.level_id + 1 > targetUnlock) {
+            targetUnlock = attempt.level_id + 1;
          }
       }
+
+      await connection.query(`
+         INSERT INTO user_progress (user_id, recommended_level, highest_unlocked_level)
+         VALUES (?, ?, ?)
+         ON DUPLICATE KEY UPDATE 
+           recommended_level = VALUES(recommended_level),
+           highest_unlocked_level = VALUES(highest_unlocked_level)
+      `, [userId, targetRec, targetUnlock]);
 
       await connection.commit();
       accepted.push(attempt.client_attempt_id);
     } catch (err) {
       await connection.rollback();
       console.error('Transaction failed for attempt', attempt.client_attempt_id, err.message);
-      rejected.push({ client_attempt_id: attempt.client_attempt_id, reason: 'Internal server error during transaction' });
+      rejected.push({ client_attempt_id: attempt.client_attempt_id, reason: 'Internal server error during transaction', transient: true });
     } finally {
       connection.release();
     }
   }
 
-  // Update user_progress if applicable
-  if (accepted.length > 0) {
-     try {
-       const [rows] = await db.query('SELECT highest_unlocked_level, recommended_level FROM user_progress WHERE user_id = ?', [userId]);
-       let targetUnlock = highestLevelUnlocked;
-       let targetRec = finalRecommendedLevel;
-       
-       if (rows.length > 0) {
-          if (rows[0].highest_unlocked_level > targetUnlock) targetUnlock = rows[0].highest_unlocked_level;
-          if (!targetRec) targetRec = rows[0].recommended_level;
-       }
-       
-       await db.query(`
-          INSERT INTO user_progress (user_id, recommended_level, highest_unlocked_level)
-          VALUES (?, ?, ?)
-          ON DUPLICATE KEY UPDATE 
-            recommended_level = VALUES(recommended_level),
-            highest_unlocked_level = VALUES(highest_unlocked_level)
-       `, [userId, targetRec, targetUnlock]);
-     } catch (err) {
-       console.error('Failed to update user_progress', err.message);
-     }
-  }
-
-                
   const reqId = crypto.randomUUID();
   let logIdentifier = reqId;
   if (process.env.SYNC_LOG_HASH_SECRET) {

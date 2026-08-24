@@ -2,7 +2,8 @@ const puppeteer = require('puppeteer');
 const fs = require('fs');
 
 (async () => {
-  const browser = await puppeteer.launch();
+  const { launchBrowser } = require('./puppeteer-helper');
+  const browser = await launchBrowser();
   
   let report = "# Laporan Pengujian (TEST_REPORT.md)\n\n## Ringkasan Eksekusi\n\n";
 
