@@ -37,11 +37,25 @@ describe('Progress Sync API Canary Gates', () => {
     jest.clearAllMocks();
     db.getConnection.mockResolvedValue(mockConnection);
     mockConnection.query.mockResolvedValue([ { insertId: 1 } ]);
-    db.query.mockResolvedValue([[]]);
+    
+    db.query.mockImplementation((queryStr, args) => {
+       if (queryStr.includes('SELECT question_key')) {
+          // Assume all questions have correct_index = 0
+          // The dummy tests usually don't send answers or send empty answers, except when they do
+          return Promise.resolve([[{ question_key: 'q1', correct_index: 0 }, { question_key: 'q2', correct_index: 0 }]]);
+       }
+       if (queryStr.includes('SELECT level_id, COUNT(*)')) {
+          return Promise.resolve([[{ level_id: 1, cnt: 1 }, { level_id: 4, cnt: 1 }]]);
+       }
+       if (queryStr.includes('SELECT highest_unlocked_level')) {
+          return Promise.resolve([[{ highest_unlocked_level: 5, recommended_level: 10 }]]);
+       }
+       return Promise.resolve([[]]);
+    });
     process.env.ENABLE_SYNC = 'true';
   });
 
-  const getValidPayload = () => ({
+    const getValidPayload = () => ({
     clientSyncId: 'sync-req-1',
     attempts: [{
       client_attempt_id: 'att-1',
@@ -49,14 +63,16 @@ describe('Progress Sync API Canary Gates', () => {
       level_id: 1,
       started_at: new Date().toISOString(),
       completed_at: new Date().toISOString(),
-      total_questions: 10,
-      correct_count: 8,
-      incorrect_count: 2,
+      total_questions: 1,
+      correct_count: 1,
+      incorrect_count: 0,
       unanswered_count: 0,
-      accuracy: 80,
-      average_answer_time: 12,
+      accuracy: 100,
+      average_answer_time: 10,
       passed: true,
-      answers: []
+      answers: [
+        { question_id: 'q1', topic: 'grammar', selected_option_id: 0, correct_option_id: 0, is_correct: true, time_spent: 5 }
+      ]
     }]
   });
 
@@ -218,7 +234,56 @@ describe('Progress Sync API Canary Gates', () => {
     
     consoleInfoSpy.mockRestore();
   });
-test('Z. Rate limit terlampaui -> 429', async () => {
+
+  test('M. Zero-Trust Server-Side Validation overrides client fake data', async () => {
+    // Mock the question index lookup to return correct_index 2 for 'q1'
+    db.query.mockImplementation((queryStr, args) => {
+       if (queryStr.includes('SELECT question_key')) {
+          return Promise.resolve([[{ question_key: 'q1', correct_index: 2 }]]);
+       }
+       if (queryStr.includes('SELECT level_id, COUNT(*)')) {
+          return Promise.resolve([[{ level_id: 1, cnt: 1 }]]);
+       }
+       return Promise.resolve([[]]);
+    });
+
+    const payload = getValidPayload();
+    // Client fakes 100% accuracy and passed = true, but sends wrong answer
+    payload.attempts[0].correct_count = 1;
+    payload.attempts[0].total_questions = 1;
+    payload.attempts[0].incorrect_count = 0;
+    payload.attempts[0].unanswered_count = 0;
+    payload.attempts[0].accuracy = 100;
+    payload.attempts[0].passed = true;
+    payload.attempts[0].answers = [
+      { question_id: 'q1', topic: 'grammar', selected_option_id: 0, correct_option_id: 2, is_correct: true, time_spent: 5 }
+    ];
+
+    const res = await request(app)
+      .post('/api/progress/sync')
+      .set('Cookie', csrfCookie)
+      .set('x-csrf-token', csrfToken)
+      .set('Authorization', `Bearer ${token}`)
+      .send(payload);
+
+    expect(res.status).toBe(200);
+    expect(res.body.status).toBe('ok');
+    
+    // Check what was actually inserted into quiz_attempts
+    const insertAttemptCall = mockConnection.query.mock.calls.find(c => c[0].includes('INSERT INTO quiz_attempts'));
+    expect(insertAttemptCall).toBeDefined();
+    
+    const insertArgs = insertAttemptCall[1];
+    // VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+    // 7 = correct_count, 8 = incorrect_count, 10 = accuracy, 12 = passed
+    // It should have overwritten client's fake 1/100%/true to 0/0%/false because selected(0) != correct(2)
+    expect(insertArgs[7]).toBe(0); // correct_count
+    expect(insertArgs[8]).toBe(1); // incorrect_count
+    expect(insertArgs[10]).toBe(0); // accuracy
+    expect(insertArgs[12]).toBe(false); // passed
+  });
+
+  test('Z. Rate limit terlampaui -> 429', async () => {
         for (let i = 0; i < 11; i++) {
        await request(app)
         .post('/api/progress/sync')

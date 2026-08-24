@@ -7,7 +7,7 @@ const VALID_TYPES = ['diagnostic', 'practice', 'timed_quiz'];
 
 function validateAttempt(a) {
   if (!a || typeof a !== 'object') return 'Attempt must be an object';
-  if (typeof a.client_attempt_id !== 'string' || !a.client_attempt_id.trim()) return 'Invalid client_attempt_id';
+  if (typeof a.client_attempt_id !== 'string' || !a.client_attempt_id.trim() || a.client_attempt_id.length > 100) return 'Invalid client_attempt_id';
   if (!VALID_TYPES.includes(a.attempt_type)) return 'Invalid attempt_type';
   if (a.level_id !== null && typeof a.level_id !== 'number') return 'Invalid level_id';
   if (isNaN(Date.parse(a.started_at))) return 'Invalid started_at';
@@ -25,8 +25,8 @@ function validateAttempt(a) {
   
   for (const ans of a.answers) {
     if (!ans || typeof ans !== 'object') return 'Answer must be an object';
-    if (typeof ans.question_id !== 'string') return 'Invalid question_id';
-    if (typeof ans.topic !== 'string') return 'Invalid topic';
+    if (typeof ans.question_id !== 'string' || ans.question_id.length > 50) return 'Invalid question_id';
+    if (typeof ans.topic !== 'string' || ans.topic.length > 50) return 'Invalid topic';
     if (ans.selected_option_id !== null && typeof ans.selected_option_id !== 'number') return 'Invalid selected_option_id';
     if (typeof ans.correct_option_id !== 'number') return 'Invalid correct_option_id';
     if (typeof ans.is_correct !== 'boolean') return 'Invalid is_correct';
@@ -75,12 +75,86 @@ exports.sync = async (req, res) => {
   let finalRecommendedLevel = null;
   let latestDiagnosticDate = 0;
 
+  
+  // --- SERVER-SIDE VALIDATION PREP ---
+  const PASS = 70;
+  const allQuestionKeys = new Set();
   for (const attempt of attempts) {
+    if (Array.isArray(attempt.answers)) {
+      for (const ans of attempt.answers) {
+        if (ans.question_id) allQuestionKeys.add(ans.question_id);
+      }
+    }
+  }
+
+  const correctMap = {};
+  if (allQuestionKeys.size > 0) {
+    const keysArray = Array.from(allQuestionKeys);
+    try {
+      const [rows] = await db.query('SELECT question_key, correct_index FROM questions WHERE question_key IN (?)', [keysArray]);
+      for (const row of rows) {
+        correctMap[row.question_key] = row.correct_index;
+      }
+    } catch(err) {
+      console.error('Error fetching questions for validation', err.message);
+    }
+  }
+
+  const levelTotals = {};
+  try {
+    const [levelRows] = await db.query('SELECT level_id, COUNT(*) as cnt FROM questions WHERE level_id IS NOT NULL AND is_active = TRUE GROUP BY level_id');
+    for (const r of levelRows) {
+      levelTotals[r.level_id] = r.cnt;
+    }
+  } catch(err) {
+    console.error('Error fetching level totals', err.message);
+  }
+  // --- END PREP ---
+
+for (const attempt of attempts) {
     const errorMsg = validateAttempt(attempt);
     if (errorMsg) {
       rejected.push({ client_attempt_id: attempt.client_attempt_id, reason: errorMsg });
       continue;
     }
+
+    
+    // --- EXECUTE VALIDATION ---
+    let actualCorrect = 0;
+    let actualIncorrect = 0;
+    
+    for (const ans of attempt.answers) {
+       const realCorrectIndex = correctMap[ans.question_id];
+       if (realCorrectIndex !== undefined && ans.selected_option_id === realCorrectIndex) {
+         ans.is_correct = true;
+         actualCorrect++;
+       } else {
+         ans.is_correct = false;
+         actualIncorrect++;
+       }
+       ans.correct_option_id = realCorrectIndex !== undefined ? realCorrectIndex : -1;
+    }
+
+    let actualTotal = attempt.total_questions;
+    if (attempt.attempt_type === 'timed_quiz' && attempt.level_id && levelTotals[attempt.level_id]) {
+       actualTotal = levelTotals[attempt.level_id];
+    } else if (attempt.attempt_type === 'diagnostic') {
+       actualTotal = 15;
+    }
+    
+    if (actualTotal < attempt.answers.length) actualTotal = attempt.answers.length;
+    if (actualTotal === 0) actualTotal = 1;
+
+    const actualUnanswered = Math.max(0, actualTotal - actualCorrect - actualIncorrect);
+    const actualAccuracy = Math.round((actualCorrect / actualTotal) * 100);
+    const actualPassed = actualAccuracy >= PASS;
+
+    attempt.correct_count = actualCorrect;
+    attempt.incorrect_count = actualIncorrect;
+    attempt.unanswered_count = actualUnanswered;
+    attempt.accuracy = actualAccuracy;
+    attempt.passed = actualPassed;
+    // --- END EXECUTE ---
 
     const connection = await db.getConnection();
     try {

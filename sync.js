@@ -90,7 +90,7 @@
 
     saveQueue(queue);
     
-    updateSyncStatusUI('Tersimpan di perangkat');
+    updateSyncStatusUI('Tersimpan di perangkat', 'success');
     
     // Only attempt sync if logged in (token exists)
     if (getAuthToken()) {
@@ -137,7 +137,7 @@
     if (!getAuthToken()) return;
 
     isSyncing = true;
-    updateSyncStatusUI('Menyinkronkan...');
+    updateSyncStatusUI('Menyinkronkan...', 'syncing');
     
     // Take up to 25 items
     const batch = queue.slice(0, 25);
@@ -159,7 +159,7 @@
       if (response.status === 401) {
         // Not authenticated, stop trying
         isSyncing = false;
-        updateSyncStatusUI('Gagal sinkron — sesi berakhir');
+        updateSyncStatusUI('Gagal sinkron — sesi berakhir', 'error');
         return;
       }
 
@@ -174,7 +174,7 @@
         const finalQueue = remainingQueue.filter(q => !rejectedIds.has(q.client_attempt_id));
 
         saveQueue(finalQueue);
-        updateSyncStatusUI('Tersinkron');
+        updateSyncStatusUI('Tersinkron', 'success');
         retryDelay = 2000; // reset
         
         if (finalQueue.length > 0) {
@@ -185,7 +185,7 @@
       }
     } catch (err) {
       console.error('Sync failed:', err);
-      updateSyncStatusUI('Gagal sinkron — akan dicoba lagi');
+      updateSyncStatusUI('Gagal sinkron — akan dicoba otomatis', 'error');
       
       retryDelay = Math.min(retryDelay * 2, MAX_RETRY_DELAY);
       clearTimeout(retryTimeout);
