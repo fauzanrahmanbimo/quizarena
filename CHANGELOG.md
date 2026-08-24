@@ -46,3 +46,6 @@
 ### Added
 - Verifikasi Question Bank Parity ke Production MySQL.
 - 900 Soal Tersinkronisasi secara idempoten.
+
+### Added
+- [P1-C] QuizArena Motion System with accessible animations, reduced motion fallback, and confetti effects

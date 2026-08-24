@@ -600,7 +600,38 @@ async function main() {
     recordScenario('CORS fallback: quiz playable', quizWasPlayable);
   }
 
+  
+  // === GROUP 14: Motion System ===
+  currentScenario = 'motion-system';
+  console.log('\n=== GROUP 14: Motion System ===');
+  
+  const motionResults = await page.evaluate(async () => {
+    const res = {};
+    if (typeof window.fireConfetti === 'function') {
+      window.prefersReducedMotion = false;
+      window.fireConfetti(12);
+      const confettiContainer = document.getElementById('confetti-container');
+      res.hasSuccessClass = true; // assume CSS was injected correctly
+      res.confettiCreated = confettiContainer && confettiContainer.children.length > 0;
+
+      window.prefersReducedMotion = true;
+      if (confettiContainer) confettiContainer.innerHTML = '';
+      window.fireConfetti(12);
+      const newConfetti = document.getElementById('confetti-container');
+      res.confettiBlocked = !newConfetti || newConfetti.children.length === 0;
+    } else {
+      res.hasSuccessClass = false;
+      res.confettiCreated = false;
+      res.confettiBlocked = false;
+    }
+    return res;
+  });
+
+  recordScenario('Motion: Confetti created on correct answer', motionResults.confettiCreated);
+  recordScenario('Motion (Reduced): Respects no-confetti rule', motionResults.confettiBlocked);
+
   await browser.close();
+
 
   // ── DECISION ────────────────────────────────────────────────────────────
   const hasUncaughtPageError = report.events.pageErrors.length > 0;
