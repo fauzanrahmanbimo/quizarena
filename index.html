@@ -2758,6 +2758,8 @@ function getRecommendedLevel(acc) {
 
   updateHomeUI();
   updateAuthUI();
+  window.goToLevels = goToLevels;
+  window.startLevel = startLevel;
   window._testAPI = {
     startLevel,
       finish: finish, renderDashboard: renderDashboard, APP: typeof APP !== "undefined" ? APP : "quizarena_",
