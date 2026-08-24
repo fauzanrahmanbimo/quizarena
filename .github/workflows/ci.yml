@@ -1,0 +1,64 @@
+name: CI
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    services:
+      mysql:
+        image: mysql:8.0
+        env:
+          MYSQL_ALLOW_EMPTY_PASSWORD: yes
+          MYSQL_DATABASE: quizarena_integration_test
+        ports:
+          - 3307:3306
+        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '18'
+
+    - name: Install Frontend Dependencies
+      run: npm install
+
+    - name: Install Backend Dependencies
+      run: cd backend && npm install
+
+    - name: Wait for MySQL
+      run: |
+        while ! mysqladmin ping -h"127.0.0.1" -P3307 --silent; do
+          sleep 1
+        done
+
+    - name: Run Backend Unit & Security Tests
+      run: npm run test:security
+      env:
+        JWT_SECRET: "test-secret"
+        NODE_ENV: "test"
+
+    - name: Run MySQL Integration Tests
+      run: npm run test:integration:mysql
+      env:
+        DATABASE_URL: "mysql://root:@127.0.0.1:3307/quizarena_integration_test?multipleStatements=true"
+        JWT_SECRET: "test-secret"
+        NODE_ENV: "test"
+        ENABLE_SYNC: "true"
+
+    - name: Run E2E and Browser Tests
+      run: |
+        npx playwright install --with-deps
+        npm run start:frontend & 
+        npx wait-on http://localhost:3000
+        npm run test:cache-exclusion
+        npm run test:queue-recovery
+        npx playwright test

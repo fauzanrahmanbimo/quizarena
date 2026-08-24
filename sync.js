@@ -165,20 +165,54 @@
 
       if (response.ok) {
         const data = await response.json();
-        // Remove accepted items from queue
-        const acceptedIds = new Set(data.accepted);
-        const remainingQueue = getQueue().filter(q => !acceptedIds.has(q.client_attempt_id));
+        const currentQueue = getQueue();
         
-        // Also remove rejected items so they don't block the queue forever
-        const rejectedIds = new Set((data.rejected || []).map(r => r.client_attempt_id));
-        const finalQueue = remainingQueue.filter(q => !rejectedIds.has(q.client_attempt_id));
+        // Items explicitly acknowledged by server are safe to remove
+        const acceptedIds = new Set(data.accepted || []);
+        
+        // Categorize rejections
+        const rejectedTransient = new Set();
+        const rejectedPermanent = new Set();
+        const failedItemsForLog = [];
+        
+        (data.rejected || []).forEach(r => {
+          if (r.transient || r.reason === 'Internal server error during transaction') {
+            rejectedTransient.add(r.client_attempt_id);
+          } else {
+            rejectedPermanent.add(r.client_attempt_id);
+            failedItemsForLog.push(r);
+          }
+        });
+
+        // Retain items that were NOT accepted AND NOT permanently rejected
+        // That means we retain un-processed items and transient-failed items
+        const finalQueue = currentQueue.filter(q => 
+          !acceptedIds.has(q.client_attempt_id) && !rejectedPermanent.has(q.client_attempt_id)
+        );
 
         saveQueue(finalQueue);
-        updateSyncStatusUI('Tersinkron', 'success');
-        retryDelay = 2000; // reset
         
-        if (finalQueue.length > 0) {
-          setTimeout(processSyncQueue, 1000);
+        // Log permanent validation failures securely to local storage for diagnosis
+        if (failedItemsForLog.length > 0) {
+           const log = JSON.parse(localStorage.getItem('quizarena_failed_syncs') || '[]');
+           failedItemsForLog.forEach(f => log.push({...f, timestamp: new Date().toISOString()}));
+           // Keep only last 50
+           localStorage.setItem('quizarena_failed_syncs', JSON.stringify(log.slice(-50)));
+        }
+
+        if (rejectedTransient.size > 0) {
+          updateSyncStatusUI('Sync tertunda (server sibuk), akan dicoba lagi', 'warning');
+          retryDelay = Math.min(retryDelay * 2, MAX_RETRY_DELAY);
+          clearTimeout(retryTimeout);
+          retryTimeout = setTimeout(processSyncQueue, retryDelay);
+        } else if (rejectedPermanent.size > 0 && acceptedIds.size === 0) {
+          updateSyncStatusUI('Sinkronisasi ditolak (Validasi gagal)', 'error');
+        } else {
+          updateSyncStatusUI('Tersinkron', 'success');
+          retryDelay = 2000; // reset
+          if (finalQueue.length > 0) {
+            setTimeout(processSyncQueue, 1000);
+          }
         }
       } else {
         throw new Error('Sync failed with status ' + response.status);
