@@ -2,7 +2,7 @@ name: CI
 
 on:
   push:
-    branches: [ "main" ]
+    branches: [ "main", "feature/p0-sync-hardening" ]
   pull_request:
     branches: [ "main" ]
 
@@ -34,18 +34,28 @@ jobs:
     - name: Install Backend Dependencies
       run: cd backend && npm install
 
+    - name: Install Puppeteer system dependencies
+      run: |
+        sudo apt-get update -y
+        sudo apt-get install -y libnss3 libatk-bridge2.0-0 libdrm2 libxkbcommon0 \
+          libgbm1 libgtk-3-0 libasound2 libxrandr2 libxcomposite1 libxdamage1 libxfixes3
+
     - name: Wait for MySQL
       run: |
         while ! mysqladmin ping -h"127.0.0.1" -P3307 --silent; do
           sleep 1
         done
 
+    # Step 1: Backend unit + security tests (no MySQL needed for most, DB connection mocked)
     - name: Run Backend Unit & Security Tests
-      run: npm run test:security
+      run: npm run test:backend
       env:
         JWT_SECRET: "test-secret"
         NODE_ENV: "test"
+        ENABLE_SYNC: "true"
+        DATABASE_URL: "mysql://root:@127.0.0.1:3307/quizarena_integration_test?multipleStatements=true"
 
+    # Step 2: Real MySQL integration tests (sequential — share the same MySQL service)
     - name: Run MySQL Integration Tests
       run: npm run test:integration:mysql
       env:
@@ -54,11 +64,31 @@ jobs:
         NODE_ENV: "test"
         ENABLE_SYNC: "true"
 
-    - name: Run E2E and Browser Tests
+    # Step 3: E2E/Browser tests using Puppeteer
+    # Frontend server started here, not globally, to isolate port usage.
+    # Proxy for Scenario F is created per-test inside test-queue-recovery.js (listen(0)).
+    - name: Run Browser Tests (Cache Exclusion, Queue Recovery, Contract Validation)
       run: |
-        npx playwright install --with-deps
-        npm run start:frontend & 
-        npx wait-on http://localhost:3000
+        # Start frontend static server on port 3000 in background
+        npm run start:frontend &
+        FRONTEND_PID=$!
+        # Wait for frontend to be ready
+        npx wait-on http://localhost:3000 --timeout 30000
+        # Run Puppeteer tests sequentially (they share the browser resource)
         npm run test:cache-exclusion
         npm run test:queue-recovery
-        npx playwright test
+        npm run test:queue-contract-validation
+        # Stop frontend
+        kill $FRONTEND_PID 2>/dev/null || true
+      env:
+        DB_PORT: "3307"
+        NODE_ENV: "test"
+
+    # Step 4: E2E UX tests (separate to give clear reporting)
+    - name: Run E2E UX Tests
+      run: |
+        npm run start:frontend &
+        FRONTEND_PID=$!
+        npx wait-on http://localhost:3000 --timeout 30000
+        npm run test:e2e:ux
+        kill $FRONTEND_PID 2>/dev/null || true
