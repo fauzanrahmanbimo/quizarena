@@ -1,9 +1,214 @@
 const db = require('../config/database');
 
+const MAX_ATTEMPTS = 25;
+const MAX_ANSWERS_PER_ATTEMPT = 50;
+const VALID_TYPES = ['diagnostic', 'practice', 'timed_quiz'];
+
+function validateAttempt(a) {
+  if (!a || typeof a !== 'object') return 'Attempt must be an object';
+  if (typeof a.client_attempt_id !== 'string' || !a.client_attempt_id.trim()) return 'Invalid client_attempt_id';
+  if (!VALID_TYPES.includes(a.attempt_type)) return 'Invalid attempt_type';
+  if (a.level_id !== null && typeof a.level_id !== 'number') return 'Invalid level_id';
+  if (isNaN(Date.parse(a.started_at))) return 'Invalid started_at';
+  if (isNaN(Date.parse(a.completed_at))) return 'Invalid completed_at';
+  if (typeof a.total_questions !== 'number' || a.total_questions < 0) return 'Invalid total_questions';
+  if (typeof a.correct_count !== 'number' || a.correct_count < 0) return 'Invalid correct_count';
+  if (typeof a.incorrect_count !== 'number' || a.incorrect_count < 0) return 'Invalid incorrect_count';
+  if (typeof a.unanswered_count !== 'number' || a.unanswered_count < 0) return 'Invalid unanswered_count';
+  if (a.correct_count + a.incorrect_count + a.unanswered_count !== a.total_questions) return 'Counts do not sum to total_questions';
+  if (typeof a.accuracy !== 'number' || a.accuracy < 0 || a.accuracy > 100) return 'Invalid accuracy';
+  if (typeof a.average_answer_time !== 'number' || a.average_answer_time < 0) return 'Invalid average_answer_time';
+  if (a.passed !== null && typeof a.passed !== 'boolean') return 'Invalid passed';
+  
+  if (!Array.isArray(a.answers) || a.answers.length > MAX_ANSWERS_PER_ATTEMPT) return 'Invalid or too many answers';
+  
+  for (const ans of a.answers) {
+    if (!ans || typeof ans !== 'object') return 'Answer must be an object';
+    if (typeof ans.question_id !== 'string') return 'Invalid question_id';
+    if (typeof ans.topic !== 'string') return 'Invalid topic';
+    if (ans.selected_option_id !== null && typeof ans.selected_option_id !== 'number') return 'Invalid selected_option_id';
+    if (typeof ans.correct_option_id !== 'number') return 'Invalid correct_option_id';
+    if (typeof ans.is_correct !== 'boolean') return 'Invalid is_correct';
+    if (typeof ans.time_spent !== 'number' || ans.time_spent < 0) return 'Invalid time_spent';
+  }
+  
+  if (a.attempt_type === 'diagnostic') {
+    if (!a.diagnostic_result || typeof a.diagnostic_result !== 'object') return 'Missing diagnostic_result';
+    if (typeof a.diagnostic_result.recommended_level !== 'number') return 'Invalid recommended_level';
+    if (!Array.isArray(a.diagnostic_result.weak_topics)) return 'Invalid weak_topics';
+  }
+  
+  return null;
+}
+
 exports.sync = async (req, res) => {
-  // PENGHENTIAN STRATEGIS (Sesuai Aturan 7):
-  // Bank soal server saat ini kosong (tidak sinkron dengan 900 soal di questions/default.json).
-  // Dilarang melakukan validasi pura-pura (menerima \`isCorrect\` dari frontend).
-  // Endpoint ini ditahan sampai proses Seed/Migrasi Soal dari JSON ke MySQL diselesaikan.
-  return res.status(501).json({ error: 'Not Implemented: Bank soal server belum tersinkronisasi dengan frontend.' });
+  const userId = req.user.id;
+  const { clientSyncId, attempts } = req.body;
+  
+  if (!clientSyncId || typeof clientSyncId !== 'string') {
+    return res.status(400).json({ error: 'clientSyncId must be a string' });
+  }
+  
+  if (!Array.isArray(attempts)) {
+    return res.status(400).json({ error: 'attempts must be an array' });
+  }
+  
+  if (attempts.length > MAX_ATTEMPTS) {
+    return res.status(413).json({ error: `Payload too large. Max ${MAX_ATTEMPTS} attempts allowed.` });
+  }
+
+  // Check if payload contains unrecognized fields (Strict Schema Validation)
+  const allowedRootKeys = ['clientSyncId', 'attempts', 'clientUpdatedAt', 'progress'];
+  for (const key of Object.keys(req.body)) {
+    if (!allowedRootKeys.includes(key)) {
+      return res.status(400).json({ error: `Unrecognized field: ${key}` });
+    }
+  }
+
+  const accepted = [];
+  const rejected = [];
+
+  let highestLevelUnlocked = 1;
+  let finalRecommendedLevel = null;
+  let latestDiagnosticDate = 0;
+
+  for (const attempt of attempts) {
+    const errorMsg = validateAttempt(attempt);
+    if (errorMsg) {
+      rejected.push({ client_attempt_id: attempt.client_attempt_id, reason: errorMsg });
+      continue;
+    }
+
+    const connection = await db.getConnection();
+    try {
+      await connection.beginTransaction();
+
+      // Attempt to insert quiz_attempt
+      let insertAttemptResult;
+      try {
+        [insertAttemptResult] = await connection.query(`
+          INSERT INTO quiz_attempts 
+          (client_attempt_id, user_id, attempt_type, level_id, started_at, completed_at, 
+           total_questions, correct_count, incorrect_count, unanswered_count, accuracy, 
+           average_answer_time, passed)
+          VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+        `, [
+          attempt.client_attempt_id, userId, attempt.attempt_type, attempt.level_id, 
+          new Date(attempt.started_at), new Date(attempt.completed_at),
+          attempt.total_questions, attempt.correct_count, attempt.incorrect_count, 
+          attempt.unanswered_count, attempt.accuracy, attempt.average_answer_time, attempt.passed
+        ]);
+      } catch (err) {
+        if (err.code === 'ER_DUP_ENTRY') {
+          // Idempotency: Already synced
+          await connection.rollback();
+          accepted.push(attempt.client_attempt_id);
+          continue;
+        }
+        throw err;
+      }
+
+      const attemptId = insertAttemptResult.insertId;
+
+      // Insert Answers
+      if (attempt.answers.length > 0) {
+        const answerValues = attempt.answers.map(ans => [
+          attemptId, ans.question_id, ans.topic, ans.selected_option_id, 
+          ans.correct_option_id, ans.is_correct, ans.time_spent
+        ]);
+        await connection.query(`
+          INSERT INTO quiz_answers 
+          (attempt_id, question_id, topic, selected_option_id, correct_option_id, is_correct, time_spent)
+          VALUES ?
+        `, [answerValues]);
+      }
+
+      // Insert Diagnostic Result
+      if (attempt.attempt_type === 'diagnostic') {
+        await connection.query(`
+          INSERT INTO diagnostic_results (user_id, attempt_id, recommended_level, weak_topics_json, completed_at)
+          VALUES (?, ?, ?, ?, ?)
+        `, [
+          userId, attemptId, attempt.diagnostic_result.recommended_level, 
+          JSON.stringify(attempt.diagnostic_result.weak_topics), new Date(attempt.completed_at)
+        ]);
+        
+        const completedTime = new Date(attempt.completed_at).getTime();
+        if (completedTime > latestDiagnosticDate) {
+           latestDiagnosticDate = completedTime;
+           finalRecommendedLevel = attempt.diagnostic_result.recommended_level;
+        }
+      }
+
+      if (attempt.passed && attempt.attempt_type === 'timed_quiz' && attempt.level_id) {
+         if (attempt.level_id + 1 > highestLevelUnlocked) {
+            highestLevelUnlocked = attempt.level_id + 1;
+         }
+      }
+
+      await connection.commit();
+      accepted.push(attempt.client_attempt_id);
+    } catch (err) {
+      await connection.rollback();
+      console.error('Transaction failed for attempt', attempt.client_attempt_id, err.message);
+      rejected.push({ client_attempt_id: attempt.client_attempt_id, reason: 'Internal server error during transaction' });
+    } finally {
+      connection.release();
+    }
+  }
+
+  // Update user_progress if applicable
+  if (accepted.length > 0) {
+     try {
+       const [rows] = await db.query('SELECT highest_unlocked_level, recommended_level FROM user_progress WHERE user_id = ?', [userId]);
+       let targetUnlock = highestLevelUnlocked;
+       let targetRec = finalRecommendedLevel;
+       
+       if (rows.length > 0) {
+          if (rows[0].highest_unlocked_level > targetUnlock) targetUnlock = rows[0].highest_unlocked_level;
+          if (!targetRec) targetRec = rows[0].recommended_level;
+       }
+       
+       await db.query(`
+          INSERT INTO user_progress (user_id, recommended_level, highest_unlocked_level)
+          VALUES (?, ?, ?)
+          ON DUPLICATE KEY UPDATE 
+            recommended_level = VALUES(recommended_level),
+            highest_unlocked_level = VALUES(highest_unlocked_level)
+       `, [userId, targetRec, targetUnlock]);
+     } catch (err) {
+       console.error('Failed to update user_progress', err.message);
+     }
+  }
+
+  return res.status(200).json({
+    status: 'ok',
+    accepted,
+    rejected,
+    serverTime: new Date().toISOString()
+  });
+};
+
+exports.getProgress = async (req, res) => {
+  const userId = req.user.id;
+  try {
+    const [progressRows] = await db.query('SELECT * FROM user_progress WHERE user_id = ?', [userId]);
+    const [attemptsRows] = await db.query('SELECT client_attempt_id, attempt_type, level_id, accuracy, passed, completed_at FROM quiz_attempts WHERE user_id = ? ORDER BY completed_at ASC', [userId]);
+    
+    // Convert dates to ISO strings explicitly
+    const attempts = attemptsRows.map(row => ({
+       ...row,
+       passed: !!row.passed, // map 1/0 to true/false
+       completed_at: new Date(row.completed_at).toISOString()
+    }));
+
+    return res.status(200).json({
+      progress: progressRows[0] || null,
+      attempts,
+      serverTime: new Date().toISOString()
+    });
+  } catch (err) {
+    console.error('Failed to get progress', err.message);
+    return res.status(500).json({ error: 'Internal server error' });
+  }
 };

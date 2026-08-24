@@ -1926,7 +1926,7 @@ function getRecommendedLevel(acc) {
           weakTopics: extractWeakTopics(finalAttempt)
        };
        localStorage.setItem(APP + "_diagnostic", JSON.stringify(diagState));
-       localStorage.setItem(APP + "_onboarded", "1");
+       localStorage.setItem(APP + "_onboarded", "1"); finalAttempt.recommendedLevel = rec; finalAttempt.weakTopics = diagState.weakTopics;
        $("result-title").textContent = "Diagnostic Selesai";
        $("result-status-badge").innerHTML = `<span style="background:var(--primary); color:white; padding:4px 8px; border-radius:12px; font-size:12px;">Diagnostic Completed</span>`;
     } else {
@@ -1980,7 +1980,7 @@ function getRecommendedLevel(acc) {
        ctaWrap.innerHTML += `<button class="btn btn--soft" onclick="goToLevels()">Kembali ke Learning Path</button>`;
     }
     
-    diagnosticMode = false;
+    if (typeof enqueueSync === "function") { enqueueSync(finalAttempt); } diagnosticMode = false;
     afterFinish();
 }
 
@@ -2568,5 +2568,5 @@ function getRecommendedLevel(acc) {
       </form>
     </dialog>
 
-</body>
+<script src="sync.js"></script></body>
 </html>
