@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
   <title>QuizArena — English Levels</title>
-  <meta name="description" content="QuizArena — kuis Bahasa Inggris dasar 20 level (600 soal) dengan materi, pembahasan, audio pengucapan, mode 2 pemain, papan skor, pencapaian, dan sertifikat." />
+  <meta name="description" content="QuizArena — kuis Bahasa Inggris dasar 30 level (900 soal) dengan materi, pembahasan, audio pengucapan, mode 2 pemain, papan skor, pencapaian, dan sertifikat." />
   <meta name="theme-color" content="#173F3A" />
   <meta name="color-scheme" content="light dark" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -12,7 +12,7 @@
   <!-- Open Graph / social -->
   <meta property="og:type" content="website" />
   <meta property="og:title" content="QuizArena — English Levels" />
-  <meta property="og:description" content="Kuis Bahasa Inggris dasar 20 level dengan materi, pembahasan, audio, mode VS, papan skor & sertifikat." />
+  <meta property="og:description" content="Kuis Bahasa Inggris dasar 30 level dengan materi, pembahasan, audio, mode VS, papan skor & sertifikat." />
   <meta name="twitter:card" content="summary" />
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%E2%9A%A1%3C/text%3E%3C/svg%3E" />
   <link rel="manifest" href="data:application/manifest+json,%7B%22name%22%3A%22QuizArena%22%2C%22short_name%22%3A%22QuizArena%22%2C%22start_url%22%3A%22.%22%2C%22display%22%3A%22standalone%22%2C%22background_color%22%3A%22%23FBF5E9%22%2C%22theme_color%22%3A%22%23173F3A%22%2C%22icons%22%3A%5B%5D%7D" />
@@ -158,6 +158,8 @@ body {
 }
 .field input::placeholder { color: #9aa4a1; font-weight: 500; }
 .field input:focus { border-color: var(--primary); box-shadow: 0 0 0 4px rgba(45, 111, 102, .15); }
+dialog .field label { color: var(--text-dim); }
+dialog .field input { border: 1px solid var(--border); background: var(--bg-main); color: var(--text-main); }
 :focus-visible { outline: 3px solid var(--primary) !important; outline-offset: 2px !important; }
 
 .meta-row { position: relative; z-index: 1; list-style: none; display: flex; justify-content: center; gap: 14px; margin-top: 28px; flex-wrap: wrap; }
@@ -747,7 +749,7 @@ html.dark .video-t{color:#EAF3EF;}
     <!-- HOME -->
     <section class="screen screen--home is-active" id="screen-home">
   <div class="card card--hero">
-    <span class="badge">?? Bahasa Inggris � 20 Level</span>
+    <span class="badge">🌍 Bahasa Inggris · 30 Level</span>
     <h1 class="hero-title" id="quiz-title">QuizArena</h1>
     <p class="hero-subtitle" id="quiz-desc">Tingkatkan Bahasa Inggrismu selangkah demi selangkah.</p>
     
@@ -811,7 +813,7 @@ html.dark .video-t{color:#EAF3EF;}
         <p class="levels-greeting" id="levels-greeting">Pilih levelmu 👇</p>
         <div class="overall">
           <div class="overall-bar"><div class="overall-fill" id="overall-fill"></div></div>
-          <span class="overall-label" id="overall-label">0 / 20 level selesai</span>
+          <span class="overall-label" id="overall-label">0 / 30 level selesai</span>
         </div>
       </div>
       <div class="level-pages" id="level-pages"></div>
@@ -820,8 +822,8 @@ html.dark .video-t{color:#EAF3EF;}
       <div class="practice-row">
         <button class="btn btn--ghost" id="btn-free">🎯 Latihan Bebas</button>
         <button class="btn btn--soft" id="btn-hard">🔁 Ulang Soal Sulit (<span id="hard-count">0</span>)</button>
-        <button class="btn btn--ghost" id="btn-custom-quiz" style="margin-top:8px;">⚙️ Custom Quiz</button>
-        <button class="btn btn--ghost" id="btn-kelola-soal" style="margin-top:8px;">🛠️ Kelola Bank Soal</button>
+        <button class="btn btn--ghost" id="btn-custom-quiz">⚙️ Custom Quiz</button>
+        <button class="btn btn--ghost" id="btn-kelola-soal">🛠️ Kelola Bank Soal</button>
 
       </div>
 
@@ -1222,7 +1224,7 @@ html.dark .video-t{color:#EAF3EF;}
                 options: typeof dbq.options === 'string' ? JSON.parse(dbq.options) : dbq.options,
                 answer: dbq.correct_index,
                 explain: dbq.explanation,
-                _originalLevel: 21 // Masuk ke custom bank
+                _originalLevel: 31 // Masuk ke custom bank
              }));
              allQuestions = allQuestions.concat(backendQs);
            }

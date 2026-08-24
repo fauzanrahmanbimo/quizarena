@@ -1,6 +1,6 @@
 /* QuizArena service worker — offline sederhana untuk situs 1 file.
    Cache index.html + PDF materi supaya bisa dibuka tanpa internet. */
-const CACHE = "quizarena-v5";
+const CACHE = "quizarena-v6";
 const ASSETS = [
   "./",
   "index.html",
