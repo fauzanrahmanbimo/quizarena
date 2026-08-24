@@ -157,7 +157,8 @@ body {
   border-radius: 16px; outline: none; transition: border-color .2s, box-shadow .2s;
 }
 .field input::placeholder { color: #9aa4a1; font-weight: 500; }
-.field input:focus { border-color: var(--primary-light); box-shadow: 0 0 0 4px rgba(132,224,110,.28); }
+.field input:focus { border-color: var(--primary); box-shadow: 0 0 0 4px rgba(45, 111, 102, .15); }
+:focus-visible { outline: 3px solid var(--primary) !important; outline-offset: 2px !important; }
 
 .meta-row { position: relative; z-index: 1; list-style: none; display: flex; justify-content: center; gap: 14px; margin-top: 28px; flex-wrap: wrap; }
 .meta-row li {
@@ -211,7 +212,7 @@ body {
   display: inline-block; font-size: 12px; font-weight: 700; letter-spacing: .6px;
   color: #dff7d8; background: rgba(255,255,255,.12); padding: 6px 14px; border-radius: 12px; margin-bottom: 14px;
 }
-.question-text { position: relative; z-index: 1; font-family: var(--font-head); font-weight: 700; font-size: clamp(21px, 4.5vw, 29px); line-height: 1.25; }
+.question-text { position: relative; z-index: 1; font-family: var(--font-head); font-weight: 700; font-size: clamp(21px, 4.5vw, 29px); line-height: 1.25; word-wrap: break-word; overflow-wrap: break-word; hyphens: auto; }
 
 /* ---------- Answers ---------- */
 .answers { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
@@ -223,6 +224,7 @@ body {
   font-family: var(--font-body); font-size: 16px; font-weight: 600;
   min-height: 66px; display: flex; align-items: center;
   transition: transform .1s, border-color .2s, background .2s, box-shadow .2s;
+  word-wrap: break-word; overflow-wrap: break-word; hyphens: auto;
 }
 .answer::before {
   content: attr(data-key); position: absolute; left: 15px; top: 50%; transform: translateY(-50%);
@@ -455,7 +457,7 @@ html.dark .materi-videos{border-top-color:rgba(255,255,255,.12);}
 
 /* confetti + toast */
 .confetti-canvas{position:fixed;inset:0;width:100vw;height:100vh;pointer-events:none;z-index:60;}
-.toast{position:fixed;left:50%;bottom:26px;transform:translateX(-50%) translateY(20px);background:var(--primary);color:#fff;font-weight:600;font-size:14px;padding:12px 20px;border-radius:14px;box-shadow:0 10px 30px rgba(0,0,0,.25);opacity:0;transition:opacity .3s,transform .3s;z-index:70;max-width:90vw;text-align:center;}
+.toast{position:fixed;left:50%;top:26px;transform:translateX(-50%) translateY(-20px);background:var(--primary);color:#fff;font-weight:600;font-size:14px;padding:12px 20px;border-radius:14px;box-shadow:0 10px 30px rgba(0,0,0,.25);opacity:0;transition:opacity .3s,transform .3s;z-index:70;max-width:90vw;text-align:center;}
 .toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
 
 @media (max-width:520px){.stats-row{grid-template-columns:repeat(2,1fr);}.seg{flex-direction:column;}.learn-actions .btn{min-width:0;}}
@@ -2158,7 +2160,10 @@ function getRecommendedLevel(acc) {
        $("result-status-badge").innerHTML = `<span style="background:var(--primary); color:white; padding:4px 8px; border-radius:12px; font-size:12px;">Diagnostic Completed</span>`;
     } else {
        if (isPassed) {
-          if (currentLevel !== null) saveBest(LEVELS[currentLevel].level, acc);
+          if (currentLevel !== null) {
+            saveBest(LEVELS[currentLevel].level, acc);
+            localStorage.setItem(APP + "_pass_L" + LEVELS[currentLevel].level, "1");
+          }
           $("result-title").textContent = "Kerja bagus!";
           $("result-status-badge").innerHTML = `<span style="background:#10B981; color:white; padding:4px 8px; border-radius:12px; font-size:12px;">Passed</span>`;
        } else {
@@ -2649,7 +2654,15 @@ function getRecommendedLevel(acc) {
   // ---------- Storage ----------
   function getNum(suffix) { return Number(localStorage.getItem(APP + suffix) || 0); }
   function isPassed(level) { return localStorage.getItem(APP + "_pass_L" + level) === "1"; }
-  function isUnlocked(i) { return true; } // syarat lulus dihapus — semua level terbuka
+  function isUnlocked(i) {
+    if (i === 0) return true;
+    const syncMax = Number(localStorage.getItem('quizarena_highest_level')) || 1;
+    let localMax = 1;
+    for (let j = 0; j <= i - 1; j++) {
+      if (isPassed(levels[j].level)) localMax = j + 2;
+    }
+    return (i + 1) <= Math.max(syncMax, localMax);
+  }
   function getStars(level) { return Number(localStorage.getItem(APP + "_stars_L" + level) || 0); }
   function getBest(level) { return Number(localStorage.getItem(APP + "_best_L" + level) || 0); }
   function saveBest(level, s) { if (s > getBest(level)) localStorage.setItem(APP + "_best_L" + level, String(s)); }

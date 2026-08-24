@@ -32,13 +32,15 @@
       el = document.createElement('div');
       el.id = 'sync-status-indicator';
       el.style.position = 'fixed';
-      el.style.bottom = '10px';
-      el.style.left = '10px';
-      el.style.padding = '4px 8px';
-      el.style.fontSize = '12px';
-      el.style.borderRadius = '4px';
+      el.style.top = '10px';
+      el.style.left = '50%';
+      el.style.transform = 'translateX(-50%)';
+      el.style.padding = '6px 12px';
+      el.style.fontSize = '13px';
+      el.style.borderRadius = '20px';
       el.style.zIndex = '9999';
       el.style.transition = 'opacity 0.5s';
+      el.style.boxShadow = '0 4px 12px rgba(0,0,0,0.15)';
       document.body.appendChild(el);
     }
     el.textContent = statusMsg;
@@ -46,14 +48,14 @@
     
     if (statusMsg === 'Tersinkron' || statusMsg === 'Tersimpan di perangkat') {
       el.style.background = 'var(--success, #10B981)';
-      el.style.color = 'white';
+      el.style.color = '#022c22';
       setTimeout(() => { el.style.opacity = '0'; }, 3000);
     } else if (statusMsg === 'Menyinkronkan...') {
       el.style.background = 'var(--warning, #F59E0B)';
       el.style.color = 'black';
     } else {
       el.style.background = 'var(--danger, #EF4444)';
-      el.style.color = 'white';
+      el.style.color = '#450a0a';
       setTimeout(() => { el.style.opacity = '0'; }, 3000);
     }
   }
