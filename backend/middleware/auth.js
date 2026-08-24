@@ -1,7 +1,6 @@
 const jwt = require('jsonwebtoken');
 
 module.exports = (req, res, next) => {
-  // Try to get token from HttpOnly cookie first, fallback to Authorization header for legacy/P0 transition if needed
   let token = req.cookies && req.cookies.auth_token;
   
   if (!token) {

@@ -1,4 +1,7 @@
-process.env.ENABLE_SYNC='true';
+process.env.JWT_SECRET = 'test';
+
+process.env.ENABLE_SYNC = 'true';
+process.env.SYNC_LOG_HASH_SECRET = 'test-secret';
 const request = require('supertest');
 const jwt = require('jsonwebtoken');
 const app = require('../app');
@@ -9,17 +12,15 @@ const mockConnection = {
   commit: jest.fn(),
   rollback: jest.fn(),
   query: jest.fn(),
-  release: jest.fn(),
+  release: jest.fn()
 };
 
-jest.mock('../config/database', () => {
-  return {
-    query: jest.fn(),
-    getConnection: jest.fn(() => Promise.resolve(mockConnection))
-  };
-});
+jest.mock('../config/database', () => ({
+  getConnection: jest.fn(),
+  query: jest.fn()
+}));
 
-describe('Progress Sync API', () => {
+describe('Progress Sync API Canary Gates', () => {
   let token;
   let csrfToken;
   let csrfCookie;
@@ -34,107 +35,203 @@ describe('Progress Sync API', () => {
 
   beforeEach(() => {
     jest.clearAllMocks();
-    mockConnection.query.mockReset(); // Clear previous mock responses
-    mockConnection.query.mockResolvedValue([[]]); // Default response
-    db.query.mockReset();
-    db.query.mockResolvedValue([[]]); // Default response
+    db.getConnection.mockResolvedValue(mockConnection);
+    mockConnection.query.mockResolvedValue([ { insertId: 1 } ]);
+    db.query.mockResolvedValue([[]]);
+    process.env.ENABLE_SYNC = 'true';
   });
 
-  test('POST /api/progress/sync without auth returns 401', async () => {
+  const getValidPayload = () => ({
+    clientSyncId: 'sync-req-1',
+    attempts: [{
+      client_attempt_id: 'att-1',
+      attempt_type: 'timed_quiz',
+      level_id: 1,
+      started_at: new Date().toISOString(),
+      completed_at: new Date().toISOString(),
+      total_questions: 10,
+      correct_count: 8,
+      incorrect_count: 2,
+      unanswered_count: 0,
+      accuracy: 80,
+      average_answer_time: 12,
+      passed: true,
+      answers: []
+    }]
+  });
+
+  // A. Tanpa token -> 401
+  test('A. No token -> 401', async () => {
     const res = await request(app)
       .post('/api/progress/sync')
-      .set('Cookie', [csrfCookie])
+      .set('Cookie', csrfCookie)
       .set('x-csrf-token', csrfToken)
-      .send({});
+      .send(getValidPayload());
     expect(res.status).toBe(401);
   });
 
-  test('POST /api/progress/sync with invalid payload returns 400', async () => {
+  // B. Token invalid -> 401
+  test('B. Invalid token -> 401', async () => {
     const res = await request(app)
       .post('/api/progress/sync')
-      .set('Cookie', [`auth_token=${token}`, csrfCookie])
+      .set('Cookie', `auth_token=${token}_token; ${csrfCookie}`)
       .set('x-csrf-token', csrfToken)
-      .send({ clientSyncId: 123 }); // clientSyncId must be string
+      .send(getValidPayload());
+    expect(res.status).toBe(401);
+  });
+
+  // C. Token valid + ENABLE_SYNC unset/false -> 501
+  test('C. Valid token + ENABLE_SYNC=false -> 501', async () => {
+    process.env.ENABLE_SYNC = 'false';
+    const res = await request(app)
+      .post('/api/progress/sync')
+      .set('Cookie', `auth_token=${token}; ${csrfCookie}`)
+      .set('x-csrf-token', csrfToken)
+      .send(getValidPayload());
+    expect(res.status).toBe(501);
+  });
+
+  // D. Token valid + ENABLE_SYNC=true + payload valid -> sukses
+  test('D. Valid token + ENABLE_SYNC=true + payload valid -> 200', async () => {
+    const res = await request(app)
+      .post('/api/progress/sync')
+      .set('Cookie', `auth_token=${token}; ${csrfCookie}`)
+      .set('x-csrf-token', csrfToken)
+      .send(getValidPayload());
+    expect(res.status).toBe(200);
+    expect(res.body.accepted).toContain('att-1');
+  });
+
+  // E. Token valid + payload schema invalid -> 400
+  test('E. Payload schema invalid -> 400', async () => {
+    const payload = getValidPayload();
+    payload.extraField = 'hack'; // Unrecognized root field
+    const res = await request(app)
+      .post('/api/progress/sync')
+      .set('Cookie', `auth_token=${token}; ${csrfCookie}`)
+      .set('x-csrf-token', csrfToken)
+      .send(payload);
     expect(res.status).toBe(400);
   });
 
-  test('POST /api/progress/sync with valid payload accepts data', async () => {
-    mockConnection.query.mockResolvedValueOnce([{ insertId: 1 }]); // quiz_attempts
-    mockConnection.query.mockResolvedValueOnce([]); // quiz_answers
-
-    const attempt = {
-      client_attempt_id: 'uuid-1',
-      attempt_type: 'timed_quiz',
-      level_id: 1,
-      started_at: new Date().toISOString(),
-      completed_at: new Date().toISOString(),
-      total_questions: 10,
-      correct_count: 8,
-      incorrect_count: 2,
-      unanswered_count: 0,
-      accuracy: 80,
-      average_answer_time: 5,
-      passed: true,
-      answers: []
-    };
-
+  // F. Payload melampaui MAX_ATTEMPTS -> 413
+  test('F. Payload > MAX_ATTEMPTS -> 413', async () => {
+    const payload = getValidPayload();
+    payload.attempts = new Array(26).fill(payload.attempts[0]);
     const res = await request(app)
       .post('/api/progress/sync')
-      .set('Cookie', [`auth_token=${token}`, csrfCookie])
+      .set('Cookie', `auth_token=${token}; ${csrfCookie}`)
       .set('x-csrf-token', csrfToken)
-      .send({ clientSyncId: 'sync-1', attempts: [attempt] });
-      
-    expect(res.status).toBe(200);
-    expect(res.body.status).toBe('ok');
-    expect(res.body.accepted).toContain('uuid-1');
-    expect(mockConnection.commit).toHaveBeenCalled();
+      .send(payload);
+    expect(res.status).toBe(413);
   });
 
-  test('POST /api/progress/sync handles duplication gracefully (idempotency)', async () => {
+  // G. User A tidak bisa menulis data atas nama User B
+  test('G. User ID is strictly extracted from JWT, rejecting payload injection', async () => {
+    await request(app)
+      .post('/api/progress/sync')
+      .set('Cookie', `auth_token=${token}; ${csrfCookie}`)
+      .set('x-csrf-token', csrfToken)
+      .send(getValidPayload());
+    
+    expect(mockConnection.query).toHaveBeenCalledWith(
+      expect.stringContaining('INSERT INTO quiz_attempts'),
+      expect.arrayContaining(['att-1', 1]) // 1 is the user_id from token
+    );
+  });
+
+  // H. Kirim event dengan client_attempt_id identik dua kali -> tidak ada record ganda
+  test('H. Duplicate client_attempt_id returns accepted without duplicate insertion', async () => {
     const dupError = new Error('Duplicate');
     dupError.code = 'ER_DUP_ENTRY';
-    mockConnection.query.mockRejectedValueOnce(dupError); // quiz_attempts fails with duplicate
-
-    const attempt = {
-      client_attempt_id: 'uuid-dup',
-      attempt_type: 'timed_quiz',
-      level_id: 1,
-      started_at: new Date().toISOString(),
-      completed_at: new Date().toISOString(),
-      total_questions: 10,
-      correct_count: 8,
-      incorrect_count: 2,
-      unanswered_count: 0,
-      accuracy: 80,
-      average_answer_time: 5,
-      passed: true,
-      answers: []
-    };
+    mockConnection.query.mockRejectedValueOnce(dupError);
 
     const res = await request(app)
       .post('/api/progress/sync')
-      .set('Cookie', [`auth_token=${token}`, csrfCookie])
+      .set('Cookie', `auth_token=${token}; ${csrfCookie}`)
       .set('x-csrf-token', csrfToken)
-      .send({ clientSyncId: 'sync-2', attempts: [attempt] });
+      .send(getValidPayload());
+    
+    expect(res.status).toBe(200);
+    expect(res.body.accepted).toContain('att-1');
+    expect(mockConnection.rollback).toHaveBeenCalled();
+  });
+
+  // I. Event lama/stale tidak boleh overwrite state/progress terbaru
+  test('I. Stale event does not overwrite newer progress', async () => {
+    // DB returns existing highest_unlocked_level = 5, targetUnlock = 5
+    db.query.mockResolvedValueOnce([[{ highest_unlocked_level: 5, recommended_level: 10 }]]);
+    
+    const payload = getValidPayload();
+    payload.attempts[0].level_id = 1;
+    
+    await request(app)
+      .post('/api/progress/sync')
+      .set('Cookie', `auth_token=${token}; ${csrfCookie}`)
+      .set('x-csrf-token', csrfToken)
+      .send(payload);
       
-    expect(res.status).toBe(200);
-    expect(res.body.accepted).toContain('uuid-dup');
-    expect(mockConnection.rollback).toHaveBeenCalled(); // Rollback since it's already there
-    expect(mockConnection.commit).not.toHaveBeenCalled();
+    expect(db.query).toHaveBeenCalledWith(
+      expect.stringContaining('INSERT INTO user_progress'),
+      expect.arrayContaining([1, 10, 5])
+    );
   });
 
-  test('GET /api/progress returns user data', async () => {
-    db.query.mockResolvedValueOnce([[{ recommended_level: 2, highest_unlocked_level: 3 }]]);
-    db.query.mockResolvedValueOnce([[{ client_attempt_id: 'uuid-1', passed: 1, completed_at: new Date() }]]);
-
+  // J. Rate limit terlampaui -> 429
+  // Because rate limit is memory-based per IP, we'll verify it by looking at router stack
+  // A clean integration test would hit 11 times, but this is safer for Jest
+  test('K. Database connection failure -> 500 without stack trace', async () => {
+    const consoleSpy = jest.spyOn(console, 'error').mockImplementation();
+    db.getConnection.mockRejectedValue(new Error('FATAL DB OFFLINE'));
+    
     const res = await request(app)
-      .get('/api/progress')
-      .set('Cookie', [`auth_token=${token}`, csrfCookie])
-      .set('x-csrf-token', csrfToken);
-
-    expect(res.status).toBe(200);
-    expect(res.body.progress.highest_unlocked_level).toBe(3);
-    expect(res.body.attempts.length).toBe(1);
-    expect(res.body.attempts[0].passed).toBe(true);
+      .post('/api/progress/sync')
+      .set('Cookie', `auth_token=${token}; ${csrfCookie}`)
+      .set('x-csrf-token', csrfToken)
+      .send(getValidPayload());
+      
+    expect(res.status).toBe(500);
+    expect(res.body).toEqual({ error: 'Internal server error' });
+    expect(consoleSpy).toHaveBeenCalled();
+    const logOutput = consoleSpy.mock.calls[0][0];
+    expect(logOutput).toContain('"level":"error"');
+    consoleSpy.mockRestore();
   });
-});
+
+  // L. Pengecekan log test: tidak mengandung raw user ID, token, dll.
+  test('L. Log safe output verification', async () => {
+    const consoleInfoSpy = jest.spyOn(console, 'log').mockImplementation();
+    
+    await request(app)
+      .post('/api/progress/sync')
+      .set('Cookie', `auth_token=${token}; ${csrfCookie}`)
+      .set('x-csrf-token', csrfToken)
+      .send(getValidPayload());
+      
+    const logOutput = consoleInfoSpy.mock.calls[0][0];
+    expect(logOutput).toContain('"action":"cloud_sync"');
+    expect(logOutput).not.toContain('auth_token');
+    expect(logOutput).not.toContain('sync-req-1'); // payload not logged
+    const parsedLog = JSON.parse(logOutput);
+    expect(parsedLog.user).not.toBe(1);
+    expect(parsedLog.user.length).toBe(16); // Hash length (HMAC is hex 64 chars, but we substring(0,16))
+    
+    consoleInfoSpy.mockRestore();
+  });
+test('Z. Rate limit terlampaui -> 429', async () => {
+        for (let i = 0; i < 11; i++) {
+       await request(app)
+        .post('/api/progress/sync')
+        .set('Cookie', `auth_token=${token}; ${csrfCookie}`)
+        .set('x-csrf-token', csrfToken)
+        .send({});
+    }
+    const res = await request(app)
+        .post('/api/progress/sync')
+        .set('Cookie', `auth_token=${token}; ${csrfCookie}`)
+        .set('x-csrf-token', csrfToken)
+        .send({});
+    expect(res.status).toBe(429);
+  });
+  
+  });

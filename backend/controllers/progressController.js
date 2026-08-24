@@ -1,3 +1,4 @@
+const crypto = require('crypto');
 const db = require('../config/database');
 
 const MAX_ATTEMPTS = 25;
@@ -183,15 +184,35 @@ exports.sync = async (req, res) => {
      }
   }
 
-        console.log(`[SYNC] UserHash: ${String(userId).slice(-4)} | Accepted: ${accepted.length} | Rejected: ${rejected.length}`);
-        return res.status(200).json({
-      status: 'ok',
+                
+  const reqId = crypto.randomUUID();
+  let logIdentifier = reqId;
+  if (process.env.SYNC_LOG_HASH_SECRET) {
+    logIdentifier = crypto.createHmac('sha256', process.env.SYNC_LOG_HASH_SECRET).update(String(userId)).digest('hex').substring(0, 16);
+  }
+  console.log(JSON.stringify({
+    level: 'info',
+    action: 'cloud_sync',
+    reqId,
+    user: logIdentifier,
+    accepted: accepted.length,
+    rejected: rejected.length
+  }));
+  return res.status(200).json({
+    status: 'ok',
+
     accepted,
     rejected,
     serverTime: new Date().toISOString()
   });
   } catch (err) {
-    console.error('Unhandled error in sync:', err.message);
+    const errorReqId = typeof reqId !== 'undefined' ? reqId : crypto.randomUUID();
+    console.error(JSON.stringify({
+      level: 'error',
+      action: 'cloud_sync',
+      reqId: errorReqId,
+      errorCategory: err.code === 'ER_DUP_ENTRY' ? 'Database_Duplicate' : 'Database_Transaction_Error'
+    }));
     return res.status(500).json({ error: 'Internal server error' });
   }
 };
