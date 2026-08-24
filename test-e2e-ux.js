@@ -19,7 +19,7 @@ const puppeteer = require('puppeteer');
 const AxePuppeteer = require('@axe-core/puppeteer').default;
 const fs = require('fs');
 
-const PORT = 4173;
+const PORT = 3000;
 const BASE_URL = `http://localhost:${PORT}`;
 const INDEX_URL = `${BASE_URL}/index.html`;
 
