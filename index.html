@@ -2659,7 +2659,7 @@ function getRecommendedLevel(acc) {
     const syncMax = Number(localStorage.getItem('quizarena_highest_level')) || 1;
     let localMax = 1;
     for (let j = 0; j <= i - 1; j++) {
-      if (isPassed(levels[j].level)) localMax = j + 2;
+      if (isPassed(LEVELS[j].level)) localMax = j + 2;
     }
     return (i + 1) <= Math.max(syncMax, localMax);
   }
