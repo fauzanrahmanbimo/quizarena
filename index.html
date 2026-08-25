@@ -819,7 +819,7 @@ html.dark .video-t{color:#EAF3EF;}
 
       <div class="practice-row">
         <button class="btn btn--ghost" id="btn-free">🎯 Latihan Bebas</button>
-        <button class="btn btn--soft" id="btn-hard">🔁 Ulang Soal Sulit (<span id="hard-count">0</span>)</button>
+        <button class="btn btn--soft" id="btn-hard" style="white-space: nowrap;">🔁 Ulang Soal Sulit (<span id="hard-count">0</span>)</button>
         <button class="btn btn--ghost" id="btn-custom-quiz">⚙️ Custom Quiz</button>
         <button class="btn btn--ghost" id="btn-kelola-soal">🛠️ Kelola Bank Soal</button>
 
@@ -975,7 +975,7 @@ html.dark .video-t{color:#EAF3EF;}
       </section>
 
       
-      <section class="screen screen--dashboard" id="screen-dashboard" hidden>
+      <section class="screen screen--dashboard" id="screen-dashboard">
         <div class="card card--dashboard">
           <button class="btn-text" id="btn-dashboard-back" style="position:static;margin-bottom:6px;">← Kembali</button>
           
@@ -1098,13 +1098,21 @@ html.dark .video-t{color:#EAF3EF;}
     window.location.reload();
   };
 
+  async function getCsrf() {
+    const r = await fetch(`${API_CONFIG.BASE_URL}/api/auth/csrf`, { credentials: 'include' });
+    if (!r.ok) return '';
+    return (await r.json()).csrfToken;
+  }
+
   window.handleLogin = async function(e) {
     e.preventDefault();
     const btn = e.target.querySelector('button'); btn.disabled = true;
     const err = document.getElementById('login-error'); err.textContent = '';
     try {
+      const csrf = await getCsrf();
       const res = await fetch(`${API_CONFIG.BASE_URL}/api/auth/login`, {
-        method: 'POST', headers: {'Content-Type': 'application/json'},
+        method: 'POST', headers: {'Content-Type': 'application/json', 'X-CSRF-Token': csrf},
+        credentials: 'include',
         body: JSON.stringify({email: document.getElementById('login-email').value, password: document.getElementById('login-password').value})
       });
       const data = await res.json();
@@ -1113,7 +1121,7 @@ html.dark .video-t{color:#EAF3EF;}
       localStorage.setItem('quizarena_user', JSON.stringify(data.user));
       document.getElementById('modal-login').close();
       updateAuthUI();
-  updateHomeUI();
+      updateHomeUI();
       // Reload history if currently viewing
     } catch(er) { err.textContent = er.message; }
     finally { btn.disabled = false; }
@@ -1124,8 +1132,10 @@ html.dark .video-t{color:#EAF3EF;}
     const btn = e.target.querySelector('button'); btn.disabled = true;
     const err = document.getElementById('reg-error'); err.textContent = '';
     try {
+      const csrf = await getCsrf();
       const res = await fetch(`${API_CONFIG.BASE_URL}/api/auth/register`, {
-        method: 'POST', headers: {'Content-Type': 'application/json'},
+        method: 'POST', headers: {'Content-Type': 'application/json', 'X-CSRF-Token': csrf},
+        credentials: 'include',
         body: JSON.stringify({email: document.getElementById('reg-email').value, password: document.getElementById('reg-password').value})
       });
       const data = await res.json();
@@ -1585,6 +1595,9 @@ function getRecommendedLevel(acc) {
       $("btn-start-rec")?.addEventListener("click", () => { startLevel(typeof getRecommendedLevel === "function" ? getRecommendedLevel() : 1); });
       $("btn-choose-level")?.addEventListener("click", typeof goToLevels === "function" ? goToLevels : () => {});
     }
+
+    if ($("meta-count")) $("meta-count").textContent = LEVELS.length;
+    if ($("meta-qtotal")) $("meta-qtotal").textContent = typeof allQuestions !== 'undefined' ? allQuestions.length : 0;
   }
 
   function handleStart() {
